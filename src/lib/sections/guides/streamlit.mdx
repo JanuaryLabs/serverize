@@ -1,0 +1,59 @@
+---
+name: 'Streamlit'
+logo: https://streamlit.io/images/brand/streamlit-mark-color.svg
+---
+
+
+```dockerfile title="Dockerfile"
+FROM python:3.9-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+	build-essential \
+	curl \
+	software-properties-common \
+	git \
+	&& rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+
+RUN pip3 install -r requirements.txt
+
+COPY . .
+
+EXPOSE 8501
+
+HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
+
+ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+```
+
+
+<details>
+  <summary>open .dockerignore</summary>
+
+
+```txt title=".dockerignore"
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore version control system files
+.git/
+.gitignore
+
+# Ignore virtual environments
+venv/
+.env
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore other unnecessary files or directories
+tests/
+docs/
+```
+
+</details>

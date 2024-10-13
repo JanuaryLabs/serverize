@@ -1,0 +1,22 @@
+---
+name: 'Bundler'
+logo: https://esbuild.github.io/favicon.svg
+---
+
+When using bundler like webpack or esbuild you can have a single file that have all the dependencies bundled therefore reducing the size of the image and the time to build it.
+
+```dockerfile title="Dockerfile"
+FROM node:alpine
+
+WORKDIR /app
+
+COPY ./dist .
+
+# Expose the port your app runs on
+EXPOSE 3000
+
+# Start the application
+CMD ["node", "index.js"]
+```
+
+_In watch mode, make sure to have the bundler in watch mode too._
