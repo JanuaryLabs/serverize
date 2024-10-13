@@ -36,19 +36,19 @@ export default function Try() {
 
   return (
     <>
-      <div className="something flex flex-col md:flex-row items-center border rounded-md px-6 py-2 gap-x-4 relative">
+      <div className="flex flex-col md:flex-row items-center border rounded-md px-6 py-2 gap-x-4 relative">
         <span className="md:text-2xl text-lg font-medium">Try it now:</span>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger
               onClick={onCopy}
-              className="flex gap-x-4 items-center transition rounded-lg hover:bg-teal-800 hover:text-white p-4"
+              className="flex gap-x-4 items-center transition rounded-lg hover:bg-gray-200 hover:text-black p-4"
             >
               <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
               <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-white text-black" />
               <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-white text-black" />
               <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-white text-black" />
-              <div ref={ref} className="md:text-4xl text-xl font-mono font-bold">
+              <div ref={ref} className="md:text-4xl text-3xl font-mono font-bold">
                 npx serverize
               </div>
               <DocumentDuplicateIcon className="md:size-6 size-4" />
