@@ -48,7 +48,7 @@ export default function Try() {
               <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-white text-black" />
               <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-white text-black" />
               <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-white text-black" />
-              <div ref={ref} className="md:text-4xl text-3xl font-mono font-bold">
+              <div ref={ref} className="md:text-4xl text-2xl font-mono font-bold">
                 npx serverize
               </div>
               <DocumentDuplicateIcon className="md:size-6 size-4" />
