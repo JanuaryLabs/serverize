@@ -5,7 +5,22 @@ logo: /icons/nextjs.svg
 
 To deploy next.js app make sure the output is set to standalone and public folder exists in the root of the project.
 
+<details open>
+<summary>next.config.mjs</summary>
+
+```js title="next.config.mjs" ins={3}
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+	  output: "standalone",
+};
+
+export default nextConfig;
+```
+</details>
+
+<details>
 _Copied from [Next.js Docker](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile)_
+  <summary>Dockerfile</summary>
 
 ```dockerfile title="Dockerfile"
 FROM node:18-alpine AS base
@@ -76,9 +91,9 @@ ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 CMD ["node", "server.js"]
 ```
-
+</details>
 <details>
-  <summary>open .dockerignore</summary>
+  <summary>.dockerignore</summary>
 
 ```txt title=".dockerignore"
 # Ignore Python cache files

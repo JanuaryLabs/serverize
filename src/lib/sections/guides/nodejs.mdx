@@ -3,7 +3,9 @@ name: 'Node.js'
 logo: https://nodejs.org/static/logos/nodejsStackedDark.svg
 ---
 
-Assuming you don't use bundler.
+
+<details open>
+<summary>Dockerfile</summary>
 
 ```dockerfile title="Dockerfile"
 # Stage 1: Install dependencies
@@ -13,12 +15,11 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev --no-audit
 
-# Stage 2: Build final image
+# Stage 2: Run the app
 FROM install AS run
 
 WORKDIR /app
 COPY --from=install /app/node_modules ./node_modules
-# Assuming your code is in root directory
 COPY . .
 
 # Expose the port your app runs on
@@ -27,5 +28,28 @@ EXPOSE 3000
 # Start the application
 CMD ["node", "index.js"]
 ```
+
+</details>
+
+<details>
+<summary>.dockerignore</summary>
+
+```.dockerignore title=".dockerignore"
+
+**/node_modules/
+**/.git
+**/README.md
+**/LICENSE
+**/.vscode
+**/npm-debug.log
+**/coverage
+**/.env
+**/.editorconfig
+**/.aws
+**/dist
+
+```
+
+</details>
 
 You can improve it by using a tool like [ncc](https://www.npmjs.com/package/@vercel/ncc) that bundles your code and dependencies into a single file.

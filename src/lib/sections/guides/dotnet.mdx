@@ -5,9 +5,10 @@ logo: https://raw.githubusercontent.com/dotnet/brand/refs/heads/main/logo/dotnet
 
 Start dotnet in watch mode.
 
-```bash frame="none"
-dotnet watch build
-```
+
+<details open>
+
+<summary>Dockerfile</summary>
 
 
 ```dockerfile title="Dockerfile"
@@ -23,8 +24,11 @@ ENTRYPOINT ["dotnet", "project-ms.dll"]
 EXPOSE 8080
 ```
 
+
+</details>
+
 <details>
-  <summary>open .dockerignore</summary>
+  <summary>.dockerignore</summary>
 
 ```txt title=".dockerignore"
 
