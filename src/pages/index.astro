@@ -16,6 +16,7 @@ import Email from '../lib/email';
 import Background from '../lib/background';
 import Try from '../lib/try';
 import { TextGenerateEffect } from '../lib/text-generate-effect';
+import PostHog from '../components/posthog.astro';
 ---
 
 <html lang="en">
@@ -55,6 +56,7 @@ import { TextGenerateEffect } from '../lib/text-generate-effect';
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
+    <PostHog />
   </head>
   <body class="flex flex-col h-full">
     <Background>
@@ -114,7 +116,7 @@ import { TextGenerateEffect } from '../lib/text-generate-effect';
       </div>
     </Background>
     <div class="prose min-w-full">
-     <div class="md:px-20 px-8">
+      <div class="md:px-20 px-8">
         <Integrations />
       </div>
       <section class="md:px-24 px-8 py-20">
