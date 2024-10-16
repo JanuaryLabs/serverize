@@ -5,23 +5,87 @@ logo: https://esbuild.github.io/favicon.svg
 
 This applies on projects that use a bundler like [esbuild](https://esbuild.github.io/), [webpack](https://webpack.js.org/), [rollup](https://rollupjs.org/), [parcel](https://parceljs.org/), or [vite](https://vitejs.dev/).
 
-
 <details open>
 <summary>Dockerfile</summary>
 
 ```dockerfile title="Dockerfile"
-FROM node:alpine
+FROM node:alpine AS base
 
+# Install dependencies only when needed
+FROM base AS deps
 WORKDIR /app
 
-COPY ./dist .
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+	if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+	elif [ -f package-lock.json ]; then npm ci; \
+	elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+	else echo "Lockfile not found." && exit 1; \
+	fi
 
-# Expose the port your app runs on
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+# Assuming the "build" script is defined in package.json
+RUN \
+	if [ -f yarn.lock ]; then yarn run build; \
+	elif [ -f package-lock.json ]; then npm run build; \
+	elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+	else echo "Lockfile not found." && exit 1; \
+	fi
+
+
+```
+
+Depending on your project, you've to continue with one of the following:
+
+- To serve node.js app
+
+```dockerfile frame="none" {9, 17}
+# Runtime
+FROM base AS runner
+WORKDIR /app
+
+RUN addgroup --system --gid 1001 mygroup
+RUN adduser --system --uid 1001 myuser
+
+# Assuming the build output is in the "dist" directory
+COPY --from=builder --chown=myuser:mygroup /app/dist
+
+USER myuser
 EXPOSE 3000
+ENV NODE_ENV=production
+ENV PORT=3000
 
-# Start the application
+# replace "index.js" with the entry point of your app, could be "server.js", "app.js", etc.
 CMD ["node", "index.js"]
 ```
+
+- To serve static files
+
+```dockerfile frame="none" {9, 16}
+# Runtime
+FROM nginx:alpine AS runner
+WORKDIR /usr/share/nginx/html
+
+RUN addgroup --system --gid 1001 mygroup
+RUN adduser --system --uid 1001 myuser
+
+# Assuming the build output is in the "dist" directory
+COPY --from=builder --chown=myuser:mygroup /app/dist .
+
+USER myuser
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+- Adjust based on your setup if needed.
 
 </details>
 
@@ -45,7 +109,3 @@ CMD ["node", "index.js"]
 ```
 
 </details>
-
-
-
-_In watch mode, make sure to have the bundler in watch mode too._
