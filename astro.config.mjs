@@ -1,5 +1,6 @@
 // @ts-check
 import mdx from '@astrojs/mdx';
+import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
 import { defineConfig } from 'astro/config';
 
 import react from '@astrojs/react';
@@ -7,16 +8,18 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 
 import expressiveCode from 'astro-expressive-code';
+import { remarkReadingTime } from './remark-reading-time.mjs';
 
 // https://astro.build/config
 export default defineConfig({
   markdown: {
+    remarkPlugins: [remarkReadingTime],
     shikiConfig: {
-      theme: 'github-light',
-      // themes: {
-      //   dark: 'github-dark',
-      //   light: 'github-light',
-      // },
+      // theme: 'github-light',
+      themes: {
+        dark: 'github-dark',
+        light: 'github-light',
+      },
     },
   },
   integrations: [
@@ -24,8 +27,10 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
-    expressiveCode({ themes: ['github-light', 'github-light'] }),
+    expressiveCode({
+      plugins: [pluginLineNumbers],
+      themes: ['github-light', 'github-dark'],
+    }),
     mdx(),
   ],
 });
- 

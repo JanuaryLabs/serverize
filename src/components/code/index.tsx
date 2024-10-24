@@ -66,7 +66,9 @@ const CodeBox: FC<PropsWithChildren<CodeBoxProps>> = ({
   language,
   showCopyButton = true,
   className,
+  ...rest
 }) => {
+  console.log({ rest });
   const ref = useRef<HTMLPreElement>(null);
 
   const [, copyToClipboard] = useCopyToClipboard();
@@ -79,6 +81,7 @@ const CodeBox: FC<PropsWithChildren<CodeBoxProps>> = ({
 
   return (
     <div className={classNames(styles.root, 'not-prose')}>
+      <div className='border-b text-sm py-2 px-4'>{language}</div>
       <pre
         ref={ref}
         className={classNames(styles.content, className)}

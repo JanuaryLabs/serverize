@@ -1,0 +1,29 @@
+---
+import '@/styles/globals.css';
+import '@fontsource/crimson-text';
+import '@fontsource/fira-code';
+import '@fontsource/roboto';
+import { Tabs } from '../../components/AnimatedTabs';
+import Main from '../../layouts/main.astro';
+import { Nav } from '../../components/background';
+import tabs from '../../lib/blog/tabs';
+
+export function getStaticPaths() {
+  return tabs.map((it) => ({ params: { category: it.href } }));
+}
+const activeTab = Astro.params.category;
+---
+
+<Main className="dark:bg-background bg-zinc-50" title={'January - Serverize'}>
+  <Nav className="bg-inherit" />
+  <div
+    class="h-[20rem] md:h-[40rem] max-w-screen-lg mx-auto [perspective:1000px] relative b flex flex-col w-full items-start justify-start mt-20 mb-8"
+  >
+    <Tabs
+      activeTab={activeTab}
+      transition:persist="something"
+      client:idle
+      tabs={tabs}
+    />
+  </div>
+</Main>

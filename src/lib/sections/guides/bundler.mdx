@@ -76,7 +76,9 @@ WORKDIR /usr/share/nginx/html
 RUN addgroup --system --gid 1001 mygroup
 RUN adduser --system --uid 1001 myuser
 
-# Assuming the build output is in the "dist" directory
+RUN mkdir -p /var/cache/nginx/client_temp
+RUN chown -R myuser:mygroup /var/cache/nginx /var/run /var/log/nginx
+
 COPY --from=builder --chown=myuser:mygroup /app/dist .
 
 USER myuser
@@ -92,7 +94,7 @@ CMD ["nginx", "-g", "daemon off;"]
 <details>
 <summary>.dockerignore</summary>
 
-```.dockerignore title=".dockerignore"
+```txt title=".dockerignore"
 
 **/node_modules/
 **/.git

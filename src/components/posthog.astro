@@ -3,6 +3,36 @@
 ---
 
 <script is:inline>
+  const isLocalhost = window.location.hostname === 'localhost';
+  if (!isLocalhost) {
+    !(function (t) {
+      if (window.ko) return;
+      (window.ko = []),
+        [
+          'identify',
+          'track',
+          'removeListeners',
+          'on',
+          'off',
+          'qualify',
+          'ready',
+        ].forEach(function (t) {
+          ko[t] = function () {
+            var n = [].slice.call(arguments);
+            return n.unshift(t), ko.push(n), ko;
+          };
+        });
+      var n = document.createElement('script');
+      (n.async = !0),
+        n.setAttribute(
+          'src',
+          'https://cdn.getkoala.com/v1/pk_04839d4c57a283033380a85777e54438647e/sdk.js',
+        ),
+        (document.body || document.head).appendChild(n);
+    })();
+  }
+</script>
+<script is:inline>
   !(function (t, e) {
     var o, n, p, r;
     e.__SV ||
@@ -52,12 +82,12 @@
   posthog.init('phc_PORJdMHMucNgcwabzQbEsaCrvfe23rQH8iDMAFaLwlS', {
     api_host: 'https://us.i.posthog.com',
     person_profiles: 'identified_only',
-    autocapture: import.meta.env.PROD,
-    capture_pageview: false, // Disable automatic pageview capture, as we capture manually
-    capture_pageleave: import.meta.env.PROD, // Enable automatic pageleave capture
-    capture_performance: import.meta.env.PROD, // Enable performance monitoring
+    autocapture: !isLocalhost,
+    capture_pageview: true, // Disable automatic pageview capture, as we capture manually
+    capture_pageleave: !isLocalhost, // Enable automatic pageleave capture
+    capture_performance: !isLocalhost, // Enable performance monitoring
     loaded: function (ph) {
-      if (import.meta.env.DEV) {
+      if (isLocalhost) {
         ph.opt_out_capturing(); // opts a user out of event capture
         ph.set_config({ disable_session_recording: true });
       }

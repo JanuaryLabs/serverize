@@ -3,27 +3,75 @@ name: 'Nuxt.js'
 logo: https://nuxt.com/assets/design-kit/logo-green-black.svg
 ---
 
+<details open>
+  <summary>Dockerfile</summary>
+
 ```dockerfile title="Dockerfile"
-# Stage 1: Install dependencies
-FROM node:alpine AS install
+FROM node:alpine AS base
 
+# Install dependencies only when needed
+FROM base AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci --omit=dev --no-audit
 
-# Stage 2: Build final image
-FROM install AS run
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+	if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+	elif [ -f package-lock.json ]; then npm ci; \
+	elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+	else echo "Lockfile not found." && exit 1; \
+	fi
 
+# Rebuild the source code only when needed
+FROM base AS builder
 WORKDIR /app
-COPY --from=install /app/node_modules ./node_modules
-# Assuming your code is in root directory
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Expose the port your app runs on
+ENV NUXT_TELEMETRY_DISABLED=1
+RUN \
+	if [ -f yarn.lock ]; then yarn run build; \
+	elif [ -f package-lock.json ]; then npm run build; \
+	elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+	else echo "Lockfile not found." && exit 1; \
+	fi
+
+# Production image, copy all the files and run the app
+FROM base AS runner
+WORKDIR /app
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 runtime
+
+COPY --from=builder --chown=runtime:nodejs /app/.output ./
+
+ENV NUXT_TELEMETRY_DISABLED=1
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOST="0.0.0.0"
+
+USER runtime
+
 EXPOSE 3000
 
 # Start the application
-CMD ["node", "index.js"]
+CMD ["node", "server/index.mjs"]
 ```
 
-You can improve it by using a tool like [ncc](https://www.npmjs.com/package/@vercel/ncc) that bundles your code and dependencies into a single file.
+
+</details>
+<details>
+  <summary>.dockerignore</summary>
+
+```txt title=".dockerignore"
+.dockerignore
+node_modules
+npm-debug.log
+README.md
+.next
+.git
+```
+
+</details>

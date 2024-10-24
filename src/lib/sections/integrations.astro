@@ -1,5 +1,5 @@
 ---
-import MDXCodeBox from '../code/code';
+import MDXCodeBox from '../../components/code/code';
 const guides = Object.values(await Astro.glob('./guides/*.mdx'));
 
 const integrations = guides.map((it: any) => ({
@@ -10,27 +10,26 @@ const integrations = guides.map((it: any) => ({
 ---
 
 <div id="integrations-section">
-  <h2 class="lg:text-4xl text-3xl">Serverize Everything:</h2>
+  <h2 class="lg:text-3xl mb-2 text-2xl px-4">Serverize Everything:</h2>
+  <p class="text-secondary-foreground/70 px-4">
+    Supports all frameworks and languages, including Node.js, PHP, Python, Ruby,
+    Go, PHP, Rust, and more.
+  </p>
   <div
-    style="
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
-    "
-    class="mb-8 gap-6 not-prose"
+    style="grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));"
+    class="mb-8 gap-6 not-prose grid px-4"
     id="integration-btn"
   >
     {
       integrations.map((it) => (
         <button
           data-integration={it.name}
-          class="flex justify-center items-center flex-col gap-y-4 group cursor-pointer"
+          class="flex justify-center tracking-wider font-medium text-secondary-foreground items-center flex-col gap-y-4 group cursor-pointer"
         >
-          <div class="w-20 border rounded py-4 px-5 group-hover:bg-slate-100">
+          <div class="w-20 border border-border rounded py-4 px-5 group-hover:bg-slate-100 group-hover:dark:bg-[#272727]">
             <img class="h-10" src={it.logo} />
           </div>
-          <span class="text-sm  truncate text-gray-500 font-semibold   ">
-            {it.name}
-          </span>
+          <span class="text-sm truncate">{it.name}</span>
         </button>
       ))
     }
@@ -38,7 +37,7 @@ const integrations = guides.map((it: any) => ({
   {
     integrations.map(({ name, Content }) => (
       <div class="hidden" data-integration-guide={name}>
-        <Content components={{ pre: MDXCodeBox }} />
+        <Content />
       </div>
     ))
   }

@@ -1,0 +1,36 @@
+---
+import type { MarkdownLayoutProps } from 'astro';
+import BlogContainer from './Blog/BlogContainer.tsx';
+import BlogHeader from './Blog/BlogHeader.tsx';
+import Main from './main.astro';
+import { Nav } from '../components/background.tsx';
+
+type Props = MarkdownLayoutProps<{
+  title: string;
+  author: string;
+  date: string;
+  minutesRead: string;
+  subtitle: string;
+}>;
+const { frontmatter, url } = Astro.props;
+const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
+---
+
+<Main className="dark:bg-background bg-zinc-50" title={frontmatter.title} canonical={canonical}>
+  <Nav className="bg-inherit" />
+  <div class="max-w-5xl xl:px-0 lg:px-10 px-4 mx-auto w-full">
+    <div class="mt-20"></div>
+    <BlogContainer>
+      <article class="prose max-w-full lg:px-8 lg:mx-28 mx-4">
+        <BlogHeader
+          title={frontmatter.title}
+          subtitle={frontmatter.subtitle}
+          author={frontmatter.author}
+          date={frontmatter.date}
+          minutesRead={frontmatter.minutesRead}
+        />
+        <slot />
+      </article>
+    </BlogContainer>
+  </div>
+</Main>

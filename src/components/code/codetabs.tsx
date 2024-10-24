@@ -30,7 +30,6 @@ export default function CodeTabs(props: PropsWithChildren) {
   );
 }
 export function CodeTab(props: PropsWithChildren) {
-  console.log(props.children);
   return (
     <Tabs defaultValue="account" className="w-[400px]">
       <TabsList>
