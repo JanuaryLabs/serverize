@@ -1,6 +1,5 @@
 'use client';
 
-import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import type { FC, PropsWithChildren, ReactNode } from 'react';
 import { Fragment, isValidElement, useRef } from 'react';
@@ -81,7 +80,7 @@ const CodeBox: FC<PropsWithChildren<CodeBoxProps>> = ({
 
   return (
     <div className={classNames(styles.root, 'not-prose')}>
-      <div className='border-b text-sm py-2 px-4'>{language}</div>
+      <div className="border-b text-sm py-2 px-4">{language}</div>
       <pre
         ref={ref}
         className={classNames(styles.content, className)}

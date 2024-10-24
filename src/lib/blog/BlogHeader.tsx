@@ -1,7 +1,6 @@
-import React from 'react';
 import { Clock } from 'lucide-react';
-import { BlogCategory } from './BlogCategory';
 import { AuthorInfo } from './AuthorInfo';
+import { BlogCategory } from './BlogCategory';
 
 interface BlogHeaderProps {
   category: string;

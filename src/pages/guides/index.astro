@@ -11,11 +11,10 @@ const posts = Object.values(
   import.meta.glob('../*.{md,mdx}', { eager: true }),
 ) as MarkdownInstance<{ title: string; subtitle: string }>[];
 
-const headings = posts[0].getHeadings();
 const guides = posts.map((it) => ({
   title: it.frontmatter.title,
   subtitle: it.frontmatter.subtitle,
-  href: it.url,
+  href: it.url!,
   headings: it.getHeadings().map((it) => ({
     title: it.text,
     href: `#${it.slug}`,
