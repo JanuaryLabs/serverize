@@ -9,6 +9,7 @@ import tailwind from '@astrojs/tailwind';
 
 import expressiveCode from 'astro-expressive-code';
 import { remarkReadingTime } from './remark-reading-time.mjs';
+import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-sections';
 
 // https://astro.build/config
 export default defineConfig({
@@ -28,7 +29,7 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     expressiveCode({
-      plugins: [pluginLineNumbers],
+      plugins: [pluginLineNumbers, pluginCollapsibleSections],
       themes: ['github-light', 'github-dark'],
     }),
     mdx(),

@@ -15,6 +15,7 @@
     "@astrojs/mdx": "^3.1.7",
     "@astrojs/react": "^3.6.2",
     "@astrojs/tailwind": "^5.1.1",
+    "@expressive-code/plugin-collapsible-sections": "^0.37.1",
     "@expressive-code/plugin-line-numbers": "^0.37.1",
     "@fontsource/crimson-text": "^5.1.0",
     "@fontsource/fira-code": "^5.1.0",
@@ -60,6 +61,7 @@
   },
   "devDependencies": {
     "prettier": "^3.3.3",
-    "prettier-plugin-astro": "^0.14.1"
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.6.8"
   }
 }

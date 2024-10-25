@@ -1,7 +1,7 @@
 ---
-layout: ../layouts/BlogPostLayout.astro
+layout: ../../layouts/BlogPostLayout.astro
 title: 'Deploy Nuxt.js to Serverize'
-subtitle: 'Learn how to deploy Serverize your Nuxt.js with different build modes (SSG, SSR, SPA)'
+subtitle: 'Learn how to Serverize your Nuxt.js with different build modes (SSG, SSR, SPA)'
 author: 'Adam Koskovki'
 date: '2024-10-22T00:00:00.000Z'
 ---
@@ -11,6 +11,8 @@ date: '2024-10-22T00:00:00.000Z'
 - Prerequisites
 - Add Dockerfile
 - Deploy
+- Automating Deployments with CI/CD
+- Takeaways
 
 ### Project Structure
 
@@ -106,7 +108,7 @@ Note: The Dockerfile tries to automatically pick the right package manager (yarn
 Continuing from the previous section Dockerfile, add the following content at the end of the Dockerfile:
 
 ```Dockerfile title="Dockerfile"
-FROM base AS runner
+FROM base AS release
 WORKDIR /app
 
 RUN addgroup --system --gid 1001 nodejs
@@ -190,3 +192,15 @@ npx serverize deploy -p <project-name>
 ```
 
 Replace `<project-name>` with the actual name of your project. This command will package and deploy your Bun application
+
+## Automating Deployments with CI/CD
+
+You can automate the deployment of your application to Serverize by using Continuous Integration and Continuous Deployment (CI/CD) tools like GitHub Actions. This setup ensures that your application is deployed whenever new code is pushed to the main branch.
+
+For detailed instructions on configuring CI/CD with Serverize and GitHub Actions, refer to our [CI/CD guide](./ci-cd).
+
+## Takeaways
+
+- Nuxt support 3 build modes: SSR, SPA, and Static and only SSR needs a node.js server whereas SPA and Static can run behind a static file server like Nginx or Apache.
+- Make sure to expose the correct port in your Dockerfile.
+- The `CMD` instruction presume you're using default configurations.

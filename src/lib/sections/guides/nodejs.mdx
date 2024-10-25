@@ -3,7 +3,6 @@ name: 'Node.js'
 logo: https://nodejs.org/static/logos/nodejsStackedDark.svg
 ---
 
-
 <details open>
 <summary>Dockerfile</summary>
 
@@ -22,20 +21,21 @@ WORKDIR /app
 COPY --from=install /app/node_modules ./node_modules
 COPY . .
 
-# Expose the port your app runs on
-EXPOSE 3000
+ENV NODE_ENV=production
+ENV PORT=3000
 
+# Expose the port your app runs on
+USER node
+EXPOSE 3000
 # Start the application
 CMD ["node", "index.js"]
 ```
-
 </details>
 
 <details>
 <summary>.dockerignore</summary>
 
 ```txt title=".dockerignore"
-
 **/node_modules/
 **/.git
 **/README.md
@@ -47,7 +47,6 @@ CMD ["node", "index.js"]
 **/.editorconfig
 **/.aws
 **/dist
-
 ```
 
 </details>

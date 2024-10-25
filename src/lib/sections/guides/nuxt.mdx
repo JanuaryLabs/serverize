@@ -8,12 +8,12 @@ logo: https://nuxt.com/assets/design-kit/logo-green-black.svg
 
 ```dockerfile title="Dockerfile"
 FROM node:alpine AS base
+WORKDIR /app
 
 # Install dependencies only when needed
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
-WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
@@ -39,8 +39,7 @@ RUN \
 	fi
 
 # Production image, copy all the files and run the app
-FROM base AS runner
-WORKDIR /app
+FROM base AS release
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 runtime
@@ -52,14 +51,13 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOST="0.0.0.0"
 
+# Expose the port your app runs on
 USER runtime
-
 EXPOSE 3000
 
 # Start the application
 CMD ["node", "server/index.mjs"]
 ```
-
 
 </details>
 <details>

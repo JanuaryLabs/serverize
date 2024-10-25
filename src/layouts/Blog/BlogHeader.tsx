@@ -9,7 +9,8 @@ export default function BlogHeader(props: {
 }) {
   return (
     <div className="justify-center flex flex-col gap-y-2 lg:gap-y-4">
-      <BlogBreadCrumb className="mt-8" />
+      {/* <BlogBreadCrumb className="mt-8" /> */}
+      
       <h1 className=" text-center font-bold lg:text-5xl md:text-3xl text-2xl mb-0">
         {props.title}
       </h1>

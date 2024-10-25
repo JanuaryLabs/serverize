@@ -1,3 +1,4 @@
+import SearchInput from './SearchInput';
 import { Button, buttonVariants } from './ui/button';
 import { cn } from './utils';
 
@@ -132,6 +133,7 @@ export function Nav(props: { className?: string }) {
           ))}
         </nav>
         <div className="ml-auto flex items-center space-x-4">
+          <SearchInput />
           <a
             href="https://cal.com/january-sh/30min"
             target="_blank"
@@ -153,6 +155,7 @@ export function Nav(props: { className?: string }) {
           >
             Guides
           </a>
+
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon" className="lg:hidden">
@@ -160,11 +163,12 @@ export function Nav(props: { className?: string }) {
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left">
+            <SheetContent side="bottom">
               <div className="grid gap-6 p-6">
                 {items.map((it) => (
                   <a
                     href={it.href}
+                    key={it.name}
                     className="font-medium hover:underline underline-offset-4"
                   >
                     {it.name}

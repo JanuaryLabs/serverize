@@ -1,9 +1,9 @@
 ---
-layout: ../layouts/BlogPostLayout.astro
-title: 'Step-by-Step Guide to Deploying Your Bun Project Using Serverize'
-subtitle: 'A Comprehensive Tutorial to Containerizing and Deploying Your Bun Project with Ease Using Serverize'
+layout: ../../layouts/BlogPostLayout.astro
+title: 'Deploy Bun to Serverize'
+subtitle: 'Learn how to Serverize your Bun project'
 author: 'Adam Koskovki'
-date: '2024-10-25T00:00:00.000Z'
+date: '2024-10-22T00:00:00.000Z'
 ---
 
 ### Table of Contents
@@ -11,6 +11,8 @@ date: '2024-10-25T00:00:00.000Z'
 - Prerequisites
 - Add Dockerfile
 - Deploy
+- Automating Deployments with CI/CD
+- Takeaways
 
 ### Project Structure
 
@@ -126,10 +128,24 @@ This list excludes directories like `node_modules`, which can be quite large, as
 
 ## Deploy Your Bun Project
 
-After completing all the previous steps, you are now ready to deploy your Bun application to Serverize.
+After completing all the previous steps, you are now ready to deploy your application to Serverize.
 
 ```sh frame=none
 npx serverize deploy -p <project-name>
 ```
 
 Replace `<project-name>` with the actual name of your project. This command will package and deploy your Bun application, leveraging Serverize to handle the setup and deployment seamlessly.
+
+## Automating Deployments with CI/CD
+
+You can automate the deployment of your application to Serverize by using Continuous Integration and Continuous Deployment (CI/CD) tools like GitHub Actions. This setup ensures that your application is deployed whenever new code is pushed to the main branch.
+
+For detailed instructions on configuring CI/CD with Serverize and GitHub Actions, refer to our [CI/CD guide](./ci-cd).
+
+## Takeaways
+
+- Make sure to expose the correct port in your Dockerfile.
+- The `CMD` command in your Dockerfile should start your application.
+- Bun doesn't need a build step as it supports TypeScript out of the box.
+
+Happy deploying! If you run into any issues or need further assistance, feel free to drop a message in our [Discord community](https://discord.gg/aj9bRtrmNt).
