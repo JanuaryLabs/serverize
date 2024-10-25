@@ -13,6 +13,7 @@ import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-s
 
 // https://astro.build/config
 export default defineConfig({
+  devToolbar: { enabled: false },
   markdown: {
     remarkPlugins: [remarkReadingTime],
     shikiConfig: {

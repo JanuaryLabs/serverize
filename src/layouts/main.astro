@@ -8,6 +8,7 @@ import '@fontsource/roboto';
 import { ViewTransitions } from 'astro:transitions';
 import PostHog from '../components/posthog.astro';
 import { cn } from '../components/utils';
+import Footer from '../components/Footer';
 
 type Props = {
   title: string;
@@ -61,5 +62,6 @@ const { title, canonical, className } = Astro.props;
   </head>
   <body class={cn(className, 'flex flex-col h-full')} vaul-drawer-wrapper="">
     <slot />
+    <!-- <Footer /> -->
   </body>
 </html>

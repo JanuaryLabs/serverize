@@ -14,10 +14,10 @@ export function getStaticPaths() {
 const activeTab = Astro.params.category;
 ---
 
-<Main className="dark:bg-background bg-zinc-50" title={'January - Serverize'}>
-  <Nav className="bg-inherit" />
+<Main title={'January - Serverize'}>
+  <Nav className="bg-inherit" client:load />
   <div
-    class="h-[20rem] md:h-[40rem] max-w-screen-lg mx-auto [perspective:1000px] relative b flex flex-col w-full items-start justify-start mt-20 mb-8"
+    class="b relative mx-auto mb-8 mt-20 flex h-[20rem] w-full max-w-screen-lg flex-col items-start justify-start [perspective:1000px] md:h-[40rem]"
   >
     <Tabs
       activeTab={activeTab}

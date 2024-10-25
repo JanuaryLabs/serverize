@@ -74,14 +74,15 @@
   }
 }
 :root {
-  --ec-frm-frameBoxShdCssVal: none !important;;
+  --ec-frm-frameBoxShdCssVal: none !important;
 }
 @layer base {
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background font-sans text-foreground;
+    /* antialiased; */
   }
 }
 
@@ -105,6 +106,9 @@ h4 {
     color: unset;
     text-decoration: none;
   }
+}
+h2{
+  @apply tracking-tighter;
 }
 p,
 li {
@@ -183,7 +187,7 @@ pre {
 }
 
 details > summary {
-  @apply transition cursor-pointer text-[#154219] text-sm;
+  @apply cursor-pointer text-sm text-[#154219] transition;
 }
 
 details[open] > summary {
@@ -194,7 +198,7 @@ details[open]:hover > summary {
 }
 
 details {
-  @apply py-1 px-2 rounded transition duration-150;
+  @apply rounded px-2 py-1 transition duration-150;
 }
 
 .no-visible-scrollbar {

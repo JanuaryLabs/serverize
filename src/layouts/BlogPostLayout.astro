@@ -5,6 +5,7 @@ import BlogHeader from './Blog/BlogHeader.tsx';
 import Main from './main.astro';
 import { Nav } from '../components/background.tsx';
 import GuideHeader from './Blog/GuideHeader.tsx';
+import Cta from '../components/Cta.tsx';
 
 type Props = MarkdownLayoutProps<{
   title: string;
@@ -17,12 +18,12 @@ const { frontmatter, url } = Astro.props;
 const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
 ---
 
-<Main title={frontmatter.title} canonical={canonical}>
-  <Nav className="bg-inherit" />
-  <div class="max-w-5xl xl:px-0 lg:px-10 px-4 mx-auto w-full">
+<Main title={frontmatter.title} canonical={canonical} >
+  <Nav  client:load />
+  <div class="mx-auto w-full max-w-6xl px-4 lg:px-10 xl:px-0">
     <a
       href="/guides"
-      class="flex items-center mt-4 md:mb-8 no-underline hover:underline cursor-pointer md:mt-12 gap-x-0.5 text-sm text-secondary-foreground/70 font-medium"
+      class="mt-4 flex cursor-pointer items-center gap-x-0.5 text-sm font-medium text-secondary-foreground/70 no-underline hover:underline md:mb-8 md:mt-12"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +31,7 @@ const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="size-4 mr-1"
+        class="mr-1 size-4"
       >
         <path
           stroke-linecap="round"
@@ -41,7 +42,7 @@ const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
     </a>
     <BlogContainer>
       <div class="mt-16 hidden md:block"></div>
-      <article class="prose max-w-full lg:px-8 lg:mx-28 md:mx-8 mx-2">
+      <article class="prose mx-2 max-w-full md:mx-8 lg:mx-28 lg:px-8 pb-20">
         <GuideHeader
           title={frontmatter.title}
           subtitle={frontmatter.subtitle}
@@ -52,5 +53,6 @@ const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
         <slot />
       </article>
     </BlogContainer>
+    <Cta />
   </div>
 </Main>

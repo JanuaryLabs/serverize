@@ -6,13 +6,13 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useEffect, useState, type PropsWithChildren } from 'react';
 
 const GridBackground: React.FC = () => (
-  <div className="absolute w-full h-full inset-0 px-4 py-0 pointer-events-none">
-    <div className="flex justify-between items-center h-full max-w-[1080px] mx-auto">
-      <div className="bg-white dark:border-accent dark:bg-background w-[1px] h-full"></div>
-      <div className="border-r dark:border-accent border-gray-200 border-dashed h-full"></div>
-      <div className="border-r dark:border-accent border-gray-200 border-dashed h-full"></div>
-      <div className="border-r dark:border-accent border-gray-200 border-dashed h-full"></div>
-      <div className="bg-white dark:border-accent dark:bg-background w-[1px] h-full"></div>
+  <div className="pointer-events-none absolute inset-0 h-full w-full px-4 py-0">
+    <div className="mx-auto flex h-full max-w-[1080px] items-center justify-between">
+      <div className="h-full w-[1px] bg-white dark:border-accent dark:bg-background"></div>
+      <div className="h-full border-r border-dashed border-gray-200 dark:border-accent"></div>
+      <div className="h-full border-r border-dashed border-gray-200 dark:border-accent"></div>
+      <div className="h-full border-r border-dashed border-gray-200 dark:border-accent"></div>
+      <div className="h-full w-[1px] bg-white dark:border-accent dark:bg-background"></div>
     </div>
   </div>
 );
@@ -25,7 +25,7 @@ export default function Background(
       <Nav />
       <div
         className={cn(
-          'relative w-full flex items-center justify-center px-4 py-10',
+          'relative flex w-full items-center justify-center px-4 py-10',
           props.className,
         )}
       >
@@ -51,10 +51,10 @@ export default function Background(
           </Button>
         </nav> */}
 
-          <div className="flex flex-col items-center w-full z-10">
+          <div className="z-10 flex w-full flex-col items-center">
             {/* <div className="w-full border-b border-dashed dark:border-accent border-gray-200"></div> */}
-            <div className="w-full flex flex-col gap-8 justify-center items-center h-full mx-auto py-16 px-4 lg:px-16">
-              <div className="relative flex flex-col items-start gap-4 justify-center w-full">
+            <div className="mx-auto flex h-full w-full flex-col items-center justify-center gap-8 px-4 py-16 lg:px-16">
+              <div className="relative flex w-full flex-col items-start justify-center gap-4">
                 {props.children}
               </div>
             </div>
@@ -109,15 +109,16 @@ export function Nav(props: { className?: string }) {
   return (
     <header
       className={cn(
-        'flex py-3 w-full items-center bg-background',
+        'flex w-full items-center py-3',
+        'bg-background dark:bg-background',
         props.className,
-        'z-50 sticky top-0 w-full',
+        'sticky top-0 z-50 w-full',
         scrolled ? 'border-b border-border/70' : '',
       )}
     >
-      <div className="mx-auto max-w-7xl flex w-full items-center px-4">
+      <div className="mx-auto flex w-full max-w-7xl items-center px-4">
         <Logo />
-        <nav className="hidden lg:flex items-center">
+        <nav className="hidden items-center lg:flex">
           {items.map((it) => (
             <a
               key={it.name}
@@ -125,7 +126,7 @@ export function Nav(props: { className?: string }) {
               target={it.target}
               className={cn(
                 buttonVariants({ variant: 'ghost' }),
-                'font-medium text-secondary-foreground/70 text-sm',
+                'text-sm font-medium text-secondary-foreground/70',
               )}
             >
               {it.name}
@@ -139,8 +140,8 @@ export function Nav(props: { className?: string }) {
             target="_blank"
             className={cn(
               buttonVariants({ variant: 'default' }),
-              'shadow-none px-2.5 py-1 h-8',
-              'lg:flex hidden',
+              'h-8 px-2.5 py-1 shadow-none',
+              'hidden lg:flex',
             )}
           >
             Contact
@@ -149,8 +150,8 @@ export function Nav(props: { className?: string }) {
             href="/guides"
             className={cn(
               buttonVariants({ variant: 'default' }),
-              'shadow-none px-2.5 py-1 h-8',
-              'lg:hidden flex',
+              'h-8 px-2.5 py-1 shadow-none',
+              'flex lg:hidden',
             )}
           >
             Guides
@@ -169,7 +170,7 @@ export function Nav(props: { className?: string }) {
                   <a
                     href={it.href}
                     key={it.name}
-                    className="font-medium hover:underline underline-offset-4"
+                    className="font-medium underline-offset-4 hover:underline"
                   >
                     {it.name}
                   </a>
@@ -229,11 +230,11 @@ export function GridBackgroundDemo(
   return (
     <div
       className={cn(
-        'w-full dark:bg-black bg-white dark:bg-grid-small-white/[0.2] bg-grid-small-black/[0.2] relative',
+        'relative w-full bg-white bg-grid-small-black/[0.2] dark:bg-black dark:bg-grid-small-white/[0.2]',
         props.className,
       )}
     >
-      <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
       {props.children}
     </div>
   );

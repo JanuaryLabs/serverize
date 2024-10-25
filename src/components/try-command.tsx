@@ -8,29 +8,34 @@ import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
 import { useRef } from 'react';
 import Box from './Box';
 import useCopyToClipboard from './code/useCopyToClipboard';
+import { cn } from './utils';
 
-export default function Try() {
+export default function Try(props: { className?: string }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [, copyToClipboard] = useCopyToClipboard();
 
   const onCopy = async () => {
-    console.log(ref.current?.textContent);
     if (ref.current?.textContent) {
       copyToClipboard(ref.current.textContent);
     }
   };
   return (
-    <Box className="lg:pr-3 md:gap-x-2 lg:pl-4 pr-2 pl-3 py-1 flex flex-col md:flex-row md:items-baseline items-center">
+    <Box
+      className={cn(
+        'flex flex-col items-center py-1 pl-3 pr-2 md:flex-row md:items-baseline md:gap-x-2 lg:pl-4 lg:pr-3',
+        props.className,
+      )}
+    >
       <TooltipProvider>
-        <span className="lg:text-xl font-medium">Try it now:</span>
+        <span className="font-medium lg:text-xl">Try it now:</span>
         <Tooltip delayDuration={0}>
           <TooltipTrigger
             onClick={onCopy}
-            className="flex lg:gap-x-4 md:ml-auto gap-x-2 md:items-baseline items-center transition rounded-lg hover:bg-gray-200 hover:text-black py-2 lg:p-4 lg:py-4"
+            className="flex items-center gap-x-2 rounded-lg py-2 transition hover:bg-gray-200 hover:text-black md:ml-auto md:items-baseline lg:gap-x-4 lg:p-4 lg:py-4"
           >
             <div
               ref={ref}
-              className="lg:text-2xl text-xl font-mono font-semibold"
+              className="font-mono text-xl font-semibold lg:text-2xl"
             >
               npx serverize
             </div>
