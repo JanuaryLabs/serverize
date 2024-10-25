@@ -6,7 +6,7 @@ import { cn } from './utils';
 export default function Cta() {
   return (
     <Card reverse={true} hideTop={true}>
-      <div className="mx-10 mb-16 mt-4 grid grid-cols-1 items-center justify-center gap-x-4 text-center md:grid-cols-3">
+      <div className="mx-10 mb-16 mt-4 grid grid-cols-1 items-center justify-center lg:gap-x-4 md:gap-x-6 gap-x-4 md:text-left text-center md:grid-cols-3">
         <div className="space-y-4 md:col-span-2">
           <h2 className="text-xl font-medium md:text-2xl">
             <strong>
