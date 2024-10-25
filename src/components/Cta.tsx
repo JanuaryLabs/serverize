@@ -1,14 +1,14 @@
 import { Card } from '../layouts/Blog/BlogCard';
-import TryCommand from './try-command';
-import { Button, buttonVariants } from './ui/button';
+import { buttonVariants } from './ui/button';
+import { Separator } from './ui/separator';
 import { cn } from './utils';
 
 export default function Cta() {
   return (
     <Card reverse={true} hideTop={true}>
-      <div className="mx-12 mb-16 mt-4 grid grid-cols-3 items-center gap-x-4">
-        <div className="col-span-2 space-y-4">
-          <h2 className="text-2xl font-medium">
+      <div className="mx-10 mb-16 mt-4 grid grid-cols-1 items-center justify-center gap-x-4 text-center md:grid-cols-3">
+        <div className="space-y-4 md:col-span-2">
+          <h2 className="text-xl font-medium md:text-2xl">
             <strong>
               <span className="text-green-700">Serverize</span> your project!
             </strong>{' '}
@@ -20,22 +20,26 @@ export default function Cta() {
               Talk to an expert for a personalized demo.
             </span>
           </h2>
-          <div className="flex gap-x-4">
+          <div className="flex justify-center gap-x-4 md:justify-normal">
             <a
               href="./cli/#deployments"
-              className={cn(buttonVariants(), 'h-10 rounded-full')}
+              className={cn(buttonVariants(), 'h-10 rounded-full no-underline')}
             >
               Serverize Now
             </a>
-            <Button
-              variant={'outline'}
-              className="h-10 rounded-full bg-white text-foreground"
+            <a
+              href="https://cal.com/january-sh/30min"
+              className={cn(
+                buttonVariants({ variant: 'outline' }),
+                'h-10 rounded-full bg-white text-foreground no-underline',
+              )}
             >
               Contact Sales
-            </Button>
+            </a>
           </div>
         </div>
-        <div className="col-start-3 space-y-4">
+        <div className="space-y-4 md:col-start-3">
+          <Separator className="mt-6 md:hidden" />
           <p>
             <strong>Would you like to chat?</strong>{' '}
             <span className="text-secondary-foreground/70">
@@ -46,7 +50,7 @@ export default function Cta() {
             href="https://discord.gg/aj9bRtrmNt"
             className={cn(
               buttonVariants({ variant: 'outline' }),
-              '"h-10 text-foreground" rounded-full bg-white',
+              'text-foreground" h-10 rounded-full bg-white no-underline',
             )}
           >
             Join Discord

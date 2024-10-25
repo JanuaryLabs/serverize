@@ -175,6 +175,44 @@ To deploy to a specific channel, such as `qa`, add the channel name:
 npx serverize deploy -p <project-name> -c qa
 ```
 
+### Secrets Management
+
+Secrets are environment variables that you can securely store and use during at runtime.
+
+#### Setting Secrets
+
+To set secrets for a project, use the `secrets set` command along with the project name flag `-p` or `--project`. You can pass multiple `NAME=VALUE` pairs.
+
+```sh
+npx serverize secrets set NAME=VALUE NAME=VALUE -p <project-name>
+```
+
+**Example:**
+
+```sh
+npx serverize secrets set API_KEY=12345 DB_PASSWORD=secret -p my-project
+```
+
+This command sets the `API_KEY` and `DB_PASSWORD` secrets for the project `my-project`.
+
+#### Setting Secrets from a File
+
+You can also set secrets from a file, such as an `.env` file, using the `secrets set-file` command.
+
+```sh
+npx serverize secrets set-file <path-to-env-file> -p <project-name>
+```
+
+**Example:**
+
+```sh
+npx serverize secrets set-file .env -p my-project
+```
+
+This command reads the `.env` file and sets all the environment variables as secrets for the project `my-project`.
+
+**Note:** Ensure that your `.env` file is properly formatted with `KEY=VALUE` pairs, each on a new line.
+
 ### Authentication Tokens
 
 To deploy a project in a CI/CD pipeline, you need to create a new token and store it in your CI/CD environment.

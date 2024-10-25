@@ -1,7 +1,14 @@
-export default function SearchInput() {
+import { cn } from './utils';
+
+export default function SearchInput(props: { className?: string }) {
   return (
-    <div className="cursor-text min-w-56 justify-between px-2 py-2 rounded-2xl text-sm flex items-center gap-x-2 text-secondary-foreground/70 bg-secondary">
-      <div className="flex gap-x-1 items-center">
+    <div
+      className={cn(
+        'flex min-w-56 cursor-text items-center justify-between gap-x-2 rounded-2xl bg-secondary px-2 py-2 text-sm text-secondary-foreground/70',
+        props.className,
+      )}
+    >
+      <div className="flex items-center gap-x-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -19,7 +26,7 @@ export default function SearchInput() {
 
         <span>Ask AI</span>
       </div>
-      <kbd className="bg-white pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border px-2 text-[10px] font-medium text-muted-foreground">
+      <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-white px-2 text-[10px] font-medium text-muted-foreground">
         <span className="text-xs">⌘</span>K
       </kbd>
     </div>

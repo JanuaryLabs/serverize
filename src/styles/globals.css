@@ -107,7 +107,7 @@ h4 {
     text-decoration: none;
   }
 }
-h2{
+h2,h1{
   @apply tracking-tighter;
 }
 p,
