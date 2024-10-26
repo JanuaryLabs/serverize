@@ -134,7 +134,7 @@ export function Nav(props: { className?: string }) {
           ))}
         </nav>
         <div className="ml-auto flex items-center space-x-4">
-          <SearchInput className="hidden lg:block" />
+          <SearchInput className="hidden lg:flex" />
           <a
             href="https://cal.com/january-sh/30min"
             target="_blank"
