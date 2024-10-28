@@ -30,6 +30,9 @@ Once you've finished adding the required files, your project should look like th
 └─── package.json
 ```
 
+> [!TIP]
+> [Check the source code](https://github.com/serverize/example-bun) for a complete example.
+
 ### Understanding the `bun run` Command
 
 Bun has the capability to run TypeScript code directly without needing a separate build step. This feature significantly reduces the overall build time and makes development faster and smoother.
@@ -55,14 +58,12 @@ FROM base AS install
 # this will cache them and speed up future builds
 RUN mkdir -p /temp/dev
 COPY package.json bun.lockb /temp/dev/
-RUN cd /temp/dev
-RUN bun install --frozen-lockfile
+RUN cd /temp/dev && bun install --frozen-lockfile
 
 # install with --production (exclude devDependencies)
 RUN mkdir -p /temp/prod
 COPY package.json bun.lockb /temp/prod/
-RUN cd /temp/prod
-RUN bun install --frozen-lockfile --production
+RUN cd /temp/prod && bun install --production --frozen-lockfile
 
 # copy node_modules from temp directory
 # then copy all (non-ignored) project files into the image
@@ -77,11 +78,10 @@ COPY --from=prerelease /app .
 
 # run the app
 USER bun
+ENV PORT=3000
 EXPOSE 3000
 
-# Assuming the "start" script is defined in package.json
-# and starts the server
-CMD [ "bun", "start" ]
+CMD [ "bun", "index.ts" ]
 ```
 
 It consists of four stages
@@ -100,7 +100,10 @@ It consists of four stages
    - Copies the source code from the `prerelease` stage.
    - Sets the user to `bun` to ensure the app runs as a non-root user for better security.
    - Exposes port `3000`.
-   - Assumes the `start` script in `package.json` will start the server.
+   - Runs the `index.ts` script which starts a server.
+
+> [!NOTE]
+> Adjust the `CMD` to point to the project entrypoint file.
 
 ### Dockerignore
 
