@@ -1,11 +1,10 @@
 ---
 import type { MarkdownLayoutProps } from 'astro';
-import BlogContainer from './Blog/BlogContainer.tsx';
-import BlogHeader from './Blog/BlogHeader.tsx';
-import Main from './main.astro';
 import { Nav } from '../components/background.tsx';
-import GuideHeader from './Blog/GuideHeader.tsx';
 import Cta from '../components/Cta.tsx';
+import BlogContainer from './Blog/BlogContainer.tsx';
+import GuideHeader from './Blog/GuideHeader.tsx';
+import Main from './main.astro';
 
 type Props = MarkdownLayoutProps<{
   title: string;
@@ -18,8 +17,8 @@ const { frontmatter, url } = Astro.props;
 const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
 ---
 
-<Main title={frontmatter.title} canonical={canonical} >
-  <Nav  client:load />
+<Main title={frontmatter.title} canonical={canonical}>
+  <Nav client:load />
   <div class="mx-auto w-full max-w-6xl px-4 lg:px-10 xl:px-0">
     <a
       href="/guides"
@@ -42,7 +41,7 @@ const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
     </a>
     <BlogContainer>
       <div class="mt-16 hidden md:block"></div>
-      <article class="prose mx-2 max-w-full md:mx-8 lg:mx-28 lg:px-8 pb-20">
+      <article class="prose mx-2 max-w-full pb-20 md:mx-8 lg:mx-28 xl:px-16 lg:px-8">
         <GuideHeader
           title={frontmatter.title}
           subtitle={frontmatter.subtitle}

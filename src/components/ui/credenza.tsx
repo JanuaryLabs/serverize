@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 
 import {
@@ -26,7 +24,7 @@ import { cn } from '@/components/utils';
 import { useMediaQuery } from '../../hooks/use-media-query';
 
 interface BaseProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 interface RootCredenzaProps extends BaseProps {
@@ -120,7 +118,7 @@ const CredenzaTitle = ({ className, children, ...props }: CredenzaProps) => {
 
 const CredenzaBody = ({ className, children, ...props }: CredenzaProps) => {
   return (
-    <div className={cn('px-4 md:px-0', className)} {...props}>
+    <div className={cn(className)} {...props}>
       {children}
     </div>
   );

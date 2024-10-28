@@ -16,7 +16,7 @@ date: '2024-10-22T00:00:00.000Z'
 
 ### Project Structure
 
-Once you've finished adding the required files, your project should contain the following files:
+Once you've finished adding the required files, your project should look like this:
 
 ```
 .
@@ -107,7 +107,7 @@ To make your Docker build faster, create a `.dockerignore` file to tell Docker w
 
 Create a `.dockerignore` file in the root of your project and add the following content:
 
-```dockerignore title=".dockerignore"
+```.dockerignore title=".dockerignore"
 node_modules
 docker-compose*
 .dockerignore

@@ -7,6 +7,7 @@ import type { MarkdownInstance } from 'astro';
 import { Nav } from '../../components/background';
 import Main from '../../layouts/main.astro';
 import BlogList from '../../lib/blog/BlogList.tsx';
+
 const posts = Object.values(
   import.meta.glob('./*.{md,mdx}', { eager: true }),
 ) as MarkdownInstance<{ title: string; subtitle: string }>[];

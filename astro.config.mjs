@@ -7,17 +7,19 @@ import react from '@astrojs/react';
 
 import tailwind from '@astrojs/tailwind';
 
-import expressiveCode from 'astro-expressive-code';
-import { remarkReadingTime } from './remark-reading-time.mjs';
 import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-sections';
+import expressiveCode from 'astro-expressive-code';
+import {
+  remarkCustomCallouts,
+  remarkReadingTime,
+} from './remark-reading-time.mjs';
 
 // https://astro.build/config
 export default defineConfig({
   devToolbar: { enabled: false },
   markdown: {
-    remarkPlugins: [remarkReadingTime],
+    remarkPlugins: [remarkReadingTime, remarkCustomCallouts],
     shikiConfig: {
-      // theme: 'github-light',
       themes: {
         dark: 'github-dark',
         light: 'github-light',

@@ -1,5 +1,3 @@
-'use client';
-
 import { cn } from '@/components/utils';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { cva } from 'class-variance-authority';
@@ -93,7 +91,7 @@ const TreeView = React.forwardRef<HTMLDivElement, TreeProps>(
     }, [data, expandAll, initialSelectedItemId]);
 
     return (
-      <div className={cn('overflow-hidden relative p-2', className)}>
+      <div className={cn('relative overflow-hidden p-2', className)}>
         <TreeItem
           data={data}
           ref={ref}
@@ -205,12 +203,12 @@ const TreeNode = ({
             isOpen={value.includes(item.id)}
             default={defaultNodeIcon}
           />
-          <span className="text-sm truncate">{item.name}</span>
+          <span className="truncate text-sm">{item.name}</span>
           <TreeActions isSelected={selectedItemId === item.id}>
             {item.actions}
           </TreeActions>
         </AccordionTrigger>
-        <AccordionContent className="ml-4 pl-1 border-l">
+        <AccordionContent className="ml-4 border-l pl-1">
           <TreeItem
             data={item.children ? item.children : item}
             selectedItemId={selectedItemId}
@@ -249,7 +247,7 @@ const TreeLeaf = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          'ml-5 flex text-left items-center cursor-pointer before:right-1',
+          'ml-5 flex cursor-pointer items-center text-left before:right-1',
           treeVariants(),
           className,
           selectedItemId === item.id && selectedTreeVariants(),
@@ -265,7 +263,7 @@ const TreeLeaf = React.forwardRef<
           isSelected={selectedItemId === item.id}
           default={defaultLeafIcon}
         />
-        <span className="flex-grow text-sm truncate">{item.name}</span>
+        <span className="flex-grow truncate text-sm">{item.name}</span>
         <TreeActions isSelected={selectedItemId === item.id}>
           {item.actions}
         </TreeActions>
@@ -282,12 +280,12 @@ const AccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        'flex flex-1 w-full items-center py-2 transition-all first:[&[data-state=open]>svg]:rotate-90',
+        'flex w-full flex-1 items-center py-2 transition-all first:[&[data-state=open]>svg]:rotate-90',
         className,
       )}
       {...props}
     >
-      <ChevronRight className="h-4 w-4 shrink-0 transition-transform duration-200 text-accent-foreground/50 mr-1" />
+      <ChevronRight className="mr-1 h-4 w-4 shrink-0 text-accent-foreground/50 transition-transform duration-200" />
       {children}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
@@ -301,7 +299,7 @@ const AccordionContent = React.forwardRef<
   <AccordionPrimitive.Content
     ref={ref}
     className={cn(
-      'overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down',
+      'data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm transition-all',
       className,
     )}
     {...props}
@@ -330,7 +328,7 @@ const TreeIcon = ({
   } else if (item.icon) {
     Icon = item.icon;
   }
-  return Icon ? <Icon className="h-4 w-4 shrink-0 mr-2" /> : <></>;
+  return Icon ? <Icon className="mr-2 h-4 w-4 shrink-0" /> : <></>;
 };
 
 const TreeActions = ({

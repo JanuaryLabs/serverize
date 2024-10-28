@@ -1,3 +1,4 @@
+import AskAiBox from './AskAi/AskAIBox';
 import SearchInput from './SearchInput';
 import { Button, buttonVariants } from './ui/button';
 import { cn } from './utils';
@@ -134,7 +135,9 @@ export function Nav(props: { className?: string }) {
           ))}
         </nav>
         <div className="ml-auto flex items-center space-x-4">
-          <SearchInput className="hidden lg:flex" />
+          <AskAiBox>
+            <SearchInput className="hidden lg:flex" />
+          </AskAiBox>
           <a
             href="https://cal.com/january-sh/30min"
             target="_blank"
