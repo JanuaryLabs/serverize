@@ -3,27 +3,43 @@ name: 'Deno'
 logo: https://docs.deno.com/img/deno-docs.svg
 ---
 
-```dockerfile title="Dockerfile"
-# Stage 1: Install dependencies
-FROM node:alpine AS install
+<details open>
+<summary>Dockerfile</summary>
 
+```dockerfile title="Dockerfile" showLineNumbers
+
+FROM denoland/deno
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci --omit=dev --no-audit
 
-# Stage 2: Build final image
-FROM install AS run
-
-WORKDIR /app
-COPY --from=install /app/node_modules ./node_modules
-# Assuming your code is in root directory
 COPY . .
 
-# Expose the port your app runs on
-EXPOSE 3000
+RUN deno install --entrypoint main.ts
 
-# Start the application
-CMD ["node", "index.js"]
+ENV PORT=8000
+EXPOSE 8000
+
+CMD ["run", "--allow-net", "main.ts"]
 ```
 
-You can improve it by using a tool like [ncc](https://www.npmjs.com/package/@vercel/ncc) that bundles your code and dependencies into a single file.
+</details>
+<details>
+  <summary>.dockerignore</summary>
+
+```txt title=".dockerignore"
+node_modules
+docker-compose*
+.dockerignore
+.git
+.gitignore
+README.md
+LICENSE
+.vscode
+Makefile
+helm-charts
+.env
+.editorconfig
+.idea
+coverage*
+```
+
+</details>

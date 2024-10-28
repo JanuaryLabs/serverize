@@ -12,8 +12,8 @@ export default function GuideHeader(props: {
       <h2 className="m-0 text-sm font-medium text-secondary-foreground/70 md:text-lg">
         {props.subtitle}
       </h2>
-      <div className="flex items-center justify-between text-sm">
-        <p className="flex items-center gap-x-1 text-secondary-foreground/60">
+      <div className="flex items-center text-sm text-secondary-foreground/70">
+        <p className="flex items-center gap-x-1 text-inherit">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -30,9 +30,8 @@ export default function GuideHeader(props: {
           </svg>
           {props.minutesRead}
         </p>
-        <p className="text-secondary-foreground/60">
-          {format(props.date, 'MMM dd, yyyy')}
-        </p>
+        <span className="mx-1">/</span>
+        <p className="text-inherit">{format(props.date, 'MMM dd, yyyy')}</p>
       </div>
     </div>
   );

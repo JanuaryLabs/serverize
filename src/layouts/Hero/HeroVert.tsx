@@ -1,7 +1,7 @@
 import Background from '../../components/background';
-import Try from '../../components/try-command';
 import { TextGenerateEffect } from '../../components/text-generate-effect';
-import { EyeCatchingButton, Button } from '../../components/ui/button';
+import Try from '../../components/try-command';
+import { Button, EyeCatchingButton } from '../../components/ui/button';
 
 export default function HeroVert() {
   return (
@@ -52,6 +52,16 @@ export default function HeroVert() {
           </div>
         </div>
       </div>
+      {/* <TypewriterEffect
+        className="mt-12"
+        words={[
+          { text: 'npx' },
+          { text: 'serverize' },
+          { text: 'deploy' },
+          { text: '-p' },
+          { text: 'project-winter', className: 'font-bold' },
+        ]}
+      /> */}
     </Background>
   );
 }

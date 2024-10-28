@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/BlogPostLayout.astro
-title: 'Deploy Bun to Serverize'
-subtitle: 'Learn how to Serverize your Bun project'
+title: 'Deploy Deno to Serverize'
+subtitle: 'Learn how to Serverize your Deno project'
 author: 'Adam Koskovki'
 date: '2024-10-22T00:00:00.000Z'
 ---
@@ -30,65 +30,41 @@ Once you've finished adding the required files, your project should look like th
 └─── package.json
 ```
 
-### Understanding the `bun run` Command
+### Understanding the `deno run` Command
 
-Bun has the capability to run TypeScript code directly without needing a separate build step. This feature significantly reduces the overall build time and makes development faster and smoother.
+Deno has the capability to run TypeScript code directly without needing a separate build step. This feature significantly reduces the overall build time and makes development faster and smoother.
 
 This means that copying the code into the container and running it is essentially all it takes, unless you have a different setup that requires more customization.
 
 ### Adding a Dockerfile
 
-To put your Bun project in a container, you need to create a Dockerfile in your project's main folder. This file tells Docker how to build and run your app.
+To put your Deno project in a container, you need to create a Dockerfile in your project's main folder. This file tells Docker how to build and run your app.
 
 In the root of your project, create a file named `Dockerfile` and add the following content:
 
 ```Dockerfile title="Dockerfile"
-FROM oven/bun:1 AS base
+FROM denoland/deno as base
+
+FROM base AS deps
 WORKDIR /app
-
-# Make sure wget is available so healthcheck works
-RUN apt-get update && apt-get install -y wget
-
-FROM base AS install
-
-# install dependencies into temp directory
-# this will cache them and speed up future builds
-RUN mkdir -p /temp/dev
-COPY package.json bun.lockb /temp/dev/
-RUN cd /temp/dev
-RUN bun install --frozen-lockfile
-
-# install with --production (exclude devDependencies)
-RUN mkdir -p /temp/prod
-COPY package.json bun.lockb /temp/prod/
-RUN cd /temp/prod
-RUN bun install --frozen-lockfile --production
-
-# copy node_modules from temp directory
-# then copy all (non-ignored) project files into the image
-FROM base AS prerelease
-COPY --from=install /temp/dev/node_modules node_modules
 COPY . .
+RUN deno install --entrypoint main.ts
 
-# copy production dependencies and source code into final image
 FROM base AS release
-COPY --from=install /temp/prod/node_modules node_modules
-COPY --from=prerelease /app .
+WORKDIR /app
+COPY --from=deps /app/main.ts .
 
-# run the app
-USER bun
-EXPOSE 3000
+ENV PORT=8000
+EXPOSE 8000
 
-# Assuming the "start" script is defined in package.json
-# and starts the server
-CMD [ "bun", "start" ]
+CMD ["run", "--allow-net", "main.ts"]
 ```
 
 It consists of four stages
 
 1. **`base`**: This stage creates a base image for all subsequent stages. It sets the working directory to `/app` and ensures that essential utilities like `wget` are available for use.
 
-2. **`install`**: Install dev dependencies and production dependencies separately which should speed up subsequent builds according to [Bun's docs](https://bun.sh/guides/ecosystem/docker).
+2. **`install`**: Install dev dependencies and production dependencies separately which should speed up subsequent builds according to [Deno's docs](https://deno.sh/guides/ecosystem/docker).
 
 3. **`prerelease`**:
 
@@ -98,7 +74,7 @@ It consists of four stages
 4. **`release`**:
    - Copies the production dependencies from the `install` stage.
    - Copies the source code from the `prerelease` stage.
-   - Sets the user to `bun` to ensure the app runs as a non-root user for better security.
+   - Sets the user to `deno` to ensure the app runs as a non-root user for better security.
    - Exposes port `3000`.
    - Assumes the `start` script in `package.json` will start the server.
 
@@ -127,7 +103,7 @@ coverage*
 
 This list excludes directories like `node_modules`, which can be quite large, as well as other files like `.git`, `.env`, and configuration files that aren't needed within the Docker container or might contain sensitive information.
 
-## Deploy Your Bun Project
+## Deploy Your Deno Project
 
 After completing all the previous steps, you are now ready to deploy your application to Serverize.
 
@@ -135,7 +111,7 @@ After completing all the previous steps, you are now ready to deploy your applic
 npx serverize deploy -p <project-name>
 ```
 
-Replace `<project-name>` with the actual name of your project. This command will package and deploy your Bun application, leveraging Serverize to handle the setup and deployment seamlessly.
+Replace `<project-name>` with the actual name of your project. This command will package and deploy your Deno application, leveraging Serverize to handle the setup and deployment seamlessly.
 
 ## Automating Deployments with CI/CD
 
@@ -147,6 +123,6 @@ For detailed instructions on configuring CI/CD with Serverize and GitHub Actions
 
 - Make sure to expose the correct port in your Dockerfile.
 - The `CMD` command in your Dockerfile should start your application.
-- Bun doesn't need a build step as it supports TypeScript out of the box.
+- Deno doesn't need a build step as it supports TypeScript out of the box.
 
 Happy deploying! If you run into any issues or need further assistance, feel free to drop a message in our [Discord community](https://discord.gg/aj9bRtrmNt).
