@@ -25,6 +25,11 @@ Once you've finished adding the required files, your project should look like th
 └─── package.json
 ```
 
+### TL;DR
+
+Use `npx serverize setup` to auto configure your project.
+Continue if you'd like to understand the steps in more detail and customize the setup further.
+
 ### Start here
 
 This guide applies on projects that use a dler like [esbuild](https://esbuild.github.io/), [webpack](https://webpack.js.org/), [rollup](https://rollupjs.org/), [parcel](https://parceljs.org/), [vite](https://vitejs.dev/), ...etc.
@@ -46,7 +51,7 @@ To put your project in a container, you need to create a Dockerfile in your proj
 
 In the root of your project, create a file named `Dockerfile` and add the following content:
 
-```Dockerfile title="Dockerfile"
+```dockerfile title="Dockerfile"
 FROM node:alpine AS base
 
 # Install dependencies only when needed
@@ -81,14 +86,14 @@ RUN \
 
 It consists of four stages (the last one in the next section):
 
-1. **`base`**: This stage creates a base image for all subsequent stages. It sets the working directory to `/app` and ensures that essential utilities like `wget` are available for use.
+1. **base**: This stage creates a base image for all subsequent stages. It sets the working directory to `/app` and ensures that essential utilities are available for use.
 
-2. `deps`: Install dependencies based using the preferred package manager.
+2. **deps**: Install dependencies based using the preferred package manager.
 
    - Auto detects the package manager.
    - Installs dependencies only when corresponding package manager lock file is present.
 
-3. `builder`: Build the source code.
+3. **builder**: Build the source code.
 
    - Rebuilds the source code only when needed.
    - Assumes the `build` script is defined in `package.json`.
@@ -97,14 +102,11 @@ It consists of four stages (the last one in the next section):
 > [!NOTE]
 > The Dockerfile tries to automatically pick the right package manager (yarn, npm, or pnpm). You can change it to only use the one you prefer.
 
-> [!TIP]
-> Remove the if statements from the `RUN` commands to use the default package manager, e.g `RUN npm ci`.
-
 #### Run Node.js server
 
 Continuing from the previous section Dockerfile, add the following content at the end of the Dockerfile to run a Node.js server:
 
-```Dockerfile title="Dockerfile"
+```dockerfile title="Dockerfile"
 FROM base AS release
 WORKDIR /app
 
@@ -127,12 +129,11 @@ CMD ["node", "server/index.mjs"]
 
 It does the following:
 
-1. Add new group and a user to it to set the permissions (run it as non-root).
-2. Copy the built files from the `builder` stage.
-3. Copy the `node_modules` directory from the `deps` stage.
-4. Set the environment variables.
-5. Expose the port.
-6. Start the Node.js server.
+1. Copy the `node_modules` directory from the `deps` stage.
+2. Copy the built files from the **builder** stage.
+3. Set the environment variables.
+4. Expose the port.
+5. Start the Node.js server.
 
 #### Serve (SPA and Static)
 
@@ -140,7 +141,7 @@ In case you're dling a frontend framework like React, Vue, Svelte, or something 
 
 At the end of the Dockerfile, add the following content:
 
-```Dockerfile title="Dockerfile"
+```dockerfile title="Dockerfile"
 FROM nginx:alpine AS runner
 WORKDIR /usr/share/nginx/html
 
@@ -161,7 +162,7 @@ CMD ["nginx", "-g", "daemon off;"]
 It does the following:
 
 1. Add new group and a user to it to set the permissions (run it as non-root).
-2. Copy the built files from the `builder` stage.
+2. Copy the built files from the **builder** stage.
 3. Expose the port.
 4. Start the Nginx server.
 
@@ -189,6 +190,9 @@ coverage*
 ```
 
 This list excludes directories like `node_modules`, which can be quite large, as well as other files like `.git`, `.env`, and configuration files that aren't needed within the Docker container or might contain sensitive information.
+
+> [!NOTE]
+> The smaller the image size, the quicker the deployment; only transfer the bare minimum of files to the final stage.
 
 ## Deploy Your Project
 

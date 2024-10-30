@@ -14,6 +14,10 @@ date: '2024-10-22T00:00:00.000Z'
 - Automating Deployments with CI/CD
 - Takeaways
 
+### TL;DR
+
+Use `npx serverize setup bun` to auto configure your Node.js project. Continue if you'd like to understand the steps in more detail and customize the setup further.
+
 ### Project Structure
 
 Once you've finished adding the required files, your project should look like this:
@@ -36,7 +40,7 @@ To put your Node.js project in a container, you need to create a Dockerfile in y
 
 In the root of your project, create a file named `Dockerfile` and add the following content:
 
-```Dockerfile title="Dockerfile"
+```dockerfile title="Dockerfile"
 # Stage 1: Install dependencies
 FROM node:alpine AS install
 
@@ -72,7 +76,6 @@ It consists of two stages:
    - The `EXPOSE 3000` command exposes port `3000` for the application to listen on.
 
    - The `CMD ["node", "src/index.js"]` command starts the application by running the `src/index.js` script.
-     You can instead use `npm start` or any other command that starts your application.
 
 ### Dockerignore
 
@@ -95,6 +98,9 @@ Create a `.dockerignore` file in the root of your project and add the following 
 ```
 
 This list excludes directories like `node_modules`, which can be quite large, as well as other files like `.git`, `.env`, and configuration files that aren't needed within the Docker container or might contain sensitive information.
+
+> [!NOTE]
+> The smaller the image size, the quicker the deployment; only transfer the bare minimum of files to the final stage.
 
 ## Deploy Your Node.js Project
 

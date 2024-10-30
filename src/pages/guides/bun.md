@@ -14,6 +14,10 @@ date: '2024-10-22T00:00:00.000Z'
 - Automating Deployments with CI/CD
 - Takeaways
 
+### TL;DR
+
+Use `npx serverize setup bun` to auto configure your Next.js project. Continue if you'd like to understand the steps in more detail and customize the setup further.
+
 ### Prerequisites
 
 - You need Docker installed on your machine to follow this guide, if it isn't installed yet, follow the [Docker installation guide](https://docs.docker.com/engine/install/) to set it up for your computer.
@@ -31,7 +35,7 @@ Once you've finished adding the required files, your project should look like th
 ```
 
 > [!TIP]
-> [Check the source code](https://github.com/serverize/example-bun) for a complete example.
+> Check the [source code](https://github.com/serverize/example-bun) for a complete example.
 
 ### Understanding the `bun run` Command
 
@@ -45,7 +49,7 @@ To put your Bun project in a container, you need to create a Dockerfile in your 
 
 In the root of your project, create a file named `Dockerfile` and add the following content:
 
-```Dockerfile title="Dockerfile"
+```dockerfile title="Dockerfile"
 FROM oven/bun:1 AS base
 WORKDIR /app
 
@@ -86,7 +90,7 @@ CMD [ "bun", "index.ts" ]
 
 It consists of four stages
 
-1. **`base`**: This stage creates a base image for all subsequent stages. It sets the working directory to `/app` and ensures that essential utilities like `wget` are available for use.
+1. **base**: This stage creates a base image for all subsequent stages. It sets the working directory to `/app` and ensures that essential utilities are available for use.
 
 2. **`install`**: Install dev dependencies and production dependencies separately which should speed up subsequent builds according to [Bun's docs](https://bun.sh/guides/ecosystem/docker).
 
@@ -129,6 +133,9 @@ coverage*
 ```
 
 This list excludes directories like `node_modules`, which can be quite large, as well as other files like `.git`, `.env`, and configuration files that aren't needed within the Docker container or might contain sensitive information.
+
+> [!NOTE]
+> The smaller the image size, the quicker the deployment; only transfer the bare minimum of files to the final stage.
 
 ## Deploy Your Bun Project
 

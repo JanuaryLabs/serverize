@@ -27,7 +27,7 @@ export default function Cta(props: { className?: string }) {
           </h2>
           <div className="flex justify-center gap-x-4 md:justify-normal">
             <a
-              href="./cli/#deployments"
+              href="guides/cli/#deployments"
               className={cn(buttonVariants(), 'h-10 rounded-full no-underline')}
             >
               Serverize Now

@@ -42,7 +42,8 @@ const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
     </a>
     <BlogContainer>
       <div class="mt-16 hidden md:block"></div>
-      <div class="flex items-start">
+      <div class="">
+        <!-- use instead of flex grid grid-cols-1 -->
         <article
           class="prose mx-2 max-w-full pb-20 md:mx-8 lg:mx-28 lg:px-8 xl:px-16"
         >
