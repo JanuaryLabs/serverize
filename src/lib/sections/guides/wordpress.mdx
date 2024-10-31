@@ -3,27 +3,6 @@ name: 'WordPress'
 logo: https://s.w.org/style/images/about/WordPress-logotype-wmark.png
 ---
 
-```dockerfile title="Dockerfile"
-# Stage 1: Install dependencies
-FROM node:alpine AS install
-
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --omit=dev --no-audit
-
-# Stage 2: Build final image
-FROM install AS run
-
-WORKDIR /app
-COPY --from=install /app/node_modules ./node_modules
-# Assuming your code is in root directory
-COPY . .
-
-# Expose the port your app runs on
-EXPOSE 3000
-
-# Start the application
-CMD ["node", "index.js"]
+```sh title="Setup" frame=none
+npx serverize setup wordpress
 ```
-
-You can improve it by using a tool like [ncc](https://www.npmjs.com/package/@vercel/ncc) that bundles your code and dependencies into a single file.

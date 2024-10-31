@@ -3,43 +3,6 @@ name: 'Deno'
 logo: https://docs.deno.com/img/deno-docs.svg
 ---
 
-<details open>
-<summary>Dockerfile</summary>
-
-```dockerfile title="Dockerfile" showLineNumbers
-
-FROM denoland/deno
-WORKDIR /app
-
-COPY . .
-
-RUN deno install --entrypoint main.ts
-
-ENV PORT=8000
-EXPOSE 8000
-
-CMD ["run", "--allow-net", "main.ts"]
+```sh title="Setup" frame=none
+npx serverize setup deno
 ```
-
-</details>
-<details>
-  <summary>.dockerignore</summary>
-
-```txt title=".dockerignore"
-node_modules
-docker-compose*
-.dockerignore
-.git
-.gitignore
-README.md
-LICENSE
-.vscode
-Makefile
-helm-charts
-.env
-.editorconfig
-.idea
-coverage*
-```
-
-</details>

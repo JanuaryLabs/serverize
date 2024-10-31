@@ -16,7 +16,7 @@ const integrations = guides.map((it: any) => ({
     Go, PHP, Rust, and more.
   </p>
   <div
-    style="grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));"
+    style="grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));"
     class="not-prose mb-8 grid gap-6 px-4"
     id="integration-btn"
   >
@@ -27,7 +27,7 @@ const integrations = guides.map((it: any) => ({
           class="group flex cursor-pointer flex-col items-center justify-center gap-y-4 font-medium tracking-wider text-secondary-foreground"
         >
           <div class="w-20 rounded border-[0.5px] border-border px-5 py-3 group-hover:bg-slate-100 group-hover:dark:bg-[#272727]">
-            <img class="h-10" src={it.logo} />
+            <img class="min-h-10" src={it.logo} />
           </div>
           <span class="truncate text-sm">{it.name}</span>
         </button>

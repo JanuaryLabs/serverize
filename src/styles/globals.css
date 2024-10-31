@@ -77,8 +77,7 @@ body {
   --ec-brdCol: hsl(var(--border)) !important;
   --ec-brdWd: 1px !important;
   --ec-brdRad: var(--radius) !important;
-  --ec-codePadBlk: 0.5rem;
- }
+}
 @layer base {
   * {
     @apply border-border;
