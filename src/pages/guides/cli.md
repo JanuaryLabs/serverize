@@ -226,3 +226,43 @@ npx serverize tokens create --project <project-name>
 Store this token securely as it will only be displayed once. [See a complete guide on how to use Serverize with GitHub Actions](./ci-cd).
 
 ---
+
+## Setup
+
+To auto setup your project (add dockerfile, dockerignore, etc) run:
+
+```sh frame=none
+npx serverize setup [framework]
+```
+
+Where `framework` is the framework you want to setup, if not provided, serverize will try to guess it otherwise it'll ask you.
+
+**Example:**
+
+1. **Setup Deno**
+
+```sh frame=none
+npx serverize setup deno
+```
+
+This command will add Dockerfile as well as dockerignore to your project.
+
+2. **Setup Astro**
+
+```sh frame=none
+npx serverize setup astro
+```
+
+3. **Setup Nuxt**
+
+```sh frame=none
+npx serverize setup nuxt
+```
+
+4. **Auto setup:**
+
+```sh frame=none
+npx serverize setup
+```
+
+Auto setup works by inspecting your project and guessing the framework.

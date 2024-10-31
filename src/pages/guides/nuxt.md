@@ -16,7 +16,7 @@ date: '2024-10-22T00:00:00.000Z'
 
 ### TL;DR
 
-Use `npx serverize setup nuxt` to auto configure your Nuxt.js project. Continue if you'd like to understand the steps in more detail and customize the setup further.
+Use **`npx serverize setup nuxt`** to auto configure your Nuxt.js project. Continue if you'd like to understand the steps in more detail and customize the setup further.
 
 ### Project Structure
 
