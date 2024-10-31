@@ -15,8 +15,6 @@ export default {
         4.5: '1.125rem',
       },
       fontFamily: {
-        // sans: ['Roboto', ...defaultTheme.fontFamily.sans],
-        // mono: ['Fira Code', ...defaultTheme.fontFamily.mono],
         sans: ['Geist Sans', ...defaultTheme.fontFamily.sans],
         mono: ['Geist Mono', ...defaultTheme.fontFamily.mono],
       },

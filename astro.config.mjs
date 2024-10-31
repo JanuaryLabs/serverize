@@ -14,9 +14,12 @@ import {
   remarkReadingTime,
 } from './remark-reading-time.mjs';
 
+import sitemap from '@astrojs/sitemap';
+
 // https://astro.build/config
 export default defineConfig({
   devToolbar: { enabled: false },
+  site: 'https://serverize.sh',
   markdown: {
     remarkPlugins: [remarkReadingTime, remarkCustomCallouts],
     shikiConfig: {
@@ -36,5 +39,6 @@ export default defineConfig({
       themes: ['github-light', 'github-dark'],
     }),
     mdx(),
+    sitemap(),
   ],
 });
