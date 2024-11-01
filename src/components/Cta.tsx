@@ -3,9 +3,12 @@ import { buttonVariants } from './ui/button';
 import { Separator } from './ui/separator';
 import { cn } from './utils';
 
-export default function Cta(props: { className?: string }) {
+export default function Cta(props: {
+  className?: string
+  hideBottom?: boolean
+}) {
   return (
-    <Card reverse={true} hideTop={true}>
+    <Card reverse={true} hideTop={true} hideBottom={props.hideBottom}>
       <div
         className={cn(
           'mx-10 mb-16 mt-4 grid grid-cols-1 items-center justify-center gap-x-4 text-center md:grid-cols-3 md:gap-x-6 md:text-left lg:gap-x-4',

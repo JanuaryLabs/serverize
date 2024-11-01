@@ -24,7 +24,7 @@ export const ChatContext = createContext<{
   [key: string]: any;
 }>({ messages: [] });
 
-export function Chat(props: { children: ReactNode }) {
+export function Chat(props: { children: ReactNode; }) {
   const {
     status,
     messages,
@@ -36,7 +36,12 @@ export function Chat(props: { children: ReactNode }) {
     stop,
     threadId,
     setThreadId,
-  } = useAssistant({ api: 'http://localhost:3000/ask' });
+  } = useAssistant({
+    api:
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000/ask'
+        : 'https://serverize.fly.dev/ask',
+  });
 
   return (
     <ChatContext.Provider

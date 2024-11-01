@@ -3,15 +3,14 @@ import '@/styles/globals.css';
 import '@fontsource/crimson-text';
 import '@fontsource/fira-code';
 import '@fontsource/roboto';
+import Cta from '../components/Cta';
+import Footer from '../components/Footer';
 import HeroVert from '../layouts/Hero/HeroVert';
 import Main from '../layouts/main.astro';
 import { Content as HowItWorksContent } from '../lib/sections/how-it-works.md';
 import Integrations from '../lib/sections/integrations.astro';
 import { Content as MotivationContent } from '../lib/sections/motivation.md';
-import { Content as OptimisationContent } from '../lib/sections/optimisation.md';
 import { Content as StaticWebsiteContent } from '../lib/sections/static-website.md';
-import { Content as TheConversationContent } from '../lib/sections/the-conversation.md';
-import Cta from '../components/Cta';
 ---
 
 <Main title={'January - Serverize'}>
@@ -20,6 +19,7 @@ import Cta from '../components/Cta';
     <div class="px-2 md:px-20">
       <Integrations />
     </div>
+
     <section class="px-6 py-20 md:px-24">
       <div class="content">
         <MotivationContent />
@@ -30,17 +30,17 @@ import Cta from '../components/Cta';
         <HowItWorksContent />
       </div>
     </section>
-    <section class="px-6 py-20 md:px-24">
+    <!-- <section class="px-6 py-20 md:px-24">
       <div class="content">
         <OptimisationContent />
       </div>
-    </section>
+    </section> -->
 
-    <section class="px-6 py-20 md:px-24">
+    <!-- <section class="px-6 py-20 md:px-24">
       <div class="content">
         <TheConversationContent />
       </div>
-    </section>
+    </section> -->
     <section class="px-6 py-20 md:px-24">
       <div class="content">
         <StaticWebsiteContent />
@@ -52,7 +52,10 @@ import Cta from '../components/Cta';
         </div>
       </section> -->
     <section>
-      <Cta className="container mx-auto px-8" />
+      <Cta hideBottom={true} className="container mx-auto px-8" />
+    </section>
+    <section>
+      <Footer className="not-prose container mx-auto px-8" />
     </section>
   </div>
 </Main>

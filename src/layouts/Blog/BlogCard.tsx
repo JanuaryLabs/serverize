@@ -12,6 +12,7 @@ const Line = ({ className = '' }) => (
 
 export const Card = (
   props: PropsWithChildren<{
+    hideBottom?: boolean;
     hideTop?: boolean;
     reverse?: boolean;
   }>,
@@ -36,9 +37,12 @@ export const Card = (
               props.reverse && 'bg-gradient-to-b',
             )}
           />
-
-          <Line className="bottom-2 right-0 bg-gradient-to-l sm:bottom-4 md:bottom-10" />
-          <Line className="bottom-2 left-0 bg-gradient-to-r sm:bottom-4 md:bottom-6" />
+          {!props.hideBottom && (
+            <>
+              <Line className="bottom-2 right-0 bg-gradient-to-l sm:bottom-4 md:bottom-10" />
+              <Line className="bottom-2 left-0 bg-gradient-to-r sm:bottom-4 md:bottom-6" />
+            </>
+          )}
         </div>
         <div className="relative z-20 mx-auto py-8">{props.children}</div>
       </div>
