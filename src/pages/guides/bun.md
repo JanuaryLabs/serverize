@@ -6,24 +6,16 @@ author: 'Adam Koskovki'
 date: '2024-10-22T00:00:00.000Z'
 ---
 
-### Table of Contents
+## TL;DR
 
-- Prerequisites
-- Add Dockerfile
-- Deploy
-- Automating Deployments with CI/CD
-- Takeaways
+Use **`npx serverize setup bun`** to auto configure your Bun project. Continue if you'd like to understand the steps in more detail and customize the setup further.
 
-### TL;DR
-
-Use **`npx serverize setup bun`** to auto configure your Next.js project. Continue if you'd like to understand the steps in more detail and customize the setup further.
-
-### Prerequisites
+## Prerequisites
 
 - You need Docker installed on your machine to follow this guide, if it isn't installed yet, follow the [Docker installation guide](https://docs.docker.com/engine/install/) to set it up for your computer.
 - You need serverize account, if you don't have one, follow the [serverize sign up guide](./cli#authentication).
 
-### Project Structure
+## Project Structure
 
 Once you've finished adding the required files, your project should look like this:
 
@@ -43,7 +35,7 @@ Bun has the capability to run TypeScript code directly without needing a separat
 
 This means that copying the code into the container and running it is essentially all it takes, unless you have a different setup that requires more customization.
 
-### Adding a Dockerfile
+## Adding a Dockerfile
 
 To put your Bun project in a container, you need to create a Dockerfile in your project's main folder. This file tells Docker how to build and run your app.
 
@@ -109,7 +101,7 @@ It consists of four stages
 > [!NOTE]
 > Adjust the `CMD` to point to the project entrypoint file.
 
-### Dockerignore
+## Dockerignore
 
 To make your Docker build faster, create a `.dockerignore` file to tell Docker which files to ignore in order to reduce the size of the image and speeds up the build process and deployment process.
 

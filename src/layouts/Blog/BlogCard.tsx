@@ -14,29 +14,35 @@ export const Card = (
   props: PropsWithChildren<{
     hideBottom?: boolean;
     hideTop?: boolean;
+    hideRight?: boolean;
+    hideLeft?: boolean;
     reverse?: boolean;
   }>,
 ) => {
   return (
     <>
       {/* <BorderedCard className="lg:block hidden">{props.children}</BorderedCard> */}
-      <div className="relative mx-auto w-full sm:px-6 md:px-8">
-        <div className="hidden md:block">
+      <div className="relative mx-auto w-full">
+        <div className="hidden lg:block">
           {!props.hideTop && (
             <Line className="left-0 top-2 bg-gradient-to-l sm:top-4 md:top-6" />
           )}
-          <Line
-            className={cn(
-              'inset-y-0 right-2 h-full w-px bg-gradient-to-t sm:right-4 md:right-6',
-              props.reverse && 'bg-gradient-to-b',
-            )}
-          />
-          <Line
-            className={cn(
-              'inset-y-0 left-2 h-full w-px bg-gradient-to-t sm:left-4 md:left-6',
-              props.reverse && 'bg-gradient-to-b',
-            )}
-          />
+          {!props.hideRight && (
+            <Line
+              className={cn(
+                'inset-y-0 right-2 h-full w-px bg-gradient-to-t sm:right-4 md:right-6',
+                props.reverse && 'bg-gradient-to-b',
+              )}
+            />
+          )}
+          {!props.hideLeft && (
+            <Line
+              className={cn(
+                'inset-y-0 left-2 h-full w-px bg-gradient-to-t sm:left-4 md:left-6',
+                props.reverse && 'bg-gradient-to-b',
+              )}
+            />
+          )}
           {!props.hideBottom && (
             <>
               <Line className="bottom-2 right-0 bg-gradient-to-l sm:bottom-4 md:bottom-10" />

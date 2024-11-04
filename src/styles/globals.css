@@ -125,10 +125,6 @@ section {
   justify-content: center;
 }
 
-section:not(:last-child) {
-  border-bottom: 1px solid #eee;
-}
-
 .content {
   max-width: 80ch;
 }

@@ -16,16 +16,16 @@ import { Content as StaticWebsiteContent } from '../lib/sections/static-website.
 <Main title={'January - Serverize'}>
   <HeroVert client:load />
   <div class="prose min-w-full">
-    <div class="px-2 md:px-20">
+    <div class="px-2 md:px-24">
       <Integrations />
     </div>
 
-    <section class="px-6 py-20 md:px-24">
+    <section class="border-b px-6 py-20 md:px-24">
       <div class="content">
         <MotivationContent />
       </div>
     </section>
-    <section class="px-6 py-20 md:px-24">
+    <section class="border-b px-6 py-20 md:px-24">
       <div class="content">
         <HowItWorksContent />
       </div>
@@ -41,7 +41,7 @@ import { Content as StaticWebsiteContent } from '../lib/sections/static-website.
         <TheConversationContent />
       </div>
     </section> -->
-    <section class="px-6 py-20 md:px-24">
+    <section class="border-b px-6 py-20 md:px-24">
       <div class="content">
         <StaticWebsiteContent />
       </div>
@@ -51,11 +51,11 @@ import { Content as StaticWebsiteContent } from '../lib/sections/static-website.
           <FaqContent />
         </div>
       </section> -->
-    <section>
-      <Cta hideBottom={true} className="container mx-auto px-8" />
+    <section class="lg:px-24">
+      <Cta className="px-8" hideBottom={true} />
     </section>
-    <section>
-      <Footer className="not-prose container mx-auto px-8" />
+    <section class="lg:px-24">
+      <Footer className="not-prose px-8" />
     </section>
   </div>
 </Main>

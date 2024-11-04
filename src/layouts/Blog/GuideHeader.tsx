@@ -9,10 +9,10 @@ export default function GuideHeader(props: {
   return (
     <div className="flex flex-col justify-center gap-y-1 lg:gap-y-4">
       <h1 className="mb-0 text-3xl font-bold lg:text-5xl">{props.title}</h1>
-      <h2 className="m-0 text-sm font-medium text-secondary-foreground/70 md:text-lg">
+      <h2 className="m-0 font-medium text-secondary-foreground/70 md:text-lg">
         {props.subtitle}
       </h2>
-      <div className="flex items-center text-sm text-secondary-foreground/70">
+      <div className="flex items-center text-sm text-secondary-foreground/70 mt-4">
         <p className="flex items-center gap-x-1 text-inherit">
           <svg
             xmlns="http://www.w3.org/2000/svg"

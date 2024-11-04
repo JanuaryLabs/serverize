@@ -2,10 +2,9 @@
 import type { MarkdownLayoutProps } from 'astro';
 import { Nav } from '../components/background.tsx';
 import Cta from '../components/Cta.tsx';
-import BlogContainer, { BlogSidebar } from './Blog/BlogContainer.tsx';
+import BlogContainer, { TocSpy } from './Blog/BlogContainer.tsx';
 import GuideHeader from './Blog/GuideHeader.tsx';
 import Main from './main.astro';
-import Footer from '../components/Footer.tsx';
 
 type Props = MarkdownLayoutProps<{
   title: string;
@@ -14,16 +13,16 @@ type Props = MarkdownLayoutProps<{
   minutesRead: string;
   subtitle: string;
 }>;
-const { frontmatter, url } = Astro.props;
+const { frontmatter, url, headings } = Astro.props;
 const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
 ---
 
 <Main title={frontmatter.title} canonical={canonical}>
   <Nav client:load />
-  <div class="mx-auto w-full max-w-6xl px-4 lg:px-10 xl:px-0">
+  <div class="mx-auto w-full max-w-6xl px-6 md:pl-10 lg:px-10 xl:px-0">
     <a
       href="/guides"
-      class="mt-4 flex cursor-pointer items-center gap-x-0.5 text-sm font-medium text-secondary-foreground/70 no-underline hover:underline md:mb-8 md:mt-12"
+      class="mb-4 mt-4 flex cursor-pointer items-center gap-x-0.5 text-sm font-medium text-secondary-foreground/70 no-underline hover:underline md:mb-8 md:mt-12"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -40,27 +39,18 @@ const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
       </svg>
       Back to Guides
     </a>
-    <BlogContainer>
-      <div class="mt-16 hidden md:block"></div>
-      <div class="">
-        <!-- use instead of flex grid grid-cols-1 -->
-        <article
-          class="prose mx-2 max-w-full pb-20 md:mx-8 lg:mx-28 lg:px-8 xl:px-16"
-        >
-          <GuideHeader
-            title={frontmatter.title}
-            subtitle={frontmatter.subtitle}
-            author={frontmatter.author}
-            date={frontmatter.date}
-            minutesRead={frontmatter.minutesRead}
-          />
-          <slot />
-        </article>
-        <!-- <BlogSidebar /> -->
-      </div>
+    <GuideHeader
+      title={frontmatter.title}
+      subtitle={frontmatter.subtitle}
+      author={frontmatter.author}
+      date={frontmatter.date}
+      minutesRead={frontmatter.minutesRead}
+    />
+    <BlogContainer path={Astro.props.url!} toc={headings}>
+      <slot />
+      <TocSpy client:idle />
     </BlogContainer>
-
-    <Cta />
     <!-- <Footer /> -->
+    <Cta />
   </div>
 </Main>

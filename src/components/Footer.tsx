@@ -1,23 +1,18 @@
 import type { PropsWithChildren } from 'react';
 import { Card } from '../layouts/Blog/BlogCard';
 import { cn } from './utils';
-import { Title } from '@radix-ui/react-dialog';
 
-const siteConfig = {
-  links: {
-    twitter: 'https://twitter.com/shadcn',
-    github: 'https://github.com/shadcn/ui',
-  },
-};
 export default function Footer(props: { className?: string }) {
   return (
     <Card reverse={false}>
       <footer
         className={cn('grid gap-y-4 py-8 sm:grid-cols-3', props.className)}
       >
-        <div className="space-y-4">
+        <div className="space-y-4 md:px-8">
           <h2 className="text-2xl font-bold">Serverize</h2>
-          <p>Development, redefined.</p>
+          <p className="text-secondary-foreground/70">
+            Development, redefined.
+          </p>
           <div className="flex flex-col gap-y-2">
             <div className="flex items-center gap-x-2">
               <SocialLink link="https://linkedin.com/company/Januarylabs/">
@@ -57,7 +52,7 @@ export default function Footer(props: { className?: string }) {
             </div>
           </div>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-2 md:px-8">
           <a href="/guides" className="font-semibold">
             Guides
           </a>
@@ -96,7 +91,7 @@ export default function Footer(props: { className?: string }) {
             </a>
           ))}
         </div>
-        <div className="space-y-2 flex flex-col">
+        <div className="flex flex-col space-y-2 md:px-8">
           {[
             { title: 'CI/CD', href: '/guides/ci-cd' },
             { title: 'CLI', href: '/guides/cli' },
@@ -107,7 +102,7 @@ export default function Footer(props: { className?: string }) {
             {
               title: 'January',
               href: 'https://january.sh',
-            }
+            },
           ].map((it) => (
             // <a
             //   key={it.title}
@@ -116,11 +111,7 @@ export default function Footer(props: { className?: string }) {
             // >
             //   {it.title}
             // </a>
-            <a
-                key={it.title}
-              href={it.href}
-              className="font-semibold"
-            >
+            <a key={it.title} href={it.href} className="font-semibold">
               {it.title}
             </a>
           ))}

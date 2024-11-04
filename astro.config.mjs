@@ -20,6 +20,11 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   devToolbar: { enabled: false },
   site: 'https://serverize.sh',
+  redirects: {
+    '/guides/next': 'guides/nextjs',
+    '/guides/nuxt': 'guides/nuxtjs',
+    '/guides/node': 'guides/nodejs',
+  },
   markdown: {
     remarkPlugins: [remarkReadingTime, remarkCustomCallouts],
     shikiConfig: {

@@ -6,19 +6,11 @@ author: 'Adam Koskovki'
 date: '2024-10-22T00:00:00.000Z'
 ---
 
-### Table of contents
-
-- Prerequisites
-- Add Dockerfile
-- Deploy
-- Automating Deployments with CI/CD
-- Takeaways
-
-### TL;DR
+## TL;DR
 
 Use **`npx serverize setup astro`** to auto configure your Astro project. Continue if you'd like to understand the steps in more detail and customize the setup further.
 
-### Project Structure
+## Project Structure
 
 Once you've finished adding the required files, your project should look like this:
 
@@ -32,7 +24,7 @@ Once you've finished adding the required files, your project should look like th
 > [!TIP]
 > Check the [source code](https://github.com/serverize/example-astro) for a complete example.
 
-### Understanding Astro build modes
+## Understanding Astro build modes
 
 Astro supports 3 build mode:
 
@@ -50,11 +42,11 @@ The difference between them is how the app is rendered:
 
 You can read more about the build modes in the [Astro deployment](https://docs.astro.build/en/guides/integrations-guide/node).
 
-### Prerequisites
+## Prerequisites
 
 You need Docker installed on your machine to follow this guide, if it isn't installed yet, follow the [Docker installation guide](https://docs.docker.com/engine/install/) to set it up for your computer.
 
-### Add Dockerfile
+## Add Dockerfile
 
 To put your Astro project in a container, you need to create a Dockerfile in your project's main folder. This file tells Docker how to build and run your app.
 
@@ -105,7 +97,7 @@ It consists of four stages (the last one in the next section):
 > [!NOTE]
 > The Dockerfile tries to automatically pick the right package manager (yarn, npm, or pnpm). You can change it to only use the one you prefer.
 
-#### Server and Hybrid
+### Server and Hybrid
 
 Continuing from the previous section Dockerfile, add the following content at the end of the Dockerfile:
 
@@ -130,7 +122,7 @@ It does the following:
 4. Expose the port.
 5. Start the Node.js server.
 
-#### Serve (SPA and Static)
+### Serve (SPA and Static)
 
 The **static** build mode can be served using a static file server like Nginx or Apache.
 
@@ -153,7 +145,7 @@ It does the following:
 3. Expose the port.
 4. Start the Nginx server.
 
-### Dockerignore
+## Dockerignore
 
 To make your Docker build faster, create a `.dockerignore` file to tell Docker which files to ignore in order to reduce the size of the image and speeds up the build process and deployment process.
 

@@ -4,14 +4,14 @@ import { Separator } from './ui/separator';
 import { cn } from './utils';
 
 export default function Cta(props: {
-  className?: string
-  hideBottom?: boolean
+  className?: string;
+  hideBottom?: boolean;
 }) {
   return (
     <Card reverse={true} hideTop={true} hideBottom={props.hideBottom}>
       <div
         className={cn(
-          'mx-10 mb-16 mt-4 grid grid-cols-1 items-center justify-center gap-x-4 text-center md:grid-cols-3 md:gap-x-6 md:text-left lg:gap-x-4',
+          'mb-16 mt-4 grid grid-cols-1 items-center justify-center gap-x-4 md:mx-8 md:grid-cols-3 md:gap-x-6 lg:gap-x-4',
           props.className,
         )}
       >
@@ -25,10 +25,12 @@ export default function Cta(props: {
             </span>
             <br />
             <span className="block text-secondary-foreground/70">
-              Talk to an expert for a personalized demo.
+              Talk to us for a{' '}
+              <span className="font-bold text-blue-600">personalized</span>{' '}
+              demo.
             </span>
           </h2>
-          <div className="flex justify-center gap-x-4 md:justify-normal">
+          <div className="flex gap-x-4">
             <a
               href="guides/cli/#deployments"
               className={cn(buttonVariants(), 'h-10 rounded-full no-underline')}
