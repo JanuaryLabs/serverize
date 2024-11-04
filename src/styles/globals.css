@@ -297,3 +297,8 @@ details {
 .callout.caution strong {
   color: #e53e3e;
 }
+
+html,
+body {
+  overscroll-behavior: none;
+}
