@@ -16,7 +16,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v3
-
+      - uses: actions/setup-node@v4
       - name: Deploy To Serverize
         run: npx serverize deploy --output ${{ runner.temp }}/serverize.json
         env:
