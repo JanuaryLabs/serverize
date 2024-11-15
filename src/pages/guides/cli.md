@@ -103,7 +103,7 @@ npx serverize releases list -p <project-name>
 
 ## Channels
 
-Managing channels is not supported at the moment, however you get 2 channels when you signup, **dev**, **qa**
+Managing channels is not supported at the moment, however you get 2 channels when you signup, **dev**, **preview**
 
 ## Deployments
 
@@ -149,16 +149,16 @@ https://<project-name>-<channel-name>-<release-name>.beta.january.sh
    https://winter-dev-demo.beta.january.sh
    ```
 
-3. **Deploying to the `qa` channel with the `regression` release:**
+3. **Deploying to the `preview` channel with the `regression` release:**
 
    ```sh frame=none
-   npx serverize deploy -p winter -c qa -r regression
+   npx serverize deploy -p winter -c preview -r regression
    ```
 
    Resulting URL:
 
    ```
-   https://winter-qa-regression.beta.january.sh
+   https://winter-preview-regression.beta.january.sh
    ```
 
 As mentioned, to deploy to a named release, specify the release name:
@@ -169,10 +169,10 @@ npx serverize deploy -p <project-name> -r <release-name>
 
 _Note:_ The default channel is `dev`.
 
-To deploy to a specific channel, such as `qa`, add the channel name:
+To deploy to a specific channel, such as `preview`, add the channel name:
 
 ```sh frame=none
-npx serverize deploy -p <project-name> -c qa
+npx serverize deploy -p <project-name> -c preview
 ```
 
 ### Secrets Management

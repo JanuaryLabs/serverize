@@ -1,12 +1,11 @@
 ---
 import '@/styles/globals.css';
-import '@fontsource/crimson-text';
-import '@fontsource/fira-code';
-import '@fontsource/roboto';
+
 import Cta from '../components/Cta';
 import Footer from '../components/Footer';
 import HeroVert from '../layouts/Hero/HeroVert';
 import Main from '../layouts/main.astro';
+import Login from '../lib/login/Login';
 import { Content as HowItWorksContent } from '../lib/sections/how-it-works.md';
 import Integrations from '../lib/sections/integrations.astro';
 import { Content as MotivationContent } from '../lib/sections/motivation.md';
@@ -15,6 +14,7 @@ import { Content as StaticWebsiteContent } from '../lib/sections/static-website.
 
 <Main title={'January - Serverize'}>
   <HeroVert client:load />
+  <!-- <Login client:load client:only /> -->
   <div class="prose min-w-full">
     <div class="px-2 md:px-24">
       <Integrations />

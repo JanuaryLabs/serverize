@@ -87,7 +87,7 @@ export function Nav(props: { className?: string }) {
     },
     {
       name: 'Roadmap',
-      href: 'https://github.com/JanuaryLabs/serverize/issues?q=is:open+is:issue+label:%22Feature+request%22+sort:created-desc',
+      href: 'https://github.com/JanuaryLabs/serverize/issues?q=is:issue+label:%22Feature+request%22+sort:created-desc',
       target: '_blank',
     },
     {

@@ -17,13 +17,14 @@ export const Card = (
     hideRight?: boolean;
     hideLeft?: boolean;
     reverse?: boolean;
+    className?: string;
   }>,
 ) => {
   return (
     <>
       {/* <BorderedCard className="lg:block hidden">{props.children}</BorderedCard> */}
-      <div className="relative mx-auto w-full">
-        <div className="hidden lg:block">
+      <div className={cn('relative mx-auto w-full pb-8 pt-6')}>
+        <div className={cn('hidden lg:block')}>
           {!props.hideTop && (
             <Line className="left-0 top-2 bg-gradient-to-l sm:top-4 md:top-6" />
           )}
@@ -50,7 +51,10 @@ export const Card = (
             </>
           )}
         </div>
-        <div className="relative z-20 mx-auto py-8">{props.children}</div>
+        <div className={cn('relative z-20 mx-auto', props.className)}>
+          {props.children}
+          <div className="pb-2"></div>
+        </div>
       </div>
     </>
   );

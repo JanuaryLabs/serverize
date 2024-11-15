@@ -1,0 +1,101 @@
+name: PR - Preview Deployment
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+
+concurrency:
+  group: preview-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy_preview:
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          message: |
+            ## Deploying with :page_facing_up: Serverize
+
+            | **Commit:** | ${{ github.event.pull_request.head.sha }} |
+            | :-- | :-- |
+            | **Status:** | 🔨 Building |
+            | **Deploy Log:** | [View Log](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
+
+      - name: Deploy To Serverize
+        if: ${{ github.event.action != 'closed' }}
+        run: npx serverize deploy -c preview -r pr-${{ github.event.pull_request.number }} --output ${{ runner.temp }}/serverize.json
+        env:
+          SERVERIZE_API_TOKEN: ${{ secrets.SERVERIZE_API_TOKEN }}
+
+      - name: Set Deployment Output
+        id: read_output
+        run: |
+          echo "serverize=$(cat ${{ runner.temp }}/serverize.json | jq -r '.url')" >> $GITHUB_OUTPUT
+
+      - name: Remove Deployment
+        if: ${{ github.event.action == 'closed' }}
+        run: npx serverize releases stop -c preview -r pr-${{ github.event.pull_request.number }}
+        env:
+          SERVERIZE_API_TOKEN: ${{ secrets.SERVERIZE_API_TOKEN }}
+
+      - name: Comment Success
+        if: ${{ success() }}
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          message: |
+            ## Deployed with :page_facing_up: Serverize
+
+            | **Commit:** | ${{ github.event.pull_request.head.sha }} |
+            | :-- | :-- |
+            | **Status:** | ✅ Success |
+            | **Preview:** | [Preview Link](${{ steps.read_output.outputs.serverize }}) |
+            | **Deploy Log:** | [View Log](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
+
+      - name: Comment Failure
+        if: ${{ failure() }}
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          message: |
+            ## Deploy Failed with :page_facing_up: Serverize
+
+            | **Commit:** | ${{ github.event.pull_request.head.sha }} |
+            | :-- | :-- |
+            | **Status:** | ❌ Failure |
+            | **Deploy Log:** | [View Log](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
+
+      - name: Slack Notification
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: general
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MESSAGE: ${{ job.status == 'success' && 'Deployment successful' || 'Deployment failed' }}
+
+      - uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_STATUS_WEBHOOK }}
+          status: ${{ job.status }}
+          title: Deployment Status of ${{github.repository}}
+          url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          content: |
+            ## Deployed with :page_facing_up: Serverize
+            | **Commit:** | ${{ github.event.pull_request.head.sha }} |
+            | :-- | :-- |
+            | **Status:** | ✅ Success |
+            | **Preview:** | [Preview Link](${{ steps.read_output.outputs.serverize }}) |
+            | **Deploy Log:** | [View Log](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |

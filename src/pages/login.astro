@@ -1,0 +1,12 @@
+---
+import '@/styles/globals.css';
+
+import { Nav } from '../components/background';
+import Main from '../layouts/main.astro';
+import Login from '../lib/login/Login';
+---
+
+<Main title={'January - Serverize'}>
+  <Nav client:load />
+  <Login />
+</Main>
