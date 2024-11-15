@@ -77,14 +77,6 @@ jobs:
             | **Status:** | ❌ Failure |
             | **Deploy Log:** | [View Log](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
 
-      - name: Slack Notification
-        if: always()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: general
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_MESSAGE: ${{ job.status == 'success' && 'Deployment successful' || 'Deployment failed' }}
-
       - uses: sarisia/actions-status-discord@v1
         if: always()
         with:

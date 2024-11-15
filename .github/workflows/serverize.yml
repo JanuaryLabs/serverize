@@ -1,0 +1,39 @@
+name: Deploy To Serverize
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  deploy_preview:
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy To Serverize
+        run: npx serverize deploy --output ${{ runner.temp }}/serverize.json
+        env:
+          SERVERIZE_API_TOKEN: ${{ secrets.SERVERIZE_API_TOKEN }}
+
+      - name: Set Deployment Output
+        id: read_output
+        run: |
+          echo "serverize=$(cat ${{ runner.temp }}/serverize.json | jq -r '.url')" >> $GITHUB_OUTPUT
+
+      - uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_STATUS_WEBHOOK }}
+          status: ${{ job.status }}
+          title: Deployment Status of ${{github.repository}}
+          url: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          content: |
+            | **Preview:** | [Preview Link](${{ steps.read_output.outputs.serverize }}) |
+            | **Deploy Log:** | [View Log](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) |
