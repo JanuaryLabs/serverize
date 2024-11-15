@@ -6,18 +6,6 @@ import { cn } from './utils';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useEffect, useState, type PropsWithChildren } from 'react';
 
-const GridBackground: React.FC = () => (
-  <div className="pointer-events-none absolute inset-0 h-full w-full px-4 py-0">
-    <div className="mx-auto flex h-full max-w-[1080px] items-center justify-between">
-      <div className="h-full w-[1px] bg-white dark:border-accent dark:bg-background"></div>
-      <div className="h-full border-r border-dashed border-gray-200 dark:border-accent"></div>
-      <div className="h-full border-r border-dashed border-gray-200 dark:border-accent"></div>
-      <div className="h-full border-r border-dashed border-gray-200 dark:border-accent"></div>
-      <div className="h-full w-[1px] bg-white dark:border-accent dark:bg-background"></div>
-    </div>
-  </div>
-);
-
 export default function Background(
   props: React.PropsWithChildren<{ className?: string }>,
 ) {
@@ -26,7 +14,7 @@ export default function Background(
       <Nav />
       <div
         className={cn(
-          'relative flex w-full items-center justify-center px-4 py-10',
+          'relative flex w-full items-center justify-center py-10',
           props.className,
         )}
       >
@@ -54,7 +42,7 @@ export default function Background(
 
           <div className="z-10 flex w-full flex-col items-center">
             {/* <div className="w-full border-b border-dashed dark:border-accent border-gray-200"></div> */}
-            <div className="mx-auto flex h-full w-full flex-col items-center justify-center gap-8 px-4 py-16 lg:px-16">
+            <div className="mx-auto flex h-full w-full flex-col items-center justify-center gap-8 py-16">
               <div className="relative flex w-full flex-col items-start justify-center gap-4">
                 {props.children}
               </div>
@@ -117,7 +105,7 @@ export function Nav(props: { className?: string }) {
         scrolled ? 'border-b border-border/70' : '',
       )}
     >
-      <div className="mx-auto flex w-full max-w-7xl items-center px-4">
+      <div className="mx-auto flex w-full max-w-7xl items-center">
         <Logo />
         <nav className="hidden items-center lg:flex">
           {items.map((it) => (

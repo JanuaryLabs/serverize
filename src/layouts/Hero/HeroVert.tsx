@@ -5,14 +5,19 @@ import { Button, EyeCatchingButton } from '../../components/ui/button';
 
 export default function HeroVert() {
   return (
-    <Background className="mx-auto max-w-7xl">
-      <div className="flex w-full flex-col items-center justify-between gap-16 md:flex-row lg:gap-40">
+    <Background className="w-full">
+      <div className="flex mx-auto w-full max-w-6xl flex-col items-center justify-between gap-16 md:flex-row lg:gap-40">
         <div className="flex w-full flex-1 flex-col justify-center">
-          <h1 className="mb-8 font-sans md:font-['Crimson_Text']">
+          <h1 className="mb-8 font-sans md:font-mono">
             <TextGenerateEffect
               className="text-3xl font-bold lg:text-5xl"
               filter={false}
               duration={1.5}
+              wordClassMap={{
+                development: 'text-green-700',
+                setup: 'underline tracking-widest',
+                accessible: 'text-blue-600',
+              }}
               words={'Make your development setup accessible worldwide'}
             />
           </h1>

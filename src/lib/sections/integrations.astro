@@ -1,5 +1,4 @@
 ---
-import MDXCodeBox from '../../components/code/code';
 const guides = Object.values(await Astro.glob('./guides/*.mdx'));
 
 const integrations = guides.map((it: any) => ({
@@ -10,21 +9,21 @@ const integrations = guides.map((it: any) => ({
 ---
 
 <div id="integrations-section">
-  <h2 class="mb-2 px-4 text-2xl lg:text-3xl">Serverize Everything:</h2>
-  <p class="px-4 text-secondary-foreground/70">
+  <h2 class="mb-2 text-2xl lg:text-4xl">Serverize Everything:</h2>
+  <p class="text-secondary-foreground/70">
     Supports all frameworks and languages, including Node.js, PHP, Python, Ruby,
     Go, PHP, Rust, and more.
   </p>
   <div
     style="grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));"
-    class="not-prose mb-8 grid gap-6 px-4"
+    class="not-prose mb-8 grid gap-6"
     id="integration-btn"
   >
     {
       integrations.map((it) => (
         <button
           data-integration={it.name}
-          class="group flex cursor-pointer flex-col items-center justify-center gap-y-4 font-medium tracking-wider text-secondary-foreground"
+          class="group flex cursor-pointer flex-col items-center justify-center gap-y-4 font-semibold tracking-wider text-secondary-foreground"
         >
           <div class="w-20 rounded border-[0.5px] border-border px-5 py-3 group-hover:bg-slate-100 group-hover:dark:bg-[#272727]">
             <img class="min-h-10" src={it.logo} />

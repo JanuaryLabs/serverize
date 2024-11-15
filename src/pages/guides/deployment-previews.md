@@ -8,7 +8,8 @@ date: '2024-11-15T00:00:00.000Z'
 
 Deployment Previews enable developers to deploy and test changes in a live environment, separate from other deployments. This is an inherent feature in Serverize, utilizing preview channels and releases.
 
-Preview channel releases remain live for 5 minutes before going to sleep to save on resources, as they are not intended to be always available. If you require an always-on server, consider creating a dedicated project for that purpose.
+> [!IMPORTANT]
+> Preview channel releases remain live for 5 minutes before going to sleep to save on resources, as they are not intended to be always available. If you require an always-on server, consider creating a dedicated project for that purpose.
 
 ## Use Cases
 
@@ -43,7 +44,7 @@ This works for any use case you might have, as long as the release name is uniqu
 
 ## Environment Variables
 
-Currently, environment variables are project-wide, meaning the same variables apply across all channels and releases.
+Right now, environment variables apply to the entire project. That means they’re the same for all channels and releases. This makes managing them easier, but it can be a problem if different channels need their own settings.
 
 However, there is ongoing [work in progress](https://github.com/JanuaryLabs/serverize/issues/12) to make these variables channel-scoped.
 
@@ -81,30 +82,29 @@ You can use the CLI to configure it:
 
 1. **Setup GitHub**
 
-    ```sh
-    npx serverize setup gh-pr-preview
-    ```
+   ```sh
+   npx serverize setup gh-pr-preview
+   ```
 
-    This command will set up the GitHub Action workflow.
+   This command will set up the GitHub Action workflow.
 
 2. **Create Project**
 
-    ```sh
-    npx serverize projects create <project-name>
-    # Example: npx serverize projects create winter
-    ```
+   ```sh
+   npx serverize projects create <project-name>
+   # Example: npx serverize projects create winter
+   ```
 
 3. **Create Token**
 
-    ```sh
-    npx serverize tokens create -p <project-name>
-    ```
+   ```sh
+   npx serverize tokens create -p <project-name>
+   ```
 
-    Store the resulting token in the GitHub repository secrets under the name `SERVERIZE_API_TOKEN`.
+   Store the resulting token in the GitHub repository secrets under the name `SERVERIZE_API_TOKEN`.
 
 4. **That's it!**
    Each PR will receive a comment including the preview URL.
 
 > [!TIP]
 > The setup command helps with all the required steps and also configures notifications to Discord or Slack.
-
