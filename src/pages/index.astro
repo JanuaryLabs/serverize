@@ -16,7 +16,7 @@ import { Content as StaticWebsiteContent } from '../lib/sections/static-website.
   <HeroVert client:load />
   <!-- <Login client:load client:only /> -->
   <div class="prose min-w-full">
-    <div class="mx-auto max-w-6xl">
+    <div class="mx-auto max-w-6xl xl:px-0 px-6">
       <Integrations />
     </div>
 
@@ -51,12 +51,12 @@ import { Content as StaticWebsiteContent } from '../lib/sections/static-website.
           <FaqContent />
         </div>
       </section> -->
-    <section class="lg:px-24">
+    <div class="mx-auto max-w-6xl">
       <Cta className="px-8" hideBottom={true} />
-    </section>
-    <section class="lg:px-24">
+    </div>
+    <div class="mx-auto max-w-6xl">
       <Footer className="not-prose px-8" />
-    </section>
+    </div>
   </div>
 </Main>
 

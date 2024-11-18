@@ -44,9 +44,15 @@ This works for any use case you might have, as long as the release name is uniqu
 
 ## Environment Variables
 
-Right now, environment variables apply to the entire project. That means they’re the same for all channels and releases. This makes managing them easier, but it can be a problem if different channels need their own settings.
+To set environment variables, use the `secrets set` command along with the project name flag `-p` or `--project`.
 
-However, there is ongoing [work in progress](https://github.com/JanuaryLabs/serverize/issues/12) to make these variables channel-scoped.
+```sh
+npx serverize secrets set NAME=VALUE -p <project-name> -c preview
+```
+
+This command sets the `NAME` environment variable to `VALUE` for the `preview` channel.
+
+All releases within the `preview` channel will have access to the `NAME` environment variable.
 
 Refer to the [Secret Management guide](https://serverize.sh/guides/cli/#secrets-management) for more information.
 

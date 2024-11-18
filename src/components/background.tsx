@@ -11,7 +11,7 @@ export default function Background(
 ) {
   return (
     <>
-      <Nav />
+      <Nav className="px-6 xl:px-0" />
       <div
         className={cn(
           'relative flex w-full items-center justify-center py-10',

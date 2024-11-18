@@ -16,11 +16,11 @@ import { useEffect, useState } from 'react';
 import { Card } from '../../layouts/Blog/BlogCard';
 
 export default function Login() {
-  const params = new URLSearchParams(window.location.search);
-  const githubUrl = params.get('import');
   const [dialogOpen, setDialogOpen] = useState<boolean | null>(false);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const githubUrl = params.get('import');
     if (githubUrl) {
       setDialogOpen(true);
     }
@@ -76,20 +76,23 @@ export default function Login() {
 
             <div className="mb-4 md:mb-0"> </div>
           </CredenzaBody>
-            <Card>
-              <p className="text-sm">
-                <Button variant={'ghost'} className="hover:underline hover:bg-transparent">
-                  <a
-                    href="https://cal.com/january-sh/30min"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Book a <span className="underline">demo</span> and
-                    let&apos;s build your product together.
-                  </a>
-                </Button>
-              </p>
-            </Card>
+          <Card>
+            <p className="text-sm">
+              <Button
+                variant={'ghost'}
+                className="hover:bg-transparent hover:underline"
+              >
+                <a
+                  href="https://cal.com/january-sh/30min"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Book a <span className="underline">demo</span> and let&apos;s
+                  build your product together.
+                </a>
+              </Button>
+            </p>
+          </Card>
         </CredenzaContent>
       </Credenza>
     </Query>
