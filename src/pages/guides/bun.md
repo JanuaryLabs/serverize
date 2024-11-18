@@ -8,7 +8,13 @@ date: '2024-10-22T00:00:00.000Z'
 
 ## TL;DR
 
-Use **`npx serverize setup bun`** to auto configure your Bun project. Continue if you'd like to understand the steps in more detail and customize the setup further.
+Use serverzie setup to auto configure your project.
+
+```sh
+npx serverize setup bun
+```
+
+Continue if you'd like to understand the steps in more detail and customize the setup further.
 
 ## Prerequisites
 
