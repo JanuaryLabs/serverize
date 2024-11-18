@@ -11,7 +11,7 @@ export default function Background(
 ) {
   return (
     <>
-      <Nav className="px-6 xl:px-0" />
+      <Nav />
       <div
         className={cn(
           'relative flex w-full items-center justify-center py-10',
@@ -19,37 +19,13 @@ export default function Background(
         )}
       >
         <GridBackgroundDemo className="w-full">
-          {/* <nav className="lg:flex hidden px-4 my-4  items-baseline w-full gap-x-2">
-          <Logo />
-          <div className="ml-4"></div>
-          <a
-            href="/guides"
-            className={cn(
-              buttonVariants({ variant: 'ghost' }),
-              'shadow-none rounded-full text-secondary-foreground/70 px-2.5 py-1 h-8',
-            )}
-          >
-            Guides
-          </a>
-          <div className="ml-auto"></div>
-          <Button variant={'outline'} className="shadow-none px-2.5 py-1 h-8">
-            Roadmap
-          </Button>
-          <Button variant={'outline'} className="shadow-none px-2.5 py-1 h-8">
-            Feedback
-          </Button>
-        </nav> */}
-
           <div className="z-10 flex w-full flex-col items-center">
-            {/* <div className="w-full border-b border-dashed dark:border-accent border-gray-200"></div> */}
             <div className="mx-auto flex h-full w-full flex-col items-center justify-center gap-8 py-16">
               <div className="relative flex w-full flex-col items-start justify-center gap-4">
                 {props.children}
               </div>
             </div>
-            {/* <div className="w-full border-t border-dashed dark:border-accent border-gray-200"></div> */}
           </div>
-          {/* <GridBackground /> */}
         </GridBackgroundDemo>
       </div>
     </>
@@ -103,6 +79,7 @@ export function Nav(props: { className?: string }) {
         props.className,
         'sticky top-0 z-50 w-full',
         scrolled ? 'border-b border-border/70' : '',
+        'md:px-6 px-4',
       )}
     >
       <div className="mx-auto flex w-full max-w-7xl items-center">
@@ -227,7 +204,7 @@ export function GridBackgroundDemo(
   return (
     <div
       className={cn(
-        'relative w-full bg-white bg-grid-small-black/[0.2] dark:bg-black dark:bg-grid-small-white/[0.2]',
+        'relative w-full bg-white bg-grid-small-black/[0.1] dark:bg-black dark:bg-grid-small-white/[0.1]',
         props.className,
       )}
     >

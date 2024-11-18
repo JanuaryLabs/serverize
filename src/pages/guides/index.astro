@@ -5,6 +5,7 @@ import type { MarkdownInstance } from 'astro';
 import { Nav } from '../../components/background';
 import Main from '../../layouts/main.astro';
 import BlogList from '../../lib/blog/BlogList.tsx';
+import CtaFooter from '../../components/CtaFooter.tsx';
 
 const posts = Object.values(
   import.meta.glob('./*.{md,mdx}', { eager: true }),
@@ -33,12 +34,16 @@ const guides = posts.map((it) => ({
     />
   </div>
 </Main> -->
-<Main title={'January - Blog'}>
+<Main title={'January - Guides'}>
   <Nav client:load />
   <div class="w-full border-b">
     <div class="mx-auto w-full max-w-screen-xl">
-      <h1 class="mx-8 py-20 text-5xl font-bold md:mx-16 xl:mx-0">Guides</h1>
+      <h1 class="mx-8 py-20 text-5xl font-bold md:mx-16">Guides</h1>
     </div>
   </div>
   <BlogList guides={guides} />
+
+  <div class="px-6 xl:px-0">
+    <CtaFooter />
+  </div>
 </Main>

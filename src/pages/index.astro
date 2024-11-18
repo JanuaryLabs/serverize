@@ -1,25 +1,24 @@
 ---
 import '@/styles/globals.css';
 
-import Cta from '../components/Cta';
-import Footer from '../components/Footer';
+import CtaFooter from '../components/CtaFooter';
 import HeroVert from '../layouts/Hero/HeroVert';
 import Main from '../layouts/main.astro';
-import Login from '../lib/login/Login';
-import { Content as HowItWorksContent } from '../lib/sections/how-it-works.md';
 import Integrations from '../lib/sections/integrations.astro';
-import { Content as MotivationContent } from '../lib/sections/motivation.md';
-import { Content as StaticWebsiteContent } from '../lib/sections/static-website.md';
+import { WhatWeBelieve } from '../lib/sections/what-we-beleive';
 ---
 
 <Main title={'January - Serverize'}>
   <HeroVert client:load />
   <!-- <Login client:load client:only /> -->
-  <div class="prose min-w-full">
-    <div class="mx-auto max-w-6xl xl:px-0 px-6">
+  <div class="min-w-full">
+    <div class="mx-auto max-w-6xl px-6 py-28 xl:px-0">
       <Integrations />
     </div>
-
+    <div class="mx-auto max-w-6xl px-6 my-28 xl:px-0">
+      <WhatWeBelieve />
+    </div>
+    <!--
     <section class="border-b px-6 py-20 md:px-24">
       <div class="content">
         <MotivationContent />
@@ -29,7 +28,7 @@ import { Content as StaticWebsiteContent } from '../lib/sections/static-website.
       <div class="content">
         <HowItWorksContent />
       </div>
-    </section>
+    </section> -->
     <!-- <section class="px-6 py-20 md:px-24">
       <div class="content">
         <OptimisationContent />
@@ -41,21 +40,18 @@ import { Content as StaticWebsiteContent } from '../lib/sections/static-website.
         <TheConversationContent />
       </div>
     </section> -->
-    <section class="border-b px-6 py-20 md:px-24">
+    <!-- <section class="border-b px-6 py-20 md:px-24">
       <div class="content">
         <StaticWebsiteContent />
       </div>
-    </section>
+    </section> -->
     <!-- <section class="md:px-24 px-6 py-20">
         <div class="content">
           <FaqContent />
         </div>
       </section> -->
-    <div class="mx-auto max-w-6xl">
-      <Cta className="px-8" hideBottom={true} />
-    </div>
-    <div class="mx-auto max-w-6xl">
-      <Footer className="not-prose px-8" />
+    <div class="px-6 xl:px-0">
+      <CtaFooter />
     </div>
   </div>
 </Main>

@@ -5,6 +5,7 @@ import Cta from '../components/Cta.tsx';
 import BlogContainer, { TocSpy } from './Blog/BlogContainer.tsx';
 import GuideHeader from './Blog/GuideHeader.tsx';
 import Main from './main.astro';
+import CtaFooter from '../components/CtaFooter.tsx';
 
 type Props = MarkdownLayoutProps<{
   title: string;
@@ -51,6 +52,8 @@ const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
       <TocSpy client:idle />
     </BlogContainer>
     <!-- <Footer /> -->
-    <Cta className="md:px-8" />
+  </div>
+  <div class="px-6 xl:px-0">
+    <CtaFooter />
   </div>
 </Main>

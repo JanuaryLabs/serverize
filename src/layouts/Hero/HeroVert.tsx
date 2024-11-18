@@ -5,7 +5,7 @@ import { Button, EyeCatchingButton } from '../../components/ui/button';
 
 export default function HeroVert() {
   return (
-    <Background className="w-full">
+    <Background className="w-full lg:py-24">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-16 px-6 md:flex-row lg:gap-40 xl:px-0">
         <div className="flex w-full flex-1 flex-col justify-center">
           <h1 className="mb-8 font-sans md:font-mono">

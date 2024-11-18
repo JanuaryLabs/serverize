@@ -26,7 +26,7 @@ export default function SearchInput(props: { className?: string }) {
 
         <span>Ask AI</span>
       </div>
-      <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-white px-2 text-[10px] font-medium text-muted-foreground">
+      <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-white dark:bg-background px-2 text-[10px] font-medium text-muted-foreground">
         <span className="text-xs">⌘</span>K
       </kbd>
     </div>
