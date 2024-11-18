@@ -26,12 +26,6 @@ Once you've finished adding the required files, your project should look like th
 └─── package.json
 ```
 
-### Understanding the `deno run` Command
-
-Deno has the capability to run TypeScript code directly without needing a separate build step. This feature significantly reduces the overall build time and makes development faster and smoother.
-
-This means that copying the code into the container and running it is essentially all it takes, unless you have a different setup that requires more customization.
-
 ## Adding a Dockerfile
 
 To put your Deno project in a container, you need to create a Dockerfile in your project's main folder. This file tells Docker how to build and run your app.
@@ -39,40 +33,39 @@ To put your Deno project in a container, you need to create a Dockerfile in your
 In the root of your project, create a file named `Dockerfile` and add the following content:
 
 ```dockerfile title="Dockerfile"
-FROM denoland/deno as base
+FROM denoland/deno:alpine AS base
+WORKDIR /app
 
 FROM base AS deps
 WORKDIR /app
-COPY . .
-RUN deno install --entrypoint main.ts
+COPY deno.json .
+RUN deno install --entrypoint deno.json
 
-FROM base AS release
+FROM deps AS builder
 WORKDIR /app
-COPY --from=deps /app/main.ts .
+COPY . .
+RUN deno compile --allow-net --allow-env --output entry main.ts
 
-ENV PORT=8000
+FROM base AS start
+COPY --from=builder /app/entry ./entry
+USER deno
 EXPOSE 8000
-
-CMD ["run", "--allow-net", "main.ts"]
+CMD ["./entry"]
 ```
 
 It consists of four stages
 
-1. **base**: This stage creates a base image for all subsequent stages. It sets the working directory to `/app` and ensures that essential utilities are available for use.
+1. **base**: This stage creates a base image for all subsequent stages and sets the working directory to `/app`.
 
-2. **`install`**: Install dev dependencies and production dependencies separately which should speed up subsequent builds according to [Deno's docs](https://deno.sh/guides/ecosystem/docker).
+2. **deps**: Install dependencies to be compiled later.
 
-3. **`prerelease`**:
+3. **builder**: Compiles the source code and outputs it as an executable.
 
-   - Copies the development dependencies from the `install` stage.
-   - Copies the source code from the current directory into the image.
-
-4. **`release`**:
-   - Copies the production dependencies from the `install` stage.
-   - Copies the source code from the `prerelease` stage.
+4. **start**:
+   - Copies the compiled executable from the `builder` stage.
    - Sets the user to `deno` to ensure the app runs as a non-root user for better security.
    - Exposes port `3000`.
-   - Assumes the `start` script in `package.json` will start the server.
+   - Runs the executable which starts the server.
 
 ## Dockerignore
 
@@ -102,7 +95,7 @@ This list excludes directories like `node_modules`, which can be quite large, as
 > [!NOTE]
 > The smaller the image size, the quicker the deployment; only transfer the bare minimum of files to the final stage.
 
-## Deploy Your Deno Project
+## Deploy Your Project
 
 After completing all the previous steps, you are now ready to deploy your application to Serverize.
 
@@ -110,7 +103,7 @@ After completing all the previous steps, you are now ready to deploy your applic
 npx serverize deploy -p <project-name>
 ```
 
-Replace `<project-name>` with the actual name of your project. This command will package and deploy your Deno application, leveraging Serverize to handle the setup and deployment seamlessly.
+Replace `<project-name>` with the actual name of your project. This command will package and deploy your application, leveraging Serverize to handle the setup and deployment seamlessly.
 
 ## Automating Deployments with CI/CD
 
@@ -122,6 +115,5 @@ For detailed instructions on configuring CI/CD with Serverize and GitHub Actions
 
 - Make sure to expose the correct port in your Dockerfile.
 - The `CMD` command in your Dockerfile should start your application.
-- Deno doesn't need a build step as it supports TypeScript out of the box.
 
 Happy deploying! If you run into any issues or need further assistance, feel free to drop a message in our [Discord community](https://discord.gg/aj9bRtrmNt).

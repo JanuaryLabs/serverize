@@ -105,16 +105,13 @@ Continuing from the previous section Dockerfile, add the following content at th
 FROM base AS release
 WORKDIR /app
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 runtime
-
-COPY --from=deps --chown=runtime:nodejs /app/node_modules ./node_modules
-COPY --from=builder --chown=runtime:nodejs /app/dist ./
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./
 
 ENV NODE_ENV=production
 ENV PORT=3000
 
-USER runtime
+USER node
 
 EXPOSE 3000
 

@@ -29,12 +29,6 @@ Once you've finished adding the required files, your project should look like th
 > [!TIP]
 > Check the [source code](https://github.com/serverize/example-bun) for a complete example.
 
-### Understanding the `bun run` Command
-
-Bun has the capability to run TypeScript code directly without needing a separate build step. This feature significantly reduces the overall build time and makes development faster and smoother.
-
-This means that copying the code into the container and running it is essentially all it takes, unless you have a different setup that requires more customization.
-
 ## Adding a Dockerfile
 
 To put your Bun project in a container, you need to create a Dockerfile in your project's main folder. This file tells Docker how to build and run your app.
