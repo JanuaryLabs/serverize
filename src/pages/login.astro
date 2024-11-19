@@ -3,10 +3,9 @@ import '@/styles/globals.css';
 
 import { Nav } from '../components/background';
 import Main from '../layouts/main.astro';
-import Screen from '../lib/login/Login';
+import { Screen } from '../lib/login/Login';
 ---
 
 <Main title={'January - Serverize'}>
-  <Nav client:load />
   <Screen client:load />
 </Main>
