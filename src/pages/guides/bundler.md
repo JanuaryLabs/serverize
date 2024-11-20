@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/BlogPostLayout.astro
 title: 'Using Bundlers with Serverize'
-subtitle: 'dle that code, deploy that app'
+subtitle: 'Bundle that code, deploy that app'
 author: 'Adam Koskovki'
 date: '2024-10-22T00:00:00.000Z'
 ---
@@ -32,9 +32,9 @@ Once you've finished adding the required files, your project should look like th
 
 ### Start here
 
-This guide applies on projects that use a dler like [esbuild](https://esbuild.github.io/), [webpack](https://webpack.js.org/), [rollup](https://rollupjs.org/), [parcel](https://parceljs.org/), [vite](https://vitejs.dev/), ...etc.
+This guide applies on projects that use a bundler like [esbuild](https://esbuild.github.io/), [webpack](https://webpack.js.org/), [rollup](https://rollupjs.org/), [parcel](https://parceljs.org/), [vite](https://vitejs.dev/), ...etc.
 
-A dler is a tool that bundles your code and dependencies into a single file which can be served by a static file server like Nginx or Apache or might dle an API server.
+A bundler is a tool that bundles your code and dependencies into a single file which can be served by a static file server like Nginx or Apache or might bundle an API server.
 
 It's very similar to the [Node.js guide](./node) but with one difference: you need to run `npm run build` before the `COPY` command.
 
