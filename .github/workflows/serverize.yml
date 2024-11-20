@@ -17,9 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v4
-      - run: npm ci
       - name: Deploy To Serverize
-        run: npx serverize deploy --output ${{ runner.temp }}/serverize.json
+        run: npx serverize@latest deploy --output ${{ runner.temp }}/serverize.json
         env:
           SERVERIZE_API_TOKEN: ${{ secrets.SERVERIZE_API_TOKEN }}
 
