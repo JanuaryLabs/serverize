@@ -17,10 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Check npx availability
-        run: npx --version
+      - run: npm ci
       - name: Deploy To Serverize
         run: npx serverize deploy --output ${{ runner.temp }}/serverize.json
         env:
