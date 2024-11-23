@@ -23,7 +23,7 @@ export default function Cta(props: {
             Start today with a free account.
           </span>
           <br />
-          <span className="block text-secondary-foreground/70">
+          <span className="block text-secondary-foreground/70 mt-1">
             Talk to us for a{' '}
             <span className="font-bold text-blue-600">personalized</span> demo.
           </span>
@@ -46,7 +46,7 @@ export default function Cta(props: {
           </a>
         </div>
       </div>
-      <div className="space-y-4 md:col-start-3">
+      <div className="space-y-4 md:col-start-3 hidden">
         <Separator className="mt-6 md:hidden" />
         <p>
           <b>Would you like to chat?</b>{' '}

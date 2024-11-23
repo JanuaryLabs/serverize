@@ -2,10 +2,10 @@ export function WhatWeBelieve() {
   return (
     <div className="mx-auto max-w-xl items-center">
       <div className="md:text-center">
-        <p className="mb-12 hidden text-lg md:block">What we want</p>
+        <p className="mb-12 hidden text-lg md:block">We want to</p>
         <h2 className="mb-12 text-4xl font-bold tracking-normal">
-          Better <span className="text-red-600">Developer</span>
-          <span className="text-blue-700"> Deployment</span> Experiance
+          Minimize <span className="text-red-600">friction</span> between
+          <span className="text-blue-700"> development</span> and <span className="text-green-700">deployment</span>
         </h2>
         <p className="text-lg">
           {/* Deploy your development setup as is to the cloud, no scalling drama or
@@ -23,14 +23,16 @@ export function WhatWeBelieve() {
           enviornments.
         </p> */}
         <p className="text-lg">
-          <span className='font-bold text-green-900'>All you need is a Dockerfile and a terminal.</span> Serverize
-          builds your image, deploys it, and sends you the access details. It’s
-          built to make feedback, testing, and sharing updates smooth and
-          lightweight—no server setup.
+          <span className="font-bold text-green-900">
+            All you need is a Dockerfile and a terminal.
+          </span>{' '}
+          Serverize builds your image, deploys it, and sends you the access
+          details. It’s built to make feedback, testing, and sharing updates
+          smooth and lightweight.
         </p>
         <p className="mt-4 text-lg font-semibold text-secondary-foreground/70">
-          With Serverize, you don’t need to create your own development or
-          testing environments. We handle it all for you.
+          You don’t need to create your own development or testing environments.
+          That's what Serverize is for.
         </p>
       </div>
     </div>
