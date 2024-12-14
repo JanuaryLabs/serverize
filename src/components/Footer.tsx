@@ -11,7 +11,7 @@ export default function Footer(props: { className?: string }) {
     >
       <div className="space-y-4 lg:col-start-1 lg:col-end-3">
         <h2 className="text-2xl font-bold">Serverize</h2>
-        <p className="max-w-md text-secondary-foreground/70">
+        <p className="text-sm max-w-md text-secondary-foreground/70">
           Serverize provides development, testing and preview environments, to
           boost collaboration, shortens feedback cycles, saves time and effort.
         </p>
