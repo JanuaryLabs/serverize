@@ -17,7 +17,6 @@
         "tsConfig": "packages/serverize/tsconfig.lib.json",
         "assets": [],
         "format": ["esm"],
-        "outputFileName": "index.js",
         "minify": false,
         "deleteOutputPath": false,
         "sourcemap": true,

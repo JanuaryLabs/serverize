@@ -5,6 +5,10 @@
   "main": "./index.js",
   "module": "./index.js",
   "types": "./src/index.d.ts",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "validator": "^13.12.0",
     "zod": "^3.23.8",

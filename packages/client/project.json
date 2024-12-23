@@ -23,8 +23,18 @@
         "thirdParty": false
       }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint"
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    }
+  },
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
     }
   }
 }
