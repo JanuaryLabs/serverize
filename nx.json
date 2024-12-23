@@ -1,12 +1,15 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "production": ["default"],
-    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
+    "default": ["{projectRoot}/**/*"],
+    "production": ["default"]
   },
   "nxCloudId": "67694c33332c815be66622de",
   "useInferencePlugins": false,
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "packages"
+  },
   "plugins": [],
   "releaseTagPattern": "release/{version}",
   "release": {

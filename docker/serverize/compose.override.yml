@@ -1,0 +1,63 @@
+services:
+  traefik:
+    volumes:
+      - ./traefik.local.yml:/etc/traefik/traefik.yml:ro
+    env_file: !reset []
+
+  manager:
+    image: node:lts-alpine
+    working_dir: /app
+    command: node --watch /app
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - '3100:3000'
+    networks:
+      - traefik-network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - serverize-uploads:/data:rw
+      - /Users/ezzabuzaid/Desktop/january/tarrez/dist/apps/serverize:/app:rw
+      - /Users/ezzabuzaid/Desktop/january/tarrez/node_modules:/app/node_modules:rw
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - API_URL=http://api:3000
+      - UPLOAD_DIR=/data
+    healthcheck:
+      test: wget --no-verbose --spider --tries=1 http://localhost:3000/health || exit 1
+
+  api:
+    image: node:lts-alpine
+    working_dir: /app
+    command: npm run start:watch
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    networks:
+      - traefik-network
+    volumes:
+      - /Users/ezzabuzaid/Desktop/january/projects/project-accounts-workspaces:/app
+    env_file: !override
+      - /Users/ezzabuzaid/Desktop/january/projects/project-accounts-workspaces/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - ORM_SYNCHRONIZE=true
+      - ORM_MIGRATIONS_RUN=true
+      - CONNECTION_STRING=postgresql://youruser:yourpassword@host.docker.internal:5432/yourdatabase
+      - MANAGEMENT_API_URL=http://manager:3000
+    healthcheck:
+      test: wget --no-verbose --spider --tries=1 http://localhost:3000/health || exit 1
+
+  tusd:
+    command: -upload-dir=/data
+    user: "0:0" # Run as root
+    ports:
+      - '8085:8080'
+
+volumes:
+  serverize-uploads:
+    driver: local
+    driver_opts: !reset null

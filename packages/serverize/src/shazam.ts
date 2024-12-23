@@ -4,7 +4,7 @@ import { existsSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 
-import { ensureDockerRunning } from '@january/docker';
+import { ensureDockerRunning } from 'serverize/docker';
 
 import { login, register } from './auth';
 import { client } from './lib/api-client';

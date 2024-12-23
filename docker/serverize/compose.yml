@@ -1,0 +1,97 @@
+services:
+  traefik:
+    image: traefik:3.2.1
+    networks:
+      - traefik-network
+    ports:
+      - '443:443'
+      - '80:80'
+      - '8080:8080'
+    volumes:
+      - './letsencrypt:/letsencrypt'
+      - './tmp/log:/var/log'
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+    env_file:
+      - .env # Make sure your Hetzner API token is in this file
+    depends_on:
+      api:
+        condition: service_healthy
+      manager:
+        condition: service_healthy
+
+  sablier:
+    image: sablierapp/sablier:1.8.1
+    command:
+      - start
+      - '--provider.name=docker'
+    ports:
+      - '10000:10000'
+    networks:
+      - traefik-network
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+
+  whoami:
+    image: traefik/whoami
+    networks:
+      - traefik-network
+    labels:
+      - 'sablier.enable=true'
+
+  manager:
+    image: docker.io/ezzabuzaid/serverize-manager:latest
+    platform: linux/amd64
+    restart: unless-stopped
+    networks:
+      - traefik-network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - serverize-uploads:/data:rw
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - GITHUB_CLIENT_ID=Ov23liTdbDl03bHIuT4N
+      - GITHUB_CLIENT_SECRET=6e79fe6d569964426f4c81d532686be6f17c28ae
+      - API_URL=http://api:3000
+    healthcheck:
+      test: wget --no-verbose --spider --tries=1 http://localhost:3000/health || exit 1
+
+  api:
+    image: docker.io/ezzabuzaid/serverize-api:latest
+    platform: linux/amd64
+    restart: unless-stopped
+    networks:
+      - traefik-network
+    env_file:
+      - .env.api
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - ORM_SYNCHRONIZE=true
+      - ORM_MIGRATIONS_RUN=true
+      - MANAGEMENT_API_URL=http://manager:3000
+    healthcheck:
+      test: wget --no-verbose --spider --tries=1 http://localhost:3000/health || exit 1
+
+  tusd:
+    image: tusproject/tusd:latest
+    command: -upload-dir=/data
+    user: "0:0" # Run as root
+    platform: linux/amd64
+    restart: unless-stopped
+    networks:
+      - traefik-network
+    volumes:
+      - serverize-uploads:/data
+
+volumes:
+  serverize-uploads:
+    driver: local
+    driver_opts:
+      type: none
+      device: /mnt/images
+      o: bind
+
+networks:
+  traefik-network:
+    external: true

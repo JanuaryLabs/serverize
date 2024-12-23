@@ -1,0 +1,70 @@
+{
+  "name": "app-serverize",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/serverize/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "cli": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "main": "apps/serverize/src/cli.ts",
+        "outputPath": "dist/apps/serverize",
+        "outputFileName": "cli.mjs",
+        "tsConfig": "apps/serverize/tsconfig.app.json",
+        "assets": [],
+        "platform": "node",
+        "format": ["cjs"]
+      },
+      "configurations": {
+        "development": {
+          "minify": false
+        },
+        "production": {
+          "minify": true
+        }
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "main": "apps/serverize/src/main.ts",
+        "tsConfig": "apps/serverize/tsconfig.app.json",
+        "outputPath": "dist/apps/serverize",
+        "format": ["esm"],
+        "minify": false,
+        "sourcemap": true,
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "alias": {
+            "lodash": "lodash-es"
+          },
+          "banner": {
+            "js": "import { createRequire } from 'module'; const require = createRequire(import.meta.url);"
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "serverize:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "serverize:build:development"
+        },
+        "production": {
+          "buildTarget": "serverize:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

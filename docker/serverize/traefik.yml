@@ -1,0 +1,45 @@
+log:
+  level: TRACE
+  format: json
+
+api:
+  dashboard: true
+  debug: true
+  insecure: true
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure:
+    address: ":443"
+    http:
+      tls:
+        certResolver: letsencrypt
+        domains:
+          - main: "january.sh"
+            sans:
+              - "*.january.sh"
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: "admin@january.sh"
+      storage: "/letsencrypt/acme.json"
+      dnsChallenge:
+        provider: hetzner
+
+providers:
+  http:
+    endpoint: "http://api:3000/operations/config"
+
+experimental:
+  plugins:
+    sablier:
+      modulename: "github.com/sablierapp/sablier"
+      version: "v1.8.1"
