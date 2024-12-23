@@ -4,7 +4,10 @@ import path, { join } from 'path';
 
 const npmProjects = ['serverize', 'client'];
 
-execSync('nx release --skip-publish');
+execSync('nx release --skip-publish', {
+  stdio: 'inherit',
+  env: process.env,
+});
 
 const [releaseTag] = execSync('git tag --sort=-creatordate --list "release/*"')
   .toString()

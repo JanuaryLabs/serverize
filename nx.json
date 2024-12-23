@@ -30,10 +30,10 @@
         "file": false
       }
     },
-    "projects": ["serverize"],
+    "projects": ["serverize", "client"],
     "releaseTagPattern": "release/{version}",
     "version": {
-      "preVersionCommand": "npx nx run-many --projects=serverize -t build -c production",
+      "preVersionCommand": "npx nx run-many --projects=serverize,client -t build -c production",
       "conventionalCommits": true
     }
   }
