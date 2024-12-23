@@ -23,8 +23,8 @@ export default defineConfig({
   },
   tsconfigFilePaths: join(process.cwd(), 'tsconfig.base.json'),
   baseTsConfig: '../tsconfig.json',
+  tsconfigName: 'tsconfig.app.json',
   formatGeneratedCode: false,
-  skipBundling: false,
   extensions: [
     identity,
     hono(),

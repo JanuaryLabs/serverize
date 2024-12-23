@@ -17,12 +17,6 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "paths": {
-      "serverize": ["packages/serverize/src/index.ts"],
-      "serverize/docker": ["packages/docker/src/index.ts"],
-      "serverize/dockerfile": ["packages/dockerfile/src/index.ts"],
-      "serverize/dockercompose": ["packages/dockercompose/src/index.ts"],
-      "serverize/utils": ["packages/utils/src/index.ts"],
-      "serverize/client": ["packages/client/src/index.ts"],
       "@extensions/firebase-auth": [
         "apps/api/output/src/extensions/firebase-auth/index.ts"
       ],
@@ -40,8 +34,14 @@
       "@workspace/identity": [
         "apps/api/output/src/extensions/identity/index.ts"
       ],
+      "@workspace/utils": ["apps/api/output/src/core/utils.ts"],
       "@workspace/validation": ["apps/api/output/src/core/validation.ts"],
-      "@workspace/utils": ["apps/api/output/src/core/utils.ts"]
+      "serverize": ["packages/serverize/src/index.ts"],
+      "serverize/client": ["packages/client/src/index.ts"],
+      "serverize/docker": ["packages/docker/src/index.ts"],
+      "serverize/dockercompose": ["packages/dockercompose/src/index.ts"],
+      "serverize/dockerfile": ["packages/dockerfile/src/index.ts"],
+      "serverize/utils": ["packages/utils/src/index.ts"]
     }
   }
 }
