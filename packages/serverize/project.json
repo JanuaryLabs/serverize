@@ -3,13 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/serverize/src",
   "projectType": "library",
-  "implicitDependencies": [
-    "dockerfile",
-    "docker",
-    "dockercompose",
-    "utils",
-    "client"
-  ],
+  "implicitDependencies": ["dockerfile", "docker", "dockercompose", "utils"],
   "tags": [],
   "targets": {
     "build": {
@@ -30,7 +24,7 @@
         "bundle": true,
         "thirdParty": false,
         "external": [
-          "serverize/client",
+          "@serverize/client",
           "serverize/utils",
           "serverize/docker",
           "serverize/dockerfile",

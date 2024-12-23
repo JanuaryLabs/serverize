@@ -1,6 +1,6 @@
 import { onIdTokenChanged } from 'firebase/auth';
 
-import { Serverize } from 'serverize/client';
+import { Serverize } from '@serverize/client';
 
 import type { Healthcheck } from '../program';
 import { auth } from './firebase';

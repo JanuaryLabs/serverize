@@ -3,7 +3,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import type { RuntimeConfig } from 'serverize';
 
-import { Serverize } from 'serverize/client';
+import { Serverize } from '@serverize/client';
 import { docker, followProgress, getContainer } from 'serverize/docker';
 import { extractError } from 'serverize/utils';
 

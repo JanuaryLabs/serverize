@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 import { readFile, writeFile } from 'fs/promises';
 import path, { join } from 'path';
 
-const npmProjects = ['create'];
+const npmProjects = ['serverize', 'client'];
 
 execSync('nx release --skip-publish');
 
@@ -14,7 +14,7 @@ const [releaseTag] = execSync('git tag --sort=-creatordate --list "release/*"')
 const releaseVersion = releaseTag.replace('release/', '');
 
 for (const project of [...npmProjects]) {
-  const dir = path.join(process.cwd(), 'dist', 'libs', project);
+  const dir = path.join(process.cwd(), 'dist', 'packages', project);
   const packageJson = JSON.parse(
     await readFile(join(dir, 'package.json'), 'utf-8'),
   );
@@ -27,7 +27,7 @@ for (const project of [...npmProjects]) {
 }
 
 for (const project of npmProjects) {
-  const dir = path.join(process.cwd(), 'dist', 'libs', project);
+  const dir = path.join(process.cwd(), 'dist', 'packages', project);
   await publishToNpm(dir).catch((err) => {
     console.error(err);
   });

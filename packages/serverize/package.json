@@ -35,12 +35,6 @@
       "import": "./dockercompose/index.js",
       "types": "./dockercompose/packages/dockercompose/src/index.d.ts"
     },
-    "./client": {
-      "node": "./client/index.js",
-      "default": "./client/index.js",
-      "import": "./client/index.js",
-      "types": "./client/packages/client/src/index.d.ts"
-    },
     "./utils": {
       "node": "./utils/index.js",
       "default": "./utils/index.js",

@@ -9,7 +9,7 @@
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/serverize/client",
+        "outputPath": "dist/packages/client",
         "main": "packages/client/src/index.ts",
         "tsConfig": "packages/client/tsconfig.lib.json",
         "assets": [],
@@ -20,14 +20,7 @@
         "sourcemap": true,
         "generatePackageJson": false,
         "bundle": true,
-        "thirdParty": false,
-        "external": [
-          "serverize/client",
-          "serverize/utils",
-          "serverize/docker",
-          "serverize/dockerfile",
-          "serverize/dockercompose"
-        ]
+        "thirdParty": false
       }
     },
     "lint": {

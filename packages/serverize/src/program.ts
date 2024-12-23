@@ -17,7 +17,7 @@ import validator from 'validator';
 
 import { box } from '@january/console';
 
-import { ValidationError } from 'serverize/client';
+import { ValidationError } from '@serverize/client';
 import { coerceArray, nodeServer } from 'serverize/dockerfile';
 
 import { client } from './lib/api-client';

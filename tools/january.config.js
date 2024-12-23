@@ -6,8 +6,11 @@ import { hono } from '@january/extensions/hono';
 import { identity } from '@january/extensions/identity';
 import { postgresql, typeorm } from '@january/extensions/typeorm';
 
+const appDir = join(process.cwd(), 'apps', 'api');
+
 export default defineConfig({
   client: {
+    packageName: '@serverize/client',
     name: 'Serverize',
     output: join(process.cwd(), 'packages/client/src'),
     securityScheme: {
@@ -19,11 +22,11 @@ export default defineConfig({
     },
   },
   fs: {
-    cwd: join(process.cwd(), 'apps/api'),
+    cwd: appDir,
   },
   tsconfigFilePaths: join(process.cwd(), 'tsconfig.base.json'),
   baseTsConfig: '../tsconfig.json',
-  tsconfigName: 'tsconfig.app.json',
+  tsconfigName: join(appDir, 'tsconfig.app.json'),
   formatGeneratedCode: false,
   extensions: [
     identity,

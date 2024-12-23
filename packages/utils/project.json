@@ -26,7 +26,7 @@
         "bundle": true,
         "thirdParty": false,
         "external": [
-          "serverize/client",
+          "@serverize/client",
           "serverize/utils",
           "serverize/docker",
           "serverize/dockerfile",

@@ -33,7 +33,7 @@
     "projects": ["serverize"],
     "releaseTagPattern": "release/{version}",
     "version": {
-      "preVersionCommand": "npx nx run-many --projects=serverize -t build",
+      "preVersionCommand": "npx nx run-many --projects=serverize -t build -c production",
       "conventionalCommits": true
     }
   }
