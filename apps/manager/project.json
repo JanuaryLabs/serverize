@@ -1,5 +1,5 @@
 {
-  "name": "app-serverize",
+  "name": "manager",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/serverize/src",
   "projectType": "application",
@@ -16,7 +16,7 @@
         "tsConfig": "apps/serverize/tsconfig.app.json",
         "assets": [],
         "platform": "node",
-        "format": ["cjs"]
+        "format": ["esm"]
       },
       "configurations": {
         "development": {

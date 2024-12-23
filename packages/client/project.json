@@ -1,0 +1,29 @@
+{
+  "name": "client",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/client/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/client",
+        "main": "packages/client/src/index.ts",
+        "tsConfig": "packages/client/tsconfig.lib.json",
+        "outputFileName": "index.js",
+        "assets": [],
+        "format": ["esm"],
+        "minify": false,
+        "sourcemap": true,
+        "generatePackageJson": false,
+        "bundle": true,
+        "thirdParty": false
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

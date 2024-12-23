@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.ts", "./output/references.d.ts"],
+  "exclude": ["vite.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
+  "compilerOptions": {
+    "jsx": "preserve",
+    "rootDir": ".",
+    "moduleResolution": "Bundler",
+    "module": "ESNext"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "name": "api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/serverize/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "generate": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "generate"
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/api",
+        "main": "apps/api/output/src/server.ts",
+        "tsConfig": "apps/api/tsconfig.json",
+        "outputFileName": "server.js",
+        "format": ["esm"],
+        "minify": false,
+        "sourcemap": false,
+        "generatePackageJson": false,
+        "bundle": true,
+        "platform": "node",
+        "thirdParty": false,
+        "esbuildOptions": {
+          "treeShaking": true,
+          "keepNames": true,
+          "banner": {
+            "js": "import { dirname } from 'path';import { createRequire } from 'module';import { fileURLToPath } from 'url';const __dirname = dirname(fileURLToPath(import.meta.url)); const require = createRequire(import.meta.url);"
+          },
+          "assetNames": "[name]",
+          "loader": {
+            ".swagger.json": "file"
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "serverize:build",
+        "args": ["--env-file", "apps/api/.env"]
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "serverize:build:development"
+        },
+        "production": {
+          "buildTarget": "serverize:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

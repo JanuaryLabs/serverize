@@ -13,13 +13,24 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
+        "outputPath": "dist/packages/serverize/utils",
         "main": "packages/utils/src/index.ts",
-        "outputPath": "dist/packages/utils",
-        "outputFileName": "index.js",
         "tsConfig": "packages/utils/tsconfig.lib.json",
+        "outputFileName": "index.js",
         "assets": [],
+        "format": ["esm"],
+        "minify": false,
+        "sourcemap": true,
+        "generatePackageJson": false,
         "bundle": true,
-        "thirdParty": false
+        "thirdParty": false,
+        "external": [
+          "serverize/client",
+          "serverize/utils",
+          "serverize/docker",
+          "serverize/dockerfile",
+          "serverize/dockercompose"
+        ]
       },
       "configurations": {
         "development": {

@@ -2,8 +2,14 @@
   "name": "@serverize/source",
   "version": "0.0.0",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "serverize": "npx concurrently -k \"nx run serverize:build --watch\" \"nx run docker:build --watch\" \"nx run dockerfile:build --watch\" \"nx run dockercompose:build --watch\""
+    "serverize": "npx concurrently -k \"nx run serverize:build --watch\" \"nx run docker:build --watch\" \"nx run dockerfile:build --watch\" \"nx run dockercompose:build --watch\" \"nx run utils:build --watch\"",
+    "start": "node --env-file .env ./output",
+    "start:watch": "node --env-file .env --watch ./output/build/server.js",
+    "generate": "node ./tools/january.config.js",
+    "generate:watch": "node --watch-path ./src --watch-path ./tools ./tools/january.config.js",
+    "dev": "npx concurrently -k -p \"[{name}]\" -n \"server,build\" -c \"blue.bold,green.bold\" \"npm run start:watch\" \"npm run build:watch\""
   },
   "private": true,
   "devDependencies": {
@@ -22,17 +28,21 @@
     "esbuild": "^0.19.2",
     "nx": "20.3.0",
     "tslib": "^2.3.0",
-    "typescript": "~5.6.2"
+    "typescript": "~5.6.2",
+    "@january/canary": "https://github.com/JanuaryLabs/dist/raw/main/canary.tar.gz?v=1.0.2",
+    "@january/declarative": "https://github.com/JanuaryLabs/dist/raw/main/declarative.tar.gz?v=1.0.2",
+    "@january/extensions": "https://github.com/JanuaryLabs/dist/raw/main/extensions.tar.gz?v=1.0.2"
   },
   "workspaces": [
+    "apps/api/output",
     "packages/**"
   ],
   "dependencies": {
     "@inquirer/prompts": "^7.2.1",
-    "@january/bundler": "https://github.com/JanuaryLabs/dist/raw/main/bundler.tar.gz?v=1.0.0",
-    "@january/console": "https://github.com/JanuaryLabs/dist/raw/main/console.tar.gz?v=1.0.0",
-    "@january/evaluator": "https://github.com/JanuaryLabs/dist/raw/main/evaluator.tar.gz?v=1.0.0",
-    "@january/parser": "https://github.com/JanuaryLabs/dist/raw/main/parser.tar.gz?v=1.0.0",
+    "@january/bundler": "https://github.com/JanuaryLabs/dist/raw/main/bundler.tar.gz?v=1.0.2",
+    "@january/console": "https://github.com/JanuaryLabs/dist/raw/main/console.tar.gz?v=1.0.2",
+    "@january/evaluator": "https://github.com/JanuaryLabs/dist/raw/main/evaluator.tar.gz?v=1.0.2",
+    "@january/parser": "https://github.com/JanuaryLabs/dist/raw/main/parser.tar.gz?v=1.0.2",
     "@trivago/prettier-plugin-sort-imports": "^5.2.0",
     "@types/validator": "^13.12.2",
     "async-mutex": "^0.5.0",
@@ -72,6 +82,14 @@
     "tus-js-client": "^4.2.3",
     "uuid": "^11.0.3",
     "validator": "^13.12.0",
-    "ws": "^8.18.0"
+    "ws": "^8.18.0",
+    "@octokit/core": "^6.1.2",
+    "axios": "^1.7.7",
+    "discord.js": "^14.16.3",
+    "fast-content-type-parse": "^2.0.0",
+    "jose": "^5.9.4",
+    "libsodium-wrappers": "^0.7.15",
+    "oxc-transform": "^0.42.0",
+    "random-words": "^2.0.1"
   }
 }

@@ -1,8 +1,8 @@
 FROM node:lts-alpine
 WORKDIR /usr/src/app
 
-COPY ./dist/apps/serverize/package*.json ./
+COPY ./dist/apps/api/package*.json ./
 RUN npm install --legacy-peer-deps --no-audit --no-fund
 
-COPY ./dist/apps/serverize/ ./
+COPY ./dist/apps/api/ ./
 CMD ["node", "./"]
