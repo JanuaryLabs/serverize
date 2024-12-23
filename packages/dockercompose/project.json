@@ -24,6 +24,7 @@
         "format": ["esm"],
         "outputFileName": "index.js",
         "minify": false,
+        "deleteOutputPath": false,
         "sourcemap": true,
         "generatePackageJson": false,
         "bundle": true,

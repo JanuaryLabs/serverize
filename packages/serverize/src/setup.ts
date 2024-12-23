@@ -18,14 +18,14 @@ import {
   ghPrWorkflow,
   slackNotification,
 } from './lib/gh-preview';
-import { cli, cwdOption, dropdown, renderMD, spinner } from './program';
+import { cli, cwdOption, dropdown, spinner } from './program';
 import { setupFramework } from './setup/setup-framework';
 
 const listCommand = new Command('list').action(() => {
   console.log(
     supportedFrameworks
       .map((it) =>
-        `Framework: ${it} | ${renderMD(`[Guide](https://serverize.sh/#integrations-section)`)}`.trim(),
+        `Framework: ${it} | https://serverize.sh/guides/${it}`.trim(),
       )
       .join('\n'),
     '\n',
@@ -63,9 +63,7 @@ export default new Command('setup')
           '- Run the command again with the framework name.',
           '- Example: $ npx serverize setup astrojs',
           '- Supported frameworks: $ npx serverize setup list',
-          `- ${await renderMD(
-            `Tell us what framework you're using in [discord](https://discord.gg/aj9bRtrmNt)`,
-          )}`,
+          `- Tell us what framework you're using in [discord](https://discord.gg/aj9bRtrmNt)`,
         );
         cli.error(`Could not detect the framework in "${projectDir}"\n`);
         return;

@@ -18,13 +18,9 @@ import {
   remix,
   streamlit,
 } from 'serverize/dockerfile';
-import { readPackageJson } from 'serverize/utils';
+import { readJsonFile, readPackageJson } from 'serverize/utils';
 
-import {
-  detectFramework,
-  readConfig,
-  readJsonFile,
-} from '../lib/detect-framework';
+import { detectFramework, readConfig } from '../lib/detect-framework';
 import { writeDockerIgnore } from '../lib/file';
 import { cli, dropdown, spinner } from '../program';
 import { getNodejsVersion, setupNodejs } from './nodejs';

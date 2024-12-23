@@ -13,7 +13,7 @@
     "importHelpers": true,
     "target": "esnext",
     "module": "esnext",
-    "lib": ["ESNext", "dom"],
+    "lib": ["ESNext"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "paths": {

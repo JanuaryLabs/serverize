@@ -66,7 +66,9 @@ export function sse(
         }) as any,
     });
     eventSource.onmessage = (event) => {
-      const payload = safeFail(() => JSON.parse(event.data), { message: '' });
+      const payload = safeFail(() => JSON.parse(event.data as any), {
+        message: '',
+      });
       if (payload.type === 'error') {
         subscriber.error(payload.message);
       } else if (payload.type === 'complete') {

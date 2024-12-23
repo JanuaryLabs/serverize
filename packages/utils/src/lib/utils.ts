@@ -352,54 +352,6 @@ export function normalizeWorkflowPath(config: {
   return config.workflowMethod ? `${config.workflowMethod} ${path}` : path;
 }
 
-const pool: Record<string, Worker> = {};
-export function runWorker<T>(
-  publicPath: string,
-  message: { type: string; payload: unknown },
-  options: WorkerOptions & {
-    terminateImmediately?: boolean;
-  } = {
-    type: 'module',
-    terminateImmediately: false,
-  },
-) {
-  let worker: Worker;
-  if (options.terminateImmediately) {
-    worker = new Worker(publicPath, options);
-  } else {
-    worker = pool[publicPath] ??= new Worker(publicPath, options);
-  }
-  // const worker =
-  //   process.env['NODE_ENV'] === 'development'
-  //     ? new Worker(publicPath, options)
-  //     : pool[publicPath];
-
-  const defer = new Promise<T>((resolve, reject) => {
-    worker.onmessage = (e) => {
-      if (options.terminateImmediately) {
-        worker.terminate();
-      }
-
-      if ('error' in e.data) {
-        reject(e.data.error);
-        console.error(e.data.error);
-      } else {
-        resolve(e.data.data);
-      }
-    };
-    worker.onerror = (e) => {
-      if (options.terminateImmediately) {
-        worker.terminate();
-      }
-      reject(e.error);
-    };
-  });
-
-  worker.postMessage(message);
-
-  return defer;
-}
-
 /**
  * Removes duplicate items from an array based on a specified accessor function
  * @param data The array to remove duplicates from

@@ -9,17 +9,25 @@
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/client",
+        "outputPath": "dist/packages/serverize/client",
         "main": "packages/client/src/index.ts",
         "tsConfig": "packages/client/tsconfig.lib.json",
-        "outputFileName": "index.js",
         "assets": [],
         "format": ["esm"],
+        "outputFileName": "index.js",
         "minify": false,
+        "deleteOutputPath": false,
         "sourcemap": true,
         "generatePackageJson": false,
         "bundle": true,
-        "thirdParty": false
+        "thirdParty": false,
+        "external": [
+          "serverize/client",
+          "serverize/utils",
+          "serverize/docker",
+          "serverize/dockerfile",
+          "serverize/dockercompose"
+        ]
       }
     },
     "lint": {

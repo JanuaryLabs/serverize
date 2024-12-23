@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "serverize": "npx concurrently -k \"nx run serverize:build --watch\" \"nx run docker:build --watch\" \"nx run dockerfile:build --watch\" \"nx run dockercompose:build --watch\" \"nx run utils:build --watch\"",
-    "start": "node --env-file .env ./output",
-    "start:watch": "node --env-file .env --watch ./output/build/server.js",
-    "generate": "node ./tools/january.config.js",
-    "generate:watch": "node --watch-path ./src --watch-path ./tools ./tools/january.config.js",
+    "start": "node --env-file apps/api/.env ./output",
+    "start:watch": "node --env-file apps/api/.env --watch apps/api/output/build/server.js",
+    "build": "node ./tools/january.config.js",
+    "build:watch": "node --watch-path apps/api/src --watch-path ./tools ./tools/january.config.js",
     "dev": "npx concurrently -k -p \"[{name}]\" -n \"server,build\" -c \"blue.bold,green.bold\" \"npm run start:watch\" \"npm run build:watch\""
   },
   "private": true,

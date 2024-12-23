@@ -35,6 +35,12 @@
       "import": "./dockercompose/index.js",
       "types": "./dockercompose/packages/dockercompose/src/index.d.ts"
     },
+    "./client": {
+      "node": "./client/index.js",
+      "default": "./client/index.js",
+      "import": "./client/index.js",
+      "types": "./client/packages/client/src/index.d.ts"
+    },
     "./utils": {
       "node": "./utils/index.js",
       "default": "./utils/index.js",
@@ -43,6 +49,7 @@
     }
   },
   "devDependencies": {
+    "@types/cli-progress": "^3.11.6",
     "@types/debug": "^4.1.12",
     "@types/semver": "^7.5.8",
     "@types/ws": "^8.5.13"

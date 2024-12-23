@@ -10,8 +10,6 @@ import glob from 'fast-glob';
 import { signOut } from 'firebase/auth';
 import { existsSync } from 'fs';
 import { readFile } from 'fs/promises';
-import { marked } from 'marked';
-import { markedTerminal } from 'marked-terminal';
 import ora from 'ora';
 import { platform } from 'os';
 import parse from 'parse-duration';
@@ -316,15 +314,6 @@ export async function getCurrentProject(project?: string) {
   }
   spinner.fail('Missing project name. use --project');
   process.exit(1);
-}
-
-export function renderMD(md: string) {
-  try {
-    marked.use((markedTerminal as any)({}));
-  } catch {
-    // noop
-  }
-  return marked(md);
 }
 
 function getFinalStageImageName(ast: Dockerfile) {

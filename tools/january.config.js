@@ -7,17 +7,17 @@ import { identity } from '@january/extensions/identity';
 import { postgresql, typeorm } from '@january/extensions/typeorm';
 
 export default defineConfig({
-  // client: {
-  //   name: 'Serverize',
-  //   output: join(process.cwd(), 'packages/client'),
-  //   securityScheme: {
-  //     bearerAuth: {
-  //       type: 'http',
-  //       scheme: 'bearer',
-  //       bearerFormat: 'JWT',
-  //     },
-  //   },
-  // },
+  client: {
+    name: 'Serverize',
+    output: join(process.cwd(), 'packages/client/src'),
+    securityScheme: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
+  },
   fs: {
     cwd: join(process.cwd(), 'apps/api'),
   },
