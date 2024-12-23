@@ -1,0 +1,44 @@
+{
+  "name": "serverize",
+  "version": "0.0.16",
+  "bin": {
+    "serverize": "./cli.js",
+    "szd": "./cli.js"
+  },
+  "type": "module",
+  "main": "./index.js",
+  "module": "./index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "node": "./index.js",
+      "default": "./index.js",
+      "import": "./index.js",
+      "types": "./src/index.d.ts"
+    },
+    "./docker": {
+      "node": "./docker/index.js",
+      "default": "./docker/index.js",
+      "import": "./docker/index.js",
+      "types": "./docker/packagesdocker/src/index.d.ts"
+    },
+    "./dockerfile": {
+      "node": "./dockerfile/index.js",
+      "default": "./dockerfile/index.js",
+      "import": "./dockerfile/index.js",
+      "types": "./dockerfile/packagesdockerfile/src/index.d.ts"
+    },
+    "./dockercompose": {
+      "node": "./dockercompose/index.js",
+      "default": "./dockercompose/index.js",
+      "import": "./dockercompose/index.js",
+      "types": "./dockercompose/packagesdockercompose/src/index.d.ts"
+    }
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "@types/semver": "^7.5.8",
+    "@types/ws": "^8.5.13"
+  }
+}

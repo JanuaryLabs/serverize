@@ -1,0 +1,46 @@
+{
+  "name": "dockerfile",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/dockerfile/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/serverize/dockerfile",
+        "main": "packages/dockerfile/src/index.ts",
+        "tsConfig": "packages/dockerfile/tsconfig.lib.json",
+        "assets": [],
+        "format": ["esm"],
+        "outputFileName": "index.js",
+        "minify": false,
+        "sourcemap": true,
+        "generatePackageJson": false,
+        "bundle": true,
+        "thirdParty": false,
+        "external": [
+          "serverize/client",
+          "serverize/utils",
+          "serverize/docker",
+          "serverize/dockerfile",
+          "serverize/dockercompose"
+        ]
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    }
+  }
+}

@@ -6,18 +6,32 @@
     "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
   },
   "nxCloudId": "67694c33332c815be66622de",
-  "plugins": [
-    {
-      "plugin": "@nx/js/typescript",
-      "options": {
-        "typecheck": {
-          "targetName": "typecheck"
+  "useInferencePlugins": false,
+  "plugins": [],
+  "releaseTagPattern": "release/{version}",
+  "release": {
+    "conventionalCommits": {
+      "types": {
+        "chore": {
+          "changelog": {
+            "hidden": true
+          }
         },
-        "build": {
-          "targetName": "build",
-          "configName": "tsconfig.lib.json"
+        "refactor": {
+          "semverBump": "patch"
         }
       }
+    },
+    "changelog": {
+      "workspaceChangelog": {
+        "file": false
+      }
+    },
+    "projects": ["serverize"],
+    "releaseTagPattern": "release/{version}",
+    "version": {
+      "preVersionCommand": "npx nx run-many --projects=serverize -t build",
+      "conventionalCommits": true
     }
-  ]
+  }
 }

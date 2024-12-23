@@ -1,0 +1,35 @@
+{
+  "name": "utils",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/utils/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "main": "packages/utils/src/index.ts",
+        "outputPath": "dist/packages/utils",
+        "outputFileName": "index.js",
+        "tsConfig": "packages/utils/tsconfig.lib.json",
+        "assets": [],
+        "bundle": true,
+        "thirdParty": false
+      },
+      "configurations": {
+        "development": {
+          "minify": false
+        },
+        "production": {
+          "minify": true
+        }
+      }
+    }
+  },
+  "tags": ["utils"]
+}
