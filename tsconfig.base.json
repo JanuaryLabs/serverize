@@ -17,6 +17,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "paths": {
+      "@/*": ["apps/www/src/*"],
       "@extensions/firebase-auth": [
         "apps/api/output/src/extensions/firebase-auth/index.ts"
       ],

@@ -1,0 +1,59 @@
+---
+import '@/styles/globals.css';
+
+import CtaFooter from '../components/CtaFooter';
+import HeroVert from '../layouts/Hero/HeroVert';
+import Main from '../layouts/main.astro';
+import Integrations from '../lib/sections/integrations.astro';
+import { WhatWeBelieve } from '../lib/sections/what-we-beleive';
+---
+
+<Main title={'January - Serverize'}>
+  <HeroVert client:load />
+  <!-- <Login client:load client:only /> -->
+  <div class="min-w-full">
+    <div class="mx-auto max-w-6xl px-6 py-28 xl:px-0">
+      <Integrations />
+    </div>
+    <div class="mx-auto max-w-6xl px-6 my-28 xl:px-0">
+      <WhatWeBelieve />
+    </div>
+    <!--
+    <section class="border-b px-6 py-20 md:px-24">
+      <div class="content">
+        <MotivationContent />
+      </div>
+    </section>
+    <section class="border-b px-6 py-20 md:px-24">
+      <div class="content">
+        <HowItWorksContent />
+      </div>
+    </section> -->
+    <!-- <section class="px-6 py-20 md:px-24">
+      <div class="content">
+        <OptimisationContent />
+      </div>
+    </section> -->
+
+    <!-- <section class="px-6 py-20 md:px-24">
+      <div class="content">
+        <TheConversationContent />
+      </div>
+    </section> -->
+    <!-- <section class="border-b px-6 py-20 md:px-24">
+      <div class="content">
+        <StaticWebsiteContent />
+      </div>
+    </section> -->
+    <!-- <section class="md:px-24 px-6 py-20">
+        <div class="content">
+          <FaqContent />
+        </div>
+      </section> -->
+    <div class="px-6 xl:px-0">
+      <CtaFooter />
+    </div>
+  </div>
+</Main>
+
+<!-- Stop waiting for deployments. -->

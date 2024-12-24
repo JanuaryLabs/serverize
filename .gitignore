@@ -221,3 +221,4 @@ npm-debug.*
 web-build/
 output/
 cache/
+.astro

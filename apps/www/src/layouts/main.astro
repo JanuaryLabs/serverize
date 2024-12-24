@@ -1,0 +1,55 @@
+---
+import '@/styles/globals.css';
+
+import '@fontsource/geist-mono';
+import '@fontsource/geist-sans';
+
+import { ViewTransitions } from 'astro:transitions';
+import PostHog from '../components/posthog.astro';
+import { cn } from '../components/utils';
+
+type Props = {
+  title: string;
+  canonical?: string;
+  className?: string;
+};
+
+const { title, canonical, className } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <title>{title}</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Italiana&subset=latin"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/github.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Italiana&subset=latin"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/github.min.css"
+    />
+    <meta
+      name="viewport"
+      content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <PostHog />
+    <ViewTransitions />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body class={cn(className, 'flex flex-col h-full')} vaul-drawer-wrapper="">
+    <slot />
+  </body>
+</html>

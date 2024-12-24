@@ -1,0 +1,74 @@
+---
+const guides = Object.values(await Astro.glob('./guides/*.md'));
+
+const integrations = guides.map((it: any) => ({
+  name: it.frontmatter.name,
+  logo: it.frontmatter.logo,
+  Content: it.Content,
+}));
+---
+
+<div id="integrations-section">
+  <h2 class="mb-4 text-4xl">Serverize Everything</h2>
+  <p class="text-secondary-foreground/70 mt-4 mb-8">
+    Supports all frameworks and languages, including Node.js, PHP, Python, Ruby,
+    Go, PHP, Rust, and more.
+  </p>
+  <div
+    style="grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));"
+    class="not-prose mb-8 grid gap-6"
+    id="integration-btn"
+  >
+    {
+      integrations.map((it) => (
+        <button
+          data-integration={it.name}
+          class="group flex cursor-pointer flex-col items-center justify-center gap-y-4 font-semibold tracking-wider text-secondary-foreground"
+        >
+          <div class="w-20 rounded border-[0.5px] border-border px-5 py-3 group-hover:bg-slate-100 group-hover:dark:bg-[#272727]">
+            <img class="min-h-10" src={it.logo} />
+          </div>
+          <span class="truncate text-sm">{it.name}</span>
+        </button>
+      ))
+    }
+  </div>
+  {
+    integrations.map(({ name, Content }) => (
+      <div class="hidden" data-integration-guide={name}>
+        <Content />
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  selectIntegration(urlSearchParams.get('integration') || 'Node.js');
+
+  const btn = document.getElementById('integration-btn')!;
+  btn.addEventListener('click', (event) => {
+    const target = (event.target as HTMLElement).closest('button');
+    if (!target) return;
+    const integration = target.getAttribute('data-integration');
+    if (!integration) return;
+    selectIntegration(integration);
+    history.pushState({}, '', `?integration=${integration}`);
+    const container = document.getElementById('integrations-section')!;
+    container.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  });
+
+  function selectIntegration(integration: string) {
+    const guides = document.querySelectorAll('[data-integration-guide]');
+    const relatedGuide = document.querySelector(
+      `[data-integration-guide="${integration}"]`,
+    );
+    if (!relatedGuide) return;
+    relatedGuide.classList.toggle('hidden');
+    guides.forEach((guide) => {
+      if (guide !== relatedGuide) {
+        guide.classList.add('hidden');
+      }
+    });
+  }
+</script>

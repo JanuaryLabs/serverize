@@ -1,0 +1,59 @@
+---
+import type { MarkdownLayoutProps } from 'astro';
+import { Nav } from '../components/background.tsx';
+import Cta from '../components/Cta.tsx';
+import BlogContainer, { TocSpy } from './Blog/BlogContainer.tsx';
+import GuideHeader from './Blog/GuideHeader.tsx';
+import Main from './main.astro';
+import CtaFooter from '../components/CtaFooter.tsx';
+
+type Props = MarkdownLayoutProps<{
+  title: string;
+  author: string;
+  date: string;
+  minutesRead: string;
+  subtitle: string;
+}>;
+const { frontmatter, url, headings } = Astro.props;
+const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
+---
+
+<Main title={frontmatter.title} canonical={canonical}>
+  <Nav client:load />
+  <div class="mx-auto w-full max-w-6xl px-6 md:pl-10 lg:px-10 xl:px-0">
+    <a
+      href="/guides"
+      class="mb-4 mt-4 flex cursor-pointer items-center gap-x-0.5 text-sm font-medium text-secondary-foreground/70 no-underline hover:underline md:mb-8 md:mt-12"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="mr-1 size-4"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"></path>
+      </svg>
+      Back to Guides
+    </a>
+    <GuideHeader
+      title={frontmatter.title}
+      subtitle={frontmatter.subtitle}
+      author={frontmatter.author}
+      date={frontmatter.date}
+      minutesRead={frontmatter.minutesRead}
+    />
+    <BlogContainer path={Astro.props.url!} toc={headings}>
+      <slot />
+      <TocSpy client:idle />
+    </BlogContainer>
+    <!-- <Footer /> -->
+  </div>
+  <div class="px-6 xl:px-0">
+    <CtaFooter />
+  </div>
+</Main>

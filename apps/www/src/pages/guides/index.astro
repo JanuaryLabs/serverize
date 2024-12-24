@@ -1,0 +1,49 @@
+---
+import '@/styles/globals.css';
+
+import type { MarkdownInstance } from 'astro';
+import { Nav } from '../../components/background';
+import Main from '../../layouts/main.astro';
+import BlogList from '../../lib/blog/BlogList.tsx';
+import CtaFooter from '../../components/CtaFooter.tsx';
+
+const posts = Object.values(
+  import.meta.glob('./*.{md,mdx}', { eager: true }),
+) as MarkdownInstance<{ title: string; subtitle: string }>[];
+
+const guides = posts.map((it) => ({
+  title: it.frontmatter.title,
+  subtitle: it.frontmatter.subtitle,
+  href: it.url!,
+  headings: it.getHeadings().map((it) => ({
+    title: it.text,
+    href: `#${it.slug}`,
+    level: it.depth,
+  })),
+}));
+---
+
+<!-- <Main className="dark:bg-background bg-zinc-50" title={'January - Blog'}>
+  <Nav className="bg-inherit" client:load  />
+  <div class="flex flex-col mx-4 w-full items-start justify-start mt-20 mb-8">
+    <Tabs
+      activeTab={'guides'}
+      transition:persist="something"
+      client:idle
+      tabs={tabs}
+    />
+  </div>
+</Main> -->
+<Main title={'January - Guides'}>
+  <Nav client:load />
+  <div class="w-full border-b">
+    <div class="mx-auto w-full max-w-screen-xl">
+      <h1 class="mx-8 py-20 text-5xl font-bold md:mx-16">Guides</h1>
+    </div>
+  </div>
+  <BlogList guides={guides} />
+
+  <div class="px-6 xl:px-0">
+    <CtaFooter />
+  </div>
+</Main>

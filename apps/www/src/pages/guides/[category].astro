@@ -1,0 +1,27 @@
+---
+import '@/styles/globals.css';
+
+import { Tabs } from '../../components/AnimatedTabs';
+import { Nav } from '../../components/background';
+import Main from '../../layouts/main.astro';
+import tabs from '../../lib/blog/tabs';
+
+export function getStaticPaths() {
+  return tabs.map((it) => ({ params: { category: it.href } }));
+}
+const activeTab = Astro.params.category;
+---
+
+<Main title={'January - Serverize'}>
+  <Nav className="bg-inherit" client:load />
+  <div
+    class="b relative mx-auto mb-8 mt-20 flex h-[20rem] w-full max-w-screen-lg flex-col items-start justify-start [perspective:1000px] md:h-[40rem]"
+  >
+    <Tabs
+      activeTab={activeTab}
+      transition:persist="something"
+      client:idle
+      tabs={tabs}
+    />
+  </div>
+</Main>
