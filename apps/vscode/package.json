@@ -1,8 +1,16 @@
 {
-  "name": "serverize-vscode",
-  "displayName": "Serverize",
-  "description": "development, redefined",
+  "name": "@serverize/vscode",
   "version": "0.0.2",
+  "displayName": "Serverize",
+  "readme": "README.md",
+  "description": "development, redefined",
+  "author": {
+    "name": "Ezz Abuzaid",
+    "url": "https://www.github.com/ezzabuzaid"
+  },
+  "bugs": {
+    "url": "https://github.com/januarylabs/serverize/issues"
+  },
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -20,9 +28,6 @@
   "main": "index.js",
   "files": [
     "assets/**"
-  ],
-  "enabledApiProposals": [
-    "contribViewsWelcome"
   ],
   "contributes": {
     "commands": [
@@ -203,12 +208,5 @@
     "eslint": "^9.13.0",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.6.3"
-  },
-  "dependencies": {
-    "@octokit/auth-oauth-device": "^7.1.1",
-    "fast-content-type-parse": "^2.0.0",
-    "oauth2-client-ts": "^0.1.1",
-    "prettier": "^3.3.3",
-    "serverize": "^0.34.2"
   }
 }

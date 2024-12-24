@@ -4,14 +4,13 @@ import path, { join } from 'path';
 
 import publishToNpm from './publish-packages';
 
-const releaseVersion = await publishToNpm('https://registry.npmjs.org/');
+// const releaseVersion = await publishToNpm('https://registry.npmjs.org/');
 
 const vscodeExtDistPath = join(process.cwd(), 'dist/apps/vscode');
-console.log('vscodeExtPath', vscodeExtDistPath);
 const packageJson = JSON.parse(
   await readFile(join(vscodeExtDistPath, 'package.json'), 'utf-8'),
 );
-packageJson.name = 'serverize-vscode';
+packageJson.name = 'serverize';
 await writeFile(
   join(vscodeExtDistPath, 'package.json'),
   JSON.stringify(packageJson, null, 2),

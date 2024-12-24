@@ -42,6 +42,9 @@
       "types": "./utils/packages/utils/src/index.d.ts"
     }
   },
+  "dependencies": {
+    "@serverize/client": "latest"
+  },
   "devDependencies": {
     "@types/cli-progress": "^3.11.6",
     "@types/debug": "^4.1.12",
