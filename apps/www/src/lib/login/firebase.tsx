@@ -6,13 +6,11 @@ import {
   GithubAuthProvider,
   GoogleAuthProvider,
   type User,
-  connectAuthEmulator,
   getAuth,
   onAuthStateChanged,
-  onIdTokenChanged,
+  onIdTokenChanged
 } from 'firebase/auth';
 import { useCallback, useEffect, useState } from 'react';
-import { useLocalStorage } from 'usehooks-ts';
 
 const app = initializeApp({
   apiKey: 'AIzaSyA6OFi52evEph_dFBFxHd-71BIGpJiCTOA',
@@ -80,13 +78,7 @@ export function useLogout() {
   return loggedOut;
 }
 
-export function useAccessToken() {
-  const [token, setToken, removeToken] = useLocalStorage<string | undefined>(
-    'accessToken',
-    undefined,
-  );
-  return [token || null, setToken, removeToken] as const;
-}
+
 
 // if (
 //   process.env.__LOCAL__ &&

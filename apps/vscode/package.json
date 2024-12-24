@@ -3,6 +3,10 @@
   "displayName": "Serverize",
   "description": "development, redefined",
   "version": "0.0.2",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "vscode": "^1.95.0"
   },
@@ -185,7 +189,7 @@
     "watch-tests": "tsc -p . -w --outDir out",
     "check-types": "tsc --noEmit",
     "test": "vscode-test",
-    "deploy": "vsce publish"
+    "deploy": "npx vsce publish"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.9",

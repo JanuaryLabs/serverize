@@ -10,7 +10,6 @@ import { WorkspacesMembers } from './WorkspacesMembers';
 import { Releases } from './Releases';
 import { Volumes } from './Volumes';
 import { Snapshots } from './Snapshots';
-import { Uint8ArrayConstructor } from './Uint8ArrayConstructor';
 import { SecretsKeys } from './SecretsKeys';
 import { ApiKeys } from './ApiKeys';
 import { PaginationMetadata } from './PaginationMetadata';
@@ -23,8 +22,8 @@ project: Projects
 projectId: string
 label: string
 channel?: null | "dev" | "preview"
-nonce: Uint8ArrayConstructor
-secret: Uint8ArrayConstructor
+nonce: Uint8Array<ArrayBufferLike>
+secret: Uint8Array<ArrayBufferLike>
 id: string
 createdAt: Date
 updatedAt?: Date

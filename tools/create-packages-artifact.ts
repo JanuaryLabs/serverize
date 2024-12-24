@@ -2,43 +2,23 @@ import { execSync } from 'child_process';
 import { readFile, writeFile } from 'fs/promises';
 import path, { join } from 'path';
 
-const npmProjects = ['serverize', 'client'];
+import publishToNpm from './publish-packages';
 
-execSync('nx release --skip-publish', {
+const releaseVersion = await publishToNpm('https://registry.npmjs.org/');
+
+const vscodeExtDistPath = join(process.cwd(), 'dist/apps/vscode');
+console.log('vscodeExtPath', vscodeExtDistPath);
+const packageJson = JSON.parse(
+  await readFile(join(vscodeExtDistPath, 'package.json'), 'utf-8'),
+);
+packageJson.name = 'serverize-vscode';
+await writeFile(
+  join(vscodeExtDistPath, 'package.json'),
+  JSON.stringify(packageJson, null, 2),
+  'utf-8',
+);
+
+execSync('npx vsce publish', {
   stdio: 'inherit',
-  env: process.env,
+  cwd: vscodeExtDistPath,
 });
-
-const [releaseTag] = execSync('git tag --sort=-creatordate --list "release/*"')
-  .toString()
-  .trim()
-  .split('\n');
-
-const releaseVersion = releaseTag.replace('release/', '');
-
-for (const project of [...npmProjects]) {
-  const dir = path.join(process.cwd(), 'dist', 'packages', project);
-  const packageJson = JSON.parse(
-    await readFile(join(dir, 'package.json'), 'utf-8'),
-  );
-  packageJson.version = releaseVersion;
-  await writeFile(
-    join(dir, 'package.json'),
-    JSON.stringify(packageJson, null, 2),
-    'utf-8',
-  );
-}
-
-for (const project of npmProjects) {
-  const dir = path.join(process.cwd(), 'dist', 'packages', project);
-  await publishToNpm(dir).catch((err) => {
-    console.error(err);
-  });
-}
-
-async function publishToNpm(path: string) {
-  execSync('npm publish --registry=https://registry.npmjs.org/', {
-    cwd: path,
-    stdio: 'inherit',
-  });
-}

@@ -11,7 +11,6 @@ import { Releases } from './Releases';
 import { Volumes } from './Volumes';
 import { Snapshots } from './Snapshots';
 import { Secrets } from './Secrets';
-import { Uint8ArrayConstructor } from './Uint8ArrayConstructor';
 import { SecretsKeys } from './SecretsKeys';
 import { ApiKeys } from './ApiKeys';
 import { Claims } from './Claims';

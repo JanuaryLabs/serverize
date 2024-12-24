@@ -11,7 +11,6 @@ import { Releases } from './Releases';
 import { Volumes } from './Volumes';
 import { Snapshots } from './Snapshots';
 import { Secrets } from './Secrets';
-import { Uint8ArrayConstructor } from './Uint8ArrayConstructor';
 import { ApiKeys } from './ApiKeys';
 import { PaginationMetadata } from './PaginationMetadata';
 import { Claims } from './Claims';
@@ -21,7 +20,7 @@ import { HealthCheck } from './HealthCheck';
 export interface SecretsKeys {
 project: Projects
 projectId: string
-key: Uint8ArrayConstructor
+key: Uint8Array<ArrayBufferLike>
 id: string
 createdAt: Date
 updatedAt?: Date
