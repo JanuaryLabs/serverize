@@ -17,6 +17,7 @@ import {
 import { streamLogs } from './view-logs';
 
 const list = new Command('list')
+  .alias('ls')
   .addOption(projectOption.makeOptionMandatory(true))
   .addOption(channelOption)
   .action(async ({ project, channel }) => {

@@ -231,7 +231,7 @@ const signout = new Command('signout').alias('logout').action(async () => {
     tell('Signed out');
   }
 });
-const whoami = new Command('whoami').action(async () => {
+export const whoami = new Command('whoami').action(async () => {
   const user = await initialise();
   if (user) {
     console.log(

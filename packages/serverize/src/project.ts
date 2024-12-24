@@ -27,7 +27,7 @@ const create = new Command('create')
   .action(async (name) => {
     await createProject(name);
   });
-const list = new Command('list').action(async () => {
+const list = new Command('list').alias('ls').action(async () => {
   const user = await ensureUser();
   if (!user) return;
 

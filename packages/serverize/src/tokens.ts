@@ -68,7 +68,7 @@ const revoke = new Command('revoke')
     }
   });
 
-const list = new Command('list').action(async () => {
+const list = new Command('list').alias('ls').action(async () => {
   const user = await ensureUser();
   if (!user) return;
   const [tokens, error] = await client.request('GET /tokens', {});

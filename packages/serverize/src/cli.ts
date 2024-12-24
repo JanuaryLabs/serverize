@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import setup from './setup';
 
-import auth from './auth';
+import auth, { whoami } from './auth';
 import deploy from './deploy';
 import logs from './logs';
 import { cli } from './program';
@@ -16,6 +16,7 @@ cli
   .addCommand(secrets)
   .addCommand(logs)
   .addCommand(auth)
+  .addCommand(whoami)
   .addCommand(project)
   .addCommand(tokens)
   .addCommand(releases)

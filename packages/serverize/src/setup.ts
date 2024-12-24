@@ -21,7 +21,7 @@ import {
 import { cli, cwdOption, dropdown, spinner } from './program';
 import { setupFramework } from './setup/setup-framework';
 
-const listCommand = new Command('list').action(() => {
+const listCommand = new Command('list').alias('ls').action(() => {
   console.log(
     supportedFrameworks
       .map((it) =>
