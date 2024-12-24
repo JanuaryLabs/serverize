@@ -1,4 +1,3 @@
-/// <reference types="vscode" />
 import { ServerError, Serverize } from '@serverize/client';
 import {
   User,
@@ -19,17 +18,14 @@ const outputChannel = vscode.window.createOutputChannel('Serverize', {
   log: true,
 });
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-
 function isDevelopment(context: vscode.ExtensionContext) {
   return context.extensionMode === vscode.ExtensionMode.Development;
 }
 
-function getServerizeAPIUrl(context: vscode.ExtensionContext, endpoint = '') {
+function getServerizeAPIUrl(context: vscode.ExtensionContext) {
   return isDevelopment(context)
-    ? `http://localhost:3000${endpoint}`
-    : `https://serverize.fly.dev${endpoint}`;
+    ? `http://localhost:3000`
+    : `https://serverize-api.january.sh`;
 }
 
 export async function activate(context: vscode.ExtensionContext) {

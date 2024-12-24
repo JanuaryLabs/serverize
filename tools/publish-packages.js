@@ -2,15 +2,11 @@ import { execSync } from 'child_process';
 import { readFile, writeFile } from 'fs/promises';
 import path, { join } from 'path';
 
-
-
-
-
 const npmProjects = ['packages/serverize', 'packages/client', 'apps/vscode'];
 
-// execSync('./node_modules/.bin/nx release --skip-publish', {
-//   stdio: 'inherit',
-// });
+execSync('./node_modules/.bin/nx release --skip-publish', {
+  stdio: 'inherit',
+});
 const [releaseTag] = execSync('git tag --sort=-creatordate --list "release/*"')
   .toString()
   .trim()

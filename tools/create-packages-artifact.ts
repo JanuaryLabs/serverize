@@ -4,7 +4,7 @@ import path, { join } from 'path';
 
 import publishToNpm from './publish-packages';
 
-// const releaseVersion = await publishToNpm('https://registry.npmjs.org/');
+const releaseVersion = await publishToNpm('https://registry.npmjs.org/');
 
 const vscodeExtDistPath = join(process.cwd(), 'dist/apps/vscode');
 const packageJson = JSON.parse(
