@@ -18,13 +18,15 @@ import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface Secrets {project: Projects
+export interface Secrets {
+project: Projects
 projectId: string
 label: string
-channel?: null | string
+channel?: null | "dev" | "preview"
 nonce: Uint8ArrayConstructor
 secret: Uint8ArrayConstructor
 id: string
 createdAt: Date
 updatedAt?: Date
-deletedAt?: Date}
+deletedAt?: Date
+}

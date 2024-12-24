@@ -548,6 +548,7 @@ export default feature({
 				channel: field.enum({
 					values: ['dev', 'preview'],
 					defaultValue: 'dev',
+					validations: [mandatory()],
 				}),
 				conclusion: field.enum({
 					values: [

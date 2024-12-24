@@ -18,11 +18,13 @@ import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface Users {members?: Members[]
+export interface Users {
+members?: Members[]
 membersIds?: null | string[]
 id: string
 createdAt: Date
 updatedAt?: Date
 deletedAt?: Date
 preference?: Preferences
-preferenceId?: null | string}
+preferenceId?: null | string
+}

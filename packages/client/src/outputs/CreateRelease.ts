@@ -28,4 +28,6 @@ import { TerminateRelease } from './TerminateRelease';
 import { CreateSecret } from './CreateSecret';
 import { GetSecrets } from './GetSecrets';
 import { GetSecretsValues } from './GetSecretsValues';
-export interface CreateRelease {id: string}
+export interface CreateRelease {
+id: string
+}

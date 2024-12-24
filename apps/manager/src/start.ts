@@ -1,15 +1,14 @@
+import { Releases, Serverize } from '@serverize/client';
 import type { Container } from 'dockerode';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import type { RuntimeConfig } from 'serverize';
 
-import { Serverize } from '@serverize/client';
 import { docker, followProgress, getContainer } from 'serverize/docker';
 import { extractError } from 'serverize/utils';
 
 import { fileWriter } from './file';
 import { createRemoteServer } from './manager';
-import type { Release } from './remove-when-sdk-is-published';
 
 export const UPLOADS_DIR =
   process.env.UPLOAD_DIR ||
@@ -77,7 +76,7 @@ export async function startServer(
     traceId: string;
     releaseId: string;
     network: string;
-    volumes: Release['volumes'];
+    volumes: Releases['volumes'];
     environment?: Record<string, string>;
     serviceName?: string;
   },

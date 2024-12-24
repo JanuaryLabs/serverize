@@ -18,7 +18,8 @@ import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface Organizations {name: string
+export interface Organizations {
+name: string
 id: string
 createdAt: Date
 updatedAt?: Date
@@ -32,4 +33,5 @@ organizationsMembersIds?: null | string[]
 preferences?: Preferences[]
 preferencesIds?: null | string[]
 apiKeys: ApiKeys[]
-apiKeysIds: string[]}
+apiKeysIds: string[]
+}

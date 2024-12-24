@@ -69,6 +69,8 @@ export async function writeSourceCode(
   recorder.record('bundle');
   const bundlePath = join(repoPath, 'build', 'server.js');
   await bundle({
+    cwd: repoPath,
+    tsconfigPath: join(repoPath, 'tsconfig.json'),
     projectRoot: repoPath,
     entry: join(repoPath, 'src', 'server.ts'),
     out: bundlePath,

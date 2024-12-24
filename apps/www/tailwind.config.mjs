@@ -1,8 +1,11 @@
-import { createGlobPatternsForDependencies } from '@nxtensions/astro/tailwind';
 import svgToDataUri from 'mini-svg-data-uri';
 import { join } from 'path';
 import defaultTheme from 'tailwindcss/defaultTheme';
 import { fileURLToPath } from 'url';
+
+const {
+  createGlobPatternsForDependencies,
+} = require('@nx/js/src/utils/generate-globs');
 
 const {
   default: flattenColorPalette,

@@ -4,13 +4,13 @@
     "default": ["{projectRoot}/**/*"],
     "production": ["default"]
   },
+  "useDaemonProcess": false,
   "nxCloudId": "67694c33332c815be66622de",
   "useInferencePlugins": false,
   "workspaceLayout": {
     "appsDir": "apps",
     "libsDir": "packages"
   },
-  "plugins": ["@nxtensions/astro"],
   "releaseTagPattern": "release/{version}",
   "release": {
     "conventionalCommits": {
@@ -30,25 +30,11 @@
         "file": false
       }
     },
-    "projects": ["serverize", "client"],
+    "projects": ["serverize", "client", "vscode"],
     "releaseTagPattern": "release/{version}",
     "version": {
-      "preVersionCommand": "npx nx run-many --projects=serverize,client -t build -c production",
+      "preVersionCommand": "npx nx run-many --projects=serverize,client,vscode -t build -c production",
       "conventionalCommits": true
-    }
-  },
-  "targetDefaults": {
-    "@nxtensions/astro:build": {
-      "inputs": ["production", "^production"],
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
-      "cache": true
-    },
-    "@nxtensions/astro:check": {
-      "inputs": ["production", "^production"],
-      "cache": true
-    },
-    "@nxtensions/astro:preview": {
-      "dependsOn": ["build"]
     }
   }
 }

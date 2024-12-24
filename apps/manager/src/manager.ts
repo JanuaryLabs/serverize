@@ -1,3 +1,4 @@
+import { Releases } from '@serverize/client';
 import { tmpdir } from 'os';
 import { join } from 'path';
 
@@ -9,13 +10,11 @@ import {
 } from 'serverize/docker';
 import { createRecorder } from 'serverize/utils';
 
-import type { Release } from './remove-when-sdk-is-published';
-
 interface Config {
   domainPrefix: string;
   network: string;
   serviceName?: string;
-  volumes?: Release['volumes'];
+  volumes?: Releases['volumes'];
   environment?: Record<string, string>;
 }
 

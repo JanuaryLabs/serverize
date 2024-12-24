@@ -18,10 +18,12 @@ import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface Snapshots {release: Releases
+export interface Snapshots {
+release: Releases
 releaseId: string
 name: string
 id: string
 createdAt: Date
 updatedAt?: Date
-deletedAt?: Date}
+deletedAt?: Date
+}

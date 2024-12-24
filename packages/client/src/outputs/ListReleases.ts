@@ -28,5 +28,7 @@ import { TerminateRelease } from './TerminateRelease';
 import { CreateSecret } from './CreateSecret';
 import { GetSecrets } from './GetSecrets';
 import { GetSecretsValues } from './GetSecretsValues';
-export interface ListReleases {records: Releases[]
-meta: PaginationMetadata}
+export interface ListReleases {
+records: Releases[]
+meta: PaginationMetadata
+}

@@ -18,7 +18,8 @@ import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface Projects {name: string
+export interface Projects {
+name: string
 workspace: Workspaces
 workspaceId: string
 id: string
@@ -34,4 +35,5 @@ secretsIds: string[]
 secretsKeys: SecretsKeys[]
 secretsKeysIds: string[]
 apiKeys: ApiKeys[]
-apiKeysIds: string[]}
+apiKeysIds: string[]
+}

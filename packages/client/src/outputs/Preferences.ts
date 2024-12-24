@@ -18,7 +18,8 @@ import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface Preferences {user?: Users
+export interface Preferences {
+user?: Users
 userId?: null | string
 organization?: Organizations
 organizationId?: null | string
@@ -29,4 +30,5 @@ projectId?: null | string
 id: string
 createdAt: Date
 updatedAt?: Date
-deletedAt?: Date}
+deletedAt?: Date
+}

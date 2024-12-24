@@ -18,9 +18,11 @@ import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface PaginationMetadata {hasNextPage: true
-hasPreviousPage: true
+export interface PaginationMetadata {
+hasNextPage: false | true
+hasPreviousPage: false | true
 pageSize?: string | number
 currentPage?: string | number
 totalCount: number
-totalPages: number}
+totalPages: number
+}

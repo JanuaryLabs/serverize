@@ -18,7 +18,9 @@ import { PaginationMetadata } from './PaginationMetadata';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface Claims {organizationId: string
+export interface Claims {
+organizationId: string
 workspaceId: string
 projectId: string
-aknowledged: true}
+aknowledged: false | true
+}

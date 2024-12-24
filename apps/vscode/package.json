@@ -1,0 +1,210 @@
+{
+  "name": "serverize-vscode",
+  "displayName": "Serverize",
+  "description": "development, redefined",
+  "version": "0.0.2",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "type": "commonjs",
+  "license": "MIT",
+  "repository": "https://github.com/januarylabs/serverize",
+  "activationEvents": [],
+  "main": "index.js",
+  "files": [
+    "assets/**"
+  ],
+  "enabledApiProposals": [
+    "contribViewsWelcome"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "serverize.release.open",
+        "title": "View in Browser",
+        "category": "Serverize",
+        "icon": "$(globe)",
+        "when": "viewItem == release"
+      },
+      {
+        "command": "serverize.projects.refresh",
+        "title": "Refresh Projects",
+        "category": "Serverize",
+        "shortTitle": "Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "serverize.orgs.refresh",
+        "title": "Refresh Organizations",
+        "category": "Serverize",
+        "shortTitle": "Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "serverize.addAccount",
+        "title": "Add Account",
+        "category": "Serverize",
+        "shortTitle": "Add Account",
+        "icon": {
+          "light": "assets/light/add-account.svg",
+          "dark": "assets/dark/add-account.svg"
+        }
+      },
+      {
+        "command": "serverize.createProject",
+        "title": "Create Project",
+        "category": "Serverize"
+      },
+      {
+        "command": "serverize.signup",
+        "title": "Sign up",
+        "category": "Serverize"
+      },
+      {
+        "command": "serverize.signin",
+        "title": "Sign in",
+        "category": "Serverize"
+      },
+      {
+        "command": "serverize.signout",
+        "title": "Sign out",
+        "category": "Serverize"
+      },
+      {
+        "command": "serverize.showOutput",
+        "title": "Show Output",
+        "category": "Serverize"
+      },
+      {
+        "command": "serverize.setup",
+        "title": "Setup dockerfile",
+        "category": "Serverize"
+      },
+      {
+        "command": "serverize.deploy",
+        "title": "Deploy",
+        "category": "Serverize"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "isWorkspaceTrusted && editorLangId == dockerfile",
+          "command": "serverize.deploy",
+          "group": "serverize"
+        }
+      ],
+      "explorer/context": [
+        {
+          "when": "isWorkspaceTrusted && resourceLangId == dockerfile",
+          "command": "serverize.deploy",
+          "group": "serverize"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "serverize.orgs.refresh",
+          "when": "view == serverizeOrgsView",
+          "group": "navigation"
+        },
+        {
+          "command": "serverize.addAccount",
+          "when": "view == serverizeOrgsView",
+          "group": "navigation"
+        },
+        {
+          "command": "serverize.projects.refresh",
+          "when": "view == serverizeProjectsView",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "serverize.release.open",
+          "group": "inline",
+          "when": "viewItem == release"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "serverizeOrgsView",
+        "contents": "You haven't added any accounts yet. Add an account to get started.\n[Add Account](command:serverize.addAccount)",
+        "when": "isWorkspaceTrusted && !serverize:isSignedIn"
+      },
+      {
+        "view": "serverizeProjectsView",
+        "contents": "You don't have any projects yet. Create a project to get started.\n[Create Project](command:serverize.createProject)",
+        "when": "!viewItemCount && isWorkspaceTrusted && serverize:isSignedIn"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "serverize",
+          "title": "Serverize",
+          "icon": "$(globe)"
+        }
+      ]
+    },
+    "views": {
+      "serverize": [
+        {
+          "id": "serverizeOrgsView",
+          "name": "Organizations",
+          "when": "isWorkspaceTrusted"
+        },
+        {
+          "id": "serverizeProjectsView",
+          "name": "Projects",
+          "when": "isWorkspaceTrusted"
+        },
+        {
+          "id": "serverizeSecretsView",
+          "name": "Secrets",
+          "when": "isWorkspaceTrusted"
+        }
+      ]
+    }
+  },
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false
+    }
+  },
+  "publisher": "january",
+  "scripts": {
+    "compile": "npm run check-types && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "build": "npm run check-types && node esbuild.js --production",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "check-types": "tsc --noEmit",
+    "test": "vscode-test",
+    "deploy": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.9",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.95.0",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.13.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@octokit/auth-oauth-device": "^7.1.1",
+    "fast-content-type-parse": "^2.0.0",
+    "oauth2-client-ts": "^0.1.1",
+    "prettier": "^3.3.3",
+    "serverize": "^0.34.2"
+  }
+}

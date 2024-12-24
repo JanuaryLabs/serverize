@@ -18,4 +18,6 @@ import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface DateConstructor {prototype: Date}
+export interface DateConstructor {
+prototype: Date
+}

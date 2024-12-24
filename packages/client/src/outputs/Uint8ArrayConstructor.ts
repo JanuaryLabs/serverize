@@ -18,5 +18,7 @@ import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface Uint8ArrayConstructor {prototype: Uint8ArrayConstructor
-BYTES_PER_ELEMENT: number}
+export interface Uint8ArrayConstructor {
+prototype: Uint8ArrayConstructor
+BYTES_PER_ELEMENT: number
+}

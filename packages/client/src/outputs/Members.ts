@@ -18,7 +18,8 @@ import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface Members {user?: Users
+export interface Members {
+user?: Users
 userId?: null | string
 organization?: Organizations
 organizationId?: null | string
@@ -29,4 +30,5 @@ deletedAt?: Date
 organizationsMembers?: OrganizationsMembers[]
 organizationsMembersIds?: null | string[]
 workspacesMembers?: WorkspacesMembers[]
-workspacesMembersIds?: null | string[]}
+workspacesMembersIds?: null | string[]
+}

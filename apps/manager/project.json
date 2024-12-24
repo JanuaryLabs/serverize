@@ -1,39 +1,17 @@
 {
   "name": "manager",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/serverize/src",
+  "sourceRoot": "apps/manager/src",
   "projectType": "application",
   "tags": [],
   "targets": {
-    "cli": {
-      "executor": "@nx/esbuild:esbuild",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
-      "options": {
-        "main": "apps/serverize/src/cli.ts",
-        "outputPath": "dist/apps/serverize",
-        "outputFileName": "cli.mjs",
-        "tsConfig": "apps/serverize/tsconfig.app.json",
-        "assets": [],
-        "platform": "node",
-        "format": ["esm"]
-      },
-      "configurations": {
-        "development": {
-          "minify": false
-        },
-        "production": {
-          "minify": true
-        }
-      }
-    },
     "build": {
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "main": "apps/serverize/src/main.ts",
-        "tsConfig": "apps/serverize/tsconfig.app.json",
-        "outputPath": "dist/apps/serverize",
+        "main": "apps/manager/src/main.ts",
+        "tsConfig": "apps/manager/tsconfig.app.json",
+        "outputPath": "dist/apps/manager",
         "format": ["esm"],
         "minify": false,
         "sourcemap": true,

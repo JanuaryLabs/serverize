@@ -15,7 +15,7 @@ import {
 import { PassThrough } from 'stream';
 import tarStream from 'tar-stream';
 
-import type { BundableFile } from '@january/generator/bundler';
+import type { BundableFile } from '@january/bundler';
 
 import { docker, getContainer } from 'serverize/docker';
 

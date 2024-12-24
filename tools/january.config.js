@@ -10,9 +10,9 @@ const appDir = join(process.cwd(), 'apps', 'api');
 
 export default defineConfig({
   client: {
-    packageName: '@serverize/client',
+    // packageName: '@serverize/client',
     name: 'Serverize',
-    output: join(process.cwd(), 'packages/client/src'),
+    output: join(process.cwd(), 'packages/client'),
     securityScheme: {
       bearerAuth: {
         type: 'http',

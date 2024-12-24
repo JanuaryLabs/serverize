@@ -18,11 +18,13 @@ import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface Volumes {release: Releases
+export interface Volumes {
+release: Releases
 releaseId: string
 src: string
 dest: string
 id: string
 createdAt: Date
 updatedAt?: Date
-deletedAt?: Date}
+deletedAt?: Date
+}

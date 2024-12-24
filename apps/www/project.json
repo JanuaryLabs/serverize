@@ -17,16 +17,6 @@
         "command": "astro check && astro build",
         "cwd": "apps/www"
       }
-    },
-    "preview": {
-      "executor": "@nxtensions/astro:preview",
-      "options": {}
-    },
-    "check": {
-      "executor": "@nxtensions/astro:check"
-    },
-    "sync": {
-      "executor": "@nxtensions/astro:sync"
     }
   },
   "tags": []

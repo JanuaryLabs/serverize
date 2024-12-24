@@ -18,4 +18,6 @@ import { PaginationMetadata } from './PaginationMetadata';
 import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { HealthCheck } from './HealthCheck';
-export interface SayHi {status: string}
+export interface SayHi {
+status: string
+}

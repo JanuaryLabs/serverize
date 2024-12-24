@@ -25,5 +25,7 @@ import { ListProjects } from './ListProjects';
 import { ListUserOrganizations } from './ListUserOrganizations';
 import { LinkUser } from './LinkUser';
 import { Signin } from './Signin';
-export interface ListOrganizations {records: Organizations[]
-meta: PaginationMetadata}
+export interface ListOrganizations {
+records: Organizations[]
+meta: PaginationMetadata
+}

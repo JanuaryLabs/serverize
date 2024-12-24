@@ -18,10 +18,12 @@ import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface SecretsKeys {project: Projects
+export interface SecretsKeys {
+project: Projects
 projectId: string
 key: Uint8ArrayConstructor
 id: string
 createdAt: Date
 updatedAt?: Date
-deletedAt?: Date}
+deletedAt?: Date
+}

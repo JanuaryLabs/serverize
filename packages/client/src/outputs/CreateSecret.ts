@@ -28,4 +28,6 @@ import { ListReleases } from './ListReleases';
 import { TerminateRelease } from './TerminateRelease';
 import { GetSecrets } from './GetSecrets';
 import { GetSecretsValues } from './GetSecretsValues';
-export interface CreateSecret {}
+export interface CreateSecret {
+
+}

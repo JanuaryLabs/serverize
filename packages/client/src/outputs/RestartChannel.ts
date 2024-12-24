@@ -19,4 +19,6 @@ import { Claims } from './Claims';
 import { StartRelease } from './StartRelease';
 import { RestartRelease } from './RestartRelease';
 import { GetConfig } from './GetConfig';
-export interface RestartChannel {traces: string[]}
+export interface RestartChannel {
+traces: string[]
+}

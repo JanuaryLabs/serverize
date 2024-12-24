@@ -25,4 +25,6 @@ import { PatchProject } from './PatchProject';
 import { ListProjects } from './ListProjects';
 import { ListUserOrganizations } from './ListUserOrganizations';
 import { LinkUser } from './LinkUser';
-export interface Signin {accessToken: string}
+export interface Signin {
+accessToken: string
+}

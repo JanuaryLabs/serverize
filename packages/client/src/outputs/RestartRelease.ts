@@ -19,6 +19,8 @@ import { Claims } from './Claims';
 import { StartRelease } from './StartRelease';
 import { RestartChannel } from './RestartChannel';
 import { GetConfig } from './GetConfig';
-export interface RestartRelease {traceId: `${string}-${string}-${string}-${string}-${string}`
+export interface RestartRelease {
+traceId: `${string}-${string}-${string}-${string}-${string}`
 releaseId: string
-finalUrl: string}
+finalUrl: string
+}

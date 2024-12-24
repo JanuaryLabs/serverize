@@ -1,3 +1,4 @@
+import { Releases } from '@serverize/client';
 import sse from 'better-sse';
 import cors from 'cors';
 import express from 'express';
@@ -18,7 +19,6 @@ import { getContainer, removeContainer } from 'serverize/docker';
 import { observeFile } from './file';
 import { type LogEntry, containerLogs, listenToDockerEvents } from './instance';
 import { makeProjectPath } from './manager';
-import type { Release } from './remove-when-sdk-is-published';
 import { startServer } from './start';
 
 Object.assign(process.env, {
@@ -136,7 +136,7 @@ const application = express()
   .post('/deploy', express.json(), async (req, res, next) => {
     try {
       const controller = new AbortController();
-      const release = req.body as Release;
+      const release = req.body as Releases;
 
       req.on('aborted', () => {
         console.log('Connection aborted');
@@ -156,8 +156,9 @@ const application = express()
         {
           channel: release.channel,
           projectId: release.projectId,
-          tarLocation: release.tarLocation,
-          image: release.image,
+          // TODO: create seperate entity for tarLocation, image and runtimeConfig (basically and column that will be updated later on not when the release is created)
+          tarLocation: release.tarLocation!,
+          image: release.image!,
           domainPrefix: release.domainPrefix,
           releaseId: release.id,
           volumes: release.volumes,
@@ -166,7 +167,7 @@ const application = express()
           serviceName: req.body.serviceName,
           network: req.body.network,
         },
-        JSON.parse(release.runtimeConfig),
+        JSON.parse(release.runtimeConfig!),
       );
     } catch (error: any) {
       // TODO: log the error
@@ -185,7 +186,7 @@ const application = express()
   .post('/restart', express.json(), async (req, res, next) => {
     try {
       const controller = new AbortController();
-      const release = req.body as Release;
+      const release = req.body as Releases;
       req.on('aborted', () => {
         controller.abort('Client aborted connection');
       });
@@ -204,8 +205,8 @@ const application = express()
         {
           channel: release.channel,
           projectId: release.projectId,
-          tarLocation: release.tarLocation,
-          image: release.image,
+          tarLocation: release.tarLocation!,
+          image: release.image!,
           domainPrefix: release.domainPrefix,
           volumes: release.volumes,
           releaseId: release.id,
@@ -214,7 +215,7 @@ const application = express()
           serviceName: req.body.serviceName,
           network: req.body.network,
         },
-        JSON.parse(release.runtimeConfig),
+        JSON.parse(release.runtimeConfig!),
       );
     } catch (error: any) {
       // TODO: log the error

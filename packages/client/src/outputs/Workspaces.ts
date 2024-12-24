@@ -18,7 +18,8 @@ import { Claims } from './Claims';
 import { EmptyFavicon } from './EmptyFavicon';
 import { SayHi } from './SayHi';
 import { HealthCheck } from './HealthCheck';
-export interface Workspaces {name: string
+export interface Workspaces {
+name: string
 organization?: Organizations
 organizationId?: null | string
 id: string
@@ -30,4 +31,5 @@ projectsIds: string[]
 workspacesMembers?: WorkspacesMembers[]
 workspacesMembersIds?: null | string[]
 preferences?: Preferences[]
-preferencesIds?: null | string[]}
+preferencesIds?: null | string[]
+}

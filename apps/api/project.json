@@ -1,15 +1,14 @@
 {
   "name": "api",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/serverize/src",
+  "sourceRoot": "apps/api/src",
   "projectType": "application",
   "tags": [],
   "targets": {
     "build": {
       "executor": "nx:run-script",
-      "outputs": ["dist/apps/api"],
       "options": {
-        "script": "generate"
+        "script": "build"
       }
     },
 
