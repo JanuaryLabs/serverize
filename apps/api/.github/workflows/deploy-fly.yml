@@ -1,0 +1,22 @@
+name: Deploy To Fly.io
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  deploy_to_fly:
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout
+        name: checkout App Repo
+        uses: actions/checkout@v3
+      - name: Setup Fly.io cli.
+        uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Deploying ...
+        run: flyctl deploy --app ${{ secrets.FLY_APP_NAME }} --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

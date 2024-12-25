@@ -17,8 +17,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - serverize-uploads:/data:rw
-      - /Users/ezzabuzaid/Desktop/january/tarrez/dist/apps/serverize:/app:rw
-      - /Users/ezzabuzaid/Desktop/january/tarrez/node_modules:/app/node_modules:rw
+      - /Users/ezzabuzaid/Desktop/january/serverize/dist/apps/manager:/app:rw
+      - /Users/ezzabuzaid/Desktop/january/serverize/node_modules:/app/node_modules:r
     environment:
       - NODE_ENV=development
       - PORT=3000
@@ -30,7 +30,7 @@ services:
   api:
     image: node:lts-alpine
     working_dir: /app
-    command: npm run start:watch
+    command: npm run dev
     platform: linux/amd64
     restart: unless-stopped
     ports:
@@ -38,9 +38,11 @@ services:
     networks:
       - traefik-network
     volumes:
-      - /Users/ezzabuzaid/Desktop/january/projects/project-accounts-workspaces:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /Users/ezzabuzaid/Desktop/january/serverize/apps/api/output:/app:rw
+      - /Users/ezzabuzaid/Desktop/january/serverize/node_modules:/app/node_modules:rw
     env_file: !override
-      - /Users/ezzabuzaid/Desktop/january/projects/project-accounts-workspaces/.env
+      - /Users/ezzabuzaid/Desktop/january/serverize/apps/api/.env
     environment:
       - NODE_ENV=development
       - PORT=3000
@@ -53,7 +55,7 @@ services:
 
   tusd:
     command: -upload-dir=/data
-    user: "0:0" # Run as root
+    user: '0:0' # Run as root
     ports:
       - '8085:8080'
 
@@ -61,3 +63,5 @@ volumes:
   serverize-uploads:
     driver: local
     driver_opts: !reset null
+# docker compose -f docker/compose.yml -f docker/compose.override.yml up --remove-orphans
+

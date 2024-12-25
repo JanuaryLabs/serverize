@@ -1,4 +1,4 @@
-import { Releases, Serverize } from '@serverize/client';
+import { Serverize } from '@serverize/client';
 import type { Container } from 'dockerode';
 import { tmpdir } from 'os';
 import { join } from 'path';
@@ -8,7 +8,7 @@ import { docker, followProgress, getContainer } from 'serverize/docker';
 import { extractError } from 'serverize/utils';
 
 import { fileWriter } from './file';
-import { createRemoteServer } from './manager';
+import { ReleaseInfo, createRemoteServer } from './manager';
 
 export const UPLOADS_DIR =
   process.env.UPLOAD_DIR ||
@@ -67,19 +67,7 @@ const imageToMemoryMap: Record<string, string> = {
 export async function startServer(
   token: string,
   signal: AbortSignal,
-  releaseInfo: {
-    projectId: string;
-    channel: 'dev' | 'preview';
-    tarLocation: string;
-    image: string;
-    domainPrefix: string;
-    traceId: string;
-    releaseId: string;
-    network: string;
-    volumes: Releases['volumes'];
-    environment?: Record<string, string>;
-    serviceName?: string;
-  },
+  releaseInfo: ReleaseInfo,
   runtimeConfig: RuntimeConfig,
 ) {
   const session = fileWriter<LogEntry>(
@@ -99,13 +87,7 @@ export async function startServer(
   const [containerName, error] = await extractError(() =>
     createRemoteServer(
       signal,
-      {
-        domainPrefix: releaseInfo.domainPrefix,
-        volumes: releaseInfo.volumes,
-        serviceName: releaseInfo.serviceName,
-        network: releaseInfo.network,
-        environment: releaseInfo.environment ?? {},
-      },
+      releaseInfo,
       async () => {
         await session.write({
           type: 'progress',

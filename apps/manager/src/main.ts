@@ -1,5 +1,5 @@
 import { Releases } from '@serverize/client';
-import sse from 'better-sse';
+// import sse from 'better-sse';
 import cors from 'cors';
 import express from 'express';
 import { createServer } from 'http';
@@ -67,7 +67,7 @@ const application = express()
       process.env.NODE_ENV === 'development' ? 'verbose' : 'info';
     const repoPath = makeProjectPath(projectId);
     console.log({ projectId, repoPath });
-    const session = await sse.createSession(req, res);
+    // const session = await sse.createSession(req, res);
     const runnerImageTag = 'makeImageName(projectId)';
     const runnerContainerName = projectId;
     // it is okay even if the container is dead (DON'T START IT)
@@ -106,7 +106,7 @@ const application = express()
             timestamp: String(event.timeNano || event.time || ''),
             // to convert to JS Date new Date(timeNano / 1000000).toIsoString()
           };
-          session.push(logEntry);
+          // session.push(logEntry);
         }
       });
 
@@ -124,19 +124,21 @@ const application = express()
         ),
       )
       .subscribe((data) => {
-        session.push(data);
+        // session.push(data);
       });
 
-    session.on('disconnected', () => {
-      console.log('disconnected');
-      dockerEventsSubscriber.unsubscribe();
-      containerLogsSubscriber.unsubscribe();
-    });
+    // session.on('disconnected', () => {
+    //   console.log('disconnected');
+    //   dockerEventsSubscriber.unsubscribe();
+    //   containerLogsSubscriber.unsubscribe();
+    // });
   })
   .post('/deploy', express.json(), async (req, res, next) => {
     try {
       const controller = new AbortController();
-      const release = req.body as Releases;
+      const release = req.body as Releases & {
+        projectName: string;
+      };
 
       req.on('aborted', () => {
         console.log('Connection aborted');
@@ -154,6 +156,9 @@ const application = express()
         token,
         controller.signal,
         {
+          id: release.id,
+          name: release.name,
+          projectName: release.projectName,
           channel: release.channel,
           projectId: release.projectId,
           // TODO: create seperate entity for tarLocation, image and runtimeConfig (basically and column that will be updated later on not when the release is created)
@@ -186,7 +191,9 @@ const application = express()
   .post('/restart', express.json(), async (req, res, next) => {
     try {
       const controller = new AbortController();
-      const release = req.body as Releases;
+      const release = req.body as Releases & {
+        projectName: string;
+      };
       req.on('aborted', () => {
         controller.abort('Client aborted connection');
       });
@@ -203,6 +210,9 @@ const application = express()
         token,
         controller.signal,
         {
+          id: release.id,
+          name: release.name,
+          projectName: release.projectName,
           channel: release.channel,
           projectId: release.projectId,
           tarLocation: release.tarLocation!,

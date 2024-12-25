@@ -10,17 +10,25 @@ import {
 } from 'serverize/docker';
 import { createRecorder } from 'serverize/utils';
 
-interface Config {
+export interface ReleaseInfo {
+  projectName: string;
+  id: string;
+  name: string;
+  projectId: string;
+  channel: 'dev' | 'preview';
+  tarLocation: string;
+  image: string;
   domainPrefix: string;
+  traceId: string;
+  releaseId: string;
   network: string;
-  serviceName?: string;
-  volumes?: Releases['volumes'];
+  volumes: Releases['volumes'];
   environment?: Record<string, string>;
+  serviceName?: string;
 }
-
 export async function createRemoteServer(
   signal: AbortSignal,
-  config: Config,
+  releaseInfo: ReleaseInfo,
   processImage: () => Promise<string>,
   instructions: {
     memory?: number;
@@ -29,11 +37,11 @@ export async function createRemoteServer(
   },
 ) {
   const recorder = createRecorder({
-    label: `createClientServer:${config.domainPrefix}`,
+    label: `createClientServer:${releaseInfo.domainPrefix}`,
     verbose: true,
   });
 
-  const runnerContainerName = config.domainPrefix;
+  const runnerContainerName = releaseInfo.domainPrefix;
 
   recorder.record('processImage');
   const runnerImageTag = await processImage();
@@ -41,7 +49,7 @@ export async function createRemoteServer(
 
   {
     recorder.record('removeContainer');
-    await removeContainer(config.domainPrefix).catch(() => {
+    await removeContainer(releaseInfo.domainPrefix).catch(() => {
       // noop
     });
     recorder.recordEnd('removeContainer');
@@ -51,7 +59,7 @@ export async function createRemoteServer(
     try {
       const container = await createRemoteContainer(
         signal,
-        config,
+        releaseInfo,
         runnerContainerName,
         runnerImageTag,
         instructions,
@@ -77,7 +85,7 @@ export async function createRemoteServer(
 
 export async function createRemoteContainer(
   signal: AbortSignal,
-  config: Config,
+  releaseInfo: ReleaseInfo,
   containerName: string,
   imageTag: string,
   instructions: {
@@ -86,8 +94,8 @@ export async function createRemoteContainer(
     Healthcheck?: Record<string, any>;
   },
 ) {
-  const network = await upsertNetwork(config.network);
-  for (const volume of config.volumes ?? []) {
+  const network = await upsertNetwork(releaseInfo.network);
+  for (const volume of releaseInfo.volumes ?? []) {
     await upsertVolume(volume.src);
   }
   const healthcheck = instructions.Healthcheck
@@ -110,13 +118,18 @@ export async function createRemoteContainer(
     Image: imageTag,
     abortSignal: signal,
     Env: [
-      ...Object.entries(config.environment ?? {}).map(
+      ...Object.entries(releaseInfo.environment ?? {}).map(
         ([key, value]) => `${key}=${value}`,
       ),
     ],
     Labels: {
       'sablier.enable': 'true',
       'sablier.group': containerName,
+      'serverize.release': releaseInfo.id,
+      'serverize.releaseName': releaseInfo.name,
+      'serverize.project': releaseInfo.projectId,
+      'serverize.projectName': releaseInfo.projectName,
+      'serverize.channelName': releaseInfo.channel,
       // TODO: it should also be the compose name (which is the group) as well
       // when the project is compose
     },
@@ -126,7 +139,7 @@ export async function createRemoteContainer(
     HostConfig: {
       ...memory(instructions.memory),
       NetworkMode: 'traefik-network', // needed for traefik to discover the container
-      Binds: (config.volumes ?? []).map(
+      Binds: (releaseInfo.volumes ?? []).map(
         (volume) => `${volume.src}:${volume.dest}`,
       ),
       RestartPolicy: {
@@ -139,10 +152,10 @@ export async function createRemoteContainer(
   });
   await network.connect({
     Container: container.id,
-    ...(config.serviceName
+    ...(releaseInfo.serviceName
       ? {
           EndpointConfig: {
-            Aliases: [config.serviceName],
+            Aliases: [releaseInfo.serviceName],
           },
         }
       : {}),
