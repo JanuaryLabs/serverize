@@ -63,42 +63,42 @@ function watchMode(token: string) {
   logger('using watch mode');
   const releaseInfo = getReleaseInfo();
   const ast = getAst();
-  followLogs(releaseInfo);
-  watchFiles()
-    .pipe(
-      switchMap(() => saveImage(releaseInfo.image)),
-      exhaustMap((details) => pushImage(details, tell)),
-      tap({
-        next: tell,
-        error: (error) => {
-          spinner.fail('Failed to push the image');
-          console.error(error);
-        },
-      }),
-      switchMap((tarLocation) =>
-        sse(ast, tarLocation, releaseInfo, token).pipe(
-          finalize(() => {
-            spinner.info('Deployed. Waiting for changes...');
-            // spinner.info(
-            //   `Accessible at https://${data.finalUrl}.beta.january.sh`,
-            // );
-          }),
-        ),
-      ),
-    )
-    .subscribe({
-      next: tell,
-      error: (error) => {
-        const message = safeFail(
-          () => (typeof error === 'string' ? error : error.message).trim(),
-          '',
-        );
-        if (message) {
-          spinner.fail(`Failed to process image: ${message}`);
-        } else {
-          spinner.fail(`Failed to process image`);
-          console.error(error);
-        }
-      },
-    });
+  // followLogs(releaseInfo);
+  // watchFiles()
+  //   .pipe(
+  //     switchMap(() => saveImage(releaseInfo.image)),
+  //     exhaustMap((details) => pushImage(details, tell)),
+  //     tap({
+  //       next: tell,
+  //       error: (error) => {
+  //         spinner.fail('Failed to push the image');
+  //         console.error(error);
+  //       },
+  //     }),
+  //     switchMap((tarLocation) =>
+  //       sse(ast, tarLocation, releaseInfo, token).pipe(
+  //         finalize(() => {
+  //           spinner.info('Deployed. Waiting for changes...');
+  //           // spinner.info(
+  //           //   `Accessible at https://${data.finalUrl}.beta.january.sh`,
+  //           // );
+  //         }),
+  //       ),
+  //     ),
+  //   )
+  //   .subscribe({
+  //     next: tell,
+  //     error: (error) => {
+  //       const message = safeFail(
+  //         () => (typeof error === 'string' ? error : error.message).trim(),
+  //         '',
+  //       );
+  //       if (message) {
+  //         spinner.fail(`Failed to process image: ${message}`);
+  //       } else {
+  //         spinner.fail(`Failed to process image`);
+  //         console.error(error);
+  //       }
+  //     },
+  //   });
 }

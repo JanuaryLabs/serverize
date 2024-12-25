@@ -17,8 +17,8 @@ const setCommand = new Command('set')
   .argument('<secrets...>', 'Secrets in format NAME=VALUE')
   .addOption(projectOption)
   .addOption(channelOption)
-  .action(async (secretsList, { project, channel }) => {
-    const currentProject = await getCurrentProject(project);
+  .action(async (secretsList, { projectName, channel }) => {
+    const currentProject = await getCurrentProject(projectName);
     for (const secret of secretsList) {
       const [name, value] = secret.split('=');
       if (!name && !value) {
@@ -46,8 +46,8 @@ const setFileCommand = new Command('set-file')
   .argument('<envFile>', 'Path to the file with secrets')
   .addOption(projectOption)
   .addOption(channelOption)
-  .action(async (file, { project, channel }) => {
-    const currentProject = await getCurrentProject(project);
+  .action(async (file, { projectName, channel }) => {
+    const currentProject = await getCurrentProject(projectName);
     const secrets = Object.entries(
       parse(await readFile(join(process.cwd(), file), 'utf-8')),
     );

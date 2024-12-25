@@ -38,7 +38,7 @@ export default new Command('shazam')
   .action(
     async ({
       framework: frameworkName,
-      project,
+      projectName,
       channel,
       release,
       output: outputFile,
@@ -144,18 +144,16 @@ export default new Command('shazam')
         process.exit(1);
       }
 
-      let projectName =
-        project ||
-        (await dropdown({
-          title: 'Select a project',
-          choices: [
-            ...projects.records.map(({ name, id }) => ({ name, value: name })),
-            {
-              name: 'Create a new project',
-              value: 'new',
-            },
-          ],
-        }));
+      projectName ||= await dropdown({
+        title: 'Select a project',
+        choices: [
+          ...projects.records.map(({ name, id }) => ({ name, value: name })),
+          {
+            name: 'Create a new project',
+            value: 'new',
+          },
+        ],
+      });
       if (projectName === 'new') {
         projectName = await createProject();
       }

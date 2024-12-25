@@ -23,21 +23,32 @@
         "generatePackageJson": true,
         "bundle": true,
         "thirdParty": false,
-        "external": [
-          "@serverize/client",
-          "serverize/utils",
-          "serverize/docker",
-          "serverize/dockerfile",
-          "serverize/dockercompose"
-        ],
         "esbuildOptions": {
-          "logLevel": "silent",
           "alias": {
             "cli-spinners": "aliases/cli-spinners/index.js"
           },
           "banner": {
             "js": "import { createRequire } from 'module'; const require = createRequire(import.meta.url);"
           }
+        }
+      },
+      "configurations": {
+        "production": {
+          "external": [
+            "@serverize/client",
+            "serverize/utils",
+            "serverize/docker",
+            "serverize/dockerfile",
+            "serverize/dockercompose"
+          ]
+        },
+        "development": {
+          "external": [
+            "serverize/utils",
+            "serverize/docker",
+            "serverize/dockerfile",
+            "serverize/dockercompose"
+          ]
         }
       }
     },

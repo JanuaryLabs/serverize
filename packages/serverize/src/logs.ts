@@ -1,11 +1,30 @@
 import { Command } from 'commander';
 
-import { projectOption } from './program';
-import { followLogs } from './view-logs';
+import { client } from './lib/api-client';
+import {
+  channelOption,
+  projectOption,
+  releaseOption,
+  showError,
+} from './program';
 
 export default new Command('logs')
   .usage('npx serverize logs -p <projectName>')
-  .addOption(projectOption)
-  .action(({ project }) => {
-    followLogs(project, false);
+  .addOption(projectOption.makeOptionMandatory())
+  .addOption(channelOption)
+  .addOption(releaseOption)
+  .action(async ({ projectName, release, channel }) => {
+    const [stream, error] = await client.stream('GET /container/logs', {
+      projectName: projectName,
+      channelName: channel,
+      releaseName: release,
+    });
+    if (error) {
+      showError(error);
+      process.exit(1);
+    }
+    const decoder = new TextDecoder();
+    for await (const chunk of stream) {
+      console.log(decoder.decode(chunk, { stream: true }));
+    }
   });

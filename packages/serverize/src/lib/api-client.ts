@@ -1,11 +1,10 @@
-import { onIdTokenChanged } from 'firebase/auth';
-
 import { Serverize } from '@serverize/client';
+import { onIdTokenChanged } from 'firebase/auth';
 
 import type { Healthcheck } from '../program';
 import { auth } from './firebase';
 
-const serverizeApiUrl =
+export const serverizeApiUrl =
   process.env.API_URL ||
   (process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
@@ -35,17 +34,6 @@ onIdTokenChanged(auth, async (user) => {
     client.setOptions({ token: '' });
   }
 });
-
-export interface ReleaseInfo {
-  channel: 'dev' | 'preview';
-  releaseName: string;
-  projectId: string;
-  projectName: string;
-  serviceName?: string;
-  image: string;
-  volumes?: string[];
-  environment?: Record<string, string>;
-}
 
 export function makeImageName(
   projectName: string,

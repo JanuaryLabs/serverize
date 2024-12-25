@@ -1,4 +1,3 @@
-import debug from 'debug';
 import { EventSource } from 'eventsource';
 import fetch from 'node-fetch';
 import { createInterface } from 'readline';
@@ -7,16 +6,13 @@ import { WebSocket } from 'ws';
 
 import { safeFail } from 'serverize/utils';
 
-import type { ReleaseInfo } from './lib/api-client';
 import {
   serverizeManagementUrl,
   serverizeManagementWs,
 } from './lib/api-client';
-import { type AST } from './program';
+import { logger } from './program';
 
-const logger = debug('serverize');
-
-export function followLogs(release: ReleaseInfo, next?: boolean) {
+export function followLogs(next?: boolean) {
   const ws = new WebSocket(`${serverizeManagementWs}?apiKey=`);
   ws.on('open', () => {
     logger('Connected to runner server');
@@ -48,12 +44,7 @@ export function toBase64(data: any) {
   return Buffer.from(JSON.stringify(data)).toString('base64');
 }
 
-export function sse(
-  ast: AST,
-  tarLocation: string,
-  releaseInfo: ReleaseInfo,
-  token: string,
-) {
+export function sse(token: string) {
   return new Observable<string>((subscriber) => {
     const eventSource = new EventSource(`${serverizeManagementUrl}/progress`, {
       fetch: (input, init) =>
@@ -129,21 +120,3 @@ export function streamLogs(logId: string) {
     };
   });
 }
-
-const getStreamSize = (stream: NodeJS.ReadableStream) => {
-  return new Promise((resolve, reject) => {
-    let size = 0;
-
-    stream.on('data', (chunk) => {
-      size += chunk.length;
-    });
-
-    stream.on('end', () => {
-      resolve(size);
-    });
-
-    stream.on('error', (err) => {
-      reject(err);
-    });
-  });
-};

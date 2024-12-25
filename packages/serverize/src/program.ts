@@ -1,5 +1,6 @@
 import ignore from '@balena/dockerignore';
 import { checkbox, input, select } from '@inquirer/prompts';
+import { ValidationError } from '@serverize/client';
 import chalk from 'chalk';
 import cliProgress from 'cli-progress';
 import cliSpinners from 'cli-spinners';
@@ -17,7 +18,6 @@ import validator from 'validator';
 
 import { box } from '@january/console';
 
-import { ValidationError } from '@serverize/client';
 import { coerceArray, nodeServer } from 'serverize/dockerfile';
 
 import { client } from './lib/api-client';
@@ -395,11 +395,12 @@ function guessPort(ast: Dockerfile) {
 
 export function showError(error?: Error) {
   if (!error) return;
-  const message = error.message;
-  spinner.fail(message);
   if (error instanceof ValidationError) {
     const message = `${error.flattened.map((it) => `${it.path}: ${it.message}`).join('\n')}`;
     spinner.fail(`${error.message}\n${message}`);
+  } else {
+    const message = error.message;
+    spinner.fail(message);
   }
 }
 

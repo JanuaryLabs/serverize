@@ -11,11 +11,11 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { isDockerRunning } from 'serverize/docker';
-
-import { safeFail } from 'serverize/utils';
 
 import { box } from '@january/console';
+
+import { isDockerRunning } from 'serverize/docker';
+import { safeFail } from 'serverize/utils';
 
 import {
   type AST,
@@ -27,9 +27,20 @@ import {
   toAst,
 } from '../program';
 import { streamLogs } from '../view-logs';
-import { type ReleaseInfo, client, makeImageName } from './api-client';
+import { client, makeImageName } from './api-client';
 import { buildCompose, buildImage, saveImage } from './image';
 import { pushImage } from './uploader';
+
+interface ReleaseInfo {
+  channel: 'dev' | 'preview';
+  releaseName: string;
+  projectId: string;
+  projectName: string;
+  serviceName?: string;
+  image: string;
+  volumes?: string[];
+  environment?: Record<string, string>;
+}
 
 const als = new AsyncLocalStorage<{
   releaseInfo: ReleaseInfo;

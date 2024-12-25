@@ -1,7 +1,6 @@
 import { confirm, input, password } from '@inquirer/prompts';
 import { Command } from 'commander';
 import { signOut } from 'firebase/auth';
-import open from 'open';
 import validator from 'validator';
 
 import { box } from '@january/console';
@@ -30,11 +29,11 @@ async function github() {
     redirect_uri: encodeURI(`${REDIRECT_URI}/github`),
   });
   const authUrl = `https://github.com/login/oauth/authorize?${params}`;
-  await open(authUrl);
+  // await open(authUrl);
 }
 async function google() {
   const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=1073944994711-7&redirect_uri=${REDIRECT_URI}/google&response_type=code`;
-  await open(authUrl);
+  // await open(authUrl);
 }
 
 async function selectProvider() {

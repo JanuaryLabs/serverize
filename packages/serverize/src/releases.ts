@@ -20,8 +20,8 @@ const list = new Command('list')
   .alias('ls')
   .addOption(projectOption.makeOptionMandatory(true))
   .addOption(channelOption)
-  .action(async ({ project, channel }) => {
-    const currentProject = await getCurrentProject(project);
+  .action(async ({ projectName, channel }) => {
+    const currentProject = await getCurrentProject(projectName);
     const [releases = { records: [] }, error] = await client.request(
       'GET /releases',
       {
@@ -58,8 +58,8 @@ const stop = new Command('stop')
   .addOption(channelOption.makeOptionMandatory(false))
   .addOption(releaseOption)
   .addOption(projectOption)
-  .action(async ({ project, channel, release }) => {
-    const currentProject = await getCurrentProject(project);
+  .action(async ({ projectName, channel, release }) => {
+    const currentProject = await getCurrentProject(projectName);
     const [, error] = await client.request('DELETE /releases', {
       channelName: channel,
       projectId: currentProject.projectId,
