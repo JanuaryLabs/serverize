@@ -37,7 +37,7 @@ export function toRequest<T extends Endpoint>(
 		baseUrl: string;
 		headers?: Record<string, string>;
 	}
-) {
+): Request {
 	const [method, path] = endpoint.split(' ');
 
 	const headers = new Headers({

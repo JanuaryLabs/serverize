@@ -1,4 +1,5 @@
 import z from 'zod';
+import * as docker from './inputs/docker';
 import * as management from './inputs/management';
 import {ListOrganizations} from './outputs/ListOrganizations';
 import {CreateDefaultOrganization} from './outputs/CreateDefaultOrganization';
