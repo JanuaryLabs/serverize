@@ -1,6 +1,5 @@
 import { ServerError, Serverize } from '@serverize/client';
 import {
-  User,
   onIdTokenChanged,
   signInWithCustomToken,
   signOut,
@@ -62,6 +61,7 @@ export async function activate(context: vscode.ExtensionContext) {
       const token = await user.getIdToken();
       serverize.setOptions({ token });
       outputChannel.info('User signed in');
+
       await vscode.commands.executeCommand(
         'setContext',
         'serverize:isSignedIn',
@@ -195,7 +195,6 @@ export async function activate(context: vscode.ExtensionContext) {
 
         await signOut(auth);
         const { user } = await signInWithEmail(email, password);
-        await setUser(serverize, context, user);
         vscode.window.showInformationMessage(
           `Welcome ${user.displayName || ''}`,
         );
@@ -215,8 +214,6 @@ export async function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand('serverize.signout', async () => {
       await signOut(auth);
-      serverize.setOptions({ token: '' });
-      await context.secrets.store('tokenId', '');
       vscode.window.showInformationMessage('Signed out');
     }),
   );
@@ -241,9 +238,9 @@ export async function activate(context: vscode.ExtensionContext) {
         auth,
         result.accessToken,
       );
-      const user = userCredential.user;
-      await setUser(serverize, context, user);
-      vscode.window.showInformationMessage(`Welcome ${session.account?.label}`);
+      vscode.window.showInformationMessage(
+        `Welcome ${userCredential.user.displayName}`,
+      );
     }),
   );
 
@@ -344,7 +341,9 @@ async function signin(
   }
   const userCredential = await signInWithCustomToken(auth, result.accessToken);
   const user = userCredential.user;
-  await sayHi(serverize, user, context);
+  vscode.window.showInformationMessage(
+    `Welcome ${userCredential.user.displayName || ''}`,
+  );
 }
 
 async function signup(serverize: Serverize, context: vscode.ExtensionContext) {
@@ -374,33 +373,15 @@ async function signup(serverize: Serverize, context: vscode.ExtensionContext) {
   }
 
   const userCredential = await signInWithCustomToken(auth, result.accessToken);
-  const user = userCredential.user;
-  await sayHi(serverize, user, context);
-}
-
-async function sayHi(
-  serverize: Serverize,
-  user: User,
-  context: vscode.ExtensionContext,
-) {
-  await setUser(serverize, context, user);
-  vscode.window.showInformationMessage(`Welcome ${user.displayName || ''}`);
+  vscode.window.showInformationMessage(
+    `Welcome ${userCredential.user.displayName || ''}`,
+  );
 }
 
 function getSession() {
   return vscode.authentication.getSession('github', ['user:email'], {
     createIfNone: true,
   });
-}
-
-async function setUser(
-  serverize: Serverize,
-  context: vscode.ExtensionContext,
-  user: User,
-) {
-  const token = await user.getIdToken();
-  serverize.setOptions({ token });
-  await context.secrets.store('tokenId', token);
 }
 
 function showProjectNameBox() {

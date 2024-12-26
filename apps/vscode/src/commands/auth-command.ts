@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
 
+import { auth } from '../auth';
+
 export function registerAuthCommands(
   context: vscode.ExtensionContext,
   id: string,
@@ -10,24 +12,12 @@ export function registerAuthCommands(
       if (!vscode.workspace.isTrusted) {
         throw new Error('Workspace is not trusted');
       }
-      const session = await vscode.authentication.getSession(
-        'github',
-        ['user:email'],
-        { createIfNone: true },
-      );
 
-      if (!session) {
-        vscode.window.showWarningMessage(
-          'Please sign in to GitHub to continue or use the cli\nnpx serverize auth signup',
-        );
-        return;
-      }
-
-      const token = await context.secrets.get('tokenId');
-      if (!token) {
+      if (!auth.currentUser) {
         vscode.window.showWarningMessage(
           'Please sign in to Serverize to continue or use the cli\nnpx serverize auth signin',
         );
+        await vscode.commands.executeCommand('serverize.auth.addAccount');
         return;
       }
 
