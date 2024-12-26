@@ -5,7 +5,7 @@ import {
   signInWithCustomToken,
   signOut,
 } from 'firebase/auth';
-import { relative } from 'path';
+import { relative, sep } from 'path';
 import * as vscode from 'vscode';
 
 import { auth, signInWithEmail } from './auth';
@@ -29,6 +29,9 @@ function getServerizeAPIUrl(context: vscode.ExtensionContext) {
 }
 
 export async function activate(context: vscode.ExtensionContext) {
+  const bin = isDevelopment(context)
+    ? 'NODE_ENV=development ./node_modules/.bin/serverize'
+    : 'npx serverize';
   const baseUrl = getServerizeAPIUrl(context);
   const logs = [
     `Extension mode: ${vscode.ExtensionMode[context.extensionMode]}`,
@@ -58,6 +61,7 @@ export async function activate(context: vscode.ExtensionContext) {
     if (user) {
       const token = await user.getIdToken();
       serverize.setOptions({ token });
+      outputChannel.info('User signed in');
       await vscode.commands.executeCommand(
         'setContext',
         'serverize:isSignedIn',
@@ -65,6 +69,7 @@ export async function activate(context: vscode.ExtensionContext) {
       );
     } else {
       serverize.setOptions({ token: '' });
+      outputChannel.info('User signed out');
       await vscode.commands.executeCommand(
         'setContext',
         'serverize:isSignedIn',
@@ -94,7 +99,7 @@ export async function activate(context: vscode.ExtensionContext) {
         });
 
       terminal.show();
-      const command = `npx serverize setup`;
+      const command = `${bin} setup`;
       outputChannel.info('Running command: ' + command);
       terminal.sendText(command);
     }),
@@ -138,8 +143,14 @@ export async function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       'serverize.release.open',
       async (item: ReleaseItem) => {
+        const SERVERIZE_DOMAIN = isDevelopment(context)
+          ? '127.0.0.1.nip.io'
+          : 'january.sh';
+        const PROTOCOL = isDevelopment(context) ? 'http' : 'https';
         vscode.env.openExternal(
-          vscode.Uri.parse(`https://${item.data.domainPrefix}.january.sh`),
+          vscode.Uri.parse(
+            `${PROTOCOL}://${item.data.domainPrefix}.${SERVERIZE_DOMAIN}`,
+          ),
         );
       },
     ),
@@ -182,12 +193,14 @@ export async function activate(context: vscode.ExtensionContext) {
           return;
         }
 
+        await signOut(auth);
         const { user } = await signInWithEmail(email, password);
         await setUser(serverize, context, user);
         vscode.window.showInformationMessage(
           `Welcome ${user.displayName || ''}`,
         );
       } else {
+        await signOut(auth);
         await signin(serverize, context, () => signup(serverize, context));
       }
     }),
@@ -234,53 +247,73 @@ export async function activate(context: vscode.ExtensionContext) {
     }),
   );
 
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'serverize.release.logs',
+      async (item: ReleaseItem) => {
+        const flags = [
+          `-p ${item.data.project.name}`,
+          `-c ${item.data.channel}`,
+          `-r ${item.data.name}`,
+        ];
+        const command = `${bin} logs ${flags.join(' ')}`;
+        const task = new vscode.Task(
+          { type: 'serverize' },
+          vscode.TaskScope.Workspace,
+          'logs',
+          'serverize',
+          new vscode.ShellExecution(command),
+        );
+        await vscode.tasks.executeTask(task);
+      },
+    ),
+  );
+
   registerAuthCommands(
     context,
     'serverize.deploy',
     async (dockerFileUri: vscode.Uri) => {
-      vscode.window.showInformationMessage('Select a project');
-      const suggestions = [
-        { label: 'Option 1', description: 'This is the first option' },
-        { label: 'Option 2', description: 'This is the second option' },
-        { label: 'Option 3', description: 'This is the third option' },
-      ];
+      const [projects, error] = await serverize.request('GET /projects', {});
+      if (error) {
+        showError(error);
+        return;
+      }
+      const values = projects.records.map((project) => ({
+        ...project,
+        label: project.name,
+      }));
 
-      // Show the list of suggestions using showQuickPick
-      const selected = await vscode.window.showQuickPick(suggestions, {
+      const selectedProject = await vscode.window.showQuickPick(values, {
+        title: 'Deploy',
         placeHolder: 'Select a project',
         ignoreFocusOut: true,
-        canPickMany: false, // Set to true if multiple selections are allowed
+        canPickMany: false,
       });
-
-      // Handle the selected option
-      if (selected) {
-        vscode.window.showInformationMessage(`You selected: ${selected.label}`);
-      } else {
-        vscode.window.showInformationMessage('No option selected');
+      if (!selectedProject) {
+        vscode.window.showWarningMessage('Please select a project');
+        return;
       }
-
-      const rootFolder = vscode.workspace.getWorkspaceFolder(dockerFileUri);
-      const dockerfile = relative(
-        rootFolder?.uri.fsPath || '',
-        dockerFileUri.fsPath,
+      const workspaceFolder =
+        vscode.workspace.getWorkspaceFolder(dockerFileUri);
+      const cwd = workspaceFolder?.uri.fsPath ?? dockerFileUri.fsPath;
+      const absoluteDockerfile =
+        dockerFileUri?.fsPath ??
+        vscode.window.activeTextEditor?.document.fileName;
+      const relativePath = relative(cwd, absoluteDockerfile);
+      const dockerfile = relativePath.split(sep).length > 1 ? relativePath : ``;
+      const flags = [
+        `-p ${selectedProject.name}`,
+        dockerfile ? `-f ${dockerfile}` : '',
+      ].filter(Boolean);
+      const command = `${bin} deploy ${flags.join(' ')}`;
+      const task = new vscode.Task(
+        { type: 'serverize' },
+        vscode.TaskScope.Workspace,
+        'deploy',
+        'serverize',
+        new vscode.ShellExecution(command),
       );
-      const wd = dockerFileUri?.fsPath || '';
-      outputChannel.trace('Root folder: ' + rootFolder?.uri.fsPath);
-      outputChannel.trace('Docker file: ' + dockerFileUri.fsPath);
-      outputChannel.trace('Relative path: ' + dockerfile);
-      outputChannel.trace('Working directory: ' + wd);
-
-      const terminal =
-        vscode.window.terminals.find((term) => term.exitStatus === undefined) ??
-        vscode.window.createTerminal({
-          name: 'Serverize',
-          message: 'Deploying...',
-        });
-
-      terminal.show();
-      const command = `npx serverize deploy -f ${dockerfile} -p devproj`;
-      outputChannel.info('Running command: ' + command);
-      terminal.sendText(command);
+      await vscode.tasks.executeTask(task);
     },
   );
 }

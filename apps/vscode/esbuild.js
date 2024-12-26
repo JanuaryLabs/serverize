@@ -1,5 +1,5 @@
 const { context } = require('esbuild');
-const { cp, copyFile, mkdir } = require('node:fs/promises');
+const { cp, copyFile, mkdir, readFile, writeFile } = require('node:fs/promises');
 const { join } = require('node:path');
 
 const production = process.argv.includes('--production');
@@ -26,7 +26,8 @@ const esbuildProblemMatcherPlugin = {
   },
 };
 const dest = join(process.cwd(), '../', '../', 'dist/apps/vscode');
-console.log('production:', process.cwd());
+console.log('src', process.cwd());
+console.log('dest ', dest);
 async function main() {
   const ctx = await context({
     entryPoints: ['src/index.ts'],
@@ -47,12 +48,21 @@ async function main() {
   });
   await mkdir(dest, { recursive: true });
   const files = ['package.json', 'README.md', 'LICENSE', 'CHANGELOG.md'];
-  for(const file of files) {
-    await copyFile(
-      join(process.cwd(), file),
-      join(dest, file),
-    );
+  for (const file of files) {
+    await copyFile(join(process.cwd(), file), join(dest, file));
   }
+
+  const packageJson = JSON.parse(
+    await readFile(join(dest, 'package.json'), 'utf-8'),
+  );
+  packageJson.name = 'serverize';
+  console.log(dest);
+  await writeFile(
+    join(dest, 'package.json'),
+    JSON.stringify(packageJson, null, 2),
+    'utf-8',
+  );
+
   await cp(join(process.cwd(), 'assets'), join(dest, 'assets'), {
     force: true,
     recursive: true,

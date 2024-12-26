@@ -9,7 +9,6 @@ import {
 } from './program';
 
 export default new Command('logs')
-  .usage('npx serverize logs -p <projectName>')
   .addOption(projectOption.makeOptionMandatory())
   .addOption(channelOption)
   .addOption(releaseOption)

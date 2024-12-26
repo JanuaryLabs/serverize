@@ -25,6 +25,7 @@ export function safeFail<T>(fn: () => T, defaultValue: T): typeof defaultValue {
 
 export const SERVERIZE_DOMAIN =
   process.env.NODE_ENV === 'development' ? '127.0.0.1.nip.io' : 'january.sh';
+
 export const PROTOCOL =
   process.env.NODE_ENV === 'development' ? 'http' : 'https';
 

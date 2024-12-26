@@ -67,6 +67,6 @@ export class OrgItem extends TreeItem {
   ) {
     super(options.name, vscode.TreeItemCollapsibleState.None);
     this.iconPath = options.icon;
-    this.contextValue = 'release';
+    this.contextValue = 'org';
   }
 }

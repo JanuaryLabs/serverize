@@ -30,12 +30,32 @@
     "assets/**"
   ],
   "contributes": {
+    "taskDefinitions": [
+      {
+        "type": "serverize",
+        "required": [
+          "command"
+        ],
+        "properties": {
+          "command": {
+            "type": "string"
+          }
+        }
+      }
+    ],
     "commands": [
       {
         "command": "serverize.release.open",
         "title": "View in Browser",
         "category": "Serverize",
         "icon": "$(globe)",
+        "when": "viewItem == release"
+      },
+      {
+        "command": "serverize.release.logs",
+        "title": "See logs",
+        "category": "Serverize",
+        "icon": "$(output)",
         "when": "viewItem == release"
       },
       {
@@ -134,7 +154,12 @@
         {
           "command": "serverize.release.open",
           "group": "inline",
-          "when": "viewItem == release"
+          "when": "viewItem == release-active"
+        },
+        {
+          "command": "serverize.release.logs",
+          "group": "inline",
+          "when": "viewItem == release-active"
         }
       ]
     },

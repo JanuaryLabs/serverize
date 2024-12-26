@@ -8,7 +8,7 @@ export const serverizeApiUrl =
   process.env.API_URL ||
   (process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : 'https://serverize/client.january.sh');
+    : 'https://serverize-api.january.sh');
 
 export const serverizeManagementUrl =
   process.env.MANAGEMENT_API_URL ||

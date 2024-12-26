@@ -52,8 +52,7 @@ export class ProjectsDataProvider
       const [releases, releasesError] = await this.serverize.request(
         'GET /releases',
         {
-          channel: 'dev',
-          projectId: element.id,
+          projectId: element.data.id,
           pageSize: 10,
         },
       );
@@ -65,9 +64,8 @@ export class ProjectsDataProvider
         ...releases.records.map(
           (release) =>
             new ReleaseItem(release, {
-              name: release.name,
+              name: `${release.channel}:${release.name} (${release.status})`,
               id: release.id,
-              icon: new vscode.ThemeIcon('package'),
             }),
         ),
         // TODO: Implement load more
@@ -76,6 +74,114 @@ export class ProjectsDataProvider
     }
     return [];
   }
+}
+
+function getReleaseIcon(release: Releases): vscode.ThemeIcon {
+  // TODO: pick an icon for terminated releases
+  const { status, conclusion, channel } = release;
+
+  // Determine the current theme kind
+  const isDarkTheme =
+    vscode.window.activeColorTheme.kind === vscode.ColorThemeKind.Dark;
+
+  // Define color mappings for dark and light themes
+  const colorMappings = {
+    inProgress: isDarkTheme ? 'charts.yellow' : 'charts.yellow',
+    queued: isDarkTheme ? 'charts.blue' : 'charts.blue',
+    successActive: isDarkTheme ? 'charts.green' : 'charts.green',
+    successInactive: isDarkTheme ? 'charts.gray' : 'charts.gray',
+    failure: isDarkTheme ? 'charts.red' : 'charts.red',
+    cancelled: isDarkTheme ? 'charts.gray' : 'charts.gray',
+    timedOut: isDarkTheme ? 'charts.orange' : 'charts.orange',
+    published: isDarkTheme ? 'charts.purple' : 'charts.purple',
+    requested: isDarkTheme ? 'charts.cyan' : 'charts.cyan',
+    devChannel: isDarkTheme ? 'charts.magenta' : 'charts.magenta',
+    previewChannel: isDarkTheme ? 'charts.teal' : 'charts.teal',
+    default: isDarkTheme ? 'charts.gray' : 'charts.gray',
+  };
+
+  if (status === 'in_progress') {
+    return new vscode.ThemeIcon(
+      'sync~spin',
+      new vscode.ThemeColor(colorMappings.inProgress),
+    );
+  }
+
+  if (status === 'queued' || status === 'waiting') {
+    return new vscode.ThemeIcon(
+      'ellipsis',
+      new vscode.ThemeColor(colorMappings.queued),
+    );
+  }
+
+  if (status === 'completed') {
+    switch (conclusion) {
+      case 'success': {
+        const isActive = true; // Replace with actual logic to determine if active
+        if (isActive) {
+          return new vscode.ThemeIcon(
+            'pass-filled',
+            new vscode.ThemeColor(colorMappings.successActive),
+          );
+        }
+        return new vscode.ThemeIcon(
+          'pass-filled',
+          new vscode.ThemeColor(colorMappings.successInactive),
+        );
+      }
+      case 'failure':
+        return new vscode.ThemeIcon(
+          'error',
+          new vscode.ThemeColor(colorMappings.failure),
+        );
+      case 'cancelled':
+        return new vscode.ThemeIcon(
+          'circle-slash',
+          new vscode.ThemeColor(colorMappings.cancelled),
+        );
+      case 'timed_out':
+        return new vscode.ThemeIcon(
+          'watch',
+          new vscode.ThemeColor(colorMappings.timedOut),
+        );
+      case 'published':
+        return new vscode.ThemeIcon(
+          'rocket',
+          new vscode.ThemeColor(colorMappings.published),
+        );
+      default:
+        return new vscode.ThemeIcon(
+          'circle-outline',
+          new vscode.ThemeColor(colorMappings.default),
+        );
+    }
+  }
+
+  if (status === 'requested') {
+    return new vscode.ThemeIcon(
+      'play-circle',
+      new vscode.ThemeColor(colorMappings.requested),
+    );
+  }
+
+  if (channel === 'dev') {
+    return new vscode.ThemeIcon(
+      'debug',
+      new vscode.ThemeColor(colorMappings.devChannel),
+    );
+  }
+
+  if (channel === 'preview') {
+    return new vscode.ThemeIcon(
+      'eye',
+      new vscode.ThemeColor(colorMappings.previewChannel),
+    );
+  }
+
+  return new vscode.ThemeIcon(
+    'package',
+    new vscode.ThemeColor(colorMappings.default),
+  );
 }
 
 class ProjectItem extends TreeItem {
@@ -104,11 +210,12 @@ export class ReleaseItem extends TreeItem {
     public options: {
       name: string;
       id: string;
-      icon: vscode.ThemeIcon;
     },
   ) {
     super(options.name, vscode.TreeItemCollapsibleState.None);
-    this.iconPath = options.icon;
-    this.contextValue = 'release';
+    this.iconPath = getReleaseIcon(data);
+    const isReleaseActive =
+      data.status === 'completed' && data.conclusion === 'success';
+    this.contextValue = isReleaseActive ? 'release-active' : 'release';
   }
 }

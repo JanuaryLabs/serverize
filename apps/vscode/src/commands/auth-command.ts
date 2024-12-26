@@ -6,7 +6,7 @@ export function registerAuthCommands(
   callback: (...args: any[]) => void | Promise<void>,
 ) {
   context.subscriptions.push(
-    vscode.commands.registerCommand(id, async () => {
+    vscode.commands.registerCommand(id, async (...args: any[]) => {
       if (!vscode.workspace.isTrusted) {
         throw new Error('Workspace is not trusted');
       }
@@ -31,7 +31,7 @@ export function registerAuthCommands(
         return;
       }
 
-      await callback(session);
+      await callback(...args);
     }),
   );
 }

@@ -180,7 +180,7 @@ export const cwdOption = new Option('--cwd [cwd]', 'Project directory').default(
 
 export const channelOption = new Option(
   '-c, --channel <channel>',
-  'Channel to deploy to',
+  'Channel name (dev or preview)',
 ).default('dev');
 export const releaseOption = new Option(
   '-r, --release <release>',
