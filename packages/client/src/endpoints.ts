@@ -1,6 +1,7 @@
 import z from 'zod';
 import * as docker from './inputs/docker';
 import * as management from './inputs/management';
+import {DeleteOrg} from './outputs/DeleteOrg';
 import {ListOrganizations} from './outputs/ListOrganizations';
 import {CreateDefaultOrganization} from './outputs/CreateDefaultOrganization';
 import {CreateOrganization} from './outputs/CreateOrganization';
@@ -35,6 +36,7 @@ import {EmptyFavicon} from './outputs/EmptyFavicon';
 import {SayHi} from './outputs/SayHi';
 import {HealthCheck} from './outputs/HealthCheck';
 export interface Endpoints {
+  "DELETE /organizations/{id}": {input: z.infer<typeof management.deleteOrgSchema>, output: DeleteOrg};
   "GET /organizations": {input: z.infer<typeof management.listOrganizationsSchema>, output: ListOrganizations};
   "POST /organizations/default": {input: z.infer<typeof management.createDefaultOrganizationSchema>, output: CreateDefaultOrganization};
   "POST /organizations": {input: z.infer<typeof management.createOrganizationSchema>, output: CreateOrganization};

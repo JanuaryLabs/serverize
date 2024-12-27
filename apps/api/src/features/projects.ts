@@ -1,3 +1,4 @@
+import { policies } from '@extensions/identity';
 import {
   createQueryBuilder,
   deferredJoinPagination,
@@ -22,7 +23,6 @@ import {
   table,
   trigger,
   unique,
-  useTable,
   workflow,
 } from '@january/declarative';
 
@@ -33,7 +33,7 @@ export default feature({
       trigger: trigger.http({
         method: 'post',
         path: '/',
-        policies: ['authenticated'],
+        policies: [policies.authenticated],
         input: (trigger) => ({
           projectId: {
             select: trigger.body.projectId,
@@ -61,7 +61,7 @@ export default feature({
       trigger: trigger.http({
         method: 'delete',
         path: '/',
-        policies: ['authenticated'],
+        policies: [policies.authenticated],
         input: (trigger) => ({
           token: {
             select: trigger.body.token,
@@ -374,7 +374,7 @@ export default feature({
       trigger: trigger.http({
         method: 'delete',
         path: '/',
-        policies: ['notImplemented', 'authenticated'],
+        policies: [policies.notImplemented, policies.authenticated],
         input: (trigger) => ({
           projectId: {
             select: trigger.query.projectId,
@@ -489,7 +489,7 @@ export default feature({
       trigger: trigger.http({
         method: 'get',
         path: '/values',
-        policies: ['authenticated'],
+        policies: [policies.authenticated],
         input: (trigger) => ({
           projectId: {
             select: trigger.query.projectId,
@@ -514,7 +514,7 @@ export default feature({
     volumes: table({
       fields: {
         release: field.relation({
-          references: useTable('releases'),
+          references: tables.releases,
           relationship: 'many-to-one',
           validations: [mandatory()],
         }),
@@ -541,7 +541,7 @@ export default feature({
           validations: [mandatory()],
         }),
         project: field.relation({
-          references: useTable('projects'),
+          references: tables.projects,
           relationship: 'many-to-one',
           validations: [mandatory()],
         }),
@@ -574,7 +574,7 @@ export default feature({
     snapshots: table({
       fields: {
         release: field.relation({
-          references: useTable('releases'),
+          references: tables.releases,
           relationship: 'one-to-one',
           validations: [mandatory()],
         }),
@@ -588,7 +588,7 @@ export default feature({
       constraints: [index('project', 'label')],
       fields: {
         project: field.relation({
-          references: useTable('projects'),
+          references: tables.projects,
           relationship: 'many-to-one',
           validations: [mandatory()],
         }),
@@ -607,7 +607,7 @@ export default feature({
     secretsKeys: table({
       fields: {
         project: field.relation({
-          references: useTable('projects'),
+          references: tables.projects,
           relationship: 'many-to-one',
           validations: [mandatory(), unique()],
         }),
@@ -617,12 +617,12 @@ export default feature({
     apiKeys: table({
       fields: {
         organization: field.relation({
-          references: useTable('organizations'),
+          references: tables.organizations,
           relationship: 'many-to-one',
           validations: [mandatory()],
         }),
         project: field.relation({
-          references: useTable('projects'),
+          references: tables.projects,
           relationship: 'many-to-one',
           validations: [mandatory()],
         }),

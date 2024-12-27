@@ -18,10 +18,8 @@ const functionList = [
   'field',
   'unique',
   'mandatory',
-  'useTable',
   'workflow',
   'QueryFactory',
-  'output',
 ];
 
 function build(userCode: string) {

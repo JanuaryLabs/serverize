@@ -9,7 +9,7 @@ const env = z.object({
   NODE_ENV: z.enum(['development', 'production']),
 });
 const [data, errors] = parse(env, process.env);
-console.log(errors);
+
 if (errors) {
   console.error(
     'Environment Variable Validation Error:',

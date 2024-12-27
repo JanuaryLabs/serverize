@@ -20,6 +20,18 @@ export default {
           }, init);
           },
         },
+  "DELETE /organizations/{id}": {
+        schema: management.deleteOrgSchema,
+        toRequest(input: Endpoints['DELETE /organizations/{id}']['input'], init: {baseUrl:string; headers?: Record<string, string>}) {
+          const endpoint = 'DELETE /organizations/{id}';
+            return toRequest(endpoint, input, {
+            inputHeaders: [],
+            inputQuery: [],
+            inputBody: [],
+            inputParams: ["id"],
+          }, init);
+          },
+        },
   "GET /organizations": {
         schema: management.listOrganizationsSchema,
         toRequest(input: Endpoints['GET /organizations']['input'], init: {baseUrl:string; headers?: Record<string, string>}) {
