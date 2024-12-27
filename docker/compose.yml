@@ -46,13 +46,14 @@ services:
       - traefik-network
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - serverize-uploads:/data:rw
+      - serverize-uploads:/serverize/uploads:rw
     environment:
       - NODE_ENV=production
       - PORT=3000
       - GITHUB_CLIENT_ID=Ov23liTdbDl03bHIuT4N
       - GITHUB_CLIENT_SECRET=6e79fe6d569964426f4c81d532686be6f17c28ae
       - API_URL=http://api:3000
+      - UPLOAD_DIR=/serverize/uploads
     healthcheck:
       test: wget --no-verbose --spider --tries=1 http://localhost:3000/health || exit 1
 
@@ -62,6 +63,9 @@ services:
     restart: unless-stopped
     networks:
       - traefik-network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - serverize-uploads:/serverize/uploads:rw
     env_file:
       - .env.api
     environment:
@@ -75,14 +79,14 @@ services:
 
   tusd:
     image: tusproject/tusd:latest
-    command: -upload-dir=/data
+    command: -upload-dir=/data -disable-download
     user: "0:0" # Run as root
     platform: linux/amd64
     restart: unless-stopped
     networks:
       - traefik-network
     volumes:
-      - serverize-uploads:/data
+      - serverize-uploads:/data:rw
 
 volumes:
   serverize-uploads:

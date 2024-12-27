@@ -10,17 +10,19 @@ export async function pushImage(
 ) {
   const chunkSize = mbToBytes(6);
   const parallelChunks = Math.floor(details.fileSize / chunkSize);
-  return new Promise<string>((resolve, reject) => {
-    const endpoint =
-      process.env.NODE_ENV === 'development'
-        ? 'http://localhost:8085/files'
-        : 'https://tusd.january.sh/files';
+  const endpoint =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:8085/files'
+      : 'https://tusd.january.sh/files';
 
-    logger(`Using endpoint: ${endpoint}`);
+  logger(`Using endpoint: ${endpoint}`);
+  logger(`File size: ${bytesToMb(details.fileSize)} MB`);
+  return new Promise<string>((resolve, reject) => {
     const upload = new Upload(details.fileStream, {
       endpoint: endpoint,
       chunkSize: chunkSize,
       parallelUploads: parallelChunks,
+      uploadDataDuringCreation: true,
       metadata: {
         filetype: 'application/x-tar',
       },

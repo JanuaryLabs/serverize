@@ -30,7 +30,7 @@ function getServerizeAPIUrl(context: vscode.ExtensionContext) {
 export async function activate(context: vscode.ExtensionContext) {
   const bin = isDevelopment(context)
     ? 'NODE_ENV=development ./node_modules/.bin/serverize'
-    : 'npx serverize';
+    : 'npx serverize@latest';
   const baseUrl = getServerizeAPIUrl(context);
   const logs = [
     `Extension mode: ${vscode.ExtensionMode[context.extensionMode]}`,
@@ -158,56 +158,22 @@ export async function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand('serverize.addAccount', async () => {
-      const provider = await vscode.window.showQuickPick(
-        ['Email & Password', 'Github'],
+      vscode.window.withProgress(
         {
-          title: 'Add Account',
-          placeHolder: 'Select a provider',
-          ignoreFocusOut: true,
-          canPickMany: false,
+          location: vscode.ProgressLocation.Notification,
+          title: 'Adding account',
+          cancellable: false,
+        },
+        async () => {
+          await addAccount(serverize);
         },
       );
-      if (provider === 'Email & Password') {
-        const email = await vscode.window.showInputBox({
-          title: 'Email',
-          prompt: 'Enter email',
-          placeHolder: 'Enter email',
-          ignoreFocusOut: true,
-        });
-
-        if (!email) {
-          vscode.window.showWarningMessage('Please enter correct email');
-          return;
-        }
-
-        const password = await vscode.window.showInputBox({
-          title: 'Password',
-          prompt: 'Enter password',
-          placeHolder: 'Enter password',
-          ignoreFocusOut: true,
-          password: true,
-        });
-
-        if (!password) {
-          vscode.window.showWarningMessage('Please enter correct password');
-          return;
-        }
-
-        await signOut(auth);
-        const { user } = await signInWithEmail(email, password);
-        vscode.window.showInformationMessage(
-          `Welcome ${user.displayName || ''}`,
-        );
-      } else {
-        await signOut(auth);
-        await signin(serverize, context, () => signup(serverize, context));
-      }
     }),
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand('serverize.signup', async () => {
-      await signup(serverize, context);
+      await signup(serverize);
     }),
   );
 
@@ -220,27 +186,7 @@ export async function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand('serverize.signin', async () => {
-      const session = await vscode.authentication.getSession(
-        'github',
-        ['user:email'],
-        { createIfNone: true },
-      );
-
-      const [result, error] = await serverize.request('POST /users/signin', {
-        token: session.accessToken,
-        providerId: 'github.com',
-      });
-      if (error) {
-        showError(error);
-        return;
-      }
-      const userCredential = await signInWithCustomToken(
-        auth,
-        result.accessToken,
-      );
-      vscode.window.showInformationMessage(
-        `Welcome ${userCredential.user.displayName}`,
-      );
+      await signin(serverize, () => signup(serverize));
     }),
   );
 
@@ -315,9 +261,53 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 }
 
+async function addAccount(serverize: Serverize) {
+  const provider = await vscode.window.showQuickPick(
+    ['Email & Password', 'Github'],
+    {
+      title: 'Add Account',
+      placeHolder: 'Select a provider',
+      ignoreFocusOut: true,
+      canPickMany: false,
+    },
+  );
+  if (provider === 'Email & Password') {
+    const email = await vscode.window.showInputBox({
+      title: 'Email',
+      prompt: 'Enter email',
+      placeHolder: 'Enter email',
+      ignoreFocusOut: true,
+    });
+
+    if (!email) {
+      vscode.window.showWarningMessage('Please enter correct email');
+      return;
+    }
+
+    const password = await vscode.window.showInputBox({
+      title: 'Password',
+      prompt: 'Enter password',
+      placeHolder: 'Enter password',
+      ignoreFocusOut: true,
+      password: true,
+    });
+
+    if (!password) {
+      vscode.window.showWarningMessage('Please enter correct password');
+      return;
+    }
+
+    await signOut(auth);
+    const { user } = await signInWithEmail(email, password);
+    vscode.window.showInformationMessage(`Welcome ${user.displayName || ''}`);
+  } else {
+    await signOut(auth);
+    await signin(serverize, () => signup(serverize));
+  }
+}
+
 async function signin(
   serverize: Serverize,
-  context: vscode.ExtensionContext,
   onUserNotFound: () => Promise<void>,
 ) {
   const session = await getSession();
@@ -340,13 +330,12 @@ async function signin(
     }
   }
   const userCredential = await signInWithCustomToken(auth, result.accessToken);
-  const user = userCredential.user;
   vscode.window.showInformationMessage(
     `Welcome ${userCredential.user.displayName || ''}`,
   );
 }
 
-async function signup(serverize: Serverize, context: vscode.ExtensionContext) {
+async function signup(serverize: Serverize) {
   const session = await getSession();
   const orgName = await showOrgNameBox();
   if (!orgName) {
