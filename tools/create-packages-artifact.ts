@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 import { readFile, writeFile } from 'fs/promises';
-import path, { join } from 'path';
+import { join } from 'path';
 
 import publishToNpm from './publish-packages';
 

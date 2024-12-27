@@ -27,7 +27,8 @@ for (const project of npmProjects) {
   /**
    * @type {string[]}
    */
-  const external = projectJson?.targets?.build?.options?.external ?? [];
+  const external =
+    projectJson?.targets?.build?.configurations?.production?.external ?? [];
   external
     .filter((external) => external.startsWith('@serverize'))
     .forEach((external) => {
@@ -39,6 +40,7 @@ for (const project of npmProjects) {
     JSON.stringify(packageJson, null, 2),
     'utf-8',
   );
+  console.log(`Updated ${project} ${join(distDir, 'package.json')}`);
 }
 
 /**

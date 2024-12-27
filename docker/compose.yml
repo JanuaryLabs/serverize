@@ -37,6 +37,7 @@ services:
       - traefik-network
     labels:
       - 'sablier.enable=true'
+      - 'sablier.group=whoami'
 
   manager:
     image: docker.io/ezzabuzaid/serverize-manager:latest
@@ -80,7 +81,7 @@ services:
   tusd:
     image: tusproject/tusd:latest
     command: -upload-dir=/data -disable-download
-    user: "0:0" # Run as root
+    user: '0:0' # Run as root
     platform: linux/amd64
     restart: unless-stopped
     networks:

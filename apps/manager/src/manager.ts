@@ -124,7 +124,7 @@ export async function createRemoteContainer(
     ],
     Labels: {
       'sablier.enable': 'true',
-      'sablier.group': containerName,
+      'sablier.group': releaseInfo.domainPrefix,
       'serverize.release': releaseInfo.id,
       'serverize.releaseName': releaseInfo.name,
       'serverize.project': releaseInfo.projectId,

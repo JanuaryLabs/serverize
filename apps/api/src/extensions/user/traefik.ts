@@ -57,13 +57,24 @@ export function toTraefikConfig(
             certresolver: 'letsencrypt',
           },
         };
+  const sablierMiddlewares = releases.reduce<
+    Record<string, ReturnType<typeof createSablierMiddleware>>
+  >((acc, release) => {
+    acc[`sablier-blocking-${release.domainPrefix}`] = createSablierMiddleware(
+      release.domainPrefix,
+    );
+    return acc;
+  }, {});
   const routers = releases.reduce<Record<string, TraefikRouter>>(
     (acc, release) => {
       acc[release.domainPrefix] = {
         service: release.domainPrefix,
         entrypoints: [defaultEntrypoint],
         rule: `Host(\`${release.domainPrefix}.${SERVERIZE_DOMAIN}\`)`,
-        middlewares: ['sablier-blocking@http', 'rate-limit@http'],
+        middlewares: [
+          `sablier-blocking-${release.domainPrefix}@http`,
+          'rate-limit@http',
+        ],
         ...productionRouteProps,
       };
       return acc;
@@ -74,19 +85,8 @@ export function toTraefikConfig(
   return {
     http: {
       middlewares: {
-        'sablier-blocking': {
-          plugin: {
-            sablier: {
-              group: 'default',
-              sablierUrl: 'http://sablier:10000',
-              sessionDuration:
-                process.env.NODE_ENV === 'development' ? '20s' : '3m',
-              blocking: {
-                defaultTimeout: '30s',
-              },
-            },
-          },
-        },
+        ...sablierMiddlewares,
+        'sablier-blocking-whoami': createSablierMiddleware('whoami'),
         'rate-limit': {
           ratelimit: {
             average: 100,
@@ -129,7 +129,7 @@ export function toTraefikConfig(
           service: 'whoami',
           entrypoints: [defaultEntrypoint],
           rule: `Host(\`whoami.${SERVERIZE_DOMAIN}\`)`,
-          middlewares: ['sablier-blocking@http', 'rate-limit@http'],
+          middlewares: ['sablier-blocking-whoami@http', 'rate-limit@http'],
           ...productionRouteProps,
         },
         tusd: {
@@ -174,5 +174,20 @@ export function toTraefikConfig(
           },
         }
       : {}),
+  };
+}
+
+function createSablierMiddleware(groupName: string) {
+  return {
+    plugin: {
+      sablier: {
+        group: groupName,
+        sablierUrl: 'http://sablier:10000',
+        sessionDuration: process.env.NODE_ENV === 'development' ? '20s' : '20m',
+        blocking: {
+          defaultTimeout: '30s',
+        },
+      },
+    },
   };
 }
