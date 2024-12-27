@@ -128,7 +128,7 @@
       ],
       "explorer/context": [
         {
-          "when": "isWorkspaceTrusted && resourceLangId == dockerfile",
+          "when": "isWorkspaceTrusted && workspaceFolderCount == 1",
           "command": "serverize.deploy",
           "group": "serverize"
         }

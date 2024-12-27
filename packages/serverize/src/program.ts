@@ -28,11 +28,6 @@ export const cli = program
   .name('Serverize')
   .version('1.0.0')
   .description('Serverize');
-// .requiredOption('-k, --api-key <key>', 'API key for authentication')
-// .action(() => {
-//   // show deployment steps, auth, add dockerfile (link to guides), etc then deploy command
-//   // cli.outputHelp()
-// });
 
 export interface Healthcheck {
   Test?: string[];

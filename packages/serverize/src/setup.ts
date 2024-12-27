@@ -33,9 +33,7 @@ const listCommand = new Command('list').alias('ls').action(() => {
   box.print('Example', '$ npx serverize setup astrojs');
 });
 
-export default new Command('setup')
-  .alias('init')
-  .addCommand(listCommand)
+const init = new Command('init')
   .argument('[framework]', 'Framework to setup')
   .allowUnknownOption()
   .option('-f, --force', 'Force setup')
@@ -172,3 +170,7 @@ export default new Command('setup')
       spinner.succeed('Setup complete');
     },
   );
+
+export default new Command('setup')
+  .addCommand(listCommand)
+  .addCommand(init, { isDefault: true });

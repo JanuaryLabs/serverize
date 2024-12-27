@@ -33,8 +33,14 @@ export default new Command('shazam')
   .addOption(channelOption)
   .addOption(releaseOption)
   .addOption(projectOption)
-  .option('-f, --framework [framework]', 'Framework to setup')
+  .option('--framework [framework]', 'Framework to setup')
   .option('--save', 'Save the setup')
+  .option('--use-dockerfile [useDockerfile]')
+  .option(
+    '-f, --file [dockerfilepath]',
+    'Name of the Dockerfile or Compose file (default:"$(pwd)/Dockerfile")',
+    'Dockerfile',
+  )
   .action(
     async ({
       framework: frameworkName,
@@ -44,40 +50,43 @@ export default new Command('shazam')
       output: outputFile,
       cwd,
       save: shouldSaveToCwd,
+      file,
+      useDockerfile,
     }) => {
       const spinner = createSpinner();
       await ensureDockerRunning();
-      const projectDir = cwd || process.cwd();
-      let dockerfilepath = join(projectDir, 'Dockerfile');
+
+      let dockerfilepath = join(cwd, file);
 
       let shouldDetectFramework = true;
       if (existsSync(dockerfilepath)) {
-        shouldDetectFramework =
-          (await dropdown({
-            title:
-              'Found a Dockerfile in the project directory. Do you want to use it?',
-            choices: [
-              {
-                name: 'Yes',
-                value: 'yes',
-              },
-              {
-                name: frameworkName
-                  ? `No, use the selected framework (${chalk.blue(frameworkName)})`
-                  : 'Use serverize auto detect framework',
-                value: 'no',
-              },
-            ],
-          })) === 'no';
+        if (useDockerfile) {
+          shouldDetectFramework = false;
+        } else {
+          shouldDetectFramework =
+            (await dropdown({
+              title:
+                'Found a Dockerfile in the project directory. Do you want to use it?',
+              choices: [
+                {
+                  name: 'Yes',
+                  value: 'yes',
+                },
+                {
+                  name: frameworkName
+                    ? `No, use the selected framework (${chalk.blue(frameworkName)})`
+                    : 'Use serverize auto detect framework',
+                  value: 'no',
+                },
+              ],
+            })) === 'no';
+        }
       }
 
       if (shouldDetectFramework) {
         let frameworkOptions: Record<string, any> | undefined;
         if (frameworkName) {
-          frameworkOptions = await getFrameworkOptions(
-            frameworkName,
-            projectDir,
-          );
+          frameworkOptions = await getFrameworkOptions(frameworkName, cwd);
           if (!frameworkOptions) {
             spinner.fail(
               `No default setup found for ${frameworkName}. Please create github issue to add support for this framework`,
@@ -85,7 +94,7 @@ export default new Command('shazam')
             process.exit(1);
           }
         } else {
-          const detectResult = await detectFramework(projectDir);
+          const detectResult = await detectFramework(cwd);
           if (detectResult) {
             frameworkName = detectResult?.framework;
             frameworkOptions = detectResult?.options;
@@ -98,17 +107,14 @@ export default new Command('shazam')
               })),
               loop: false,
             }).catch(() => undefined);
-            frameworkOptions = await getFrameworkOptions(
-              frameworkName,
-              projectDir,
-            );
+            frameworkOptions = await getFrameworkOptions(frameworkName, cwd);
           }
 
           spinner.info(`Framework/Language: ${chalk.blue.bold(frameworkName)}`);
         }
         const { dockerfile } = await setupFramework({
           framework: frameworkName,
-          cwd: projectDir,
+          cwd: cwd,
           dest: shouldSaveToCwd ? cwd : join(tmpdir(), crypto.randomUUID()),
           options: frameworkOptions,
         });
@@ -137,32 +143,37 @@ export default new Command('shazam')
           await register();
         }
       }
+      if (!projectName) {
+        const [projects, error] = await client.request('GET /projects', {});
+        if (error) {
+          showError(error);
+          process.exit(1);
+        }
 
-      const [projects, error] = await client.request('GET /projects', {});
-      if (error) {
-        showError(error);
-        process.exit(1);
+        projectName = await dropdown({
+          title: 'Select a project',
+          choices: [
+            ...projects.records.map(({ name, id }) => ({ name, value: name })),
+            {
+              name: 'Create a new project',
+              value: 'new',
+            },
+          ],
+        });
+        if (projectName === 'new') {
+          projectName = await createProject();
+        }
       }
-
-      projectName ||= await dropdown({
-        title: 'Select a project',
-        choices: [
-          ...projects.records.map(({ name, id }) => ({ name, value: name })),
-          {
-            name: 'Create a new project',
-            value: 'new',
-          },
-        ],
-      });
-      if (projectName === 'new') {
-        projectName = await createProject();
+      if (!projectName) {
+        spinner.fail('No project selected');
+        process.exit(1);
       }
 
       spinner.info(`Deploying (${chalk.green(projectName)})...`);
       await runInDeployContext({
         projectName,
         file: dockerfilepath,
-        cwd: projectDir,
+        cwd: cwd,
         channel,
         release,
         outputFile,

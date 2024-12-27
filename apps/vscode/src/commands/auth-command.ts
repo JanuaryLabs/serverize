@@ -1,6 +1,5 @@
+import { client, initialise } from 'serverize';
 import * as vscode from 'vscode';
-
-import { auth } from '../auth';
 
 export function registerAuthCommands(
   context: vscode.ExtensionContext,
@@ -9,16 +8,14 @@ export function registerAuthCommands(
 ) {
   context.subscriptions.push(
     vscode.commands.registerCommand(id, async (...args: any[]) => {
-      if (!vscode.workspace.isTrusted) {
-        throw new Error('Workspace is not trusted');
-      }
-
-      if (!auth.currentUser) {
+      const user = await initialise();
+      if (!user) {
         vscode.window.showWarningMessage(
           'Please sign in to Serverize to continue or use the cli\nnpx serverize auth signin',
         );
-        await vscode.commands.executeCommand('serverize.auth.addAccount');
-        return;
+        await vscode.commands.executeCommand('serverize.addAccount');
+      } else {
+        client.setOptions({ token: (await user.getIdToken()) || '' });
       }
 
       await callback(...args);

@@ -19,7 +19,7 @@ export class ProjectsDataProvider
 
   constructor(
     private context: vscode.ExtensionContext,
-    private readonly serverize: Serverize,
+    private readonly client: Serverize,
   ) {}
 
   getTreeItem(
@@ -29,11 +29,11 @@ export class ProjectsDataProvider
   }
 
   async getChildren(element?: TreeItem | undefined) {
-    if (!this.serverize.options.token) {
+    if (!this.client.options.token) {
       return [];
     }
     if (element === undefined) {
-      const [data, error] = await this.serverize.request('GET /projects', {});
+      const [data, error] = await this.client.request('GET /projects', {});
       if (error) {
         showError(error);
         return [];
@@ -49,7 +49,7 @@ export class ProjectsDataProvider
       );
     }
     if (element.type === 'project') {
-      const [releases, releasesError] = await this.serverize.request(
+      const [releases, releasesError] = await this.client.request(
         'GET /releases',
         {
           projectId: element.data.id,

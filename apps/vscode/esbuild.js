@@ -1,5 +1,11 @@
 const { context } = require('esbuild');
-const { cp, copyFile, mkdir, readFile, writeFile } = require('node:fs/promises');
+const {
+  cp,
+  copyFile,
+  mkdir,
+  readFile,
+  writeFile,
+} = require('node:fs/promises');
 const { join } = require('node:path');
 
 const production = process.argv.includes('--production');
@@ -26,8 +32,6 @@ const esbuildProblemMatcherPlugin = {
   },
 };
 const dest = join(process.cwd(), '../', '../', 'dist/apps/vscode');
-console.log('src', process.cwd());
-console.log('dest ', dest);
 async function main() {
   const ctx = await context({
     entryPoints: ['src/index.ts'],
@@ -56,7 +60,6 @@ async function main() {
     await readFile(join(dest, 'package.json'), 'utf-8'),
   );
   packageJson.name = 'serverize';
-  console.log(dest);
   await writeFile(
     join(dest, 'package.json'),
     JSON.stringify(packageJson, null, 2),

@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import { client } from './lib/api-client';
 import {
   channelOption,
+  ensureUser,
   projectOption,
   releaseOption,
   showError,
@@ -13,6 +14,8 @@ export default new Command('logs')
   .addOption(channelOption)
   .addOption(releaseOption)
   .action(async ({ projectName, release, channel }) => {
+    const user = await ensureUser();
+    if (!user) return;
     const [stream, error] = await client.stream('GET /container/logs', {
       projectName: projectName,
       channelName: channel,

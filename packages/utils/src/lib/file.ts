@@ -1,15 +1,8 @@
-import { existsSync } from 'fs';
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
 import { dirname, isAbsolute, join } from 'path';
-
-
 
 import { formatCode } from './format-code';
 import { getExt } from './utils';
-
-
-
-
 
 export interface PackageJson {
   name: string;
@@ -53,8 +46,11 @@ export async function writeFiles(
   }
 }
 
-export function readFolder(path: string) {
-  return existsSync(path) ? readdir(path) : ([] as string[]);
+export async function readFolder(path: string) {
+  if (await exist(path)) {
+    return readdir(path);
+  }
+  return [] as string[];
 }
 
 export async function readPackageJson(dir: string) {
@@ -68,11 +64,17 @@ export async function readPackageJson(dir: string) {
       writeFile(packageJsonPath, JSON.stringify(value, null, 2), 'utf-8'),
   };
 }
+export async function exist(file: string): Promise<boolean> {
+  return stat(file)
+    .then(() => true)
+    .catch(() => false);
+}
 
-export function getFile(filePath: string) {
-  return existsSync(filePath)
-    ? readFile(filePath, 'utf-8')
-    : Promise.resolve(null);
+export async function getFile(filePath: string) {
+  if (await exist(filePath)) {
+    return readFile(filePath, 'utf-8');
+  }
+  return null;
 }
 
 export async function readJsonFile(filePath: string) {

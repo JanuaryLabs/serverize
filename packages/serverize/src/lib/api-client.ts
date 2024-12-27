@@ -22,7 +22,7 @@ export const serverizeManagementWs =
     : 'wss://serverize-manager.january.sh');
 
 export const client = new Serverize({
-  token: 'token',
+  token: '',
   baseUrl: serverizeApiUrl,
 });
 

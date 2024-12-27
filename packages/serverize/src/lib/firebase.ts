@@ -4,44 +4,36 @@ import { mkdir, rm, writeFile } from 'fs/promises';
 import { tmpdir } from 'os';
 import { dirname, join } from 'path';
 
-
-import { getFile, safeFail } from 'serverize/utils';
+import { getFile } from 'serverize/utils';
 
 class FilePersistence {
-  public static type = 'NONE' as const;
-  public type = 'NONE' as const;
+  public static type = 'LOCAL' as const;
+  public type = 'LOCAL' as const;
   async _isAvailable() {
     return true;
   }
 
-  decode(key: string) {
-    return key;
-    // return Buffer.from(key, 'base64').toString('base64') === key
-    //   ? key
-    //   : Buffer.from(key, 'base64').toString('utf-8').toString()
-  }
-
   async _set(key: string, value: unknown) {
-    const fullPath = join(tmpdir(), this.decode(key));
+    const fullPath = join(tmpdir(), key);
     await mkdir(dirname(fullPath), { recursive: true });
-    return writeFile(fullPath, JSON.stringify(value));
+    return writeFile(fullPath, JSON.stringify(value)).catch((error) => {
+      console.error('Error writing file', error);
+      return null;
+    });
   }
 
-  async _get(base64: string) {
-    return await getFile(join(tmpdir(), this.decode(base64)))
-      .then((data) => {
-        if (!data) {
-          return null;
-        }
-        return safeFail(() => JSON.parse(data), null);
-      })
+  async _get(key: string) {
+    const fullPath = join(tmpdir(), key);
+    return getFile(fullPath)
+      .then((data) => (data ? JSON.parse(data) : null))
       .catch((error) => {
+        console.error('Error reading file', error);
         return null;
       });
   }
 
-  async _remove(base64: string) {
-    await rm(join(tmpdir(), this.decode(base64)), { force: true });
+  async _remove(key: string) {
+    await rm(join(tmpdir(), key), { force: true });
   }
 
   _addListener(_key: string, _listener: unknown) {

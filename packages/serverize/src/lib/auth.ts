@@ -246,12 +246,10 @@ export async function signInWithEmail(email: string, password: string) {
         case AuthErrorCodes.INVALID_LOGIN_CREDENTIALS:
         case AuthErrorCodes.INVALID_EMAIL:
           throw new Error('Wrong email or password, please try again.');
-        default:
-          throw error;
       }
     }
+    throw error;
   }
-  return { user: null };
 }
 
 export function initialise() {
