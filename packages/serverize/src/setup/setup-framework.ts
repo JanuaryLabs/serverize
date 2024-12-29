@@ -2,7 +2,7 @@ import { confirm, input } from '@inquirer/prompts';
 import chalk from 'chalk';
 import { detect } from 'detect-package-manager';
 import { mkdir, readFile, readdir } from 'fs/promises';
-import { join } from 'path';
+import { basename, dirname, join } from 'path';
 
 import {
   type AstroOutputMode,
@@ -13,6 +13,7 @@ import {
   bun,
   deno,
   dotnet,
+  fastapi,
   nextjs,
   nuxtjs,
   remix,
@@ -20,14 +21,18 @@ import {
 } from 'serverize/dockerfile';
 import { readJsonFile, readPackageJson } from 'serverize/utils';
 
-import { detectFramework, readConfig } from '../lib/detect-framework';
+import {
+  detectFramework,
+  framework,
+  readConfig,
+} from '../lib/detect-framework';
 import { writeDockerIgnore } from '../lib/file';
 import { cli, dropdown, spinner } from '../program';
 import { getNodejsVersion, setupNodejs } from './nodejs';
 import { setupVite } from './vite';
 
 export interface SetupFrameworkConfig {
-  framework: string;
+  framework: framework;
   cwd: string;
   src?: string;
   dest?: string;
@@ -43,6 +48,26 @@ export async function setupFramework(options: SetupFrameworkConfig) {
   const dockerfilepath = join(dest, 'Dockerfile');
   const dockerIgnoreDir = (options.options?.dockerignoreDir || dest) as string;
   switch (options.framework) {
+    case 'fastapi':
+      {
+        let mainFile = options.options?.mainFile;
+        if (!mainFile) {
+          spinner.warn(
+            'Could not detect the main.py file. Please provide the path to the app entrypoint file.',
+          );
+          mainFile = await input({
+            message: 'Entrypoint file (relative to the project root)',
+            required: true,
+            validate: (it) => it.endsWith('.py') || 'Must be a .py file',
+          });
+        }
+        await fastapi({
+          dir: dirname(mainFile),
+          mainFile: basename(mainFile),
+        }).save(dockerfilepath);
+        await writeDockerIgnore(dockerIgnoreDir, fastapi.dockerignore);
+      }
+      break;
     case 'nextjs':
       {
         const configFilePath = (await readdir(src)).find((it) =>

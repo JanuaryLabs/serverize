@@ -185,9 +185,11 @@ export async function runInDeployContext(config: DeployContext) {
         spinner.warn('No exposed port found, use 3000 as default');
       }
       if (!ast.healthCheckOptions) {
-        spinner.warn(
-          `No health check options found, using default health check`,
-        );
+        // NOTE: atm, serverize no longer wait for healthcheck
+        // this might change in the future
+        // spinner.warn(
+        //   `No health check options found, using default health check`,
+        // );
       }
 
       await buildImage(releaseInfo.image, ast.dockerfile);

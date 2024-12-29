@@ -6,7 +6,7 @@ import { fileBundler } from '@january/bundler';
 import { type Callers, staticEval } from '@january/evaluator';
 import { checker, parseCode, resolveCallExpression } from '@january/parser';
 
-import { getFile, readJsonFile, safeFail } from 'serverize/utils';
+import { exist, getFile, readJsonFile, safeFail } from 'serverize/utils';
 
 import { parseRequirements } from './requirements-parser';
 
@@ -25,6 +25,7 @@ export const supportedFrameworks = [
   'gh-pr-preview',
   'gh-automate',
   'nx',
+  'fastapi',
   // 'jamstack' // check if package.json is there and if so, check if it has a build script, otherwise just use nginx
 ] as const;
 
@@ -140,6 +141,25 @@ const frameworksClues: Record<framework, Clue[]> = {
         'vite.config.cjs',
       ];
       return configFiles.some((it) => existsSync(join(config.cwd, it)));
+    },
+  ],
+  fastapi: [
+    async (config) => {
+      const content = await getFile(join(config.cwd, 'requirements.txt'));
+      if (!content) return false;
+      const requirements = await parseRequirements(content);
+      const isFastapi = requirements.some(
+        (it) => it.type === 'package' && it.package === 'fastapi',
+      );
+      if (!isFastapi) return null;
+      const mainPy = (await exist(join(config.cwd, 'main.py')))
+        ? 'main.py'
+        : (await exist(join(config.cwd, 'app', 'main.py')))
+          ? join('app', 'main.py')
+          : null;
+      return {
+        mainFile: mainPy,
+      };
     },
   ],
   streamlit: [

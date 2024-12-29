@@ -16,7 +16,7 @@ export async function pushImage(
       : 'https://tusd.january.sh/files';
 
   logger(`Using endpoint: ${endpoint}`);
-  logger(`File size: ${bytesToMb(details.fileSize)} MB`);
+  logger(`Image size: ${Math.round(bytesToMb(details.fileSize))}MB`);
   return new Promise<string>((resolve, reject) => {
     const upload = new Upload(details.fileStream, {
       endpoint: endpoint,

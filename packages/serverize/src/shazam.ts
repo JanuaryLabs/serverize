@@ -55,6 +55,7 @@ export default new Command('shazam')
     }) => {
       const spinner = createSpinner();
       await ensureDockerRunning();
+      await initialise();
 
       let dockerfilepath = join(cwd, file);
 

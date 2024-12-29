@@ -67,9 +67,11 @@ const parse = (content: string): (Requirement | null)[] => {
         .slice(packageName.length)
         .match(/\s*(==|>=|<=|!=|~=|>|<)\s*([a-zA-Z0-9\-._*]+)/);
 
+      const packageNameWithExtras = packageName.replace(/\[.*\]/, '');
+
       return {
         type: 'package',
-        package: packageName,
+        package: packageNameWithExtras,
         version: versionMatch ? versionMatch[2] : null,
         specifier: versionMatch ? versionMatch[1] : null,
         envMarker,
@@ -86,9 +88,10 @@ const parse = (content: string): (Requirement | null)[] => {
  */
 const parseExtras = (packageName: string) => {
   const extrasMatch = packageName.match(/\[(.*)\]$/);
-  if (!extrasMatch) return null;
+  if (!extrasMatch) return [];
   return extrasMatch[1].split(',').map((extra) => extra.trim());
 };
+
 export async function parseRequirements(content: string) {
   try {
     return parse(content).filter(notNullOrUndefined);

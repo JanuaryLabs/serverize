@@ -10,6 +10,7 @@ export * from './lib/frameworks/nuxtjs';
 export * from './lib/frameworks/remix';
 export * from './lib/frameworks/streamlit';
 export * from './lib/frameworks/vite';
+export * from './lib/frameworks/fastapi';
 export * from './lib/network';
 export * from './lib/servers';
 export * from './lib/utils';
