@@ -1,7 +1,6 @@
 import { AsyncLocalStorage } from 'async_hooks';
 import chalk from 'chalk';
 import { writeFileSync } from 'fs';
-import { join } from 'path';
 import {
   from,
   lastValueFrom,
@@ -152,6 +151,7 @@ export async function runInComposeContext(config: DeployContext) {
 export interface DeployContext {
   projectName: string;
   file: string;
+  dockerignorepath: string;
   channel: 'dev' | 'preview';
   release: string;
   outputFile?: string;
@@ -165,7 +165,7 @@ export async function runInDeployContext(config: DeployContext) {
     process.exit(1);
   }
   const currentProject = await getCurrentProject(config.projectName);
-  const ast = await toAst(join(config.cwd, '.dockerignore'), config.file);
+  const ast = await toAst(config.dockerignorepath, config.file);
 
   const releaseInfo: ReleaseInfo = {
     channel: config.channel,

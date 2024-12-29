@@ -52,6 +52,7 @@ export default new Command('deploy')
 
       await runInComposeContext({
         projectName,
+        dockerignorepath: join(cwd, '.dockerignore'),
         file: join(cwd, file),
         cwd,
         channel,
@@ -65,6 +66,7 @@ export default new Command('deploy')
       await runInDeployContext({
         projectName,
         file: join(cwd, file),
+        dockerignorepath: join(cwd, '.dockerignore'),
         cwd,
         channel,
         release,

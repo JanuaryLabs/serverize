@@ -9,7 +9,6 @@ import debug from 'debug';
 import { type Dockerfile, DockerfileParser } from 'dockerfile-ast';
 import glob from 'fast-glob';
 import { signOut } from 'firebase/auth';
-import { existsSync } from 'fs';
 import { readFile } from 'fs/promises';
 import ora from 'ora';
 import { platform } from 'os';
@@ -19,6 +18,7 @@ import validator from 'validator';
 import { box } from '@january/console';
 
 import { coerceArray, nodeServer } from 'serverize/dockerfile';
+import { exist } from 'serverize/utils';
 
 import { client } from './lib/api-client';
 import { initialise } from './lib/auth';
@@ -50,10 +50,10 @@ export async function toAst(
   dockerfilePath: string,
 ): Promise<AST> {
   let dockerignore = '';
-  if (!existsSync(dockerfilePath)) {
+  if (!(await exist(dockerfilePath))) {
     throw new Error(`No Dockerfile found at ${dockerfilePath}`);
   }
-  if (!existsSync(dockerignorefilePath)) {
+  if (!(await exist(dockerignorefilePath))) {
     spinner.warn(
       `No .dockerignore found at ${dockerignorefilePath}. Using defaults.`,
     );

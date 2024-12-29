@@ -9,6 +9,7 @@ import { join } from 'path';
 
 import {
   type Healthcheck,
+  logger,
   printDivider,
   refineHealthcheck,
   spinner,
@@ -43,8 +44,8 @@ export async function saveImage(imageName: string): Promise<ImageDetails> {
 }
 
 export async function buildImage(imageName: string, filePath: string) {
-  // console.log('\n');
   printDivider();
+  logger(`Building image ${chalk.green(imageName)} from ${filePath} with context ${process.cwd()}`);
   const options = [
     '--pull',
     '--rm',
@@ -56,6 +57,7 @@ export async function buildImage(imageName: string, filePath: string) {
     'linux/amd64',
     '.',
   ].filter(Boolean);
+  logger(`docker build ${options.join(' ')}`);
   await execa(`docker`, ['build', ...options], {
     cwd: process.cwd(),
     stdio: 'inherit',

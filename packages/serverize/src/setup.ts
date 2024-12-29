@@ -159,14 +159,17 @@ const init = new Command('init')
         }
       }
 
-      await setupFramework({
+      const setups = await setupFramework({
         framework,
         cwd: projectDir,
         dest: projectDir,
       });
 
-      spinner.succeed(`Dockerfile: ${join(projectDir, 'Dockerfile')}`);
-      spinner.succeed(`.dockerignore: ${join(projectDir, '.dockerignore')}`);
+      for (const setup of setups) {
+        spinner.succeed(`Dockerfile: ${setup.dockerfile}`);
+        spinner.succeed(`.dockerignore: ${setup.dockerignore}`);
+      }
+
       spinner.succeed('Setup complete');
     },
   );

@@ -226,9 +226,10 @@ export async function activate(context: vscode.ExtensionContext) {
       return;
     }
 
-    const flags = [`-p ${selectedProject.name}`, '--use-dockerfile'].filter(
-      Boolean,
-    );
+    const flags = [
+      `-p ${selectedProject.name}`,
+      '--use-dockerfile-if-exists',
+    ].filter(Boolean);
     const command = `${bin} ${flags.join(' ')}`;
     await runTask(command);
   }

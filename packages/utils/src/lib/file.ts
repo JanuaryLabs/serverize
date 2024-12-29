@@ -79,5 +79,5 @@ export async function getFile(filePath: string) {
 
 export async function readJsonFile(filePath: string) {
   const file = await getFile(filePath);
-  return file ? JSON.parse(file) : null;
+  return file ? (JSON.parse(file) as Record<string, any>) : null;
 }

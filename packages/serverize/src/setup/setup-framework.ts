@@ -19,7 +19,7 @@ import {
   remix,
   streamlit,
 } from 'serverize/dockerfile';
-import { readJsonFile, readPackageJson } from 'serverize/utils';
+import { exist, readJsonFile, readPackageJson } from 'serverize/utils';
 
 import {
   detectFramework,
@@ -41,12 +41,23 @@ export interface SetupFrameworkConfig {
     packageManager?: PackageManager;
   };
 }
-export async function setupFramework(options: SetupFrameworkConfig) {
+
+export interface SetupResult {
+  dockerfile: string;
+  dockerignore: string;
+  framework: framework;
+  appName?: string;
+}
+
+export async function setupFramework(
+  options: SetupFrameworkConfig,
+): Promise<SetupResult[]> {
   const src = options.src || options.cwd;
   const dest = options.dest || src;
   await mkdir(dest, { recursive: true });
   const dockerfilepath = join(dest, 'Dockerfile');
   const dockerIgnoreDir = (options.options?.dockerignoreDir || dest) as string;
+  const setups: SetupResult[] = [];
   switch (options.framework) {
     case 'fastapi':
       {
@@ -66,6 +77,11 @@ export async function setupFramework(options: SetupFrameworkConfig) {
           mainFile: basename(mainFile),
         }).save(dockerfilepath);
         await writeDockerIgnore(dockerIgnoreDir, fastapi.dockerignore);
+        setups.push({
+          dockerfile: dockerfilepath,
+          dockerignore: join(dockerIgnoreDir, '.dockerignore'),
+          framework: 'fastapi',
+        });
       }
       break;
     case 'nextjs':
@@ -106,6 +122,11 @@ export async function setupFramework(options: SetupFrameworkConfig) {
           nodejsVersion: await getNodejsVersion(src).then((it) => it?.alpine),
         }).save(dockerfilepath);
         await writeDockerIgnore(dockerIgnoreDir, nextjs.dockerignore);
+        setups.push({
+          dockerfile: dockerfilepath,
+          dockerignore: join(dockerIgnoreDir, '.dockerignore'),
+          framework: 'nextjs',
+        });
       }
       break;
     case 'nuxtjs':
@@ -134,6 +155,11 @@ export async function setupFramework(options: SetupFrameworkConfig) {
           packageManager: await detect({ cwd: src }),
         }).save(dockerfilepath);
         await writeDockerIgnore(dockerIgnoreDir, nuxtjs.dockerignore);
+        setups.push({
+          dockerfile: dockerfilepath,
+          dockerignore: join(dockerIgnoreDir, '.dockerignore'),
+          framework: 'nuxtjs',
+        });
       }
       break;
     case 'astrojs':
@@ -162,14 +188,26 @@ export async function setupFramework(options: SetupFrameworkConfig) {
           mode: config.output as AstroOutputMode,
         }).save(dockerfilepath);
         await writeDockerIgnore(dockerIgnoreDir, astrojs.dockerignore);
+        setups.push({
+          dockerfile: dockerfilepath,
+          dockerignore: join(dockerIgnoreDir, '.dockerignore'),
+          framework: 'astrojs',
+        });
       }
       break;
     case 'vite':
-      await setupVite({
-        src: src,
-        dest,
-        ...options.options,
-      });
+      {
+        await setupVite({
+          src: src,
+          dest,
+          ...options.options,
+        });
+        setups.push({
+          dockerfile: dockerfilepath,
+          dockerignore: join(dockerIgnoreDir, '.dockerignore'),
+          framework: 'vite',
+        });
+      }
       break;
     case 'angular':
       {
@@ -185,6 +223,11 @@ export async function setupFramework(options: SetupFrameworkConfig) {
           distDir: distDir,
         }).save(dockerfilepath);
         await writeDockerIgnore(dockerIgnoreDir, angular.dockerignore);
+        setups.push({
+          dockerfile: dockerfilepath,
+          dockerignore: join(dockerIgnoreDir, '.dockerignore'),
+          framework: 'angular',
+        });
       }
       break;
     case 'streamlit': {
@@ -224,6 +267,11 @@ export async function setupFramework(options: SetupFrameworkConfig) {
         dockerfilepath,
       );
       await writeDockerIgnore(dockerIgnoreDir, dotnet.dockerignore);
+      setups.push({
+        dockerfile: dockerfilepath,
+        dockerignore: join(dockerIgnoreDir, '.dockerignore'),
+        framework: 'dotnet',
+      });
       break;
     }
     case 'remix': {
@@ -254,6 +302,11 @@ export async function setupFramework(options: SetupFrameworkConfig) {
         mode: outputMode,
       }).save(dockerfilepath);
       await writeDockerIgnore(dockerIgnoreDir, remix.dockerignore);
+      setups.push({
+        dockerfile: dockerfilepath,
+        dockerignore: join(dockerIgnoreDir, '.dockerignore'),
+        framework: 'remix',
+      });
       break;
     }
     case 'deno': {
@@ -281,20 +334,38 @@ export async function setupFramework(options: SetupFrameworkConfig) {
         entrypoint: entrypoint,
       }).save(dockerfilepath);
       await writeDockerIgnore(dockerIgnoreDir, bun.dockerignore);
+      setups.push({
+        dockerfile: dockerfilepath,
+        dockerignore: join(dockerIgnoreDir, '.dockerignore'),
+        framework: 'bun',
+      });
       break;
     }
     case 'nodejs': {
-      await setupNodejs({
-        cwd: options.cwd,
-        src: src,
-        dest,
-        ...options.options,
-      });
+      {
+        await setupNodejs({
+          cwd: options.cwd,
+          src: src,
+          dest,
+          ...options.options,
+        });
+        setups.push({
+          dockerfile: dockerfilepath,
+          dockerignore: join(dockerIgnoreDir, '.dockerignore'),
+          framework: 'nodejs',
+        });
+      }
       break;
     }
     case 'nx': {
       const nxJson = JSON.parse(await readFile(join(src, 'nx.json'), 'utf-8'));
-      const appsDir = nxJson?.workspaceLayout?.appsDir || 'apps';
+      let appsDir = nxJson?.workspaceLayout?.appsDir || 'apps';
+      if (!(await exist(join(src, appsDir)))) {
+        spinner.warn(`Could not find the apps directory.`);
+        appsDir = await input({
+          message: 'Apps directory (relative to the project root)',
+        });
+      }
       const appsNames = (
         await readdir(join(src, appsDir), {
           withFileTypes: true,
@@ -303,27 +374,29 @@ export async function setupFramework(options: SetupFrameworkConfig) {
         .filter((it) => it.isDirectory() && !it.name.endsWith('e2e'))
         .map((it) => it.name);
       const appsConfigs: {
-        dir: string;
+        src: string;
+        dest: string;
         name: string;
         config: Record<string, any>;
       }[] = [];
       for (const app of appsNames) {
-        const dir = join(src, appsDir, app);
-        const projectJson = await readJsonFile(join(dir, 'project.json'));
+        const appSrc = join(src, appsDir, app);
+        const projectJson = await readJsonFile(join(appSrc, 'project.json'));
         if (!projectJson) {
           continue;
         }
         appsConfigs.push({
           name: app,
           config: projectJson,
-          dir,
+          src: appSrc,
+          dest: join(dest, appsDir, app),
         });
       }
       spinner.info(
         `Projects: ${chalk.blue(appsConfigs.map((it) => it.name).join(','))}`,
       );
       for (const appConfig of appsConfigs) {
-        const frameworkDetails = await detectFramework(appConfig.dir, {
+        const frameworkDetails = await detectFramework(appConfig.src, {
           nx: true,
         });
         if (!frameworkDetails) {
@@ -340,11 +413,11 @@ export async function setupFramework(options: SetupFrameworkConfig) {
           `Project: ${chalk.bgBlue(appConfig.name)}, Framework: ${chalk.bgYellow(framework)}`,
         );
 
-        await setupFramework({
+        const nxAppSetupResult = await setupFramework({
           framework,
-          cwd: options.cwd,
-          src: appConfig.dir,
-          dest: appConfig.dir,
+          cwd: src,
+          src: appConfig.src,
+          dest: appConfig.dest,
           options: {
             packageManager: await detect({ cwd: src }),
             dockerignoreDir: dest,
@@ -353,11 +426,14 @@ export async function setupFramework(options: SetupFrameworkConfig) {
             ...frameworkOptions,
           },
         });
+        setups.push(...nxAppSetupResult);
       }
       break;
     }
     default:
-      throw new Error(`Unknown framework ${options.framework}`);
+      if (!setups.length) {
+        throw new Error(`Unknown framework ${options.framework}`);
+      }
   }
-  return { dockerfile: dockerfilepath };
+  return setups;
 }

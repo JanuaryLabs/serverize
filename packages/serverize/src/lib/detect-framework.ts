@@ -88,7 +88,9 @@ const frameworksClues: Record<framework, Clue[]> = {
           return null;
         }
         return {
-          distDir: buildTarget.options.outputPath,
+          distDir:
+            buildTarget.configurations?.[buildTarget.defaultConfiguration]
+              ?.outputPath || buildTarget.options.outputPath,
         };
       }
       const configFiles = ['angular.json'];
@@ -99,6 +101,9 @@ const frameworksClues: Record<framework, Clue[]> = {
         return null;
       }
       const angularJson = await readJsonFile(join(config.cwd, 'angular.json'));
+      if (!angularJson) {
+        return null;
+      }
       return {
         distDir: safeFail(
           () => angularJson.projects.angular.architect.build.options.outputPath,
