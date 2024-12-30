@@ -7,32 +7,16 @@ import { hono } from '@january/extensions/hono';
 import { identity } from '@january/extensions/identity';
 import { postgresql, typeorm } from '@january/extensions/typeorm';
 
-const skipClient = process.argv.includes('--skip-client');
-
 const appDir = join(process.cwd(), 'apps', 'api');
 
 export default defineConfig({
-  client: !skipClient
-    ? {
-        // packageName: '@serverize/client',
-        name: 'Serverize',
-        output: join(process.cwd(), 'packages/client'),
-        securityScheme: {
-          bearerAuth: {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'JWT',
-          },
-        },
-      }
-    : undefined,
   fs: {
     cwd: appDir,
   },
   tsconfigFilePaths: join(process.cwd(), 'tsconfig.base.json'),
   baseTsConfig: '../tsconfig.json',
   tsconfigName: join(appDir, 'tsconfig.app.json'),
-  formatGeneratedCode: false,
+  formatGeneratedCode: true,
   extensions: [
     identity,
     hono(),
