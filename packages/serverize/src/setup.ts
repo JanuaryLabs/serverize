@@ -22,10 +22,14 @@ import { cli, cwdOption, dropdown, spinner } from './program';
 import { setupFramework } from './setup/setup-framework';
 
 const listCommand = new Command('list').alias('ls').action(() => {
+  const links: Partial<Record<framework, string>> = {
+    'gh-pr-preview': 'deployment-previews',
+    'gh-automate': 'ci-cd',
+  };
   console.log(
     supportedFrameworks
       .map((it) =>
-        `Framework: ${it} | https://serverize.sh/guides/${it}`.trim(),
+        `Framework: ${it} | https://serverize.sh/guides/${links[it] || it}`.trim(),
       )
       .join('\n'),
     '\n',
