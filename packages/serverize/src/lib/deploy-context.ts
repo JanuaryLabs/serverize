@@ -196,10 +196,20 @@ export async function runInDeployContext(config: DeployContext) {
 
       const finalUrl = await lastValueFrom(deployProject());
       spinner.succeed(chalk.yellow('Deployed successfully'));
+      const logsCommand = [
+        'npx serverize logs',
+        `-p ${releaseInfo.projectName}`,
+        releaseInfo.channel !== 'dev' ? `-c ${releaseInfo.channel}` : '',
+        releaseInfo.releaseName !== 'latest'
+          ? `-r ${releaseInfo.releaseName}`
+          : '',
+      ]
+        .filter(Boolean)
+        .join(' ');
       box.print(
         `${releaseInfo.projectName} Deployed`,
         `Accessible at ${finalUrl}`,
-        `Logs: npx serverize logs -p ${releaseInfo.projectName}`,
+        `Logs: ${logsCommand}`,
         `Stuck? Join us at https://discord.gg/aj9bRtrmNt`,
       );
 

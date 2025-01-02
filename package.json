@@ -1,7 +1,6 @@
 {
   "name": "@serverize/source",
   "version": "0.0.0",
-  "license": "MIT",
   "type": "module",
   "scripts": {
     "serverize": "npx concurrently -k \"nx run serverize:build:development --watch\" \"nx run docker:build:development --watch\" \"nx run dockerfile:build:development --watch\" \"nx run dockercompose:build:development --watch\" \"nx run utils:build:development --watch\"",
