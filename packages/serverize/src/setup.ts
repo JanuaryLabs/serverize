@@ -18,7 +18,7 @@ import {
   ghPrWorkflow,
   slackNotification,
 } from './lib/gh-preview';
-import { cli, cwdOption, dropdown, spinner } from './program';
+import { cli, cwdOption, dropdown, printDivider, spinner } from './program';
 import { setupFramework } from './setup/setup-framework';
 
 const listCommand = new Command('list').alias('ls').action(() => {
@@ -111,7 +111,7 @@ const init = new Command('init')
       }
       if (framework === 'gh-automate') {
         spinner.info(`Setting up preview deployment...`);
-        const healthCheck = await dropdown({
+        const notification = await dropdown({
           title: 'Select notification type',
           choices: [
             {
@@ -128,10 +128,14 @@ const init = new Command('init')
             },
           ],
         });
+        // TODO: ask the user if they w'd like to generate a token
+        const serverizeToken = '';
+        const channel = 'dev';
         const workflow = ghAutomateWorkflow(
-          healthCheck === 'discord'
+          channel,
+          notification === 'discord'
             ? discordNotification()
-            : healthCheck === 'slack'
+            : notification === 'slack'
               ? slackNotification()
               : undefined,
         );
@@ -142,9 +146,11 @@ const init = new Command('init')
         const actionFile = join(workflowsDir, 'deployment.yml');
         await writeFile(actionFile, workflow.content, 'utf-8');
         spinner.succeed(`Deployment workflow added.\n${actionFile}`);
+        printDivider();
         spinner.info(
           `Please add the following secrets to your repository:\n${workflow.vars.map((it) => `- ${chalk.blue.bold(it)}`).join('\n')}`,
         );
+        printDivider();
         return;
       }
       spinner.info(`Framework/Language: ${chalk.blue.bold(framework)}`);

@@ -77,9 +77,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: npm
@@ -102,8 +102,8 @@ Explanation:
 - `deploy`: This is the name of the job
   - `runs-on`: The operating system on which the job runs.
   - `steps`: This is a collection of steps that are executed in order.
-  - It fetches the code from the repository using the `actions/checkout@v3` action.
-  - It sets up the Node.js environment using the `actions/setup-node@v3` action.
+  - It fetches the code from the repository using the `actions/checkout@v4` action.
+  - It sets up the Node.js environment using the `actions/setup-node@v4` action.
   - It runs the `npx serverize deploy` command to deploy the project.
 
 > Note: _Make sure to add the `SERVERIZE_API_TOKEN` secret to your repository's settings._

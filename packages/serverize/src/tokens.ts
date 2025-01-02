@@ -1,6 +1,5 @@
 import chalk from 'chalk';
 import { Command } from 'commander';
-
 import { box } from '@january/console';
 
 import { client } from './lib/api-client';
@@ -43,7 +42,7 @@ const create = new Command('create')
       }
       projectId = project.id;
     }
-    projectId ??= await dropdown({
+    projectId ||= await dropdown({
       title: 'Select a project',
       choices: projects.records.map(({ name, id }) => ({ name, value: id })),
     });

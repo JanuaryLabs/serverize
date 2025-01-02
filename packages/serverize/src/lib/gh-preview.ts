@@ -50,7 +50,7 @@ export const ghPrWorkflow = (notification?: Step) => {
             },
           },
           {
-            uses: 'actions/checkout@v3',
+            uses: 'actions/checkout@v4',
           },
           {
             name: 'Deploy To Serverize',

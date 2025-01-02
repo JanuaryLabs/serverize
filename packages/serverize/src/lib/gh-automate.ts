@@ -11,51 +11,59 @@ interface Step {
   };
   vars?: string[];
 }
-export const ghAutomateWorkflow = (notification?: Step) => {
+
+export const ghAutomateWorkflow = (channel: string, notification?: Step) => {
+  const env = {
+    LOG_URL:
+      '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}',
+    SUCCESS_TEMPLATE:
+      '## Deployed with :page_facing_up: Serverize\n| **Commit:** | ${{ github.event.pull_request.head.sha }} |\n| **Status:** | ✅ Success |\n| **Url:** | [Open](${{ steps.read_output.outputs.serverize }}) |\n| **Deploy Log:** | [View Log](${{env.LOG_URL}}) |',
+    FAILED_TEMPLATE:
+      '## Deploy Failed with :page_facing_up: Serverize\n| **Commit:** | ${{ github.event.pull_request.head.sha }} |\n| **Status:** | ❌ Failure |\n| **Deploy Log:** | [View Log](${{env.LOG_URL}}) |',
+    OUTPUT_FILE: '${{ runner.temp }}/serverize.json',
+  };
   const workflow = {
-    name: 'Deploy PR previews',
+    name: 'Deploy',
     on: {
       pull_request: {
         types: ['opened', 'reopened', 'synchronize', 'closed'],
       },
     },
     concurrency: {
-      group: 'preview-${{ github.workflow }}-${{ github.ref }}',
+      group: '${{ github.workflow }}-${{ github.ref }}',
       'cancel-in-progress': true,
     },
     jobs: {
-      deploy_preview: {
+      deploy: {
         'runs-on': 'ubuntu-latest',
         'continue-on-error': false,
-        permissions: {
-          contents: 'read',
-        },
-        env: {
-          LOG_URL:
-            '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}',
-          OUTPUT_FILE: '${{ runner.temp }}/serverize.json',
-          SUCCESS_TEMPLATE:
-            '## Deployed with :page_facing_up: Serverize\n| **Commit:** | ${{ github.event.pull_request.head.sha }} |\n| **Status:** | ✅ Success |\n| **Url:** | [Open](${{ steps.read_output.outputs.serverize }}) |\n| **Deploy Log:** | [View Log](${{env.LOG_URL}}) |',
-          FAILED_TEMPLATE:
-            '## Deploy Failed with :page_facing_up: Serverize\n| **Commit:** | ${{ github.event.pull_request.head.sha }} |\n| **Status:** | ❌ Failure |\n| **Deploy Log:** | [View Log](${{env.LOG_URL}}) |',
-        },
+        ...(notification
+          ? {
+              permissions: {
+                contents: 'read',
+              },
+            }
+          : {}),
+        env: notification ? env : {},
         steps: [
           {
-            uses: 'actions/checkout@v3',
+            uses: 'actions/checkout@v4',
           },
           {
             name: 'Deploy To Serverize',
             if: "${{ github.event.action != 'closed' }}",
-            run: 'npx serverize deploy -c qa -r pr-${{ github.event.pull_request.number }} --output ${{env.OUTPUT_FILE}}',
+            run: `npx serverize deploy -c ${channel} ${notification ? ' --output ${{env.OUTPUT_FILE}}' : ''}`,
             env: {
               SERVERIZE_API_TOKEN: `\${{ secrets.SERVERIZE_API_TOKEN }}`,
             },
           },
-          {
-            name: 'Set Deployment Output',
-            id: 'read_output',
-            run: 'echo "serverize=$(cat ${{env.OUTPUT_FILE}} | jq -r \'.url\')" >> $GITHUB_OUTPUT\n',
-          },
+          notification
+            ? {
+                name: 'Set Deployment Output',
+                id: 'read_output',
+                run: 'echo "serverize=$(cat ${{env.OUTPUT_FILE}} | jq -r \'.url\')" >> $GITHUB_OUTPUT\n',
+              }
+            : null,
           notification?.action,
         ].filter(Boolean),
       },
