@@ -12,7 +12,7 @@ import {
 
 const base: (config: NodeJsConfig) => Stage = (config) => ({
   from: {
-    image: `node:${config.version ?? 'lts-alpine'}`,
+    image: `--platform=$BUILDPLATFORM node:${config.version ?? 'lts-alpine'}`,
     pm: 'apk',
   },
 });
