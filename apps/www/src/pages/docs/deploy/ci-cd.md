@@ -1,6 +1,6 @@
 ---
-layout: ../../layouts/BlogPostLayout.astro
-title: 'Automate Serverize Deployments with GitHub Actions'
+layout: ../../../layouts/DocsLayout.astro
+title: 'GitHub Actions'
 subtitle: 'Use GitHub Actions to automate your Serverize deployments. Step-by-step guide to setting up workflows, creating tokens, and deploying your projects'
 author: 'Adam Koskovki'
 date: '2024-10-22T00:00:00.000Z'
@@ -65,8 +65,8 @@ name: Serverize
 
 on:
   push:
-    branches:
-      - main
+	branches:
+	  - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref}}
@@ -74,21 +74,21 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+	runs-on: ubuntu-latest
+	steps:
+	  - name: Checkout
+		uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: npm
+	  - uses: actions/setup-node@v4
+		with:
+		  node-version: '20'
+		  cache: npm
 
-      # Assuming the build and other processes are happening in the Dockerfile
-      - name: Deploy
-        run: npx serverize deploy
-        env:
-          SERVERIZE_API_TOKEN: ${{ secrets.SERVERIZE_API_TOKEN }}
+	  # Assuming the build and other processes are happening in the Dockerfile
+	  - name: Deploy
+		run: npx serverize deploy
+		env:
+		  SERVERIZE_API_TOKEN: ${{ secrets.SERVERIZE_API_TOKEN }}
 ```
 
 **_This workflow assumes that the build and other processes are happening in the Dockerfile._**
@@ -122,12 +122,12 @@ Taking Slack as an example, you can add the following step to your workflow to s
 - name: Slack Notification
    uses: rtCamp/action-slack-notify@v2
    env:
-      SLACK_CHANNEL: general
-      SLACK_COLOR: ${{ job.status }}
-      SLACK_MESSAGE: ${{ job.status == 'success' && 'Deployment successful' || 'Deployment failed' }}
-      SLACK_TITLE: 'Deployment Status'
-      SLACK_USERNAME: deployment
-      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+	  SLACK_CHANNEL: general
+	  SLACK_COLOR: ${{ job.status }}
+	  SLACK_MESSAGE: ${{ job.status == 'success' && 'Deployment successful' || 'Deployment failed' }}
+	  SLACK_TITLE: 'Deployment Status'
+	  SLACK_USERNAME: deployment
+	  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 ```
 
 > Make sure to add `SLACK_WEBHOOK` as a repository secret, similar to SERVERIZE_API_TOKEN.

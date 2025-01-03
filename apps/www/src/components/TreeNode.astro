@@ -1,0 +1,49 @@
+---
+interface Props {
+  tree: Record<string, any>;
+  level?: number;
+  className?: string;
+}
+
+const { tree, level = 0, className } = Astro.props;
+---
+
+<ul class:list={[level === 0 ? 'pl-0' : 'border-l', className || '']}>
+  {
+    Object.entries(tree).map(([key, value]) => (
+      <li class:list={[level > 0 && 'mt-1 pl-4', level === 0 && 'pt-6']}>
+        {value.href ? (
+          <a
+            href={value.href}
+            style={{
+              fontVariantCaps: level === 0 ? 'all-petite-caps' : 'normal',
+            }}
+            class:list={[
+              'hover:text-primary',
+              level === 0
+                ? 'text-lg font-semibold uppercase tracking-wide'
+                : 'text-secondary-foreground/70 text-[15px]',
+            ]}
+          >
+            {value.title || key}
+          </a>
+        ) : (
+          <span
+            style={{
+              fontVariantCaps: level === 0 ? 'all-petite-caps' : 'normal',
+            }}
+            class:list={[
+              '',
+              level === 0 && 'text-lg font-semibold uppercase tracking-wide',
+            ]}
+          >
+            {key}
+          </span>
+        )}
+        {Object.keys(value.children).length > 0 && (
+          <Astro.self tree={value.children} level={level + 1} />
+        )}
+      </li>
+    ))
+  }
+</ul>

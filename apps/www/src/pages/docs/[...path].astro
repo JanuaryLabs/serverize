@@ -1,0 +1,28 @@
+---
+import type { MarkdownInstance } from 'astro';
+import { join } from 'path';
+const posts = import.meta.glob('./**/*.md', { eager: true });
+export async function getStaticPaths() {
+  const files = import.meta.glob('./**/*.md', { eager: true });
+  const paths = Object.keys(files).map((file) => {
+    const path = join(file.replaceAll(/\d\./g, '').replace(/\.md$/, ''));
+    return {
+      params: {
+        path,
+      },
+    };
+  });
+  return paths;
+}
+
+const { path } = Astro.params;
+const key = Object.keys(posts).find(
+  (key) => join(key.replaceAll(/\d\./g, '').replace(/\.md$/, '')) === path,
+)!;
+const { Content } = posts[key] as MarkdownInstance<{
+  title: string;
+  subtitle: string;
+}>;
+---
+
+<Content />

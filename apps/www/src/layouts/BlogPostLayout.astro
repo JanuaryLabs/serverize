@@ -1,11 +1,10 @@
 ---
 import type { MarkdownLayoutProps } from 'astro';
 import { Nav } from '../components/background.tsx';
-import Cta from '../components/Cta.tsx';
+import CtaFooter from '../components/CtaFooter.tsx';
 import BlogContainer, { TocSpy } from './Blog/BlogContainer.tsx';
 import GuideHeader from './Blog/GuideHeader.tsx';
 import Main from './main.astro';
-import CtaFooter from '../components/CtaFooter.tsx';
 
 type Props = MarkdownLayoutProps<{
   title: string;
@@ -23,7 +22,7 @@ const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
   <div class="mx-auto w-full max-w-6xl px-6 md:pl-10 lg:px-10 xl:px-0">
     <a
       href="/guides"
-      class="mb-4 mt-4 flex cursor-pointer items-center gap-x-0.5 text-sm font-medium text-secondary-foreground/70 no-underline hover:underline md:mb-8 md:mt-12"
+      class="text-secondary-foreground/70 mb-4 mt-4 flex cursor-pointer items-center gap-x-0.5 text-sm font-medium no-underline hover:underline md:mb-8 md:mt-12"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
