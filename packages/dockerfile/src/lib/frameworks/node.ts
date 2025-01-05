@@ -1,5 +1,3 @@
-import { basename, dirname } from 'path';
-
 import { type Stage, dockerfile } from '../docker_file';
 import { nodeServer } from '../servers';
 import {
@@ -9,6 +7,7 @@ import {
   packageManagerCommands,
   stage,
 } from '../utils';
+import { basename, dirname } from 'path';
 
 const base: (config: NodeJsConfig) => Stage = (config) => ({
   from: {

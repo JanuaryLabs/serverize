@@ -3,9 +3,6 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 import { existsSync } from 'fs';
 import { mkdir, writeFile } from 'fs/promises';
-import { join } from 'path';
-
-import { box } from '@january/console';
 
 import {
   detectFramework,
@@ -20,6 +17,9 @@ import {
 } from './lib/gh-preview';
 import { cli, cwdOption, dropdown, printDivider, spinner } from './program';
 import { setupFramework } from './setup/setup-framework';
+import { join } from 'path';
+
+import { box } from '@january/console';
 
 const listCommand = new Command('list').alias('ls').action(() => {
   const links: Partial<Record<framework, string>> = {

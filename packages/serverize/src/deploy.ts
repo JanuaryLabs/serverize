@@ -1,6 +1,5 @@
 import chalk from 'chalk';
 import { Command, Option } from 'commander';
-import { join } from 'path';
 
 import { runInComposeContext, runInDeployContext } from './lib/deploy-context';
 import {
@@ -10,6 +9,7 @@ import {
   releaseOption,
   spinner,
 } from './program';
+import { join } from 'path';
 
 const deployPreviewCommand = new Command('preview').option(
   '-pr, --preview [NAME]',

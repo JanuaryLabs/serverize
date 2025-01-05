@@ -1,12 +1,14 @@
 import { type EvaluateOptions } from '@mdx-js/mdx';
-import { type FC } from 'react';
-type Runtime = Pick<EvaluateOptions, 'jsx' | 'jsxs' | 'Fragment'>;
-
 import rehypeShiki from '@shikijs/rehype';
-import { memo } from 'react';
-import ReactMarkdown, { type Options } from 'react-markdown';
+
 import { CodeBox2, TransformCodev2 } from '../code';
 import MDXCodeBox from '../code/code';
+import { type FC } from 'react';
+import { memo } from 'react';
+import ReactMarkdown, { type Options } from 'react-markdown';
+
+type Runtime = Pick<EvaluateOptions, 'jsx' | 'jsxs' | 'Fragment'>;
+
 const MemoizedReactMarkdown: FC<Options> = memo(
   ReactMarkdown,
   (prevProps, nextProps) =>
@@ -59,7 +61,7 @@ export function AssistantMessage(props: { message: string }) {
 
 export function UserMessage({ message }: { message: string }) {
   return (
-    <div className="sticky top-0 z-10 block bg-background py-4 text-sm font-semibold text-[#204300]">
+    <div className="bg-background sticky top-0 z-10 block py-4 text-sm font-semibold text-[#204300]">
       {message}
     </div>
   );

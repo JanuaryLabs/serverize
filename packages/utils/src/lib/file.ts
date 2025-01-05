@@ -1,8 +1,8 @@
 import { mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
-import { dirname, isAbsolute, join } from 'path';
 
 import { formatCode } from './format-code';
 import { getExt } from './utils';
+import { dirname, isAbsolute, join } from 'path';
 
 export interface PackageJson {
   name: string;

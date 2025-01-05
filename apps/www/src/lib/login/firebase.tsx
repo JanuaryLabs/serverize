@@ -8,8 +8,9 @@ import {
   type User,
   getAuth,
   onAuthStateChanged,
-  onIdTokenChanged
+  onIdTokenChanged,
 } from 'firebase/auth';
+
 import { useCallback, useEffect, useState } from 'react';
 
 const app = initializeApp({
@@ -77,8 +78,6 @@ export function useLogout() {
 
   return loggedOut;
 }
-
-
 
 // if (
 //   process.env.__LOCAL__ &&

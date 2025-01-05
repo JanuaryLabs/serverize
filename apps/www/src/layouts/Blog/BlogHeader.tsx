@@ -1,5 +1,7 @@
 import { format } from 'date-fns';
+
 import BlogBreadCrumb from './BlogBreadCrumb';
+
 export default function BlogHeader(props: {
   title: string;
   subtitle: string;
@@ -8,17 +10,17 @@ export default function BlogHeader(props: {
   minutesRead: string;
 }) {
   return (
-    <div className="justify-center flex flex-col gap-y-2 lg:gap-y-4">
+    <div className="flex flex-col justify-center gap-y-2 lg:gap-y-4">
       {/* <BlogBreadCrumb className="mt-8" /> */}
-      
-      <h1 className=" text-center font-bold lg:text-5xl md:text-3xl text-2xl mb-0">
+
+      <h1 className="mb-0 text-center text-2xl font-bold md:text-3xl lg:text-5xl">
         {props.title}
       </h1>
-      <div className="flex text-sm gap-x-1 justify-center">
+      <div className="flex justify-center gap-x-1 text-sm">
         <p>{props.author}</p>
         <p className="text-secondary-foreground/60">Software Engineer</p>
       </div>
-      <div className="flex text-sm items-center justify-between">
+      <div className="flex items-center justify-between text-sm">
         <p className="text-secondary-foreground/60 flex items-center gap-x-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +46,7 @@ export default function BlogHeader(props: {
         style={{
           marginTop: '1em',
         }}
-        className="text-2xl font-medium text-secondary-foreground/70"
+        className="text-secondary-foreground/70 text-2xl font-medium"
       >
         {props.subtitle}
       </h2>

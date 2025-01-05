@@ -1,5 +1,5 @@
-import { type PropsWithChildren } from 'react';
 import { cn } from './utils';
+import { type PropsWithChildren } from 'react';
 
 const Icon = ({ className, ...rest }: any) => {
   return (
@@ -21,14 +21,14 @@ export default function Try(props: PropsWithChildren<{ className?: string }>) {
     <>
       <div
         className={cn(
-          'border border-border/70 rounded-md relative',
+          'border-border/70 relative rounded-md border',
           props.className,
         )}
       >
-        <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
-        <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-white text-black" />
-        <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-white text-black" />
-        <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-white text-black" />
+        <Icon className="absolute -left-3 -top-3 h-6 w-6 text-black dark:text-white" />
+        <Icon className="absolute -bottom-3 -left-3 h-6 w-6 text-black dark:text-white" />
+        <Icon className="absolute -right-3 -top-3 h-6 w-6 text-black dark:text-white" />
+        <Icon className="absolute -bottom-3 -right-3 h-6 w-6 text-black dark:text-white" />
         {props.children}
       </div>
     </>

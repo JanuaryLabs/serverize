@@ -1,10 +1,10 @@
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+
 import AskAiBox from './AskAi/AskAIBox';
 import SearchInput from './SearchInput';
 import { Button, buttonVariants } from './ui/button';
 import { cn } from './utils';
-
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { useEffect, useState, type PropsWithChildren } from 'react';
+import { type PropsWithChildren, useEffect, useState } from 'react';
 
 export default function Background(
   props: React.PropsWithChildren<{ className?: string }>,
@@ -78,8 +78,8 @@ export function Nav(props: { className?: string }) {
         'bg-background dark:bg-background',
         props.className,
         'sticky top-0 z-50 w-full',
-        scrolled ? 'border-b border-border/70' : '',
-        'md:px-6 px-4',
+        scrolled ? 'border-border/70 border-b' : '',
+        'px-4 md:px-6',
       )}
     >
       <div className="mx-auto flex w-full max-w-7xl items-center">
@@ -92,7 +92,7 @@ export function Nav(props: { className?: string }) {
               target={it.target}
               className={cn(
                 buttonVariants({ variant: 'ghost' }),
-                'text-sm font-medium text-secondary-foreground/70',
+                'text-secondary-foreground/70 text-sm font-medium',
               )}
             >
               {it.name}
@@ -204,7 +204,7 @@ export function GridBackgroundDemo(
   return (
     <div
       className={cn(
-        'relative w-full bg-white bg-grid-small-black/[0.1] dark:bg-black dark:bg-grid-small-white/[0.1]',
+        'bg-grid-small-black/[0.1] dark:bg-grid-small-white/[0.1] relative w-full bg-white dark:bg-black',
         props.className,
       )}
     >

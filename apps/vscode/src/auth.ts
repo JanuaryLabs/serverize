@@ -1,4 +1,5 @@
 import { GithubAuthProvider, signInWithCredential } from 'firebase/auth';
+
 import { auth } from 'serverize';
 
 export async function signInWithGithub(accessToken: string) {

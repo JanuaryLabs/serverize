@@ -1,11 +1,11 @@
 import { evaluate } from '@mdx-js/mdx';
-import { useEffect, useState } from 'react';
-import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
-
 import type { EvaluateOptions } from '@mdx-js/mdx';
 import type { MDXProps } from 'mdx/types';
-import type { FC, ReactNode } from 'react';
+
 import { rehypePlugins } from './rehype';
+import { useEffect, useState } from 'react';
+import type { FC, ReactNode } from 'react';
+import { Fragment, jsx, jsxs } from 'react/jsx-runtime';
 
 type ReactMDXContent = (props: MDXProps) => ReactNode;
 type Runtime = Pick<EvaluateOptions, 'jsx' | 'jsxs' | 'Fragment'>;

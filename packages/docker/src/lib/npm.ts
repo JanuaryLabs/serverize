@@ -1,20 +1,19 @@
 import type { Container } from 'dockerode';
+
+import { docker } from './instance';
+import { followLogs, removeContainer, startContainer } from './utils';
+import { extractError } from 'serverize/utils';
 import { PassThrough } from 'stream';
 import tarStream, { type Pack } from 'tar-stream';
 
-import { extractError } from 'serverize/utils';
-
-  interface SourceData {
+interface SourceData {
   scope?: string;
   full: string;
   moduleName: string;
   version: string;
   package: string;
   file?: string;
-  }
-
-import { docker } from './instance';
-import { followLogs, removeContainer, startContainer } from './utils';
+}
 
 const mainOutStream = new PassThrough();
 const mainErrStream = new PassThrough();

@@ -2,8 +2,8 @@ import { initializeApp } from 'firebase/app';
 import { initializeAuth } from 'firebase/auth';
 import { mkdir, rm, writeFile } from 'fs/promises';
 import { tmpdir } from 'os';
-import { dirname, join } from 'path';
 
+import { dirname, join } from 'path';
 import { getFile } from 'serverize/utils';
 
 class FilePersistence {

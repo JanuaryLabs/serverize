@@ -1,17 +1,16 @@
+import { Button } from '../ui/button';
+import { ChatContext } from './docs-chat';
+import { AssistantMessage, UserMessage } from './docs-messages';
+import type { Message } from 'ai/react';
 import React, {
+  type PropsWithChildren,
   useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
-  type PropsWithChildren,
 } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-
-import { Button } from '../ui/button';
-import { ChatContext } from './docs-chat';
-import { AssistantMessage, UserMessage } from './docs-messages';
-import type { Message } from 'ai/react';
 
 export function ChatList(props: PropsWithChildren) {
   const { messages, submitMessage, append, setInput } = useContext(ChatContext);
@@ -80,7 +79,7 @@ export function ChatList(props: PropsWithChildren) {
       )}
       <div
         id="chat-content"
-        className="prose text-sm prose-p:my-4 prose-ol:my-4"
+        className="prose prose-p:my-4 prose-ol:my-4 text-sm"
       >
         {messages.map((it) => (
           <React.Fragment key={it.id}>
@@ -100,13 +99,13 @@ function SuggestedPrompts(props: { onSelectPrompt: (prompt: string) => void }) {
   return (
     <>
       <div className="mb-4 flex flex-col items-start">
-        <p className="my-4 text-sm text-secondary-foreground/70">
+        <p className="text-secondary-foreground/70 my-4 text-sm">
           Hi! I'm an AI assistant trained on documentation, code, and other
           content. I can answer questions about{' '}
           <strong className="text-foreground">Serverize</strong>, what's on your
           mind?
         </p>
-        <p className="mb-4 text-xs text-secondary-foreground/70">
+        <p className="text-secondary-foreground/70 mb-4 text-xs">
           Suggested Prompts
         </p>
         <ul className="flex flex-col items-start gap-y-2">

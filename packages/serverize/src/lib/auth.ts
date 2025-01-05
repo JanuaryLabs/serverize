@@ -16,9 +16,9 @@ import {
   signInWithRedirect,
 } from 'firebase/auth';
 
-import { box } from '@january/console';
-
 import { auth } from './firebase';
+
+import { box } from '@january/console';
 
 export async function anonymouslySignIn() {
   if (auth.currentUser) {

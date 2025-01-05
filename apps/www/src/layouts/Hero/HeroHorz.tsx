@@ -1,14 +1,14 @@
-import type { PropsWithChildren } from 'react';
-import Background from '../../components/background';
 import Try from '../../components/Box';
+import Background from '../../components/background';
 import { TextGenerateEffect } from '../../components/text-generate-effect';
-import { EyeCatchingButton, Button } from '../../components/ui/button';
+import { Button, EyeCatchingButton } from '../../components/ui/button';
+import type { PropsWithChildren } from 'react';
 
 export default function HeroHorz(props: PropsWithChildren) {
   return (
     <Background>
-      <div className="max-w-2xl w-full">
-        <div className="w-full flex justify-center flex-col">
+      <div className="w-full max-w-2xl">
+        <div className="flex w-full flex-col justify-center">
           <h1>
             <TextGenerateEffect
               filter={false}
@@ -16,19 +16,19 @@ export default function HeroHorz(props: PropsWithChildren) {
               words={'Make your development setup accessible worldwide'}
             />
           </h1>
-          <h2 className="md:text-xl mt-8 mb-8 text-secondary-foreground">
+          <h2 className="text-secondary-foreground mb-8 mt-8 md:text-xl">
             Serverize optimizes your development workflow by placing your
             development setup in the cloud, allowing for quick feedback,
             immediate testing, easy sharing, and smooth team collaboration.
             <strong>Deployment happens, but without the usual wait.</strong>
           </h2>
-          <div className="md:flex items-start">
+          <div className="items-start md:flex">
             <Try />
           </div>
-          <div className="italic text-sm mt-4 font-semibold">
+          <div className="mt-4 text-sm font-semibold italic">
             This website is being Serverized
           </div>
-          <div className="mt-8 lg:gap-8 gap-4 flex lg:flex-row flex-col items-center">
+          <div className="mt-8 flex flex-col items-center gap-4 lg:flex-row lg:gap-8">
             <EyeCatchingButton>
               <a href="https://cal.com/january-sh/30min"> Request a demo </a>
             </EyeCatchingButton>

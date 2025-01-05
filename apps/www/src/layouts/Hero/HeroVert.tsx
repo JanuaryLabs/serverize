@@ -26,7 +26,7 @@ export default function HeroVert() {
           </div>
         </div>
         <div className="md:w-1/2">
-          <h2 className="mb-8 text-secondary-foreground/70 lg:text-xl">
+          <h2 className="text-secondary-foreground/70 mb-8 lg:text-xl">
             Serverize your static website, API project, or full-stack
             application<span className="mx-1">-</span>
             <strong className="text-secondary-foreground">

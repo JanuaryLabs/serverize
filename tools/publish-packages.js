@@ -1,5 +1,6 @@
 import { execSync } from 'child_process';
 import { readFile, writeFile } from 'fs/promises';
+
 import path, { join } from 'path';
 
 const npmProjects = ['packages/serverize', 'packages/client', 'apps/vscode'];

@@ -13,6 +13,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+
 import type { PropsWithChildren } from 'react';
 
 export default function Page(props: PropsWithChildren) {

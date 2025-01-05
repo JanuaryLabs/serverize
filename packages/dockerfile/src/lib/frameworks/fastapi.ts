@@ -1,7 +1,6 @@
-import { join } from 'path';
-
 import { dockerfile } from '../docker_file';
 import { nodeServer } from '../servers';
+import { join } from 'path';
 
 interface FastAPIConfig {
   port?: number;

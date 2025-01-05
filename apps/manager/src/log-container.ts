@@ -1,7 +1,6 @@
 // import sse from 'better-sse';
-import { catchError, filter, map, of, startWith, switchMap } from 'rxjs';
-
 import { type LogEntry, containerLogs, listenToDockerEvents } from './instance';
+import { catchError, filter, map, of, startWith, switchMap } from 'rxjs';
 
 const eventMessages: Record<string, string | ((event: any) => string)> = {
   create: 'Container created. Starting logs...',

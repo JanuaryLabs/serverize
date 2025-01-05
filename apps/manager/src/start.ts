@@ -1,14 +1,13 @@
 import { Serverize } from '@serverize/client';
 import type { Container } from 'dockerode';
 import { tmpdir } from 'os';
-import { join } from 'path';
-import type { RuntimeConfig } from 'serverize';
-
-import { docker, followProgress, getContainer } from 'serverize/docker';
-import { extractError } from 'serverize/utils';
 
 import { fileWriter } from './file';
 import { ReleaseInfo, createRemoteServer } from './manager';
+import { join } from 'path';
+import type { RuntimeConfig } from 'serverize';
+import { docker, followProgress, getContainer } from 'serverize/docker';
+import { extractError } from 'serverize/utils';
 
 export const UPLOADS_DIR =
   process.env.UPLOAD_DIR ||

@@ -1,10 +1,6 @@
 import chalk from 'chalk';
 import { Command } from 'commander';
 import { tmpdir } from 'os';
-import { join } from 'path';
-
-import { ensureDockerRunning } from 'serverize/docker';
-import { exist } from 'serverize/utils';
 
 import { login, register } from './auth';
 import { client } from './lib/api-client';
@@ -28,6 +24,9 @@ import {
 } from './program';
 import { createProject } from './project';
 import { setupFramework } from './setup/setup-framework';
+import { join } from 'path';
+import { ensureDockerRunning } from 'serverize/docker';
+import { exist } from 'serverize/utils';
 
 interface ShazamConfig {
   frameworkName?: framework;

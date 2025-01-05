@@ -1,7 +1,7 @@
-import { dirname } from 'path';
-
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'fs';
-import { basename, resolve, join, relative } from 'path';
+
+import { dirname } from 'path';
+import { basename, join, relative, resolve } from 'path';
 
 const filterFiles = (dir, fileName) => {
   const dirName = basename(dir);

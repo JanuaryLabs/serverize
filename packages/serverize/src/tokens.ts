@@ -1,6 +1,5 @@
 import chalk from 'chalk';
 import { Command } from 'commander';
-import { box } from '@january/console';
 
 import { client } from './lib/api-client';
 import {
@@ -10,6 +9,8 @@ import {
   showError,
   spinner,
 } from './program';
+
+import { box } from '@january/console';
 
 const create = new Command('create')
   .addOption(projectOption.makeOptionMandatory(false))

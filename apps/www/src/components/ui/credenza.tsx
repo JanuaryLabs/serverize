@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import {
   Dialog,
   DialogClose,
@@ -21,7 +19,9 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer';
 import { cn } from '@/components/utils';
+
 import { useMediaQuery } from '../../hooks/use-media-query';
+import * as React from 'react';
 
 interface BaseProps {
   children?: React.ReactNode;

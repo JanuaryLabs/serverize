@@ -1,14 +1,13 @@
 import { input } from '@inquirer/prompts';
 import { detect } from 'detect-package-manager';
 import { rm } from 'fs/promises';
-import { join } from 'path';
-import semver from 'semver';
-import { type PackageManager, nodejs } from 'serverize/dockerfile';
-
-import { type PackageJson, getFile, readPackageJson } from 'serverize/utils';
 
 import { writeDockerIgnore } from '../lib/file';
 import { spinner } from '../program';
+import { join } from 'path';
+import semver from 'semver';
+import { type PackageManager, nodejs } from 'serverize/dockerfile';
+import { type PackageJson, getFile, readPackageJson } from 'serverize/utils';
 
 interface Setup {
   cwd: string;

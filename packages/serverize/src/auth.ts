@@ -3,8 +3,6 @@ import { Command } from 'commander';
 import { signOut } from 'firebase/auth';
 import validator from 'validator';
 
-import { box } from '@january/console';
-
 import { client, serverizeManagementUrl } from './lib/api-client';
 import {
   initialise,
@@ -14,6 +12,8 @@ import {
 } from './lib/auth';
 import { auth } from './lib/firebase';
 import { askForProjectName, showError, spinner, tell } from './program';
+
+import { box } from '@january/console';
 
 const CLIENT_ID =
   process.env.NODE_ENV === 'development'

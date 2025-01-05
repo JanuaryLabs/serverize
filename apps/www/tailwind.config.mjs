@@ -1,4 +1,5 @@
 import svgToDataUri from 'mini-svg-data-uri';
+
 import { join } from 'path';
 import defaultTheme from 'tailwindcss/defaultTheme';
 import { fileURLToPath } from 'url';

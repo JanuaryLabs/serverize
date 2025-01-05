@@ -5,10 +5,11 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
-import { useRef } from 'react';
+
 import Box from './Box';
 import useCopyToClipboard from './code/useCopyToClipboard';
 import { cn } from './utils';
+import { useRef } from 'react';
 
 export default function Try(props: { className?: string }) {
   const ref = useRef<HTMLDivElement | null>(null);

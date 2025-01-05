@@ -1,9 +1,5 @@
 import { Command } from 'commander';
 
-import { box } from '@january/console';
-
-import { safeFail } from 'serverize/utils';
-
 import { client } from './lib/api-client';
 import {
   channelOption,
@@ -15,6 +11,9 @@ import {
   tell,
 } from './program';
 import { streamLogs } from './view-logs';
+import { safeFail } from 'serverize/utils';
+
+import { box } from '@january/console';
 
 const list = new Command('list')
   .alias('ls')

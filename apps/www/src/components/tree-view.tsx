@@ -2,6 +2,7 @@ import { cn } from '@/components/utils';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
 import { cva } from 'class-variance-authority';
 import { ChevronRight } from 'lucide-react';
+
 import React from 'react';
 
 const treeVariants = cva(
@@ -285,7 +286,7 @@ const AccordionTrigger = React.forwardRef<
       )}
       {...props}
     >
-      <ChevronRight className="mr-1 h-4 w-4 shrink-0 text-accent-foreground/50 transition-transform duration-200" />
+      <ChevronRight className="text-accent-foreground/50 mr-1 h-4 w-4 shrink-0 transition-transform duration-200" />
       {children}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>

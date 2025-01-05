@@ -2,8 +2,17 @@ import { confirm, input } from '@inquirer/prompts';
 import chalk from 'chalk';
 import { detect } from 'detect-package-manager';
 import { mkdir, readFile, readdir } from 'fs/promises';
-import { basename, dirname, join } from 'path';
 
+import {
+  detectFramework,
+  framework,
+  readConfig,
+} from '../lib/detect-framework';
+import { writeDockerIgnore } from '../lib/file';
+import { cli, dropdown, spinner } from '../program';
+import { getNodejsVersion, setupNodejs } from './nodejs';
+import { setupVite } from './vite';
+import { basename, dirname, join } from 'path';
 import {
   type AstroOutputMode,
   type NextjsOutputMode,
@@ -20,16 +29,6 @@ import {
   streamlit,
 } from 'serverize/dockerfile';
 import { exist, readJsonFile, readPackageJson } from 'serverize/utils';
-
-import {
-  detectFramework,
-  framework,
-  readConfig,
-} from '../lib/detect-framework';
-import { writeDockerIgnore } from '../lib/file';
-import { cli, dropdown, spinner } from '../program';
-import { getNodejsVersion, setupNodejs } from './nodejs';
-import { setupVite } from './vite';
 
 export interface SetupFrameworkConfig {
   framework: framework;

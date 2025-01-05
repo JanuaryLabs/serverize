@@ -1,20 +1,5 @@
-import { AsyncLocalStorage } from 'async_hooks';
 import chalk from 'chalk';
 import { writeFileSync } from 'fs';
-import {
-  from,
-  lastValueFrom,
-  map,
-  mergeMap,
-  switchMap,
-  tap,
-  throwError,
-} from 'rxjs';
-
-import { box } from '@january/console';
-
-import { isDockerRunning } from 'serverize/docker';
-import { safeFail } from 'serverize/utils';
 
 import {
   type AST,
@@ -29,6 +14,20 @@ import { streamLogs } from '../view-logs';
 import { client, makeImageName } from './api-client';
 import { buildCompose, buildImage, saveImage } from './image';
 import { pushImage } from './uploader';
+import { AsyncLocalStorage } from 'async_hooks';
+import {
+  from,
+  lastValueFrom,
+  map,
+  mergeMap,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
+import { isDockerRunning } from 'serverize/docker';
+import { safeFail } from 'serverize/utils';
+
+import { box } from '@january/console';
 
 interface ReleaseInfo {
   channel: 'dev' | 'preview';

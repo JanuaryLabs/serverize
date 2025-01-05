@@ -1,11 +1,12 @@
 import { parseFromString } from 'dom-parser';
-import type { PropsWithChildren } from 'react';
+
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from '../../components/ui/tabs';
+import type { PropsWithChildren } from 'react';
 
 function splitDivs(element: string) {
   const doc = parseFromString(element);

@@ -1,9 +1,9 @@
 import { tmpdir } from 'os';
-import { join } from 'path';
 
-import { followProgress } from '../utils';
 import { docker } from '../instance';
+import { followProgress } from '../utils';
 import { startContainer, upsertNetwork, upsertVolume } from '../utils';
+import { join } from 'path';
 
 export async function imageExists(repoTag: string) {
   const images = await docker.listImages({ all: true });

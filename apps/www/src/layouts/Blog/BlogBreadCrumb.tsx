@@ -14,7 +14,7 @@ export default function BlogBreadCrumb(props: { className?: string }) {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        className="size-4 mr-1"
+        className="mr-1 size-4"
       >
         <path
           strokeLinecap="round"
@@ -23,7 +23,7 @@ export default function BlogBreadCrumb(props: { className?: string }) {
         />
       </svg>
 
-      <p className="text-secondary-foreground/60 text-sm mr-0.5">
+      <p className="text-secondary-foreground/60 mr-0.5 text-sm">
         Blog
         <div>/</div>
       </p>

@@ -5,7 +5,8 @@ export function WhatWeBelieve() {
         <p className="mb-12 hidden text-lg md:block">We want to</p>
         <h2 className="mb-12 text-4xl font-bold tracking-normal">
           Minimize <span className="text-red-600">friction</span> between
-          <span className="text-blue-700"> development</span> and <span className="text-green-700">deployment</span>
+          <span className="text-blue-700"> development</span> and{' '}
+          <span className="text-green-700">deployment</span>
         </h2>
         <p className="text-lg">
           {/* Deploy your development setup as is to the cloud, no scalling drama or
@@ -30,7 +31,7 @@ export function WhatWeBelieve() {
           details. It’s built to make feedback, testing, and sharing updates
           smooth and lightweight.
         </p>
-        <p className="mt-4 text-lg font-semibold text-secondary-foreground/70">
+        <p className="text-secondary-foreground/70 mt-4 text-lg font-semibold">
           You don’t need to create your own development or testing environments.
           That's what Serverize is for.
         </p>

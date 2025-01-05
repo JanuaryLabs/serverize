@@ -1,6 +1,5 @@
-import { removeDuplicates } from 'serverize/utils';
-
 import type { ComposeService } from './compose';
+import { removeDuplicates } from 'serverize/utils';
 
 interface NodeServerOptions {
   image?: string;

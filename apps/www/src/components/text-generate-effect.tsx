@@ -1,5 +1,6 @@
 import { cn } from '@/components/utils';
 import { motion, stagger, useAnimate } from 'framer-motion';
+
 import { useEffect } from 'react';
 
 export const TextGenerateEffect = ({

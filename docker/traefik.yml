@@ -9,7 +9,7 @@ api:
 
 entryPoints:
   web:
-    address: ":80"
+    address: ':80'
     http:
       redirections:
         entryPoint:
@@ -17,29 +17,29 @@ entryPoints:
           scheme: https
           permanent: true
   websecure:
-    address: ":443"
+    address: ':443'
     http:
       tls:
         certResolver: letsencrypt
         domains:
-          - main: "january.sh"
+          - main: 'january.sh'
             sans:
-              - "*.january.sh"
+              - '*.january.sh'
 
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: "admin@january.sh"
-      storage: "/letsencrypt/acme.json"
+      email: 'admin@january.sh'
+      storage: '/letsencrypt/acme.json'
       dnsChallenge:
         provider: hetzner
 
 providers:
   http:
-    endpoint: "http://api:3000/operations/config"
+    endpoint: 'http://api:3000/operations/config'
 
 experimental:
   plugins:
     sablier:
-      modulename: "github.com/sablierapp/sablier"
-      version: "v1.8.1"
+      modulename: 'github.com/sablierapp/sablier'
+      version: 'v1.8.1'

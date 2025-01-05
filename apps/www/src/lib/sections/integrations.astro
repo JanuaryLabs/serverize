@@ -10,7 +10,7 @@ const integrations = guides.map((it: any) => ({
 
 <div id="integrations-section">
   <h2 class="mb-4 text-4xl">Serverize Everything</h2>
-  <p class="text-secondary-foreground/70 mt-4 mb-8">
+  <p class="text-secondary-foreground/70 mb-8 mt-4">
     Supports all frameworks and languages, including Node.js, PHP, Python, Ruby,
     Go, PHP, Rust, and more.
   </p>
@@ -23,9 +23,9 @@ const integrations = guides.map((it: any) => ({
       integrations.map((it) => (
         <button
           data-integration={it.name}
-          class="group flex cursor-pointer flex-col items-center justify-center gap-y-4 font-semibold tracking-wider text-secondary-foreground"
+          class="text-secondary-foreground group flex cursor-pointer flex-col items-center justify-center gap-y-4 font-semibold tracking-wider"
         >
-          <div class="w-20 rounded border-[0.5px] border-border px-5 py-3 group-hover:bg-slate-100 group-hover:dark:bg-[#272727]">
+          <div class="border-border w-20 rounded border-[0.5px] px-5 py-3 group-hover:bg-slate-100 group-hover:dark:bg-[#272727]">
             <img class="min-h-10" src={it.logo} />
           </div>
           <span class="truncate text-sm">{it.name}</span>

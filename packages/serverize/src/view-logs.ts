@@ -1,16 +1,15 @@
 import { EventSource } from 'eventsource';
 import fetch from 'node-fetch';
-import { createInterface } from 'readline';
-import { Observable, from, switchMap } from 'rxjs';
 import { WebSocket } from 'ws';
-
-import { safeFail } from 'serverize/utils';
 
 import {
   serverizeManagementUrl,
   serverizeManagementWs,
 } from './lib/api-client';
 import { logger } from './program';
+import { createInterface } from 'readline';
+import { Observable, from, switchMap } from 'rxjs';
+import { safeFail } from 'serverize/utils';
 
 export function followLogs(next?: boolean) {
   const ws = new WebSocket(`${serverizeManagementWs}?apiKey=`);

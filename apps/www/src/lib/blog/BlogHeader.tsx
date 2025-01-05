@@ -1,4 +1,5 @@
 import { Clock } from 'lucide-react';
+
 import { AuthorInfo } from './AuthorInfo';
 import { BlogCategory } from './BlogCategory';
 
@@ -31,21 +32,21 @@ export function BlogHeader({
   imageCredit,
 }: BlogHeaderProps) {
   return (
-    <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <header className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="flex flex-col space-y-6">
         <nav className="flex items-center space-x-2 text-sm">
-          <span className="text-gray-500 text-lg">Blog</span>
+          <span className="text-lg text-gray-500">Blog</span>
           <span className="text-gray-500">&gt;</span>
           <BlogCategory name={category} />
         </nav>
 
         <div className="grid grid-cols-2 gap-8">
           <div className="flex flex-col">
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 mb-4">
+            <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
               {title}
             </h1>
 
-            <p className="text-xl text-gray-600 mb-6">{description}</p>
+            <p className="mb-6 text-xl text-gray-600">{description}</p>
 
             <div className="flex flex-col space-y-4">
               <div className="flex items-center space-x-4 text-sm text-gray-600">
@@ -64,9 +65,9 @@ export function BlogHeader({
             <img
               src={imageUrl}
               alt="Blog header"
-              className="w-full h-[400px] object-cover rounded-lg"
+              className="h-[400px] w-full rounded-lg object-cover"
             />
-            <div className="absolute bottom-4 right-4 text-sm text-gray-600 bg-white/80 px-2 py-1 rounded">
+            <div className="absolute bottom-4 right-4 rounded bg-white/80 px-2 py-1 text-sm text-gray-600">
               Photo Credit:{' '}
               <a
                 href={imageCredit.url}

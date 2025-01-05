@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import { useState, type PropsWithChildren } from 'react';
+
 import { useMetaKey } from '../../hooks/use-metakey';
 import {
   Credenza,
@@ -12,9 +12,10 @@ import {
   CredenzaTrigger,
 } from '../ui/credenza';
 import { Separator } from '../ui/separator';
+import { PromptForm } from './PromptForm';
 import { Chat } from './docs-chat';
 import { ChatList } from './docs-chatlist';
-import { PromptForm } from './PromptForm';
+import { type PropsWithChildren, useState } from 'react';
 
 export default function AskAiBox(props: PropsWithChildren) {
   const [open, setOpen] = useState(false);

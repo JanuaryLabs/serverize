@@ -1,8 +1,8 @@
 import { rm } from 'fs/promises';
-import { Upload } from 'tus-js-client';
 
 import { logger } from '../program';
 import { type ImageDetails } from './image';
+import { Upload } from 'tus-js-client';
 
 export async function pushImage(
   details: ImageDetails,

@@ -9,16 +9,16 @@ api:
 
 entryPoints:
   web:
-    address: ":80"
+    address: ':80'
   websecure:
-    address: ":443"
+    address: ':443'
 
 providers:
   http:
-    endpoint: "http://api:3000/operations/config"
+    endpoint: 'http://api:3000/operations/config'
 
 experimental:
   plugins:
     sablier:
-      modulename: "github.com/sablierapp/sablier"
-      version: "v1.8.1"
+      modulename: 'github.com/sablierapp/sablier'
+      version: 'v1.8.1'

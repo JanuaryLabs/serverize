@@ -85,7 +85,7 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background font-sans text-foreground;
+    @apply bg-background text-foreground font-sans;
     /* antialiased; */
   }
 }
@@ -214,7 +214,7 @@ details {
 
 /* General Callout Styles */
 .callout {
-  @apply relative my-4 w-full rounded-lg border px-4 py-3 text-sm not-italic antialiased [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7;
+  @apply [&>svg]:text-foreground relative my-4 w-full rounded-lg border px-4 py-3 text-sm not-italic antialiased [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg~*]:pl-7;
 
   > div {
     @apply text-sm [&_p]:m-0 [&_p]:leading-relaxed [&_p_+_*]:mt-2 [&_p_a]:ml-1;

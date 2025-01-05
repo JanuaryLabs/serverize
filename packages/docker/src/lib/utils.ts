@@ -3,10 +3,10 @@ import type { Container } from 'dockerode';
 import { createReadStream, existsSync } from 'fs';
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'os';
-import { basename, dirname, join } from 'path';
-import type internal from 'stream';
 
 import { docker } from './instance';
+import { basename, dirname, join } from 'path';
+import type internal from 'stream';
 
 export function followProgress(
   stream: NodeJS.ReadableStream,

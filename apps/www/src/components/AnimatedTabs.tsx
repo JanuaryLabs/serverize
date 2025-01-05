@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from './utils';
+
 import type { Tab } from '../lib/blog/tabs';
 import { buttonVariants } from './ui/button';
+import { cn } from './utils';
+import { useEffect, useState } from 'react';
 
 export const Tabs = ({
   tabs: propTabs,
@@ -43,10 +44,10 @@ export const Tabs = ({
   const [hovering, setHovering] = useState(false);
 
   return (
-    <div className="[perspective:1000px] relative">
+    <div className="relative [perspective:1000px]">
       <div
         className={cn(
-          'flex flex-row items-center justify-start [perspective:1000px] relative overflow-auto sm:overflow-visible no-visible-scrollbar max-w-full w-full',
+          'no-visible-scrollbar relative flex w-full max-w-full flex-row items-center justify-start overflow-auto [perspective:1000px] sm:overflow-visible',
           containerClassName,
         )}
       >
@@ -121,7 +122,7 @@ export const FadeInDiv = ({
     return tab.href === tabs[0].href;
   };
   return (
-    <div className="relative w-full h-full">
+    <div className="relative h-full w-full">
       {tabs.map((tab, idx) => (
         <motion.div
           key={tab.href}
@@ -135,7 +136,7 @@ export const FadeInDiv = ({
           animate={{
             y: isActive(tab) ? [0, 40, 0] : 0,
           }}
-          className={cn('w-full h-full absolute top-0 left-0', className)}
+          className={cn('absolute left-0 top-0 h-full w-full', className)}
         >
           <DummyContent />
           {/* {tab.content} */}
@@ -152,7 +153,7 @@ export const DummyContent = () => {
       alt="dummy image"
       width="1000"
       height="1000"
-      className="object-cover object-left-top h-[60%]  md:h-[90%] absolute -bottom-10 inset-x-0 w-[90%] rounded-xl mx-auto"
+      className="absolute inset-x-0 -bottom-10 mx-auto h-[60%] w-[90%] rounded-xl object-cover object-left-top md:h-[90%]"
     />
   );
 };

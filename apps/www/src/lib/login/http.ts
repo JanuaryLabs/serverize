@@ -1,10 +1,9 @@
-import { join, normalize } from 'path';
 import { auth } from './firebase';
+import { join, normalize } from 'path';
 
-export const baseUrl =
-  import.meta.env.DEV
-    ? 'http://localhost:3000'
-    : 'https://serverize.fly.dev';
+export const baseUrl = import.meta.env.DEV
+  ? 'http://localhost:3000'
+  : 'https://serverize.fly.dev';
 
 export namespace request {
   async function makeHeaders(withAuth = true) {

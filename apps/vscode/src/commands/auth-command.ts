@@ -1,5 +1,6 @@
-import { client, initialise } from 'serverize';
 import * as vscode from 'vscode';
+
+import { client, initialise } from 'serverize';
 
 export function registerAuthCommands(
   context: vscode.ExtensionContext,

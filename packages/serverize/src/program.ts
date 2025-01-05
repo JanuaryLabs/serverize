@@ -12,17 +12,16 @@ import { signOut } from 'firebase/auth';
 import { readFile } from 'fs/promises';
 import ora from 'ora';
 import { platform } from 'os';
-import parse from 'parse-duration';
 import validator from 'validator';
-
-import { box } from '@january/console';
-
-import { coerceArray, nodeServer } from 'serverize/dockerfile';
-import { exist } from 'serverize/utils';
 
 import { client } from './lib/api-client';
 import { initialise } from './lib/auth';
 import { auth } from './lib/firebase';
+import parse from 'parse-duration';
+import { coerceArray, nodeServer } from 'serverize/dockerfile';
+import { exist } from 'serverize/utils';
+
+import { box } from '@january/console';
 
 export const cli = program
   .name('Serverize')

@@ -1,9 +1,9 @@
 import { Command } from 'commander';
 
-import { box } from '@january/console';
-
 import { client } from './lib/api-client';
 import { askForProjectName, ensureUser, showError, spinner } from './program';
+
+import { box } from '@january/console';
 
 export async function createProject(name?: string) {
   const user = await ensureUser();

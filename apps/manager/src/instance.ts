@@ -1,5 +1,6 @@
 import type { GetEventsOptions } from 'dockerode';
 import os from 'os';
+
 import {
   Observable,
   Subject,
@@ -12,12 +13,11 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
+import { docker, getContainer } from 'serverize/docker';
 import { PassThrough } from 'stream';
 import tarStream from 'tar-stream';
 
 import type { BundableFile } from '@january/bundler';
-
-import { docker, getContainer } from 'serverize/docker';
 
 export class ContainerNotFoundError extends Error {
   constructor(public containerId: string) {

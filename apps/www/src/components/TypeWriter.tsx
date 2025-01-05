@@ -1,8 +1,9 @@
 'use client';
 
 import { motion, stagger, useAnimate, useInView } from 'framer-motion';
-import { useEffect } from 'react';
+
 import { cn } from './utils';
+import { useEffect } from 'react';
 
 export const TypewriterEffect = ({
   words,
@@ -72,7 +73,7 @@ export const TypewriterEffect = ({
   return (
     <div
       className={cn(
-        'text-center mx-auto text-base font-medium sm:text-xl md:text-3xl lg:text-5xl',
+        'mx-auto text-center text-base font-medium sm:text-xl md:text-3xl lg:text-5xl',
         className,
       )}
     >

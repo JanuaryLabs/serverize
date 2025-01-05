@@ -4,7 +4,7 @@ export default function SearchInput(props: { className?: string }) {
   return (
     <div
       className={cn(
-        'flex min-w-56 cursor-text items-center justify-between gap-x-2 rounded-2xl bg-secondary px-2 py-2 text-sm text-secondary-foreground/70',
+        'bg-secondary text-secondary-foreground/70 flex min-w-56 cursor-text items-center justify-between gap-x-2 rounded-2xl px-2 py-2 text-sm',
         props.className,
       )}
     >
@@ -26,7 +26,7 @@ export default function SearchInput(props: { className?: string }) {
 
         <span>Ask AI</span>
       </div>
-      <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-white dark:bg-background px-2 text-[10px] font-medium text-muted-foreground">
+      <kbd className="dark:bg-background text-muted-foreground pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-white px-2 text-[10px] font-medium">
         <span className="text-xs">⌘</span>K
       </kbd>
     </div>

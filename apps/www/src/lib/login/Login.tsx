@@ -1,19 +1,20 @@
 import { Separator } from '@radix-ui/react-separator';
+
 import { Query } from '../../components/Query';
 import { Button } from '../../components/ui/button';
 import {
   Credenza,
-  CredenzaTrigger,
+  CredenzaBody,
   CredenzaContent,
+  CredenzaDescription,
   CredenzaHeader,
   CredenzaTitle,
-  CredenzaDescription,
-  CredenzaBody,
+  CredenzaTrigger,
 } from '../../components/ui/credenza';
 import { Input } from '../../components/ui/input';
+import { Card } from '../../layouts/Blog/BlogCard';
 import { AuthButton } from './AuthButton';
 import { useEffect, useState } from 'react';
-import { Card } from '../../layouts/Blog/BlogCard';
 
 export default function Login() {
   const [dialogOpen, setDialogOpen] = useState<boolean | null>(false);
@@ -107,20 +108,20 @@ export function Screen() {
           <a href="https://serverize.sh">Serverize</a>
         </div>
         <a target="_blank" href="https://serverize.sh/guides">
-          <button className="inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md border border-input px-4 py-2 text-xs font-medium shadow-sm transition-colors hover:bg-accent hover:text-black focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+          <button className="border-input hover:bg-accent focus-visible:ring-ring inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md border px-4 py-2 text-xs font-medium shadow-sm transition-colors hover:text-black focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50">
             Documentation
           </button>
         </a>
       </header>
       <div className="flex flex-1">
-        <div className="flex w-full max-w-2xl flex-col items-center justify-center space-y-8 bg-foreground/5 p-8">
+        <div className="bg-foreground/5 flex w-full max-w-2xl flex-col items-center justify-center space-y-8 p-8">
           <div className="w-[300px] space-y-4 text-center">
             <h2 className="font-regular text-4xl">Welcome!</h2>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Sign in to your account
             </p>
           </div>
-          <button className="inline-flex h-9 w-[300px] border-spacing-0 items-center justify-center space-y-2 whitespace-nowrap rounded-md border-2 border-gray-700 bg-primary px-4 py-4 text-sm font-medium text-primary-foreground shadow transition-colors hover:border-gray-500 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+          <button className="bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-ring inline-flex h-9 w-[300px] border-spacing-0 items-center justify-center space-y-2 whitespace-nowrap rounded-md border-2 border-gray-700 px-4 py-4 text-sm font-medium shadow transition-colors hover:border-gray-500 focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50">
             <svg
               stroke="currentColor"
               fill="currentColor"
@@ -159,7 +160,7 @@ export function Screen() {
             </svg>
             Continue with Google
           </button>
-          <p className="w-[300px] max-w-sm text-center text-xs text-muted-foreground">
+          <p className="text-muted-foreground w-[300px] max-w-sm text-center text-xs">
             By continuing, you agree to Serverize
             <a
               href="https://mem0.ai/privacy-policy"
@@ -177,7 +178,7 @@ export function Screen() {
             , and to receive periodic emails with updates.
           </p>
         </div>
-        <div className="hidden flex-1 items-center justify-center border-l border-muted-foreground/20 p-8 lg:flex">
+        <div className="border-muted-foreground/20 hidden flex-1 items-center justify-center border-l p-8 lg:flex">
           <div className="max-w-md space-y-4">
             <div className="relative flex flex-col gap-6">
               <div className="z-10 max-w-lg text-3xl">

@@ -1,6 +1,7 @@
 import { Terminal } from 'lucide-react';
-import type { PropsWithChildren } from 'react';
+
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
+import type { PropsWithChildren } from 'react';
 
 export default function Note(
   props: PropsWithChildren<{ variant?: 'warning' | 'info' }>,

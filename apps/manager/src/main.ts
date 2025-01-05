@@ -6,20 +6,16 @@ import { createServer } from 'http';
 import { StatusCodes } from 'http-status-codes';
 import morgan from 'morgan';
 import { tmpdir } from 'os';
+import { WebSocketServer } from 'ws';
+
+import { observeFile } from './file';
+import { startServer } from './start';
 import { join } from 'path';
 import {
   ProblemDetailsException,
   problemDetailsMiddleware,
 } from 'rfc-7807-problem-details';
-import { catchError, filter, map, of, startWith, switchMap } from 'rxjs';
-import { WebSocketServer } from 'ws';
-
 import { getContainer, removeContainer } from 'serverize/docker';
-
-import { observeFile } from './file';
-import { type LogEntry, containerLogs, listenToDockerEvents } from './instance';
-import { makeProjectPath } from './manager';
-import { startServer } from './start';
 
 Object.assign(process.env, {
   NODE_ENV: process.env.NODE_ENV ?? 'development',

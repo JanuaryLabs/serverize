@@ -1,14 +1,13 @@
 import { existsSync } from 'fs';
 import { readFile, readdir, rm } from 'fs/promises';
+
+import { parseRequirements } from './requirements-parser';
 import { basename, dirname, join } from 'path';
+import { exist, getFile, readJsonFile, safeFail } from 'serverize/utils';
 
 import { fileBundler } from '@january/bundler';
 import { type Callers, staticEval } from '@january/evaluator';
 import { checker, parseCode, resolveCallExpression } from '@january/parser';
-
-import { exist, getFile, readJsonFile, safeFail } from 'serverize/utils';
-
-import { parseRequirements } from './requirements-parser';
 
 export const supportedFrameworks = [
   'nextjs',

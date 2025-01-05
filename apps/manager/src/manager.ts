@@ -1,7 +1,7 @@
 import { type Releases } from '@serverize/client';
 import { tmpdir } from 'os';
-import { join } from 'path';
 
+import { join } from 'path';
 import {
   docker,
   removeContainer,

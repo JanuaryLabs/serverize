@@ -1,7 +1,6 @@
+import { type Message, useAssistant } from 'ai/react';
 import type { ReactNode } from 'react';
 import { createContext } from 'react';
-
-import { useAssistant, type Message } from 'ai/react';
 
 export type GenerationStatus =
   | 'pending'

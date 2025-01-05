@@ -5,7 +5,6 @@ import { type ReadStream, createReadStream, readFileSync } from 'fs';
 import { readFile, stat, writeFile } from 'fs/promises';
 import yaml from 'js-yaml';
 import { tmpdir } from 'os';
-import { join } from 'path';
 
 import {
   type Healthcheck,
@@ -15,6 +14,7 @@ import {
   spinner,
   toAst,
 } from '../program';
+import { join } from 'path';
 
 export interface ImageDetails {
   filePath: string;
@@ -45,7 +45,9 @@ export async function saveImage(imageName: string): Promise<ImageDetails> {
 
 export async function buildImage(imageName: string, filePath: string) {
   printDivider();
-  logger(`Building image ${chalk.green(imageName)} from ${filePath} with context ${process.cwd()}`);
+  logger(
+    `Building image ${chalk.green(imageName)} from ${filePath} with context ${process.cwd()}`,
+  );
   const options = [
     '--pull',
     '--rm',

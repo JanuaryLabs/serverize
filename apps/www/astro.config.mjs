@@ -4,14 +4,14 @@ import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-sections';
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
-import expressiveCode from 'astro-expressive-code';
-import { defineConfig } from 'astro/config';
-import { fileURLToPath } from 'url';
 
 import {
   remarkCustomCallouts,
   remarkReadingTime,
 } from '../../tools/remark.mjs';
+import expressiveCode from 'astro-expressive-code';
+import { defineConfig } from 'astro/config';
+import { fileURLToPath } from 'url';
 
 // https://astro.build/config
 export default defineConfig({

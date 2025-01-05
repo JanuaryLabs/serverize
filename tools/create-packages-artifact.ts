@@ -1,8 +1,8 @@
 import { execSync } from 'child_process';
 import { readFile, writeFile } from 'fs/promises';
-import { join } from 'path';
 
 import publishToNpm from './publish-packages';
+import { join } from 'path';
 
 const releaseVersion = await publishToNpm('https://registry.npmjs.org/');
 

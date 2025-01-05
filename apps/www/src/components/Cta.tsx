@@ -22,7 +22,7 @@ export default function Cta(props: {
             Start today with a free account.
           </span>
           <br />
-          <span className="block text-secondary-foreground/70 mt-1">
+          <span className="text-secondary-foreground/70 mt-1 block">
             Talk to us for a{' '}
             <span className="font-bold text-blue-600">personalized</span> demo.
           </span>
@@ -38,14 +38,14 @@ export default function Cta(props: {
             href="https://cal.com/january-sh/30min"
             className={cn(
               buttonVariants({ variant: 'outline' }),
-              'h-10 rounded-full bg-white text-foreground no-underline dark:bg-background',
+              'text-foreground dark:bg-background h-10 rounded-full bg-white no-underline',
             )}
           >
             Contact Sales
           </a>
         </div>
       </div>
-      <div className="space-y-4 md:col-start-3 hidden">
+      <div className="hidden space-y-4 md:col-start-3">
         <Separator className="mt-6 md:hidden" />
         <p>
           <b>Would you like to chat?</b>{' '}

@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
+import { Chat, ChatContext } from './docs-chat';
 // export function PromptForm(props: { className?: string }) {
 //   const { question, setQuestion, generationStatus, submitQuestion } =
 //     useContext(ChatContext);
@@ -60,9 +61,8 @@ import { Input } from '@/components/ui/input';
 //     </div>
 //   );
 // }
-import { useAssistant, type Message } from 'ai/react';
+import { type Message, useAssistant } from 'ai/react';
 import { useContext } from 'react';
-import { Chat, ChatContext } from './docs-chat';
 
 export function PromptForm(props: { className?: string }) {
   const { status, messages, input, submitMessage, handleInputChange, stop } =

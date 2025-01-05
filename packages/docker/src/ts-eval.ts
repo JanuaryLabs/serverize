@@ -3,8 +3,8 @@ import esbuild from 'esbuild';
 import { nodeExternalsPlugin } from 'esbuild-node-externals';
 import { writeFileSync } from 'fs';
 import { tmpdir } from 'os';
-import { join } from 'path';
 
+import { join } from 'path';
 import { createRecorder } from 'serverize/utils';
 
 const docker = new Docker();

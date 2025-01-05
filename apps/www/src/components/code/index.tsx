@@ -1,9 +1,9 @@
 import classNames from 'classnames';
-import type { FC, PropsWithChildren, ReactNode } from 'react';
-import { Fragment, isValidElement, useRef } from 'react';
-import useCopyToClipboard from './useCopyToClipboard';
 
 import styles from './index.module.css';
+import useCopyToClipboard from './useCopyToClipboard';
+import type { FC, PropsWithChildren, ReactNode } from 'react';
+import { Fragment, isValidElement, useRef } from 'react';
 
 // Transforms a code element with plain text content into a more structured
 // format for rendering with line numbers

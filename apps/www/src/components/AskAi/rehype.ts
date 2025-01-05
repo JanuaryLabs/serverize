@@ -1,5 +1,6 @@
 import type { RehypeExpressiveCodeOptions } from 'rehype-expressive-code';
 import rehypeExpressiveCode from 'rehype-expressive-code';
+
 export const rehypePlugins = () =>
   [
     [

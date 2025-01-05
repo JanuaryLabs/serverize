@@ -1,5 +1,5 @@
-import type { PropsWithChildren } from 'react';
 import { cn } from './utils';
+import type { PropsWithChildren } from 'react';
 
 export default function Footer(props: { className?: string }) {
   return (
@@ -11,7 +11,7 @@ export default function Footer(props: { className?: string }) {
     >
       <div className="space-y-4 lg:col-start-1 lg:col-end-3">
         <h2 className="text-2xl font-bold">Serverize</h2>
-        <p className="text-sm max-w-md text-secondary-foreground/70">
+        <p className="text-secondary-foreground/70 max-w-md text-sm">
           Serverize provides development, testing and preview environments, to
           boost collaboration, shortens feedback cycles, saves time and effort.
         </p>
@@ -91,7 +91,7 @@ export default function Footer(props: { className?: string }) {
             <a
               key={it.title}
               href={it.href}
-              className="flex items-center gap-x-2 text-sm text-secondary-foreground/70"
+              className="text-secondary-foreground/70 flex items-center gap-x-2 text-sm"
             >
               {it.title}
             </a>

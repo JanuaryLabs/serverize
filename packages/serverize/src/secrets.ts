@@ -1,7 +1,6 @@
 import { Command } from 'commander';
 import { parse } from 'dotenv';
 import { readFile } from 'fs/promises';
-import { join } from 'path';
 
 import { client } from './lib/api-client';
 import {
@@ -11,6 +10,7 @@ import {
   showError,
   spinner,
 } from './program';
+import { join } from 'path';
 
 const setCommand = new Command('set')
   .usage('[options] NAME=VALUE NAME=VALUE ...')

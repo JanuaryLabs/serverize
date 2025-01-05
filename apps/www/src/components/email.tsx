@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+
+import React, { useState } from 'react';
 
 type EmailValidationState = 'idle' | 'invalid' | 'valid';
 
@@ -9,27 +10,27 @@ const validateEmail = (email: string): boolean => EMAIL_REGEX.test(email);
 
 const ErrorMessage: React.FC = () => (
   <motion.div
-    className="w-full bg-red-100 rounded-lg mt-1.5 flex items-center justify-start px-3 py-2 relative z-[2]"
+    className="relative z-[2] mt-1.5 flex w-full items-center justify-start rounded-lg bg-red-100 px-3 py-2"
     key="error"
     initial={{ y: -42, opacity: 0 }}
     animate={{ y: 0, opacity: 1 }}
     exit={{ y: -42, opacity: 1 }}
     transition={{ duration: 0.2, delay: 0.1, ease: 'linear' }}
   >
-    <p className="text-red-500 text-sm font-medium">Invalid email address</p>
+    <p className="text-sm font-medium text-red-500">Invalid email address</p>
   </motion.div>
 );
 
 const ContinueButton: React.FC = () => (
   <motion.button
-    className="w-full bg-violet-500 rounded-lg mt-1.5 flex items-center justify-center px-2 py-3 relative z-[2]"
+    className="relative z-[2] mt-1.5 flex w-full items-center justify-center rounded-lg bg-violet-500 px-2 py-3"
     key="valid"
     initial={{ y: -48, opacity: 0 }}
     animate={{ y: 0, opacity: 1 }}
     exit={{ y: -48, opacity: 1 }}
     transition={{ duration: 0.2, delay: 0.1, ease: 'linear' }}
   >
-    <p className="text-white text-sm font-medium">Continue</p>
+    <p className="text-sm font-medium text-white">Continue</p>
   </motion.button>
 );
 
@@ -44,7 +45,7 @@ const BackgroundAnimation: React.FC<{ state: EmailValidationState }> = ({
 
   return (
     <motion.div
-      className={`absolute right-0 left-0 w-full top-0 h-0 ${bgColor}`}
+      className={`absolute left-0 right-0 top-0 h-0 w-full ${bgColor}`}
       key={`${state}-bg`}
       initial={{ height: 0 }}
       animate={{ height }}
@@ -60,7 +61,7 @@ const EmailInput: React.FC<{
 }> = ({ email, onChange }) => (
   <motion.input
     key="email"
-    className="w-full relative z-10 rounded-lg py-3 pl-3.5 pr-9 bg-white outline-none border border-slate-200 h-[47px]"
+    className="relative z-10 h-[47px] w-full rounded-lg border border-slate-200 bg-white py-3 pl-3.5 pr-9 outline-none"
     type="email"
     placeholder="Email"
     value={email}
@@ -94,7 +95,7 @@ const EmailValidationForm: React.FC = () => {
 
   return (
     <motion.div
-      className="w-full overflow-hidden rounded-xl p-1.5 bg-white border border-slate-200 relative"
+      className="relative w-full overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5"
       initial={{ height: getFormHeight() }}
       animate={{ height: getFormHeight() }}
       exit={{ height: getFormHeight() }}

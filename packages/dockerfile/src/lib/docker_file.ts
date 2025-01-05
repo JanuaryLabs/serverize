@@ -4,10 +4,9 @@ import { rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, normalize } from 'node:path';
 
+import type { NetworkFactory } from './network';
 import { ensureDockerRunning } from 'serverize/docker';
 import { safeFail } from 'serverize/utils';
-
-import type { NetworkFactory } from './network';
 
 type StageFn = (options?: any) => Stage;
 export interface ShortCopy {

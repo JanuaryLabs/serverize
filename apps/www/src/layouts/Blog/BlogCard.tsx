@@ -1,5 +1,5 @@
-import type { PropsWithChildren } from 'react';
 import { cn } from '../../components/utils';
+import type { PropsWithChildren } from 'react';
 
 const Line = ({ className = '' }) => (
   <div

@@ -1,5 +1,11 @@
 import { watch } from 'chokidar';
 import { readFile } from 'fs/promises';
+
+import { logger, spinner, tell } from '../program';
+import { followLogs, sse } from '../view-logs';
+import { getAst, getReleaseInfo } from './deploy-context';
+import { saveImage } from './image';
+import { pushImage } from './uploader';
 import { join } from 'path';
 import {
   Observable,
@@ -10,14 +16,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-
 import { safeFail } from 'serverize/utils';
-
-import { logger, spinner, tell } from '../program';
-import { followLogs, sse } from '../view-logs';
-import { getAst, getReleaseInfo } from './deploy-context';
-import { saveImage } from './image';
-import { pushImage } from './uploader';
 
 export function watchFiles() {
   const ast = getAst();

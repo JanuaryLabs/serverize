@@ -1,7 +1,7 @@
-import type { MarkdownHeading } from 'astro';
-import { Fragment, useEffect, type PropsWithChildren } from 'react';
 import { cn } from '../../components/utils';
 import { Card } from './BlogCard';
+import type { MarkdownHeading } from 'astro';
+import { Fragment, type PropsWithChildren, useEffect } from 'react';
 
 const Ellipses = () => {
   const sharedClasses =
@@ -23,12 +23,12 @@ export const BorderedCard = (
 ) => (
   <div
     className={cn(
-      'relative mx-auto w-full rounded-lg border border-dashed border-zinc-300 px-4 dark:border-zinc-800 sm:px-6 md:px-8',
+      'relative mx-auto w-full rounded-lg border border-dashed border-zinc-300 px-4 sm:px-6 md:px-8 dark:border-zinc-800',
       props.className,
     )}
   >
-    <div className="absolute left-0 top-4 -z-0 h-px w-full bg-zinc-400 dark:bg-zinc-700 sm:top-6 md:top-8"></div>
-    <div className="absolute bottom-4 left-0 z-0 h-px w-full bg-zinc-400 dark:bg-zinc-700 sm:bottom-6 md:bottom-8"></div>
+    <div className="absolute left-0 top-4 -z-0 h-px w-full bg-zinc-400 sm:top-6 md:top-8 dark:bg-zinc-700"></div>
+    <div className="absolute bottom-4 left-0 z-0 h-px w-full bg-zinc-400 sm:bottom-6 md:bottom-8 dark:bg-zinc-700"></div>
     <div className="relative w-full border-x border-zinc-400 dark:border-zinc-700">
       <Ellipses />
       <div className="relative z-20 mx-auto py-8">
@@ -60,7 +60,7 @@ export default function BlogContainer(props: {
 }) {
   return (
     <Card hideLeft={true}>
-      <div className="grid grid-cols-1 pt-4 lg:mr-10 md:grid-cols-5">
+      <div className="grid grid-cols-1 pt-4 md:grid-cols-5 lg:mr-10">
         <article className="prose col-span-full max-w-full pb-20 md:col-span-3">
           {props.children}
         </article>
