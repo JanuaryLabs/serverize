@@ -1,7 +1,6 @@
 import { DateConstructor } from './DateConstructor';
 import { Organizations } from './Organizations';
 import { Projects } from './Projects';
-
 export interface ApiKeys {
   organization: Organizations;
   organizationId: string;

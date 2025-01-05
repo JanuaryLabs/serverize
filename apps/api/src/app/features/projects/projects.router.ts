@@ -6,12 +6,10 @@ import { type HonoEnv } from '@workspace/utils';
 import { parseOrThrow } from '@workspace/validation';
 import { Hono } from 'hono';
 import z from 'zod';
-
 import swagger from './projects.swagger.json';
 import * as releases from './releases';
 import * as secrets from './secrets';
 import * as tokens from './tokens';
-
 const router = new Hono<HonoEnv>();
 router.get(
   '/projects/swagger',

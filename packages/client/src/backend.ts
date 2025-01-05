@@ -1,5 +1,4 @@
 import z from 'zod';
-
 import { handleError, parseResponse } from './client';
 import type { Endpoints } from './endpoints';
 import schemas from './schemas';

@@ -2,7 +2,6 @@ import { DateConstructor } from './DateConstructor';
 import { Projects } from './Projects';
 import { Snapshots } from './Snapshots';
 import { Volumes } from './Volumes';
-
 export interface Releases {
   volumes: Volumes[];
   volumesIds: string[];

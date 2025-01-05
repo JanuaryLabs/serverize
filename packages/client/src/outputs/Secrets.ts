@@ -1,6 +1,5 @@
 import { DateConstructor } from './DateConstructor';
 import { Projects } from './Projects';
-
 export interface Secrets {
   project: Projects;
   projectId: string;

@@ -1,5 +1,3 @@
-import Members from './members.entity.ts';
-import Preferences from './preferences.entity.ts';
 import {
   CreateDateColumn,
   DeleteDateColumn,
@@ -11,12 +9,16 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
+import Members from './members.entity.ts';
+import Preferences from './preferences.entity.ts';
 
 @Entity('Users')
 export default class Users {
-  @OneToMany(() => Members, (relatedEntity) => relatedEntity.user, {
-    nullable: true,
-  })
+  @OneToMany(
+    () => Members,
+    (relatedEntity) => relatedEntity.user,
+    { nullable: true },
+  )
   members?: Members[];
   @RelationId((entity: Users) => entity.members)
   membersIds?: string[] | null;
@@ -28,9 +30,11 @@ export default class Users {
   updatedAt?: Date;
   @DeleteDateColumn()
   deletedAt?: Date;
-  @OneToOne(() => Preferences, (relatedEntity) => relatedEntity.user, {
-    nullable: true,
-  })
+  @OneToOne(
+    () => Preferences,
+    (relatedEntity) => relatedEntity.user,
+    { nullable: true },
+  )
   preference?: Relation<Preferences>;
   @RelationId((entity: Users) => entity.preference)
   preferenceId?: string | null;

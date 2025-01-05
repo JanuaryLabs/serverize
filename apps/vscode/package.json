@@ -18,24 +18,18 @@
   "engines": {
     "vscode": "^1.95.0"
   },
-  "categories": [
-    "Other"
-  ],
+  "categories": ["Other"],
   "type": "commonjs",
   "license": "MIT",
   "repository": "https://github.com/januarylabs/serverize",
   "activationEvents": [],
   "main": "index.js",
-  "files": [
-    "assets/**"
-  ],
+  "files": ["assets/**"],
   "contributes": {
     "taskDefinitions": [
       {
         "type": "serverize",
-        "required": [
-          "command"
-        ],
+        "required": ["command"],
         "properties": {
           "command": {
             "type": "string"

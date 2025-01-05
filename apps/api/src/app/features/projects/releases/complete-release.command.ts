@@ -1,16 +1,13 @@
+import { trigger } from '@january/declarative';
 import {
   createQueryBuilder,
   execute,
   patchEntity,
   useTransaction,
 } from '@workspace/extensions/postgresql';
-import z from 'zod';
-
-import Releases from '../releases.entity.ts';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
-
-import { trigger } from '@january/declarative';
-
+import z from 'zod';
+import Releases from '../releases.entity.ts';
 export const completeReleaseSchema = z.object({
   releaseId: z.string().uuid(),
   conclusion: z.enum(['success', 'failure']),

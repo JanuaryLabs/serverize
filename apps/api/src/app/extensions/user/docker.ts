@@ -1,5 +1,5 @@
-import parse from 'parse-duration';
 import { PassThrough } from 'stream';
+import parse from 'parse-duration';
 
 export const defaultHealthCheck = (port: string | number) => ({
   Test: [

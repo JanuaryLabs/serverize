@@ -1,10 +1,7 @@
+import { trigger } from '@january/declarative';
 import { saveEntity } from '@workspace/extensions/postgresql';
 import z from 'zod';
-
 import Organizations from '../organizations.entity.ts';
-
-import { trigger } from '@january/declarative';
-
 export const createOrganizationSchema = z.object({
   name: z.string().trim().min(1),
 });

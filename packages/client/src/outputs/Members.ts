@@ -3,7 +3,6 @@ import { Organizations } from './Organizations';
 import { OrganizationsMembers } from './OrganizationsMembers';
 import { Users } from './Users';
 import { WorkspacesMembers } from './WorkspacesMembers';
-
 export interface Members {
   user?: Users;
   userId?: null | string;

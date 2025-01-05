@@ -1,7 +1,5 @@
 import z from 'zod';
-
 import { channelSchema, orgNameValidator } from '../zod';
-
 export const deleteOrgSchema = z.object({ id: z.string().uuid() });
 export const listOrganizationsSchema = z.object({
   pageSize: z.coerce.number().int().min(1).max(50).default(50).optional(),

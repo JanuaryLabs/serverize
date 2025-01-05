@@ -1,5 +1,4 @@
 import entities from '@workspace/entities';
-
 import { DataSource, DefaultNamingStrategy } from 'typeorm';
 
 class NamingStrategy extends DefaultNamingStrategy {

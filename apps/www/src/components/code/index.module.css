@@ -10,7 +10,7 @@
     & > code {
       @apply grid overflow-x-auto bg-transparent font-mono text-sm leading-snug text-neutral-400 [counter-reset:line];
 
-      & > [class='line'] {
+      & > [class="line"] {
         @apply relative min-w-0 pl-8;
 
         &:not(:empty:last-child)::before {

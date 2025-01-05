@@ -1,5 +1,4 @@
 import z from 'zod';
-
 import type { Endpoints } from './endpoints';
 import * as docker from './inputs/docker';
 import * as management from './inputs/management';
@@ -8,7 +7,6 @@ import * as projects from './inputs/projects';
 import * as root from './inputs/root';
 import { createUrl, toRequest } from './request';
 import type { StreamEndpoints } from './stream-endpoints';
-
 export default {
   'GET /container/logs': {
     schema: docker.streamContainerLogsSchema,

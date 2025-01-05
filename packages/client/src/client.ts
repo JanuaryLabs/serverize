@@ -1,5 +1,4 @@
 import { parse } from 'fast-content-type-parse';
-
 import type { Endpoints } from './endpoints';
 import schemas from './schemas';
 import { ServerError, validateOrThrow } from './validator';

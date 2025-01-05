@@ -1,13 +1,10 @@
+import { trigger } from '@january/declarative';
 import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
 import { serverizeUrl } from '@workspace/extensions/user';
 import { channelSchema } from '@workspace/extensions/zod';
-import z from 'zod';
-
-import Releases from '../../projects/releases.entity.ts';
 import axios from 'axios';
-
-import { trigger } from '@january/declarative';
-
+import z from 'zod';
+import Releases from '../../projects/releases.entity.ts';
 export const restartChannelSchema = z.object({
   channel: channelSchema,
   projectId: z.string().uuid(),

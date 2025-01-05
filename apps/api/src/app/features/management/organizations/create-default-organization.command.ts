@@ -1,3 +1,4 @@
+import { trigger } from '@january/declarative';
 import { firebaseApp } from '@workspace/extensions/firebase-auth';
 import {
   createDefaultOrg,
@@ -6,12 +7,8 @@ import {
 } from '@workspace/extensions/user';
 import { orgNameValidator } from '@workspace/extensions/zod';
 import { getAuth } from 'firebase-admin/auth';
-import z from 'zod';
-
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
-
-import { trigger } from '@january/declarative';
-
+import z from 'zod';
 export const createDefaultOrganizationSchema = z.object({
   name: orgNameValidator,
   projectName: orgNameValidator,

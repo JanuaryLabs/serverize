@@ -1,3 +1,4 @@
+import { trigger } from '@january/declarative';
 import { createQueryBuilder } from '@workspace/extensions/postgresql';
 import {
   PROTOCOL,
@@ -7,13 +8,9 @@ import {
   tellDiscord,
 } from '@workspace/extensions/user';
 import { channelSchema, orgNameValidator } from '@workspace/extensions/zod';
-import z from 'zod';
-
-import Releases from '../../projects/releases.entity.ts';
 import axios from 'axios';
-
-import { trigger } from '@january/declarative';
-
+import z from 'zod';
+import Releases from '../../projects/releases.entity.ts';
 export const restartReleaseSchema = z.object({
   releaseName: orgNameValidator,
   projectId: z.string().uuid(),

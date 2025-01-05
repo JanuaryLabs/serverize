@@ -1,8 +1,3 @@
-import ApiKeys from '../projects/api-keys.entity.ts';
-import Members from './members.entity.ts';
-import OrganizationsMembers from './organizations-members.entity.ts';
-import Preferences from './preferences.entity.ts';
-import Workspaces from './workspaces.entity.ts';
 import {
   Column,
   CreateDateColumn,
@@ -13,6 +8,11 @@ import {
   RelationId,
   UpdateDateColumn,
 } from 'typeorm';
+import ApiKeys from '../projects/api-keys.entity.ts';
+import Members from './members.entity.ts';
+import OrganizationsMembers from './organizations-members.entity.ts';
+import Preferences from './preferences.entity.ts';
+import Workspaces from './workspaces.entity.ts';
 
 @Entity('Organizations')
 export default class Organizations {
@@ -26,15 +26,19 @@ export default class Organizations {
   updatedAt?: Date;
   @DeleteDateColumn()
   deletedAt?: Date;
-  @OneToMany(() => Workspaces, (relatedEntity) => relatedEntity.organization, {
-    nullable: true,
-  })
+  @OneToMany(
+    () => Workspaces,
+    (relatedEntity) => relatedEntity.organization,
+    { nullable: true },
+  )
   workspaces?: Workspaces[];
   @RelationId((entity: Organizations) => entity.workspaces)
   workspacesIds?: string[] | null;
-  @OneToMany(() => Members, (relatedEntity) => relatedEntity.organization, {
-    nullable: true,
-  })
+  @OneToMany(
+    () => Members,
+    (relatedEntity) => relatedEntity.organization,
+    { nullable: true },
+  )
   members?: Members[];
   @RelationId((entity: Organizations) => entity.members)
   membersIds?: string[] | null;
@@ -46,15 +50,19 @@ export default class Organizations {
   organizationsMembers?: OrganizationsMembers[];
   @RelationId((entity: Organizations) => entity.organizationsMembers)
   organizationsMembersIds?: string[] | null;
-  @OneToMany(() => Preferences, (relatedEntity) => relatedEntity.organization, {
-    nullable: true,
-  })
+  @OneToMany(
+    () => Preferences,
+    (relatedEntity) => relatedEntity.organization,
+    { nullable: true },
+  )
   preferences?: Preferences[];
   @RelationId((entity: Organizations) => entity.preferences)
   preferencesIds?: string[] | null;
-  @OneToMany(() => ApiKeys, (relatedEntity) => relatedEntity.organization, {
-    nullable: false,
-  })
+  @OneToMany(
+    () => ApiKeys,
+    (relatedEntity) => relatedEntity.organization,
+    { nullable: false },
+  )
   apiKeys!: ApiKeys[];
   @RelationId((entity: Organizations) => entity.apiKeys)
   apiKeysIds!: string[];

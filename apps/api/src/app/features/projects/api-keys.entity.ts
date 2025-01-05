@@ -1,5 +1,3 @@
-import Organizations from '../management/organizations.entity.ts';
-import Projects from '../management/projects.entity.ts';
 import {
   Column,
   CreateDateColumn,
@@ -10,18 +8,24 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
+import Organizations from '../management/organizations.entity.ts';
+import Projects from '../management/projects.entity.ts';
 
 @Entity('ApiKeys')
 export default class ApiKeys {
-  @ManyToOne(() => Organizations, (relatedEntity) => relatedEntity.apiKeys, {
-    nullable: false,
-  })
+  @ManyToOne(
+    () => Organizations,
+    (relatedEntity) => relatedEntity.apiKeys,
+    { nullable: false },
+  )
   organization!: Relation<Organizations>;
   @Column({ nullable: false, type: 'uuid' })
   organizationId!: string;
-  @ManyToOne(() => Projects, (relatedEntity) => relatedEntity.apiKeys, {
-    nullable: false,
-  })
+  @ManyToOne(
+    () => Projects,
+    (relatedEntity) => relatedEntity.apiKeys,
+    { nullable: false },
+  )
   project!: Relation<Projects>;
   @Column({ nullable: false, type: 'uuid' })
   projectId!: string;

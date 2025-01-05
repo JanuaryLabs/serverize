@@ -1,10 +1,7 @@
+import { trigger } from '@january/declarative';
 import { saveEntity } from '@workspace/extensions/postgresql';
 import z from 'zod';
-
 import Snapshots from '../snapshots.entity.ts';
-
-import { trigger } from '@january/declarative';
-
 export const createReleaseSnapshotSchema = z.object({
   releaseId: z.string().uuid(),
   name: z.string().trim().min(1),

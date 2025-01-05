@@ -1,5 +1,4 @@
 import { cert, initializeApp } from 'firebase-admin/app';
-
 import type { GoogleServiceAccount } from '../../core/service-account';
 
 const serviceAccount: GoogleServiceAccount = JSON.parse(

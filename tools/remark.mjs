@@ -4,7 +4,7 @@ import getReadingTime from 'reading-time';
 import { visit } from 'unist-util-visit';
 
 export function remarkReadingTime() {
-  return function (tree, { data }) {
+  return (tree, { data }) => {
     const textOnPage = toString(tree);
     const readingTime = getReadingTime(textOnPage);
     // readingTime.text will give us minutes read as a friendly string,

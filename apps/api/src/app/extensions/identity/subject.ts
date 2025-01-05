@@ -6,7 +6,6 @@ import {
   FirebaseAuthError,
   getAuth,
 } from 'firebase-admin/auth';
-
 import type { IResult } from 'ua-parser-js';
 
 export interface ClientInfo {

@@ -1,5 +1,3 @@
-import Members from './members.entity.ts';
-import Organizations from './organizations.entity.ts';
 import {
   Column,
   CreateDateColumn,
@@ -10,6 +8,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
+import Members from './members.entity.ts';
+import Organizations from './organizations.entity.ts';
 
 @Entity('OrganizationsMembers')
 export default class OrganizationsMembers {

@@ -3,7 +3,6 @@ import { Organizations } from './Organizations';
 import { Projects } from './Projects';
 import { Users } from './Users';
 import { Workspaces } from './Workspaces';
-
 export interface Preferences {
   user?: Users;
   userId?: null | string;

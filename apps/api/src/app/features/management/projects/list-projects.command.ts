@@ -1,3 +1,4 @@
+import { trigger } from '@january/declarative';
 import {
   createQueryBuilder,
   deferredJoinPagination,
@@ -5,11 +6,7 @@ import {
 } from '@workspace/extensions/postgresql';
 import { type IdentitySubject } from '@workspace/identity';
 import z from 'zod';
-
 import Projects from '../projects.entity.ts';
-
-import { trigger } from '@january/declarative';
-
 export const listProjectsSchema = z.object({
   workspaceId: z.string().uuid().optional(),
   name: z.string().trim().min(1).optional(),

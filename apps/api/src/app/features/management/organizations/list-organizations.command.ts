@@ -1,14 +1,11 @@
+import { trigger } from '@january/declarative';
 import {
   createQueryBuilder,
   deferredJoinPagination,
   execute,
 } from '@workspace/extensions/postgresql';
 import z from 'zod';
-
 import Organizations from '../organizations.entity.ts';
-
-import { trigger } from '@january/declarative';
-
 export const listOrganizationsSchema = z.object({
   pageSize: z.coerce.number().int().min(1).max(50).default(50).optional(),
   pageNo: z.coerce.number().int().min(1).optional(),

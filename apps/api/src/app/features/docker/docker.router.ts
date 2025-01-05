@@ -5,10 +5,8 @@ import { parseOrThrow } from '@workspace/validation';
 import { Hono } from 'hono';
 import { streamText } from 'hono/streaming';
 import z from 'zod';
-
 import * as container from './container';
 import swagger from './docker.swagger.json';
-
 const router = new Hono<HonoEnv>();
 router.get(
   '/docker/swagger',

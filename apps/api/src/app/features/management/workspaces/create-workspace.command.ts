@@ -1,10 +1,7 @@
+import { trigger } from '@january/declarative';
 import { saveEntity } from '@workspace/extensions/postgresql';
 import z from 'zod';
-
 import Workspaces from '../workspaces.entity.ts';
-
-import { trigger } from '@january/declarative';
-
 export const createWorkspaceSchema = z.object({
   name: z.string().trim().min(1),
   organizationId: z.string().uuid(),

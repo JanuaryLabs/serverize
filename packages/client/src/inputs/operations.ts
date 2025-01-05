@@ -1,7 +1,5 @@
 import z from 'zod';
-
 import { channelSchema, orgNameValidator } from '../zod';
-
 export const startReleaseSchema = z.object({
   releaseName: orgNameValidator,
   projectId: z.string().uuid(),

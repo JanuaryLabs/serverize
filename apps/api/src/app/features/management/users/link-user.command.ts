@@ -1,3 +1,4 @@
+import { trigger } from '@january/declarative';
 import { Octokit } from '@octokit/core';
 import { firebaseApp } from '@workspace/extensions/firebase-auth';
 import { createDefaultOrg } from '@workspace/extensions/user';
@@ -8,12 +9,8 @@ import {
   FirebaseAuthError,
   getAuth,
 } from 'firebase-admin/auth';
-import z from 'zod';
-
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
-
-import { trigger } from '@january/declarative';
-
+import z from 'zod';
 export const linkUserSchema = z.object({
   token: z.string(),
   providerId: z.enum(['github.com', 'google.com', 'password']),

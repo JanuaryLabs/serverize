@@ -1,7 +1,3 @@
-import Organizations from './organizations.entity.ts';
-import Preferences from './preferences.entity.ts';
-import Projects from './projects.entity.ts';
-import WorkspacesMembers from './workspaces-members.entity.ts';
 import {
   Column,
   CreateDateColumn,
@@ -14,14 +10,20 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
+import Organizations from './organizations.entity.ts';
+import Preferences from './preferences.entity.ts';
+import Projects from './projects.entity.ts';
+import WorkspacesMembers from './workspaces-members.entity.ts';
 
 @Entity('Workspaces')
 export default class Workspaces {
   @Column({ nullable: false, type: 'varchar' })
   name!: string;
-  @ManyToOne(() => Organizations, (relatedEntity) => relatedEntity.workspaces, {
-    nullable: true,
-  })
+  @ManyToOne(
+    () => Organizations,
+    (relatedEntity) => relatedEntity.workspaces,
+    { nullable: true },
+  )
   organization?: Relation<Organizations>;
   @Column({ nullable: true, type: 'uuid' })
   organizationId?: string | null;
@@ -33,9 +35,11 @@ export default class Workspaces {
   updatedAt?: Date;
   @DeleteDateColumn()
   deletedAt?: Date;
-  @OneToMany(() => Projects, (relatedEntity) => relatedEntity.workspace, {
-    nullable: false,
-  })
+  @OneToMany(
+    () => Projects,
+    (relatedEntity) => relatedEntity.workspace,
+    { nullable: false },
+  )
   projects!: Projects[];
   @RelationId((entity: Workspaces) => entity.projects)
   projectsIds!: string[];
@@ -47,9 +51,11 @@ export default class Workspaces {
   workspacesMembers?: WorkspacesMembers[];
   @RelationId((entity: Workspaces) => entity.workspacesMembers)
   workspacesMembersIds?: string[] | null;
-  @OneToMany(() => Preferences, (relatedEntity) => relatedEntity.workspace, {
-    nullable: true,
-  })
+  @OneToMany(
+    () => Preferences,
+    (relatedEntity) => relatedEntity.workspace,
+    { nullable: true },
+  )
   preferences?: Preferences[];
   @RelationId((entity: Workspaces) => entity.preferences)
   preferencesIds?: string[] | null;

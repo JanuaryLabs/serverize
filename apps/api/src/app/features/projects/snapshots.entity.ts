@@ -1,4 +1,3 @@
-import Releases from './releases.entity.ts';
 import {
   Column,
   CreateDateColumn,
@@ -10,13 +9,16 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
+import Releases from './releases.entity.ts';
 
 @Entity('Snapshots')
 export default class Snapshots {
   @JoinColumn()
-  @OneToOne(() => Releases, (relatedEntity) => relatedEntity.snapshot, {
-    nullable: false,
-  })
+  @OneToOne(
+    () => Releases,
+    (relatedEntity) => relatedEntity.snapshot,
+    { nullable: false },
+  )
   release!: Relation<Releases>;
   @Column({ nullable: false, type: 'uuid' })
   releaseId!: string;

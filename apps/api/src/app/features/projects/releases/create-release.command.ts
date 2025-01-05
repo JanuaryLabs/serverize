@@ -1,3 +1,4 @@
+import { trigger } from '@january/declarative';
 import {
   createQueryBuilder,
   execute,
@@ -5,11 +6,7 @@ import {
 } from '@workspace/extensions/postgresql';
 import { channelSchema, orgNameValidator } from '@workspace/extensions/zod';
 import z from 'zod';
-
 import Releases from '../releases.entity.ts';
-
-import { trigger } from '@january/declarative';
-
 export const createReleaseSchema = z.object({
   releaseName: orgNameValidator,
   projectId: z.string().uuid(),

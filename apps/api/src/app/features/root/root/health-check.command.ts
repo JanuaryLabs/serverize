@@ -1,6 +1,5 @@
-import { dataSource } from '@workspace/extensions/postgresql';
-
 import { trigger } from '@january/declarative';
+import { dataSource } from '@workspace/extensions/postgresql';
 
 export async function healthCheck(
   output: trigger.http.output,

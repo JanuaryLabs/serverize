@@ -7,8 +7,8 @@ import { type StatusCode } from 'hono/utils/http-status';
 
 import './features/crons';
 import './features/listeners';
-import routes from './features/routes';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
+import routes from './features/routes';
 
 const application = new Hono<HonoEnv>();
 application.use(cors(), logger());

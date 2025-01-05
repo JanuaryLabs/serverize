@@ -1,7 +1,3 @@
-import OrganizationsMembers from './organizations-members.entity.ts';
-import Organizations from './organizations.entity.ts';
-import Users from './users.entity.ts';
-import WorkspacesMembers from './workspaces-members.entity.ts';
 import {
   Column,
   CreateDateColumn,
@@ -14,18 +10,26 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
+import OrganizationsMembers from './organizations-members.entity.ts';
+import Organizations from './organizations.entity.ts';
+import Users from './users.entity.ts';
+import WorkspacesMembers from './workspaces-members.entity.ts';
 
 @Entity('Members')
 export default class Members {
-  @ManyToOne(() => Users, (relatedEntity) => relatedEntity.members, {
-    nullable: true,
-  })
+  @ManyToOne(
+    () => Users,
+    (relatedEntity) => relatedEntity.members,
+    { nullable: true },
+  )
   user?: Relation<Users>;
   @Column({ nullable: true, type: 'varchar' })
   userId?: string | null;
-  @ManyToOne(() => Organizations, (relatedEntity) => relatedEntity.members, {
-    nullable: true,
-  })
+  @ManyToOne(
+    () => Organizations,
+    (relatedEntity) => relatedEntity.members,
+    { nullable: true },
+  )
   organization?: Relation<Organizations>;
   @Column({ nullable: true, type: 'uuid' })
   organizationId?: string | null;
@@ -45,9 +49,11 @@ export default class Members {
   organizationsMembers?: OrganizationsMembers[];
   @RelationId((entity: Members) => entity.organizationsMembers)
   organizationsMembersIds?: string[] | null;
-  @OneToMany(() => WorkspacesMembers, (relatedEntity) => relatedEntity.member, {
-    nullable: true,
-  })
+  @OneToMany(
+    () => WorkspacesMembers,
+    (relatedEntity) => relatedEntity.member,
+    { nullable: true },
+  )
   workspacesMembers?: WorkspacesMembers[];
   @RelationId((entity: Members) => entity.workspacesMembers)
   workspacesMembersIds?: string[] | null;

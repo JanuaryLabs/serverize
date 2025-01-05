@@ -1,5 +1,4 @@
 import z from 'zod';
-
 import * as docker from './inputs/docker';
 import * as management from './inputs/management';
 import * as operations from './inputs/operations';
@@ -37,7 +36,6 @@ import { SayHi } from './outputs/SayHi';
 import { Signin } from './outputs/Signin';
 import { StartRelease } from './outputs/StartRelease';
 import { TerminateRelease } from './outputs/TerminateRelease';
-
 export interface Endpoints {
   'DELETE /organizations/{id}': {
     input: z.infer<typeof management.deleteOrgSchema>;

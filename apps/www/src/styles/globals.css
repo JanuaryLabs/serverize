@@ -77,8 +77,8 @@ body {
   --ec-brdCol: hsl(var(--border)) !important;
   --ec-brdWd: 1px !important;
   --ec-brdRad: var(--radius) !important;
-  --ec-codeFontFml: theme('fontFamily.mono');
-  --ec-uiFontFml: theme('fontFamily.sans');
+  --ec-codeFontFml: theme("fontFamily.mono");
+  --ec-uiFontFml: theme("fontFamily.sans");
 }
 @layer base {
   * {

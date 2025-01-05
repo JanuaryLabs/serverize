@@ -1,3 +1,4 @@
+import { trigger } from '@january/declarative';
 import { Octokit } from '@octokit/core';
 import { firebaseApp } from '@workspace/extensions/firebase-auth';
 import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
@@ -6,13 +7,9 @@ import {
   FirebaseAuthError,
   getAuth,
 } from 'firebase-admin/auth';
-import z from 'zod';
-
-import Preferences from '../preferences.entity.ts';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
-
-import { trigger } from '@january/declarative';
-
+import z from 'zod';
+import Preferences from '../preferences.entity.ts';
 export const signinSchema = z.object({
   token: z.string(),
   providerId: z.enum(['github.com', 'google.com', 'password']),

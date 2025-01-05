@@ -1,6 +1,5 @@
 import { DateConstructor } from './DateConstructor';
 import { Releases } from './Releases';
-
 export interface Snapshots {
   release: Releases;
   releaseId: string;

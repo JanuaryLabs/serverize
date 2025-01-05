@@ -27,7 +27,6 @@ await generate({
   },
 });
 
-execSync(
-  `./node_modules/.bin/prettier packages/client/**/* --write --config .prettierrc`,
-  { cwd: process.cwd() },
-);
+execSync(`npx biome check packages/client --write`, {
+  cwd: process.cwd(),
+});

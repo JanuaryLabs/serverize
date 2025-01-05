@@ -5,7 +5,6 @@ import { Releases } from './Releases';
 import { Secrets } from './Secrets';
 import { SecretsKeys } from './SecretsKeys';
 import { Workspaces } from './Workspaces';
-
 export interface Projects {
   name: string;
   workspace: Workspaces;

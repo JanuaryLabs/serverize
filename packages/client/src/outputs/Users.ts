@@ -1,7 +1,6 @@
 import { DateConstructor } from './DateConstructor';
 import { Members } from './Members';
 import { Preferences } from './Preferences';
-
 export interface Users {
   members?: Members[];
   membersIds?: null | string[];

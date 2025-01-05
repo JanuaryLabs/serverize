@@ -10,7 +10,7 @@ import { postgresql, typeorm } from '@january/extensions/typeorm';
 
 const appDir = join(process.cwd(), 'apps', 'api');
 
-export default defineConfig({
+await defineConfig({
   fs: {
     cwd: appDir,
   },
@@ -30,7 +30,6 @@ export default defineConfig({
   ],
 });
 
-execSync(
-  `./node_modules/.bin/prettier apps/api/src/app/**/* --write --config .prettierrc`,
-  { cwd: process.cwd() },
-);
+execSync(`npx biome check apps/api/src/app --write`, {
+  cwd: process.cwd(),
+});

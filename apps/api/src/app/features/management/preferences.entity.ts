@@ -1,7 +1,3 @@
-import Organizations from './organizations.entity.ts';
-import Projects from './projects.entity.ts';
-import Users from './users.entity.ts';
-import Workspaces from './workspaces.entity.ts';
 import {
   Column,
   CreateDateColumn,
@@ -14,13 +10,19 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
+import Organizations from './organizations.entity.ts';
+import Projects from './projects.entity.ts';
+import Users from './users.entity.ts';
+import Workspaces from './workspaces.entity.ts';
 
 @Entity('Preferences')
 export default class Preferences {
   @JoinColumn()
-  @OneToOne(() => Users, (relatedEntity) => relatedEntity.preference, {
-    nullable: true,
-  })
+  @OneToOne(
+    () => Users,
+    (relatedEntity) => relatedEntity.preference,
+    { nullable: true },
+  )
   user?: Relation<Users>;
   @Column({ nullable: true, type: 'varchar' })
   userId?: string | null;
@@ -32,15 +34,19 @@ export default class Preferences {
   organization?: Relation<Organizations>;
   @Column({ nullable: true, type: 'uuid' })
   organizationId?: string | null;
-  @ManyToOne(() => Workspaces, (relatedEntity) => relatedEntity.preferences, {
-    nullable: true,
-  })
+  @ManyToOne(
+    () => Workspaces,
+    (relatedEntity) => relatedEntity.preferences,
+    { nullable: true },
+  )
   workspace?: Relation<Workspaces>;
   @Column({ nullable: true, type: 'uuid' })
   workspaceId?: string | null;
-  @ManyToOne(() => Projects, (relatedEntity) => relatedEntity.preferences, {
-    nullable: true,
-  })
+  @ManyToOne(
+    () => Projects,
+    (relatedEntity) => relatedEntity.preferences,
+    { nullable: true },
+  )
   project?: Relation<Projects>;
   @Column({ nullable: true, type: 'uuid' })
   projectId?: string | null;

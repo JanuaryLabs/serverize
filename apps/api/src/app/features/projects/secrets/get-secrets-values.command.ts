@@ -1,9 +1,7 @@
+import { trigger } from '@january/declarative';
 import { getChannelEnv } from '@workspace/extensions/user';
 import { channelSchema } from '@workspace/extensions/zod';
 import z from 'zod';
-
-import { trigger } from '@january/declarative';
-
 export const getSecretsValuesSchema = z.object({
   projectId: z.string().uuid(),
   channel: channelSchema,

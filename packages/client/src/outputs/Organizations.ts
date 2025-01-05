@@ -4,7 +4,6 @@ import { Members } from './Members';
 import { OrganizationsMembers } from './OrganizationsMembers';
 import { Preferences } from './Preferences';
 import { Workspaces } from './Workspaces';
-
 export interface Organizations {
   name: string;
   id: string;

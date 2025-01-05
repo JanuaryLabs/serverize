@@ -1,4 +1,3 @@
-import Projects from '../management/projects.entity.ts';
 import {
   Column,
   CreateDateColumn,
@@ -10,13 +9,16 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
+import Projects from '../management/projects.entity.ts';
 
 @Entity('Secrets')
 @Index(['projectId', 'label'], { unique: true })
 export default class Secrets {
-  @ManyToOne(() => Projects, (relatedEntity) => relatedEntity.secrets, {
-    nullable: false,
-  })
+  @ManyToOne(
+    () => Projects,
+    (relatedEntity) => relatedEntity.secrets,
+    { nullable: false },
+  )
   project!: Relation<Projects>;
   @Column({ nullable: false, type: 'uuid' })
   projectId!: string;

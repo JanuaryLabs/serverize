@@ -1,7 +1,5 @@
 import z from 'zod';
-
 import { channelSchema, orgNameValidator } from '../zod';
-
 export const createTokenSchema = z.object({ projectId: z.string().uuid() });
 export const revokeTokenSchema = z.object({ token: z.string() });
 export const listTokensSchema = z.object({});

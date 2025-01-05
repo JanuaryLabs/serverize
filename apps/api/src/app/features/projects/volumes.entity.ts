@@ -1,4 +1,3 @@
-import Releases from './releases.entity.ts';
 import {
   Column,
   CreateDateColumn,
@@ -9,12 +8,15 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
+import Releases from './releases.entity.ts';
 
 @Entity('Volumes')
 export default class Volumes {
-  @ManyToOne(() => Releases, (relatedEntity) => relatedEntity.volumes, {
-    nullable: false,
-  })
+  @ManyToOne(
+    () => Releases,
+    (relatedEntity) => relatedEntity.volumes,
+    { nullable: false },
+  )
   release!: Relation<Releases>;
   @Column({ nullable: false, type: 'uuid' })
   releaseId!: string;
