@@ -5,13 +5,68 @@
   "projectType": "application",
   "tags": [],
   "targets": {
-    "build": {
+    "generate": {
       "executor": "nx:run-script",
       "options": {
-        "script": "build"
+        "script": "generate"
       }
     },
-
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "description": "Generate code out of January",
+            "prefix": "generate",
+            "color": "yellow",
+            "command": "npm run generate:watch"
+          },
+          {
+            "description": "Start the server",
+            "prefix": "server",
+            "color": "green",
+            "command": "nx run api:serve:development --watch"
+          }
+        ],
+        "parallel": true
+      }
+    },
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "main": "apps/api/src/app/server.ts",
+        "tsConfig": "apps/api/tsconfig.app.json",
+        "outputPath": "dist/apps/api",
+        "format": ["esm"],
+        "minify": false,
+        "sourcemap": true,
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "alias": {
+            "lodash": "lodash-es"
+          },
+          "banner": {
+            "js": "import { createRequire } from 'module'; const require = createRequire(import.meta.url);"
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "api:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "api:build:development"
+        },
+        "production": {
+          "buildTarget": "api:build:production"
+        }
+      }
+    },
     "lint": {
       "executor": "@nx/eslint:lint"
     }

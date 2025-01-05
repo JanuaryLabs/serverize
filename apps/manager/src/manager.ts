@@ -1,4 +1,4 @@
-import { Releases } from '@serverize/client';
+import { type Releases } from '@serverize/client';
 import { tmpdir } from 'os';
 import { join } from 'path';
 

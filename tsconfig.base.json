@@ -15,29 +15,17 @@
     "module": "esnext",
     "lib": ["ESNext"],
     "skipLibCheck": true,
+    "noEmit": true,
     "skipDefaultLibCheck": true,
+    "allowImportingTsExtensions": true,
     "paths": {
       "@/*": ["apps/www/src/*"],
-      "@extensions/firebase-auth": [
-        "apps/api/output/src/extensions/firebase-auth/index.ts"
-      ],
-      "@extensions/hono": ["apps/api/output/src/extensions/hono/index.ts"],
-      "@extensions/identity": [
-        "apps/api/output/src/extensions/identity/index.ts"
-      ],
-      "@extensions/postgresql": [
-        "apps/api/output/src/extensions/postgresql/index.ts"
-      ],
-      "@extensions/tokens": ["apps/api/src/extensions/tokens/index.ts"],
-      "@extensions/user": ["apps/api/src/extensions/user/index.ts"],
-      "@extensions/zod": ["apps/api/src/extensions/zod/index.ts"],
+      "@workspace/extensions/*": ["apps/api/src/app/extensions/*"],
+      "@workspace/entities": ["apps/api/src/app/features/entities.ts"],
+      "@workspace/identity": ["apps/api/src/app/extensions/identity/index.ts"],
+      "@workspace/utils": ["apps/api/src/app/core/utils.ts"],
+      "@workspace/validation": ["apps/api/src/app/core/validation.ts"],
       "@serverize/client": ["packages/client/src/index.ts"],
-      "@workspace/entities": ["apps/api/output/src/features/entities.ts"],
-      "@workspace/identity": [
-        "apps/api/output/src/extensions/identity/index.ts"
-      ],
-      "@workspace/utils": ["apps/api/output/src/core/utils.ts"],
-      "@workspace/validation": ["apps/api/output/src/core/validation.ts"],
       "serverize": ["packages/serverize/src/index.ts"],
       "serverize/docker": ["packages/docker/src/index.ts"],
       "serverize/dockercompose": ["packages/dockercompose/src/index.ts"],

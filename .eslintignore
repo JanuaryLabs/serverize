@@ -1,0 +1,5 @@
+node_modules
+*.text.ts
+*.txt.ts
+*.config.js
+sodium.js

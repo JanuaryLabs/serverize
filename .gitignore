@@ -219,7 +219,6 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-output/
 cache/
 .astro
 

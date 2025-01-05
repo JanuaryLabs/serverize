@@ -1,7 +1,7 @@
 {
-  "extends": "./output/tsconfig.json",
-  "include": ["src/**/*.ts", "./output/references.d.ts"],
-  "exclude": ["vite.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
+  "extends": "./tsconfig.json",
+  "include": ["src/app/**/*.ts"],
+  "exclude": ["src/app/**/*.spec.ts", "src/app/**/*.test.ts"],
   "compilerOptions": {
     "jsx": "preserve",
     "moduleResolution": "Bundler",

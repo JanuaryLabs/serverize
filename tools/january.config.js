@@ -2,7 +2,6 @@ import { join } from 'path';
 
 import { defineConfig } from '@january/canary';
 import { auth } from '@january/extensions/firebase';
-import { fly } from '@january/extensions/fly';
 import { hono } from '@january/extensions/hono';
 import { identity } from '@january/extensions/identity';
 import { postgresql, typeorm } from '@january/extensions/typeorm';
@@ -19,9 +18,10 @@ export default defineConfig({
   formatGeneratedCode: true,
   extensions: [
     identity,
-    hono(),
+    hono({
+      generateSwagger: () => false,
+    }),
     auth(),
-    fly(),
     typeorm({
       database: postgresql(),
     }),

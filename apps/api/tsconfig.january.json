@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/january/**/*.ts", "references.d.ts"],
+  "exclude": [],
+  "compilerOptions": {
+    "jsx": "preserve",
+    "moduleResolution": "Bundler",
+    "module": "ESNext"
+  }
+}
