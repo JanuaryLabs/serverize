@@ -1,4 +1,1 @@
-
-export interface TerminateRelease {
-
-}
+export interface TerminateRelease {}

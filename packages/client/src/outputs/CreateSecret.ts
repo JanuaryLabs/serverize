@@ -1,4 +1,1 @@
-
-export interface CreateSecret {
-
-}
+export interface CreateSecret {}

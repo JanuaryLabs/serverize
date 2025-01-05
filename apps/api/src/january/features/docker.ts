@@ -1,9 +1,9 @@
 import { orgNameValidator } from '@workspace/extensions/zod';
 import z from 'zod';
 
-import { feature, trigger, workflow } from '@january/declarative';
-
 import { docker } from 'serverize/docker';
+
+import { feature, trigger, workflow } from '@january/declarative';
 
 export default feature({
   tables: {},

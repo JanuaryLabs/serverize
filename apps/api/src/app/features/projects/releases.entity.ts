@@ -1,18 +1,18 @@
+import Projects from '../management/projects.entity.ts';
+import Snapshots from './snapshots.entity.ts';
+import Volumes from './volumes.entity.ts';
 import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
+  PrimaryGeneratedColumn,
   RelationId,
+  UpdateDateColumn,
 } from 'typeorm';
-import Volumes from './volumes.entity.ts';
-import Projects from '../management/projects.entity.ts';
-import Snapshots from './snapshots.entity.ts';
 import { type Relation } from 'typeorm';
 
 @Entity('Releases')

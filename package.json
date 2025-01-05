@@ -8,7 +8,8 @@
     "generate:watch": "node --watch-path apps/api/src/january --watch-path tools tools/january.config.js",
     "openai": "node ./tools/openapi.js # this should generate openapi.json",
     "client": "node ./tools/client.js # this should take openapi.json and generate client code",
-    "dev": "npx concurrently -k -p \"[{name}]\" -n \"server,build\" -c \"blue.bold,green.bold\" \"npm run start:watch\" \"npm run generate:watch\""
+    "dev": "npx concurrently -k -p \"[{name}]\" -n \"server,build\" -c \"blue.bold,green.bold\" \"npm run start:watch\" \"npm run generate:watch\"",
+    "prepare": "husky"
   },
   "private": true,
   "devDependencies": {
@@ -19,9 +20,10 @@
     "@astrojs/tailwind": "^5.1.4",
     "@expressive-code/plugin-collapsible-sections": "^0.37.1",
     "@expressive-code/plugin-line-numbers": "^0.37.1",
-    "@january/canary": "https://github.com/JanuaryLabs/dist/raw/main/canary.tar.gz?v=1.1.0",
-    "@january/declarative": "https://github.com/JanuaryLabs/dist/raw/main/declarative.tar.gz?v=1.1.0",
-    "@january/extensions": "https://github.com/JanuaryLabs/dist/raw/main/extensions.tar.gz?v=1.1.0",
+    "@january/canary": "https://github.com/JanuaryLabs/dist/raw/main/canary.tar.gz?v=1.1.1",
+    "@january/declarative": "https://github.com/JanuaryLabs/dist/raw/main/declarative.tar.gz?v=1.1.1",
+    "@january/extensions": "https://github.com/JanuaryLabs/dist/raw/main/extensions.tar.gz?v=1.1.1",
+    "@january/openapi": "https://github.com/JanuaryLabs/dist/raw/main/openapi.tar.gz?v=1.1.1",
     "@nx/esbuild": "^20.3.0",
     "@nx/js": "20.3.0",
     "@shikijs/rehype": "^1.22.1",
@@ -41,6 +43,7 @@
     "@types/tar-stream": "^3.1.3",
     "astro": "^4.3.5",
     "esbuild": "^0.19.2",
+    "husky": "^9.1.7",
     "nx": "20.3.0",
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
@@ -67,10 +70,10 @@
     "@fontsource/roboto": "^5.1.0",
     "@heroicons/react": "^2.1.5",
     "@inquirer/prompts": "^7.2.1",
-    "@january/bundler": "https://github.com/JanuaryLabs/dist/raw/main/bundler.tar.gz?v=1.1.0",
-    "@january/console": "https://github.com/JanuaryLabs/dist/raw/main/console.tar.gz?v=1.1.0",
-    "@january/evaluator": "https://github.com/JanuaryLabs/dist/raw/main/evaluator.tar.gz?v=1.1.0",
-    "@january/parser": "https://github.com/JanuaryLabs/dist/raw/main/parser.tar.gz?v=1.1.0",
+    "@january/bundler": "https://github.com/JanuaryLabs/dist/raw/main/bundler.tar.gz?v=1.1.1",
+    "@january/console": "https://github.com/JanuaryLabs/dist/raw/main/console.tar.gz?v=1.1.1",
+    "@january/evaluator": "https://github.com/JanuaryLabs/dist/raw/main/evaluator.tar.gz?v=1.1.1",
+    "@january/parser": "https://github.com/JanuaryLabs/dist/raw/main/parser.tar.gz?v=1.1.1",
     "@mdx-js/mdx": "^3.1.0",
     "@nanostores/react": "^0.8.0",
     "@octokit/core": "^6.1.2",
@@ -129,6 +132,7 @@
     "jose": "^5.9.4",
     "js-yaml": "^4.1.0",
     "libsodium-wrappers": "^0.7.15",
+    "lint-staged": "^15.3.0",
     "lucide-react": "^0.451.0",
     "marked": "^14.1.4",
     "marked-terminal": "^7.2.1",
@@ -156,5 +160,8 @@
     "validator": "^13.12.0",
     "vaul": "^1.1.0",
     "ws": "^8.18.0"
+  },
+  "lint-staged": {
+    "*": "prettier --ignore-unknown --write"
   }
 }

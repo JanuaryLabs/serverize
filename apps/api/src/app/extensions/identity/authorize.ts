@@ -8,7 +8,7 @@ export function authorize<T>(
 ) {
   return async (context: T, next: any) => {
     for (const policy of routePolicies) {
-      if (!await policy(context)) {
+      if (!(await policy(context))) {
         throw new ForbiddenException();
       }
     }
@@ -22,8 +22,8 @@ export class UnauthorizedException extends ProblemDetailsException {
       new ProblemDetails(
         'Unauthorized',
         detail ?? 'Authentication is required to access this resource.',
-        401
-      )
+        401,
+      ),
     );
     Error.captureStackTrace(this, UnauthorizedException);
   }
@@ -32,7 +32,11 @@ export class UnauthorizedException extends ProblemDetailsException {
 export class ForbiddenException extends ProblemDetailsException {
   constructor(detail?: string) {
     super(
-      new ProblemDetails('Forbidden', detail ?? 'You do not have permission to access this resource.', 403)
+      new ProblemDetails(
+        'Forbidden',
+        detail ?? 'You do not have permission to access this resource.',
+        403,
+      ),
     );
     Error.captureStackTrace(this, ForbiddenException);
   }

@@ -1,4 +1,3 @@
-
 export interface DateConstructor {
-prototype: Date
+  prototype: Date;
 }

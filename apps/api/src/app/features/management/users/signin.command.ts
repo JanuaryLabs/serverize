@@ -6,10 +6,13 @@ import {
   FirebaseAuthError,
   getAuth,
 } from 'firebase-admin/auth';
-import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
+
 import Preferences from '../preferences.entity.ts';
+import { ProblemDetailsException } from 'rfc-7807-problem-details';
+
 import { trigger } from '@january/declarative';
+
 export const signinSchema = z.object({
   token: z.string(),
   providerId: z.enum(['github.com', 'google.com', 'password']),

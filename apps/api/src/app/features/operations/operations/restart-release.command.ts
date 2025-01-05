@@ -7,10 +7,13 @@ import {
   tellDiscord,
 } from '@workspace/extensions/user';
 import { channelSchema, orgNameValidator } from '@workspace/extensions/zod';
-import axios from 'axios';
 import z from 'zod';
+
 import Releases from '../../projects/releases.entity.ts';
+import axios from 'axios';
+
 import { trigger } from '@january/declarative';
+
 export const restartReleaseSchema = z.object({
   releaseName: orgNameValidator,
   projectId: z.string().uuid(),

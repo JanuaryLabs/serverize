@@ -4,10 +4,13 @@ import {
   patchEntity,
   useTransaction,
 } from '@workspace/extensions/postgresql';
-import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
+
 import Releases from '../releases.entity.ts';
+import { ProblemDetailsException } from 'rfc-7807-problem-details';
+
 import { trigger } from '@january/declarative';
+
 export const completeReleaseSchema = z.object({
   releaseId: z.string().uuid(),
   conclusion: z.enum(['success', 'failure']),

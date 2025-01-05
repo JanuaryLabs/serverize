@@ -1,16 +1,19 @@
 import { Octokit } from '@octokit/core';
 import { firebaseApp } from '@workspace/extensions/firebase-auth';
 import { createDefaultOrg } from '@workspace/extensions/user';
+import { type Claims } from '@workspace/extensions/user';
 import { orgNameValidator } from '@workspace/extensions/zod';
 import {
   AuthClientErrorCode,
   FirebaseAuthError,
   getAuth,
 } from 'firebase-admin/auth';
-import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
+
+import { ProblemDetailsException } from 'rfc-7807-problem-details';
+
 import { trigger } from '@january/declarative';
-import { type Claims } from '@workspace/extensions/user';
+
 export const linkUserSchema = z.object({
   token: z.string(),
   providerId: z.enum(['github.com', 'google.com', 'password']),

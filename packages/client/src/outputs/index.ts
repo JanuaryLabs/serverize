@@ -11,6 +11,7 @@ export * from './CreateToken';
 export * from './CreateWorkspace';
 export * from './DateConstructor';
 export * from './DeleteOrg';
+export * from './DeleteSecret';
 export * from './EmptyFavicon';
 export * from './GetConfig';
 export * from './GetSecrets';

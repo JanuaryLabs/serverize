@@ -1,5 +1,5 @@
-import { authenticated } from './authenticated.policy.ts';
 import { adminOnly } from './admin-only.policy.ts';
+import { authenticated } from './authenticated.policy.ts';
 import { notImplemented } from './not-implemented.policy.ts';
 
 export const policies = {

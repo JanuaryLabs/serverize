@@ -1,8 +1,10 @@
 import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
-import z from 'zod';
-import ApiKeys from '../api-keys.entity.ts';
-import { trigger } from '@january/declarative';
 import { type IdentitySubject } from '@workspace/identity';
+import z from 'zod';
+
+import ApiKeys from '../api-keys.entity.ts';
+
+import { trigger } from '@january/declarative';
 
 export async function listTokens(
   output: trigger.http.output,

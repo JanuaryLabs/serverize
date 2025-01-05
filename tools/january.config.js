@@ -1,3 +1,5 @@
+import { execSync } from 'child_process';
+
 import { join } from 'path';
 
 import { defineConfig } from '@january/canary';
@@ -15,7 +17,7 @@ export default defineConfig({
   tsconfigFilePaths: join(process.cwd(), 'tsconfig.base.json'),
   baseTsConfig: '../tsconfig.json',
   tsconfigName: join(appDir, 'tsconfig.app.json'),
-  formatGeneratedCode: true,
+  formatGeneratedCode: false,
   extensions: [
     identity,
     hono({
@@ -27,3 +29,8 @@ export default defineConfig({
     }),
   ],
 });
+
+execSync(
+  `./node_modules/.bin/prettier apps/api/src/app/**/* --write --config .prettierrc`,
+  { cwd: process.cwd() },
+);

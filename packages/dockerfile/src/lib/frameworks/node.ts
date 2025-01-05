@@ -40,6 +40,7 @@ const devDeps: (config: { packageManager?: PackageManager }) => Stage = (
     cwd: '/temp/dev',
   },
 });
+
 const prodDeps: (config: { packageManager?: PackageManager }) => Stage = (
   config,
 ) => ({

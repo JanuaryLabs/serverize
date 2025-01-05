@@ -21,7 +21,7 @@ export function knownPackageManager(
 export const packageManagerCommands = {
   npm: {
     install: 'npm ci',
-    devinstall: 'npm ci',
+    devinstall: 'npm i',
     prodinstall: 'npm ci --omit-dev',
     build: 'npm run build',
     lockFile: ['package-lock.json*'],

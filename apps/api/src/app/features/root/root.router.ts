@@ -1,10 +1,12 @@
-import { Hono } from 'hono';
-import { createOutput } from '@workspace/extensions/hono';
 import { apiReference } from '@scalar/hono-api-reference';
-import swagger from './root.swagger.json';
-import * as root from './root';
+import { createOutput } from '@workspace/extensions/hono';
 import { authorize } from '@workspace/identity';
 import { type HonoEnv } from '@workspace/utils';
+import { Hono } from 'hono';
+
+import * as root from './root';
+import swagger from './root.swagger.json';
+
 const router = new Hono<HonoEnv>();
 router.get('/swagger', apiReference({ spec: { url: swagger as any } }));
 

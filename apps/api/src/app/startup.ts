@@ -1,6 +1,7 @@
 import { initialize } from '@workspace/extensions/postgresql';
-import { parse } from 'apps/api/src/app/core/validation';
 import z from 'zod';
+
+import { parse } from '@workspace/validation';
 
 const env = z.object({
   ...(await import('@workspace/extensions/postgresql')).env,

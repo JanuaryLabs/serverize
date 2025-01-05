@@ -1,4 +1,5 @@
-import { tables } from 'apps/api/src/app/features/entities';
+import { tables } from '@workspace/entities';
+import { policies } from '@workspace/extensions/identity';
 import {
   createQueryBuilder,
   execute,
@@ -17,9 +18,9 @@ import {
   toTraefikConfig,
 } from '@workspace/extensions/user';
 import { channelSchema, orgNameValidator } from '@workspace/extensions/zod';
-import { policies } from '@workspace/extensions/identity';
-import axios from 'axios';
 import z from 'zod';
+
+import axios from 'axios';
 
 import { feature, trigger, workflow } from '@january/declarative';
 

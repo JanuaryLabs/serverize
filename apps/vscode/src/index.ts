@@ -4,14 +4,15 @@ import {
   signInWithCustomToken,
   signOut,
 } from 'firebase/auth';
-import { relative, sep } from 'path';
-import { auth, client, signInWithEmail } from 'serverize';
 import * as vscode from 'vscode';
 
 import { registerAuthCommands } from './commands/auth-command';
 import { OrganizationDataProvider } from './data/accounts';
 import { ProjectsDataProvider, ReleaseItem } from './data/projects';
+import { ChannelItem, SecretItem, SecretsDataProvider } from './data/secrets';
 import { showError } from './error-handler';
+import { relative, sep } from 'path';
+import { auth, client, signInWithEmail } from 'serverize';
 
 const outputChannel = vscode.window.createOutputChannel('Serverize', {
   log: true,
@@ -33,6 +34,7 @@ export async function activate(context: vscode.ExtensionContext) {
   logs.forEach((log) => console.log(log));
   logs.forEach((log) => outputChannel.info(log));
 
+  const secretsDataProvider = new SecretsDataProvider(context, client);
   const projectDataProvider = new ProjectsDataProvider(context, client);
   const organizationDataProvider = new OrganizationDataProvider(
     context,
@@ -69,6 +71,7 @@ export async function activate(context: vscode.ExtensionContext) {
     }
     await vscode.commands.executeCommand('serverize.orgs.refresh');
     await vscode.commands.executeCommand('serverize.projects.refresh');
+    await vscode.commands.executeCommand('serverize.secrets.refresh');
   });
 
   vscode.window.registerTreeDataProvider(
@@ -79,6 +82,11 @@ export async function activate(context: vscode.ExtensionContext) {
   vscode.window.registerTreeDataProvider(
     'serverizeProjectsView',
     projectDataProvider,
+  );
+
+  vscode.window.registerTreeDataProvider(
+    'serverizeSecretsView',
+    secretsDataProvider,
   );
 
   context.subscriptions.push(
@@ -99,6 +107,11 @@ export async function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand('serverize.projects.refresh', async () => {
       projectDataProvider.refresh();
+    }),
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand('serverize.secrets.refresh', async () => {
+      secretsDataProvider.refresh();
     }),
   );
   context.subscriptions.push(
@@ -199,6 +212,90 @@ export async function activate(context: vscode.ExtensionContext) {
           new vscode.ShellExecution(command),
         );
         await vscode.tasks.executeTask(task);
+      },
+    ),
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'serverize.secrets.add',
+      async (item: ChannelItem) => {
+        const label = await vscode.window.showInputBox({
+          title: 'Add secret',
+          prompt: 'Enter secret name',
+          placeHolder: 'Enter secret name',
+          ignoreFocusOut: true,
+        });
+        if (!label) {
+          vscode.window.showWarningMessage('Secret name is required');
+          return;
+        }
+        const value = await vscode.window.showInputBox({
+          title: 'Add secret',
+          prompt: 'Enter secret value',
+          placeHolder: 'Enter secret value',
+          ignoreFocusOut: true,
+        });
+        if (!value) {
+          vscode.window.showWarningMessage('Secret value is required');
+          return;
+        }
+        const [, error] = await client.request('POST /secrets', {
+          channel: item.data.name,
+          projectId: item.data.projectId,
+          secretLabel: label,
+          secretValue: value,
+        });
+        if (error) {
+          showError(error);
+          return;
+        }
+        vscode.window.showInformationMessage('Secret added');
+        await vscode.commands.executeCommand('serverize.secrets.refresh');
+      },
+    ),
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'serverize.secrets.set',
+      async (item: SecretItem) => {
+        const value = await vscode.window.showInputBox({
+          title: 'Set secret',
+          prompt: 'Enter secret value',
+          placeHolder: 'Enter secret value',
+          ignoreFocusOut: true,
+        });
+        if (!value) {
+          vscode.window.showWarningMessage('Secret value is required');
+          return;
+        }
+        const [, error] = await client.request('POST /secrets', {
+          channel: item.data.channel!,
+          projectId: item.data.projectId,
+          secretLabel: item.data.label,
+          secretValue: value,
+        });
+        if (error) {
+          showError(error);
+          return;
+        }
+        vscode.window.showInformationMessage('Secret updated');
+        await vscode.commands.executeCommand('serverize.secrets.refresh');
+      },
+    ),
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'serverize.secrets.delete',
+      async (item: SecretItem) => {
+        const [, error] = await client.request('DELETE /secrets/{id}', {
+          id: item.data.id,
+        });
+        if (error) {
+          showError(error);
+          return;
+        }
+        vscode.window.showInformationMessage('Secret deleted');
+        await vscode.commands.executeCommand('serverize.secrets.refresh');
       },
     ),
   );

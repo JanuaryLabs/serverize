@@ -1,4 +1,1 @@
-
-export interface PatchRelease {
-
-}
+export interface PatchRelease {}

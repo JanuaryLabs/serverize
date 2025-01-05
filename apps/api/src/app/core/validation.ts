@@ -1,5 +1,6 @@
-import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import { z } from 'zod';
+
+import { ProblemDetailsException } from 'rfc-7807-problem-details';
 
 export function parse<T extends z.ZodRawShape>(
   schema: z.ZodObject<T>,

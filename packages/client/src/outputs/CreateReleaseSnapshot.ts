@@ -1,4 +1,3 @@
-
 export interface CreateReleaseSnapshot {
-id: string
+  id: string;
 }

@@ -59,8 +59,36 @@
         "when": "viewItem == release"
       },
       {
+        "command": "serverize.secrets.delete",
+        "title": "Delete secret",
+        "category": "Serverize",
+        "icon": "$(trash)",
+        "when": "viewItem == secret"
+      },
+      {
+        "command": "serverize.secrets.set",
+        "title": "Edit secret",
+        "category": "Serverize",
+        "icon": "$(edit)",
+        "when": "viewItem == secret"
+      },
+      {
+        "command": "serverize.secrets.add",
+        "title": "Add secret",
+        "category": "Serverize",
+        "icon": "$(add)",
+        "when": "viewItem == channel"
+      },
+      {
         "command": "serverize.projects.refresh",
         "title": "Refresh Projects",
+        "category": "Serverize",
+        "shortTitle": "Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "serverize.secrets.refresh",
+        "title": "Refresh Secrets",
         "category": "Serverize",
         "shortTitle": "Refresh",
         "icon": "$(refresh)"
@@ -148,6 +176,11 @@
           "command": "serverize.projects.refresh",
           "when": "view == serverizeProjectsView",
           "group": "navigation"
+        },
+        {
+          "command": "serverize.secrets.refresh",
+          "when": "view == serverizeSecretsView",
+          "group": "navigation"
         }
       ],
       "view/item/context": [
@@ -160,6 +193,21 @@
           "command": "serverize.release.logs",
           "group": "inline",
           "when": "viewItem == release-active"
+        },
+        {
+          "command": "serverize.secrets.add",
+          "group": "inline",
+          "when": "viewItem == channel"
+        },
+        {
+          "command": "serverize.secrets.set",
+          "group": "inline",
+          "when": "viewItem == secret"
+        },
+        {
+          "command": "serverize.secrets.delete",
+          "group": "inline",
+          "when": "viewItem == secret"
         }
       ]
     },

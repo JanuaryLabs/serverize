@@ -1,4 +1,3 @@
-
 export interface SayHi {
-status: string
+  status: string;
 }

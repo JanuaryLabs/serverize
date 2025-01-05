@@ -12,6 +12,7 @@ import secretsKeysEntity from './projects/secrets-keys.entity';
 import secretsEntity from './projects/secrets.entity';
 import snapshotsEntity from './projects/snapshots.entity';
 import volumesEntity from './projects/volumes.entity';
+
 const entities = [
   membersEntity,
   organizationsMembersEntity,

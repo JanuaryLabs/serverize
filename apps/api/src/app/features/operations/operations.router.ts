@@ -1,14 +1,16 @@
-import { Hono } from 'hono';
-import { createOutput, consume } from '@workspace/extensions/hono';
 import { apiReference } from '@scalar/hono-api-reference';
+import { consume, createOutput } from '@workspace/extensions/hono';
 import { policies } from '@workspace/extensions/identity';
-import axios from 'axios';
-import z from 'zod';
-import swagger from './operations.swagger.json';
-import * as operations from './operations';
-import { parseOrThrow } from '@workspace/validation';
 import { authorize } from '@workspace/identity';
 import { type HonoEnv } from '@workspace/utils';
+import { parseOrThrow } from '@workspace/validation';
+import { Hono } from 'hono';
+import z from 'zod';
+
+import * as operations from './operations';
+import swagger from './operations.swagger.json';
+import axios from 'axios';
+
 const router = new Hono<HonoEnv>();
 router.get(
   '/operations/swagger',

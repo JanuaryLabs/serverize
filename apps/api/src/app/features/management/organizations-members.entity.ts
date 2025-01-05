@@ -1,14 +1,14 @@
+import Members from './members.entity.ts';
+import Organizations from './organizations.entity.ts';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
   DeleteDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import Organizations from './organizations.entity.ts';
-import Members from './members.entity.ts';
 import { type Relation } from 'typeorm';
 
 @Entity('OrganizationsMembers')

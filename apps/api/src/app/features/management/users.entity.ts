@@ -1,15 +1,15 @@
-import {
-  Entity,
-  PrimaryColumn,
-  OneToMany,
-  OneToOne,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-  RelationId,
-} from 'typeorm';
 import Members from './members.entity.ts';
 import Preferences from './preferences.entity.ts';
+import {
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryColumn,
+  RelationId,
+  UpdateDateColumn,
+} from 'typeorm';
 import { type Relation } from 'typeorm';
 
 @Entity('Users')

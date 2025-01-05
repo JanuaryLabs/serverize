@@ -2,10 +2,13 @@ import {
   createQueryBuilder,
   removeEntity,
 } from '@workspace/extensions/postgresql';
-import z from 'zod';
-import ApiKeys from '../api-keys.entity.ts';
-import { trigger } from '@january/declarative';
 import { type IdentitySubject } from '@workspace/identity';
+import z from 'zod';
+
+import ApiKeys from '../api-keys.entity.ts';
+
+import { trigger } from '@january/declarative';
+
 export const revokeTokenSchema = z.object({ token: z.string() });
 
 export async function revokeToken(

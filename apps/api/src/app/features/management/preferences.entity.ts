@@ -1,18 +1,18 @@
+import Organizations from './organizations.entity.ts';
+import Projects from './projects.entity.ts';
+import Users from './users.entity.ts';
+import Workspaces from './workspaces.entity.ts';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToOne,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
   DeleteDateColumn,
+  Entity,
   JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import Users from './users.entity.ts';
-import Organizations from './organizations.entity.ts';
-import Workspaces from './workspaces.entity.ts';
-import Projects from './projects.entity.ts';
 import { type Relation } from 'typeorm';
 
 @Entity('Preferences')

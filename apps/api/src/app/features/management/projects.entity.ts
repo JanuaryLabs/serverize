@@ -1,21 +1,21 @@
+import ApiKeys from '../projects/api-keys.entity.ts';
+import Releases from '../projects/releases.entity.ts';
+import SecretsKeys from '../projects/secrets-keys.entity.ts';
+import Secrets from '../projects/secrets.entity.ts';
+import Preferences from './preferences.entity.ts';
+import Workspaces from './workspaces.entity.ts';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToMany,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
   DeleteDateColumn,
+  Entity,
   Index,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
   RelationId,
+  UpdateDateColumn,
 } from 'typeorm';
-import Workspaces from './workspaces.entity.ts';
-import Preferences from './preferences.entity.ts';
-import Releases from '../projects/releases.entity.ts';
-import Secrets from '../projects/secrets.entity.ts';
-import SecretsKeys from '../projects/secrets-keys.entity.ts';
-import ApiKeys from '../projects/api-keys.entity.ts';
 import { type Relation } from 'typeorm';
 
 @Entity('Projects')

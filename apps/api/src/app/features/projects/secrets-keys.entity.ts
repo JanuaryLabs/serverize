@@ -1,13 +1,13 @@
+import Projects from '../management/projects.entity.ts';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
   DeleteDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import Projects from '../management/projects.entity.ts';
 import { type Relation } from 'typeorm';
 
 @Entity('SecretsKeys')

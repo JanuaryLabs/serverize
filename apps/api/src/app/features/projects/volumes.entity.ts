@@ -1,13 +1,13 @@
+import Releases from './releases.entity.ts';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
   DeleteDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import Releases from './releases.entity.ts';
 import { type Relation } from 'typeorm';
 
 @Entity('Volumes')

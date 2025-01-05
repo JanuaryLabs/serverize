@@ -1,4 +1,3 @@
-
 export interface RestartChannel {
-traces: string[]
+  traces: string[];
 }

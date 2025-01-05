@@ -1,18 +1,18 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToMany,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-  RelationId,
-} from 'typeorm';
 import Organizations from './organizations.entity.ts';
+import Preferences from './preferences.entity.ts';
 import Projects from './projects.entity.ts';
 import WorkspacesMembers from './workspaces-members.entity.ts';
-import Preferences from './preferences.entity.ts';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  RelationId,
+  UpdateDateColumn,
+} from 'typeorm';
 import { type Relation } from 'typeorm';
 
 @Entity('Workspaces')

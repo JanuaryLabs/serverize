@@ -13,12 +13,15 @@ import {
   serverizeUrl,
 } from '@workspace/extensions/user';
 import { channelSchema, orgNameValidator } from '@workspace/extensions/zod';
-import axios from 'axios';
 import z from 'zod';
+
 import Projects from '../../management/projects.entity.ts';
 import Releases from '../../projects/releases.entity.ts';
 import Volumes from '../../projects/volumes.entity.ts';
+import axios from 'axios';
+
 import { trigger } from '@january/declarative';
+
 export const startReleaseSchema = z.object({
   releaseName: orgNameValidator,
   projectId: z.string().uuid(),

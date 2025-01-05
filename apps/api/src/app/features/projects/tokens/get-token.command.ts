@@ -1,8 +1,11 @@
 import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
-import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
+
 import ApiKeys from '../api-keys.entity.ts';
+import { ProblemDetailsException } from 'rfc-7807-problem-details';
+
 import { trigger } from '@january/declarative';
+
 export const getTokenSchema = z.object({ token: z.string() });
 
 export async function getToken(

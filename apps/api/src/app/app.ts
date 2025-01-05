@@ -1,14 +1,14 @@
 import { loadSubject } from '@workspace/extensions/identity';
-import { type HonoEnv } from 'apps/api/src/app/core/utils';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { type StatusCode } from 'hono/utils/http-status';
-import { ProblemDetailsException } from 'rfc-7807-problem-details';
 
 import './features/crons';
 import './features/listeners';
 import routes from './features/routes';
+import { type HonoEnv } from '@workspace/utils';
+import { ProblemDetailsException } from 'rfc-7807-problem-details';
 
 const application = new Hono<HonoEnv>();
 application.use(cors(), logger());

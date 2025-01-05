@@ -1,14 +1,14 @@
+import Releases from './releases.entity.ts';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  OneToOne,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
   DeleteDateColumn,
+  Entity,
   JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import Releases from './releases.entity.ts';
 import { type Relation } from 'typeorm';
 
 @Entity('Snapshots')

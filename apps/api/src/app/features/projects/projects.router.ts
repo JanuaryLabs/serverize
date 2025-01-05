@@ -1,15 +1,17 @@
-import { Hono } from 'hono';
-import { createOutput, consume } from '@workspace/extensions/hono';
 import { apiReference } from '@scalar/hono-api-reference';
+import { consume, createOutput } from '@workspace/extensions/hono';
 import { policies } from '@workspace/extensions/identity';
-import z from 'zod';
-import swagger from './projects.swagger.json';
 import { authorize } from '@workspace/identity';
-import * as tokens from './tokens';
+import { type HonoEnv } from '@workspace/utils';
 import { parseOrThrow } from '@workspace/validation';
+import { Hono } from 'hono';
+import z from 'zod';
+
+import swagger from './projects.swagger.json';
 import * as releases from './releases';
 import * as secrets from './secrets';
-import { type HonoEnv } from '@workspace/utils';
+import * as tokens from './tokens';
+
 const router = new Hono<HonoEnv>();
 router.get(
   '/projects/swagger',
@@ -187,6 +189,13 @@ router.get('/secrets', authorize(), async (context, next) => {
   });
   const output = createOutput(context);
   await secrets.getSecrets(input, output, context.req.raw.signal);
+  return output.finalize();
+});
+router.delete('/secrets/:id', authorize(), async (context, next) => {
+  const path = context.req.param();
+  const input = parseOrThrow(secrets.deleteSecretSchema, { id: path.id });
+  const output = createOutput(context);
+  await secrets.deleteSecret(input, output, context.req.raw.signal);
   return output.finalize();
 });
 router.get(

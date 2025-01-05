@@ -1,4 +1,3 @@
-
 export interface ReadableStream {
-readable: false | true
+  readable: false | true;
 }

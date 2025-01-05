@@ -1,4 +1,4 @@
-import { tables } from 'apps/api/src/app/features/entities';
+import { tables } from '@workspace/entities';
 
 interface TraefikService {
   loadBalancer: {

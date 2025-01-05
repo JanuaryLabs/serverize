@@ -1,4 +1,5 @@
-import { tables } from 'apps/api/src/app/features/entities';
+import { tables } from '@workspace/entities';
+import { policies } from '@workspace/extensions/identity';
 import {
   createQueryBuilder,
   deferredJoinPagination,
@@ -15,9 +16,9 @@ import {
   getProjectKey,
 } from '@workspace/extensions/user';
 import { channelSchema, orgNameValidator } from '@workspace/extensions/zod';
-import { policies } from '@workspace/extensions/identity';
-import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
+
+import { ProblemDetailsException } from 'rfc-7807-problem-details';
 
 import {
   feature,
@@ -483,9 +484,29 @@ export default feature({
           .andWhere('secrets.channel = :channel', {
             channel: input.channel,
           })
-          .select(['secrets.label']);
+          .select(['secrets.id', 'secrets.label']);
         const secrets = await execute(qb);
         return secrets;
+      },
+    }),
+    workflow('DeleteSecret', {
+      tag: 'secrets',
+      trigger: trigger.http({
+        method: 'delete',
+        path: '/:id',
+        input: (trigger) => ({
+          id: {
+            select: trigger.path.id,
+            against: z.string().uuid(),
+          },
+        }),
+      }),
+      execute: async ({ input }) => {
+        const qb = createQueryBuilder(tables.secrets, 'secrets').where(
+          'secrets.id = :id',
+          { id: input.id },
+        );
+        await removeEntity(tables.secrets, qb);
       },
     }),
     workflow('GetSecretsValues', {
@@ -603,6 +624,7 @@ export default feature({
         channel: field.enum({
           values: ['dev', 'preview'],
           defaultValue: 'dev',
+          validations: [mandatory()],
         }),
         nonce: field.bytes({ validations: [mandatory()] }),
         secret: field.bytes({ validations: [mandatory()] }),

@@ -1,6 +1,7 @@
 import { Octokit } from '@octokit/core';
-import { tables } from 'apps/api/src/app/features/entities';
+import { tables } from '@workspace/entities';
 import { firebaseApp } from '@workspace/extensions/firebase-auth';
+import { policies, verifyToken } from '@workspace/extensions/identity';
 import {
   createQueryBuilder,
   deferredJoinPagination,
@@ -16,14 +17,14 @@ import {
   tellDiscord,
 } from '@workspace/extensions/user';
 import { orgNameValidator } from '@workspace/extensions/zod';
-import { policies, verifyToken } from '@workspace/extensions/identity';
 import {
   AuthClientErrorCode,
   FirebaseAuthError,
   getAuth,
 } from 'firebase-admin/auth';
-import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
+
+import { ProblemDetailsException } from 'rfc-7807-problem-details';
 
 import {
   feature,

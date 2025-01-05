@@ -1,2 +1,1 @@
-
 export type PatchProject = void;

@@ -1,18 +1,18 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
-  RelationId,
-} from 'typeorm';
-import Workspaces from './workspaces.entity.ts';
+import ApiKeys from '../projects/api-keys.entity.ts';
 import Members from './members.entity.ts';
 import OrganizationsMembers from './organizations-members.entity.ts';
 import Preferences from './preferences.entity.ts';
-import ApiKeys from '../projects/api-keys.entity.ts';
+import Workspaces from './workspaces.entity.ts';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  RelationId,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('Organizations')
 export default class Organizations {

@@ -1,4 +1,3 @@
-
 export interface HealthCheck {
-status: string
+  status: string;
 }

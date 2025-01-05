@@ -1,2 +1,1 @@
-
 export type DeleteOrg = void;

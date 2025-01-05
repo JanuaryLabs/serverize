@@ -1,10 +1,10 @@
+import { tables } from '@workspace/entities';
 import { firebaseApp } from '@workspace/extensions/firebase-auth';
 import {
   createQueryBuilder,
   execute,
   saveEntity,
 } from '@workspace/extensions/postgresql';
-import { tables } from 'apps/api/src/app/features/entities';
 import { WebhookClient } from 'discord.js';
 import { getAuth } from 'firebase-admin/auth';
 

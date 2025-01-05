@@ -1,19 +1,18 @@
+import { dataSource } from './data-source';
 import { AsyncLocalStorage } from 'async_hooks';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import sqlTag, { type RawValue } from 'sql-template-tag';
 import { Transform } from 'stream';
 import {
-	type DeepPartial,
-	EntityManager,
-	type EntityTarget,
-	type ObjectLiteral,
-	QueryFailedError,
-	type QueryRunner,
-	SelectQueryBuilder,
+  type DeepPartial,
+  EntityManager,
+  type EntityTarget,
+  type ObjectLiteral,
+  QueryFailedError,
+  type QueryRunner,
+  SelectQueryBuilder,
 } from 'typeorm';
 import type { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity.js';
-
-import { dataSource } from './data-source';
 
 const asyncLocalStorage = new AsyncLocalStorage<QueryRunner>();
 
@@ -214,46 +213,46 @@ export async function saveEntity<
   try {
     return await repo.save(entity as T);
   } catch (error) {
-		if (error instanceof QueryFailedError) {
-			const { severity, code, table, detail } = error.driverError ?? {};
-			throw new ProblemDetailsException({
-				title: error.message,
-				detail: `${severity} with code ${code} on table ${table}: ${detail}`,
+    if (error instanceof QueryFailedError) {
+      const { severity, code, table, detail } = error.driverError ?? {};
+      throw new ProblemDetailsException({
+        title: error.message,
+        detail: `${severity} with code ${code} on table ${table}: ${detail}`,
         status: 400,
         engineCode: code,
-			});
-		}
+      });
+    }
     throw error;
   }
 }
 
 export async function upsertEntity<
-	Entity extends ObjectLiteral,
-	T extends QueryDeepPartialEntity<Entity>,
+  Entity extends ObjectLiteral,
+  T extends QueryDeepPartialEntity<Entity>,
 >(
-	entityType: EntityTarget<Entity>,
-	entity: Omit<T, 'createdAt' | 'updatedAt' | 'deletedAt'>,
-	options: {
-		upsertColumns?: Extract<keyof (Entity & { id: string }), string>[];
-		conflictColumns?: Extract<keyof (Entity & { id: string }), string>[];
-	} = {}
+  entityType: EntityTarget<Entity>,
+  entity: Omit<T, 'createdAt' | 'updatedAt' | 'deletedAt'>,
+  options: {
+    upsertColumns?: Extract<keyof (Entity & { id: string }), string>[];
+    conflictColumns?: Extract<keyof (Entity & { id: string }), string>[];
+  } = {},
 ) {
-	const manager = getManager();
-	const repo = manager.getRepository(entityType);
-	await repo
-		.createQueryBuilder()
-		.insert()
-		.into(entityType)
-		.values(entity as T)
-		.orUpdate(
-			options.upsertColumns ?? ['id'],
-			options.conflictColumns ??
-				(Object.keys(entity) as Extract<
-					keyof (Entity & { id: string }),
-					string
-				>[])
-		)
-		.execute();
+  const manager = getManager();
+  const repo = manager.getRepository(entityType);
+  await repo
+    .createQueryBuilder()
+    .insert()
+    .into(entityType)
+    .values(entity as T)
+    .orUpdate(
+      options.upsertColumns ?? ['id'],
+      options.conflictColumns ??
+        (Object.keys(entity) as Extract<
+          keyof (Entity & { id: string }),
+          string
+        >[]),
+    )
+    .execute();
 }
 
 export function sql(
@@ -270,5 +269,3 @@ export function exists<Entity extends ObjectLiteral>(
 ) {
   return qb.getOne().then(Boolean);
 }
-
-

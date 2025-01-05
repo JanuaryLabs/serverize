@@ -1,8 +1,11 @@
 import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
 import { channelSchema } from '@workspace/extensions/zod';
 import z from 'zod';
+
 import Secrets from '../secrets.entity.ts';
+
 import { trigger } from '@january/declarative';
+
 export const getSecretsSchema = z.object({
   projectId: z.string().uuid(),
   channel: channelSchema,
@@ -20,7 +23,7 @@ export async function getSecrets(
     .andWhere('secrets.channel = :channel', {
       channel: input.channel,
     })
-    .select(['secrets.label']);
+    .select(['secrets.id', 'secrets.label']);
   const secrets = await execute(qb);
   return output.ok(secrets);
 }

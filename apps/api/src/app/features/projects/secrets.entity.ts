@@ -1,14 +1,14 @@
+import Projects from '../management/projects.entity.ts';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
   DeleteDateColumn,
+  Entity,
   Index,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import Projects from '../management/projects.entity.ts';
 import { type Relation } from 'typeorm';
 
 @Entity('Secrets')
@@ -23,12 +23,12 @@ export default class Secrets {
   @Column({ nullable: false, type: 'varchar' })
   label!: string;
   @Column({
-    nullable: true,
+    nullable: false,
     default: 'dev',
     type: 'enum',
     enum: ['dev', 'preview'],
   })
-  channel?: 'dev' | 'preview' | null;
+  channel!: 'dev' | 'preview';
   @Column({ nullable: false, type: 'bytea' })
   nonce!: Uint8Array;
   @Column({ nullable: false, type: 'bytea' })

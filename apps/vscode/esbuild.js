@@ -42,7 +42,6 @@ async function main() {
     sourcesContent: false,
     platform: 'node',
     outfile: join(dest, 'index.js'),
-    // outfile: join(process.cwd(), 'dist/index.js'),
     external: ['vscode'],
     logLevel: 'silent',
     plugins: [
@@ -50,8 +49,9 @@ async function main() {
       esbuildProblemMatcherPlugin,
     ],
   });
+
   await mkdir(dest, { recursive: true });
-  const files = ['package.json', 'README.md', 'LICENSE', 'CHANGELOG.md'];
+  const files = ['package.json', 'README.md', 'CHANGELOG.md'];
   for (const file of files) {
     await copyFile(join(process.cwd(), file), join(dest, file));
   }

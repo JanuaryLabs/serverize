@@ -1,4 +1,3 @@
-
 export interface Signin {
-accessToken: string
+  accessToken: string;
 }

@@ -1,8 +1,10 @@
 import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
 import { toTraefikConfig } from '@workspace/extensions/user';
-import axios from 'axios';
 import z from 'zod';
+
 import Releases from '../../projects/releases.entity.ts';
+import axios from 'axios';
+
 import { trigger } from '@january/declarative';
 
 export async function getConfig(
