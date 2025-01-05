@@ -1,14 +1,8 @@
 FROM node:lts-alpine
 WORKDIR /usr/src/app
 
-COPY package*.json ./
-RUN npm install --legacy-peer-deps --no-audit --no-fund --omit=dev
+COPY ./dist/apps/api/package*.json ./
+RUN npm i --no-audit --no-fund
 
-WORKDIR /usr/src/app/output
-COPY apps/api/output/package.json ./
-RUN npm install --legacy-peer-deps --no-audit --no-fund --omit=dev
-
-WORKDIR /usr/src/app
-COPY apps/api/output/ ./output
-
-CMD ["node", "./output"]
+COPY ./dist/apps/api/ ./
+CMD ["node", "./"]
