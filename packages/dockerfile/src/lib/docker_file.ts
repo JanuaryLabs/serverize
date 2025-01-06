@@ -1,12 +1,12 @@
-import { execa } from 'execa';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join, normalize } from 'node:path';
+import { join, posix } from 'node:path';
+import { execa } from 'execa';
 
-import type { NetworkFactory } from './network';
 import { ensureDockerRunning } from 'serverize/docker';
 import { safeFail } from 'serverize/utils';
+import type { NetworkFactory } from './network';
 
 type StageFn = (options?: any) => Stage;
 export interface ShortCopy {
@@ -192,14 +192,14 @@ function copyWriter(stages: Record<string, Stage>) {
   };
   const writeShortCopy = (workdir: string, copy: ShortCopy) => {
     const lines: string[] = [];
-    const fixedPoint = normalize(join('/', copy.link, '/'));
+    const fixedPoint = posix.normalize(posix.join('/', copy.link, '/'));
     const path = fixedPoint.replace(/^\//, './').replace(/\/$/, '');
     if (copy.from) {
       const relatedStage = followStage(stages, copy as HasFrom);
 
       lines.push(
-        `COPY --from=${relatedStage[0]} ${normalize(
-          join(
+        `COPY --from=${relatedStage[0]} ${posix.normalize(
+          posix.join(
             store.getStore()?.stagesSet[relatedStage[0]].config.workdir || '',
             copy.link,
           ),
@@ -220,7 +220,7 @@ function copyWriter(stages: Record<string, Stage>) {
     }
     let instruction = 'COPY';
     let copySrcs = (Array.isArray(copy.src) ? copy.src : [copy.src]).map(
-      (src) => normalize(join(src)),
+      (src) => posix.normalize(posix.join(src)),
     );
     if (copy.from) {
       const relatedStage = followStage(stages, copy as HasFrom);
@@ -228,8 +228,8 @@ function copyWriter(stages: Record<string, Stage>) {
 
       copySrcs = copySrcs.map(
         (it) =>
-          `${normalize(
-            join(
+          `${posix.normalize(
+            posix.join(
               store.getStore()?.stagesSet[relatedStage[0]].config.workdir || '',
               it,
             ),
@@ -249,18 +249,18 @@ function copyWriter(stages: Record<string, Stage>) {
     } else {
       const lines: string[] = [
         copy.dest.create
-          ? `RUN mkdir -p ${normalize(
+          ? `RUN mkdir -p ${posix.normalize(
               copy.dest.path.startsWith('/')
                 ? copy.dest.path
-                : join('./', copy.dest.path),
+                : posix.join('./', copy.dest.path),
             )}`
           : '',
-        `COPY ${copySrcs.join(' ')} ${normalize(
+        `COPY ${copySrcs.join(' ')} ${posix.normalize(
           copy.dest.path.startsWith('/')
             ? copySrcs.length > 1
               ? `${copy.dest.path}/`
               : copy.dest.path
-            : join('./', normalizeDest(copySrcs, copy.dest.path)),
+            : posix.join('./', normalizeDest(copySrcs, copy.dest.path)),
         )}`,
       ];
       return lines;

@@ -20,9 +20,9 @@ export function knownPackageManager(
  */
 export const packageManagerCommands = {
   npm: {
-    install: 'npm ci',
+    install: 'npm i',
     devinstall: 'npm i',
-    prodinstall: 'npm ci --omit-dev',
+    prodinstall: 'npm i --omit-dev',
     build: 'npm run build',
     lockFile: ['package-lock.json*'],
   },
@@ -62,7 +62,7 @@ export const guessPackageManager = {
   ],
   install: [
     'if [ -f yarn.lock ]; then yarn --frozen-lockfile;',
-    'elif [ -f package-lock.json ]; then npm ci;',
+    'elif [ -f package-lock.json ]; then npm i;',
     'elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile;',
     'else echo "Lockfile not found." && exit 1;',
     'fi',

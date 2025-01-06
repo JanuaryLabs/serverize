@@ -124,10 +124,12 @@ export async function login() {
         try {
           const { email, pw } = await credsForm(false);
           tell('Signing in...');
-          await signInWithEmail(email, pw);
-          spinner.succeed('Signed in');
+
+          const { token } = await signInWithEmail(email, pw);
+          client.setOptions({ token });
         } catch (error) {
-          spinner.fail((error as Error).message);
+          showError(error as Error);
+          process.exit(1);
         }
       }
       break;
@@ -174,7 +176,12 @@ export async function register() {
           await user.delete();
           process.exit(1);
         }
+
+        // refresh get the custom claims
+        const token = await user.getIdToken(true);
+        client.setOptions({ token });
         await user.reload();
+
         return projectName;
       } catch (error) {
         await auth.currentUser?.delete().catch(() => {
@@ -199,6 +206,7 @@ const signin = new Command('signin')
       return;
     }
     await login();
+    spinner.succeed('Signed in');
   });
 
 const signup = new Command('signup')

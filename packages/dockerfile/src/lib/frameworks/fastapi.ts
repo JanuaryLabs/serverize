@@ -1,6 +1,6 @@
+import { join, posix } from 'path';
 import { dockerfile } from '../docker_file';
 import { nodeServer } from '../servers';
-import { join } from 'path';
 
 interface FastAPIConfig {
   port?: number;
@@ -28,7 +28,7 @@ export const fastapi = (config: FastAPIConfig) => {
       cmd: [
         'fastapi',
         'run',
-        join('app', config.mainFile),
+        posix.join('app', config.mainFile),
         '--port',
         `${port}`,
         '--proxy-headers',

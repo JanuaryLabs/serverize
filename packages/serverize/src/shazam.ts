@@ -176,6 +176,7 @@ async function shazam({
       await register();
     }
   }
+
   if (!projectName) {
     const [projects, error] = await client.request('GET /projects', {});
     if (error) {
