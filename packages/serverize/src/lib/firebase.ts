@@ -1,10 +1,12 @@
+import { tmpdir } from 'os';
 import { initializeApp } from 'firebase/app';
 import { initializeAuth } from 'firebase/auth';
 import { mkdir, rm, writeFile } from 'fs/promises';
-import { tmpdir } from 'os';
 
 import { dirname, join } from 'path';
 import { getFile } from 'serverize/utils';
+
+const file = 'serverize.txt';
 
 class FilePersistence {
   public static type = 'LOCAL' as const;
@@ -14,7 +16,7 @@ class FilePersistence {
   }
 
   async _set(key: string, value: unknown) {
-    const fullPath = join(tmpdir(), key);
+    const fullPath = join(tmpdir(), file);
     await mkdir(dirname(fullPath), { recursive: true });
     return writeFile(fullPath, JSON.stringify(value)).catch((error) => {
       console.error('Error writing file', error);
@@ -23,7 +25,7 @@ class FilePersistence {
   }
 
   async _get(key: string) {
-    const fullPath = join(tmpdir(), key);
+    const fullPath = join(tmpdir(), file);
     return getFile(fullPath)
       .then((data) => (data ? JSON.parse(data) : null))
       .catch((error) => {
@@ -33,7 +35,7 @@ class FilePersistence {
   }
 
   async _remove(key: string) {
-    await rm(join(tmpdir(), key), { force: true });
+    await rm(join(tmpdir(), file), { force: true });
   }
 
   _addListener(_key: string, _listener: unknown) {
