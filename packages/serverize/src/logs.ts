@@ -10,6 +10,7 @@ import {
 } from './program';
 
 export default new Command('logs')
+  .description('View logs for a specific project and release')
   .addOption(projectOption.makeOptionMandatory())
   .addOption(channelOption)
   .addOption(releaseOption)

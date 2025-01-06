@@ -2,6 +2,7 @@ import { Command } from 'commander';
 import { parse } from 'dotenv';
 import { readFile } from 'fs/promises';
 
+import { join } from 'path';
 import { client } from './lib/api-client';
 import {
   channelOption,
@@ -10,10 +11,9 @@ import {
   showError,
   spinner,
 } from './program';
-import { join } from 'path';
 
 const setCommand = new Command('set')
-  .usage('[options] NAME=VALUE NAME=VALUE ...')
+  .description('Set one or more environment variables for a project channel')
   .argument('<secrets...>', 'Secrets in format NAME=VALUE')
   .addOption(projectOption)
   .addOption(channelOption)
@@ -42,7 +42,7 @@ const setCommand = new Command('set')
   });
 
 const setFileCommand = new Command('set-file')
-  .usage('[options] .env')
+  .description('Import environment variables from a .env file')
   .argument('<envFile>', 'Path to the file with secrets')
   .addOption(projectOption)
   .addOption(channelOption)
@@ -73,6 +73,6 @@ const setFileCommand = new Command('set-file')
   });
 
 export default new Command('secrets')
-  .description('Manage project secrets')
+  .description('Manage project channel secrets')
   .addCommand(setCommand)
   .addCommand(setFileCommand);

@@ -183,7 +183,7 @@ To deploy a project in a CI/CD pipeline, you need to create a new token and stor
 To create a new token, run:
 
 ```sh frame=none
-npx serverize tokens create --project <project-name>
+npx serverize tokens create -p <project-name>
 ```
 
 Store this token securely as it will only be displayed once. [See a complete guide on how to use Serverize with GitHub Actions](./ci-cd).

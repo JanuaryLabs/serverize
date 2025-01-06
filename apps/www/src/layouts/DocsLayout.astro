@@ -72,12 +72,13 @@ function extractProps(
 
 const { frontmatter, url } = Astro.props;
 const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
+const dashes = '-'.repeat(1000);
 ---
 
 <Main title={frontmatter.title} canonical={canonical}>
   <Nav client:load className="border-b" />
   <div
-    class="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 gap-x-12 px-6 xl:px-0 md:grid-cols-[240px_minmax(0,2fr)] md:gap-x-8 lg:grid-cols-[240px_minmax(0,1fr)_240px] lg:gap-x-4 xl:gap-x-12"
+    class="mx-auto mt-16 grid max-w-[1400px] grid-cols-1 gap-4 gap-x-12 px-6 md:grid-cols-[240px_minmax(0,2fr)] md:gap-x-8 lg:grid-cols-[240px_minmax(0,1fr)_240px] lg:gap-x-4 xl:gap-x-12 xl:px-0"
   >
     <aside
       class="sticky top-16 hidden h-[calc(100vh-4rem)] overflow-y-auto border-r md:block lg:block"
@@ -85,7 +86,8 @@ const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
       <TreeNode tree={groups} />
     </aside>
 
-    <article class="prose mt-16 max-w-full pb-16 pt-6">
+    <article class="prose max-w-full pb-16">
+      <p class="invisible h-0">{dashes}</p>
       <h1 class="mb-0 text-4xl font-bold [&_+p]:mt-2">{frontmatter.title}</h1>
       <!-- <p class="text-secondary-foreground/70">{frontmatter.subtitle}</p> -->
       <slot />

@@ -190,59 +190,74 @@ export async function register() {
   }
 }
 
-const signin = new Command('signin').alias('login').action(async () => {
-  const wants = await askUser();
-  if (!wants) {
-    return;
-  }
-  await login();
-});
-
-const signup = new Command('signup').alias('register').action(async () => {
-  const wants = await askUser();
-  if (!wants) {
-    return;
-  }
-  const projectName = await register();
-  if (projectName) {
-    spinner.succeed(`You're ready to deploy ${projectName}`);
-    console.log(
-      box(
-        `Deploy ${projectName}`,
-        `To deploy: npx serverize deploy -p ${projectName}`,
-        `To set secrets: npx serverize secrets set-file .env -p ${projectName}`,
-      ),
-    );
-  }
-});
-const signout = new Command('signout').alias('logout').action(async () => {
-  const user = await initialise();
-  if (!user) {
-    tell('Not authenticated');
-    return;
-  }
-  const yes = await confirm({
-    message: 'Are you sure you want to sign out?',
-    default: false,
+const signin = new Command('signin')
+  .alias('login')
+  .description('Sign in to your Serverize account')
+  .action(async () => {
+    const wants = await askUser();
+    if (!wants) {
+      return;
+    }
+    await login();
   });
-  if (yes) {
-    await signOut(auth);
-    tell('Signed out');
-  }
-});
-export const whoami = new Command('whoami').action(async () => {
-  const user = await initialise();
-  if (user) {
-    console.log(
-      `Signed in as ${user.displayName || user.email || user.phoneNumber}`,
-    );
-  } else {
-    console.log('Not authenticated');
-  }
-});
+
+const signup = new Command('signup')
+  .alias('register')
+  .description('Sign up for a new Serverize account')
+  .action(async () => {
+    const wants = await askUser();
+    if (!wants) {
+      return;
+    }
+    const projectName = await register();
+    if (projectName) {
+      spinner.succeed(`You're ready to deploy ${projectName}`);
+      console.log(
+        box(
+          `Deploy ${projectName}`,
+          `To deploy: npx serverize deploy -p ${projectName}`,
+          `To set secrets: npx serverize secrets set-file .env -p ${projectName}`,
+        ),
+      );
+    }
+  });
+
+const signout = new Command('signout')
+  .alias('logout')
+  .description('Sign out of your Serverize account')
+  .action(async () => {
+    const user = await initialise();
+    if (!user) {
+      tell('Not authenticated');
+      return;
+    }
+    const yes = await confirm({
+      message: 'Are you sure you want to sign out?',
+      default: false,
+    });
+    if (yes) {
+      await signOut(auth);
+      tell('Signed out');
+    }
+  });
+
+export const whoami = new Command('whoami')
+  .description('Show the currently authenticated user')
+  .action(async () => {
+    const user = await initialise();
+    if (user) {
+      console.log(
+        `Signed in as ${user.displayName || user.email || user.phoneNumber}`,
+      );
+    } else {
+      console.log('Not authenticated');
+    }
+  });
 
 export default new Command('auth')
-  .description('Authenticate with serverize (signin, signup, signout)')
+  .description(
+    `Access Serverize by signing up for a new account using the auth signup command or logging in with the auth signin command if you already have an account. To disconnect, use the auth logout command.`,
+  )
   .addCommand(signin)
   .addCommand(signup)
   .addCommand(signout)

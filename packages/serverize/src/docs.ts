@@ -1,55 +1,123 @@
 import fs from 'fs';
-import path from 'path';
+import path, { join } from 'path';
 import { Command } from 'commander';
 import cli from './cli'; // <-- Import your main CLI (the one with .addCommand(...))
 
-/**
- * Recursively generates a Markdown string for a given Commander.js command.
- * Throws an error if the command has no name.
- */
-function generateDocsForCommand(cmd: Command, depth = 0): string {
+function generateUsageInstructionFromCommand(prefix: string, command: Command) {
+  const requiredOptions: string[] = [];
+  const optionalOptions: string[] = [];
+
+  for (const option of command.options) {
+    const optionText = `${option.short || option.long} ${option.mandatory ? `<${option.attributeName()}>` : `[${option.attributeName()}]`}`;
+    if (option.mandatory) {
+      requiredOptions.push(optionText);
+    } else {
+      optionalOptions.push(optionText);
+    }
+  }
+  const args = command.registeredArguments.map((arg) =>
+    arg.required ? `<${arg.name()}>` : `[${arg.name()}]`,
+  );
+
+  const usages: string[] = [];
+
+  const withArgs = args.length > 0 ? ` ${args.join(' ')}` : '';
+  const withRequiredOptions = requiredOptions.length
+    ? ` ${requiredOptions.join(' ')}`
+    : '';
+  const alwaysSuffix = `${withArgs}${withRequiredOptions}`;
+  const alwaysVisible = `${prefix} ${command.name()}${alwaysSuffix}`;
+  for (let index = 0; index < optionalOptions.length; index++) {
+    const option = optionalOptions[index];
+    usages.push(`${alwaysVisible} ${option}`);
+    for (let j = index + 1; j < optionalOptions.length; j++) {
+      usages.push(`${alwaysVisible} ${option} ${optionalOptions[j]}`);
+    }
+  }
+
+  return usages;
+}
+function getArgumentBracketType(argumentStr: string): 'required' | 'optional' {
+  if (argumentStr.startsWith('<') && argumentStr.endsWith('>')) {
+    return 'required';
+  }
+  if (argumentStr.startsWith('[') && argumentStr.endsWith(']')) {
+    return 'optional';
+  }
+  return 'required'; // Default fallback if not strictly bracketed
+}
+
+function generateDocsForCommand(
+  prefix: string,
+  cmd: Command,
+  depth = 0,
+): string {
   const cmdName = cmd.name()?.trim();
   if (!cmdName) {
     throw new Error(
       'A Commander command is missing a name. Please specify one.',
     );
   }
+  const lines: string[] = [];
 
-  const indent = '  '.repeat(depth);
-  const headingLevel = depth + 2; // e.g., depth=0 -> "##", depth=1 -> "###"
+  const headingLevel = depth + 1; // e.g., depth=0 -> "##", depth=1 -> "###"
+  const heading = '#'.repeat(headingLevel);
+  const nextHeading = '#'.repeat(headingLevel + 1);
 
-  // Aliases
   const aliasList = cmd.aliases?.() || [];
-  const aliases = aliasList.length ? ` (aliases: ${aliasList.join(', ')})` : '';
-
-  // Description
   const description = cmd.description() || 'No description provided.';
 
-  let docs = `${'#'.repeat(headingLevel)} \`${cmdName}\`${aliases}\n\n`;
-  docs += `${indent}**Description:** ${description}\n\n`;
+  // Start building the Markdown content
+
+  // docs += `**Description:** ${description}\n\n`;
+  if (depth !== 0) {
+    lines.push(`${heading} ${cmdName}`);
+  }
+  lines.push(`${description}`);
+  if (depth === 0) {
+    lines.push(
+      `> [!TIP]`,
+      `> Arguments or options enclosed in \`<>\` are required, while those enclosed in \`[]\` are optional.`,
+      ' ',
+    );
+  }
 
   // Usage
   const usage = cmd.usage?.();
-  if (usage && usage !== cmdName) {
-    docs += `${indent}**Usage:** \`${usage}\`\n\n`;
+  if (usage) {
+    // docs += `**Usage:** \`${usage}\`\n\n`;
+    lines.push(`${nextHeading} Usage`);
+    lines.push(`\`\`\`sh frame="none"\n${prefix} ${cmdName} ${usage}\n\`\`\``);
   }
 
-  // Arguments
-  // Using cmd.registeredArguments per your snippet; adapt if needed for your Commander version
+  // docs += `**Usage:**\n\n`;
+  // const usages = generateUsageInstructionFromCommand('npx serverize', cmd);
+  // for (const usage of usages) {
+  //   docs += `\`\`\`sh\n${usage}\n\`\`\`\n\n`;
+  // }
+  //
+
   if (cmd.registeredArguments?.length) {
-    docs += `${indent}**Arguments:**\n\n`;
+    lines.push(`${nextHeading} Arguments\n\n`);
     cmd.registeredArguments.forEach((arg) => {
-      const argName = arg.name();
+      const rawArgName = arg.name(); // e.g., "<file>"
+      const bracketType = getArgumentBracketType(rawArgName);
       const argDesc = arg.description || 'No description';
       const variadic = arg.variadic ? ' (variadic)' : '';
-      docs += `${indent}- \`${argName}${variadic}\`: ${argDesc}\n`;
+
+      // Clean angle/square brackets from the name for clarity
+      const cleanArgName = rawArgName.replace(/^[\[<]|[\]>]$/g, '');
+
+      // docs += `- \`${cleanArgName}${variadic}\` **(${bracketType})**: ${argDesc}\n`;
+      lines.push(
+        `- \`${cleanArgName}${variadic}\` **(${bracketType})**: ${argDesc}`,
+      );
     });
-    docs += '\n';
+    // docs += '\n';
   }
 
-  // Options
   if (cmd.options?.length) {
-    docs += `${indent}**Options:**\n\n`;
+    lines.push(`${nextHeading} Options\n\n`);
     cmd.options.forEach((opt) => {
       const {
         flags,
@@ -60,38 +128,36 @@ function generateDocsForCommand(cmd: Command, depth = 0): string {
       } = opt;
 
       const descStr = optDescription || 'No description';
+      const cwd = process.cwd();
+      // If the default value is the current working directory, show $(pwd) instead
       const defValStr =
-        defaultValue !== undefined ? ` (default: \`${defaultValue}\`)` : '';
+        defaultValue !== undefined
+          ? ` (default: \`${defaultValue === cwd ? '$(pwd)' : defaultValue}\`)`
+          : '';
+
       const isRequired = mandatory || required ? ' (required)' : '';
 
-      docs += `${indent}- \`${flags}\`${isRequired}: ${descStr}${defValStr}\n`;
+      lines.push(`- \`${flags}\`${isRequired}: ${descStr}${defValStr}`);
+      // docs += `- \`${flags}\`${isRequired}: ${descStr}${defValStr}\n`;
     });
-    docs += '\n';
+    // docs += '\n';
   }
 
-  // Subcommands
   if (cmd.commands?.length) {
-    docs += `${indent}**Subcommands:**\n\n`;
+    lines.push(`${nextHeading} Subcommands\n\n`);
     cmd.commands.forEach((sub) => {
-      docs += generateDocsForCommand(sub, depth + 1);
+      lines.push(
+        generateDocsForCommand(`${prefix} ${cmdName}`, sub, depth + 2),
+      );
     });
   }
 
-  return docs;
+  return lines.join('\n');
 }
 
-/**
- * Loops through all root-level commands in your CLI and creates one Markdown file per command.
- */
 function main(): void {
   const rootCommands = cli.commands || [];
 
-  if (!rootCommands.length) {
-    console.log('No root-level commands found on this CLI.');
-    return;
-  }
-
-  // For each top-level command, generate docs and write to <cmdName>.md
   rootCommands.forEach((command) => {
     const cmdName = command.name()?.trim();
     if (!cmdName) {
@@ -100,16 +166,21 @@ function main(): void {
       );
     }
 
-    const mdContent = generateDocsForCommand(command, 0);
+    const lines = [
+      '---',
+      `layout: ../../../layouts/DocsLayout.astro`,
+      `title: npx serverize ${cmdName}`,
+      '---',
+      generateDocsForCommand('npx serverize', command, 0),
+    ];
 
-    // Write to <commandName>.md
-    const fileName = `${cmdName}.md`;
-    const filePath = path.join(process.cwd(), fileName);
-
-    fs.writeFileSync(filePath, mdContent, 'utf-8');
-    console.log(`Documentation for "${cmdName}" written to: ${filePath}`);
+    const filePath = join(
+      process.cwd(),
+      'apps/www/src/pages/docs/cli',
+      `${cmdName}.md`,
+    );
+    fs.writeFileSync(filePath, lines.join('\n').trim(), 'utf-8');
   });
 }
 
-// Execute
 main();

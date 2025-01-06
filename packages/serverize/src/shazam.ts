@@ -1,7 +1,10 @@
+import { tmpdir } from 'os';
 import chalk from 'chalk';
 import { Command } from 'commander';
-import { tmpdir } from 'os';
 
+import { join } from 'path';
+import { ensureDockerRunning } from 'serverize/docker';
+import { exist } from 'serverize/utils';
 import { login, register } from './auth';
 import { client } from './lib/api-client';
 import { initialise } from './lib/auth';
@@ -24,9 +27,6 @@ import {
 } from './program';
 import { createProject } from './project';
 import { setupFramework } from './setup/setup-framework';
-import { join } from 'path';
-import { ensureDockerRunning } from 'serverize/docker';
-import { exist } from 'serverize/utils';
 
 interface ShazamConfig {
   frameworkName?: framework;
@@ -214,6 +214,7 @@ async function shazam({
   });
 }
 export default new Command('shazam')
+  .description('Detect and deploy a project using a Dockerfile or framework')
   .option('-o, --output [file]', 'Write output to a file')
   .addOption(cwdOption)
   .addOption(channelOption)

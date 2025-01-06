@@ -38,7 +38,7 @@ Serverize uses a token to authenticate your deployments, ensuring that only auth
 To create a new token, run the following command:
 
 ```sh frame=none
-npx serverize tokens create --project <project-name>
+npx serverize tokens create -p <project-name>
 ```
 
 Store this token securely as it will only be displayed once. You will need this token for authentication in GitHub Actions.

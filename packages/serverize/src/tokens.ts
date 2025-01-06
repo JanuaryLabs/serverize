@@ -13,6 +13,9 @@ import {
 import { box } from '@january/console';
 
 const create = new Command('create')
+  .description(
+    'Generate a new access token for deploying projects in CI environment',
+  )
   .addOption(projectOption.makeOptionMandatory(false))
   .action(async ({ projectName }) => {
     const user = await ensureUser();
@@ -54,7 +57,9 @@ const create = new Command('create')
     }
     box.print('Save it in secure place', data);
   });
+
 const revoke = new Command('revoke')
+  .description('Permanently revoke an access token')
   .argument('<token>', 'Token to revoke')
   .action(async (token) => {
     const user = await ensureUser();
@@ -68,32 +73,36 @@ const revoke = new Command('revoke')
     }
   });
 
-const list = new Command('list').alias('ls').action(async () => {
-  const user = await ensureUser();
-  if (!user) return;
-  const [tokens, error] = await client.request('GET /tokens', {});
-  if (error) {
-    showError(error);
-    process.exit(1);
-  }
+const list = new Command('list')
+  .alias('ls')
+  .description('List all active access tokens')
+  .action(async () => {
+    const user = await ensureUser();
+    if (!user) return;
+    const [tokens, error] = await client.request('GET /tokens', {});
+    if (error) {
+      showError(error);
+      process.exit(1);
+    }
 
-  if (tokens.length === 0) {
-    box.print(
-      'No tokens found',
-      '$ npx serverize tokens create <project-name>',
+    if (tokens.length === 0) {
+      box.print(
+        'No tokens found',
+        '$ npx serverize tokens create <project-name>',
+      );
+      return;
+    }
+
+    console.table(
+      tokens.map((token) => ({
+        Project: token.project.name,
+        'Created At': token.createdAt,
+      })),
     );
-    return;
-  }
-
-  console.table(
-    tokens.map((token) => ({
-      Project: token.project.name,
-      'Created At': token.createdAt,
-    })),
-  );
-});
+  });
 
 export default new Command('tokens')
+  .description('Manage deployment access tokens')
   .addCommand(create)
   .addCommand(list)
   .addCommand(revoke);

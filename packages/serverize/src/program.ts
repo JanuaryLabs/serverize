@@ -1,3 +1,4 @@
+import { platform } from 'os';
 import ignore from '@balena/dockerignore';
 import { checkbox, input, select } from '@inquirer/prompts';
 import { ValidationError } from '@serverize/client';
@@ -11,22 +12,16 @@ import glob from 'fast-glob';
 import { signOut } from 'firebase/auth';
 import { readFile } from 'fs/promises';
 import ora from 'ora';
-import { platform } from 'os';
 import validator from 'validator';
 
-import { client } from './lib/api-client';
-import { initialise } from './lib/auth';
-import { auth } from './lib/firebase';
 import parse from 'parse-duration';
 import { coerceArray, nodeServer } from 'serverize/dockerfile';
 import { exist } from 'serverize/utils';
+import { client } from './lib/api-client';
+import { initialise } from './lib/auth';
+import { auth } from './lib/firebase';
 
 import { box } from '@january/console';
-
-export const cli = program
-  .name('Serverize')
-  .version('1.0.0')
-  .description('Serverize');
 
 export interface Healthcheck {
   Test?: string[];

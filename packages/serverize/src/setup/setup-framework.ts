@@ -3,15 +3,6 @@ import chalk from 'chalk';
 import { detect } from 'detect-package-manager';
 import { mkdir, readFile, readdir } from 'fs/promises';
 
-import {
-  detectFramework,
-  framework,
-  readConfig,
-} from '../lib/detect-framework';
-import { writeDockerIgnore } from '../lib/file';
-import { cli, dropdown, spinner } from '../program';
-import { getNodejsVersion, setupNodejs } from './nodejs';
-import { setupVite } from './vite';
 import { basename, dirname, join } from 'path';
 import {
   type AstroOutputMode,
@@ -29,6 +20,15 @@ import {
   streamlit,
 } from 'serverize/dockerfile';
 import { exist, readJsonFile, readPackageJson } from 'serverize/utils';
+import {
+  detectFramework,
+  framework,
+  readConfig,
+} from '../lib/detect-framework';
+import { writeDockerIgnore } from '../lib/file';
+import { dropdown, spinner } from '../program';
+import { getNodejsVersion, setupNodejs } from './nodejs';
+import { setupVite } from './vite';
 
 export interface SetupFrameworkConfig {
   framework: framework;
@@ -89,7 +89,7 @@ export async function setupFramework(
           it.startsWith('next.config.'),
         );
         if (!configFilePath) {
-          cli.error(
+          spinner.fail(
             `Detected Next.js framework but no next.config.js file found in the current directory.`,
           );
           process.exit(1);
@@ -134,7 +134,7 @@ export async function setupFramework(
           it.startsWith('nuxt.config.'),
         );
         if (!configFilePath) {
-          cli.error(
+          spinner.fail(
             `Detected "Nuxt.js" framework but no "nuxt.config" file found in the current directory.`,
           );
           process.exit(1);
@@ -167,7 +167,7 @@ export async function setupFramework(
           it.startsWith('astro.config.'),
         );
         if (!configFilePath) {
-          cli.error(
+          spinner.fail(
             `Detected "Astro" framework but no "astro.config" file found in the current directory.`,
           );
           process.exit(1);
@@ -239,7 +239,7 @@ export async function setupFramework(
         it.endsWith('.csproj'),
       );
       if (!csProjFile) {
-        cli.error(`Could not find .csproj file in ${src}`);
+        spinner.fail(`Could not find .csproj file in ${src}`);
         process.exit(1);
       }
       const projectName = csProjFile.replace('.csproj', '');
@@ -278,7 +278,7 @@ export async function setupFramework(
         it.startsWith('vite.config.'),
       );
       if (!configFilePath) {
-        cli.error(
+        spinner.fail(
           `Detected "Vite" framework but no "vite.config" file found in the current directory.`,
         );
         process.exit(1);

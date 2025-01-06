@@ -23,29 +23,34 @@ export async function createProject(name?: string) {
 }
 
 const create = new Command('create')
+  .description('Create a new project')
   .argument('[name]', 'Name of the project')
   .action(async (name) => {
     await createProject(name);
   });
-const list = new Command('list').alias('ls').action(async () => {
-  const user = await ensureUser();
-  if (!user) return;
 
-  const [projects, error] = await client.request('GET /projects', {});
-  if (error) {
-    showError(error);
-    process.exit(1);
-  }
-  if (projects.records.length === 0) {
-    box.print(
-      'No projects found',
-      'Create a project by running:',
-      '$ npx serverize projects create <project-name>',
-    );
-    return;
-  }
-  console.table(projects.records, ['id', 'name']);
-});
+const list = new Command('list')
+  .alias('ls')
+  .description('List all projects')
+  .action(async () => {
+    const user = await ensureUser();
+    if (!user) return;
+
+    const [projects, error] = await client.request('GET /projects', {});
+    if (error) {
+      showError(error);
+      process.exit(1);
+    }
+    if (projects.records.length === 0) {
+      box.print(
+        'No projects found',
+        'Create a project by running:',
+        '$ npx serverize projects create <project-name>',
+      );
+      return;
+    }
+    console.table(projects.records, ['id', 'name']);
+  });
 
 process.on('unhandledRejection', (error) => {
   showError(error as any);
@@ -55,6 +60,6 @@ process.on('unhandledRejection', (error) => {
 export default new Command('projects')
   .alias('project')
   .alias('p')
-  .description('Manage your projects')
+  .description(`Manage your serverize projects`)
   .addCommand(create)
   .addCommand(list);

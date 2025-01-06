@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { Command, Option } from 'commander';
 
+import { join } from 'path';
 import { runInComposeContext, runInDeployContext } from './lib/deploy-context';
 import {
   channelOption,
@@ -9,12 +10,11 @@ import {
   releaseOption,
   spinner,
 } from './program';
-import { join } from 'path';
 
-const deployPreviewCommand = new Command('preview').option(
-  '-pr, --preview [NAME]',
-  'Preview deployment name',
-);
+const deployPreviewCommand = new Command('preview')
+  .description('Deploy a preview version of the project')
+  .usage('[options]')
+  .option('-pr, --preview [NAME]', 'Preview deployment name');
 
 const outputOption = new Option(
   '-o, --output-file <outputFile>',
@@ -34,10 +34,12 @@ const outputOption = new Option(
 //   .addOption(projectOption);
 
 export default new Command('deploy')
-  .usage('npx serverize deploy -p <projectName>')
+  .description(
+    'Deploy an application using a Dockerfile or Docker Compose file',
+  )
   .option(
     '-f, --file [dockerfilepath]',
-    'Name of the Dockerfile or Compose file (default:"$(pwd)/Dockerfile")',
+    'Path to Dockerfile or Compose file',
     'Dockerfile',
   )
   .addOption(outputOption)

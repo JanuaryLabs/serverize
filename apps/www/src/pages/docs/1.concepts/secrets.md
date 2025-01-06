@@ -2,8 +2,6 @@
 layout: ../../../layouts/DocsLayout.astro
 title: 'Secrets'
 subtitle: 'Learn how to Serverize your Bun project'
-author: 'Adam Koskovki'
-date: '2024-10-22T00:00:00.000Z'
 ---
 
 Secrets are secure pieces of data you can store and use at runtime, such as API keys, database passwords, or plaintext values. These are made available to your project as environment variables for use as needed.

@@ -1,9 +1,10 @@
+import { existsSync } from 'fs';
 import { confirm } from '@inquirer/prompts';
 import chalk from 'chalk';
 import { Command } from 'commander';
-import { existsSync } from 'fs';
 import { mkdir, writeFile } from 'fs/promises';
 
+import { join } from 'path';
 import {
   detectFramework,
   type framework,
@@ -15,29 +16,32 @@ import {
   ghPrWorkflow,
   slackNotification,
 } from './lib/gh-preview';
-import { cli, cwdOption, dropdown, printDivider, spinner } from './program';
+import { cwdOption, dropdown, printDivider, spinner } from './program';
 import { setupFramework } from './setup/setup-framework';
-import { join } from 'path';
 
 import { box } from '@january/console';
 
-const listCommand = new Command('list').alias('ls').action(() => {
-  const links: Partial<Record<framework, string>> = {
-    'gh-pr-preview': 'deployment-previews',
-    'gh-automate': 'ci-cd',
-  };
-  console.log(
-    supportedFrameworks
-      .map((it) =>
-        `Framework: ${it} | https://serverize.sh/guides/${links[it] || it}`.trim(),
-      )
-      .join('\n'),
-    '\n',
-  );
-  box.print('Example', '$ npx serverize setup astrojs');
-});
+const listCommand = new Command('list')
+  .alias('ls')
+  .description('List all supported frameworks')
+  .action(() => {
+    const links: Partial<Record<framework, string>> = {
+      'gh-pr-preview': 'deployment-previews',
+      'gh-automate': 'ci-cd',
+    };
+    console.log(
+      supportedFrameworks
+        .map((it) =>
+          `Framework: ${it} | https://serverize.sh/guides/${links[it] || it}`.trim(),
+        )
+        .join('\n'),
+      '\n',
+    );
+    box.print('Example', '$ npx serverize setup astrojs');
+  });
 
 const init = new Command('init')
+  .description('Create Dockerfile for a framework')
   .argument('[framework]', 'Framework to setup')
   .allowUnknownOption()
   .option('-f, --force', 'Force setup')
@@ -67,7 +71,7 @@ const init = new Command('init')
           '- Supported frameworks: $ npx serverize setup list',
           `- Tell us what framework you're using in [discord](https://discord.gg/aj9bRtrmNt)`,
         );
-        cli.error(`Could not detect the framework in "${projectDir}"\n`);
+        spinner.fail(`Could not detect the framework in "${projectDir}"\n`);
         return;
       }
 
@@ -185,5 +189,6 @@ const init = new Command('init')
   );
 
 export default new Command('setup')
+  .description('Automatically create Dockerfile from your codebase')
   .addCommand(listCommand)
   .addCommand(init, { isDefault: true });
