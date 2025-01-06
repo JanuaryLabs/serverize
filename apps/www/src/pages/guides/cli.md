@@ -107,6 +107,7 @@ Managing channels is not supported at the moment, however you get 2 channels whe
 
 ## Deployments
 
+> [!IMPORTANT]
 > Before deploying a project, ensure your Dockerfile is ready and works as expected; it should expose the port your server is listening on.
 
 You can deploy a project by running:
@@ -115,10 +116,10 @@ You can deploy a project by running:
 npx serverize deploy -p <project-name>
 ```
 
-The resulting URL will be:
+The resulting URL will follow this format:
 
 ```
-https://<project-name>-<channel-name>-<release-name>.beta.january.sh
+https://<project-name>-<channel-name>-<release-name>-<org-name>.january.sh
 ```
 
 **Examples:**
@@ -132,7 +133,7 @@ https://<project-name>-<channel-name>-<release-name>.beta.january.sh
    Resulting URL:
 
    ```
-   https://winter-dev.beta.january.sh
+   https://winter-dev-yourorg.january.sh
    ```
 
    _Note:_ For the `latest` release, the release name doesn't appear in the URL.
@@ -146,7 +147,7 @@ https://<project-name>-<channel-name>-<release-name>.beta.january.sh
    Resulting URL:
 
    ```
-   https://winter-dev-demo.beta.january.sh
+   https://winter-dev-demo-yourorg.january.sh
    ```
 
 3. **Deploying to the `preview` channel with the `regression` release:**
@@ -158,7 +159,7 @@ https://<project-name>-<channel-name>-<release-name>.beta.january.sh
    Resulting URL:
 
    ```
-   https://winter-preview-regression.beta.january.sh
+   https://winter-preview-regression-yourorg.january.sh
    ```
 
 As mentioned, to deploy to a named release, specify the release name:

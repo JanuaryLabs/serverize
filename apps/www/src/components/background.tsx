@@ -46,6 +46,10 @@ function Logo() {
 export function Nav(props: { className?: string }) {
   const items = [
     {
+      name: 'Docs',
+      href: '/docs/concepts/projects',
+    },
+    {
       name: 'Guides',
       href: '/guides',
     },
@@ -82,7 +86,7 @@ export function Nav(props: { className?: string }) {
         'px-4 md:px-6',
       )}
     >
-      <div className="mx-auto flex w-full max-w-7xl items-center">
+      <div className="mx-auto flex w-full max-w-[1400px] items-center">
         <Logo />
         <nav className="hidden items-center lg:flex">
           {items.map((it) => (
@@ -111,6 +115,17 @@ export function Nav(props: { className?: string }) {
             )}
           >
             Contact
+          </a>
+          <a
+            href="/docs"
+            className={cn(
+              buttonVariants({ variant: 'default' }),
+              'h-8 px-2.5 py-1 shadow-none',
+              'flex lg:hidden',
+              'mr-3 md:mr-4',
+            )}
+          >
+            Docs
           </a>
           <a
             href="/guides"

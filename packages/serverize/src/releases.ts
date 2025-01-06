@@ -1,5 +1,6 @@
 import { Command } from 'commander';
 
+import { safeFail } from 'serverize/utils';
 import { client } from './lib/api-client';
 import {
   channelOption,
@@ -11,7 +12,6 @@ import {
   tell,
 } from './program';
 import { streamLogs } from './view-logs';
-import { safeFail } from 'serverize/utils';
 
 import { box } from '@january/console';
 
@@ -53,7 +53,7 @@ const list = new Command('list')
       })),
     );
   });
-const stop = new Command('stop')
+const terminate = new Command('terminate')
   .addOption(channelOption.makeOptionMandatory(false))
   .addOption(releaseOption)
   .addOption(projectOption)
@@ -68,7 +68,9 @@ const stop = new Command('stop')
       showError(error);
       process.exit(1);
     }
-    spinner.succeed(`Release ${release} of ${channel} stopped successfully`);
+    spinner.succeed(
+      `Release "${release}" of channel "${channel}" terminate successfully`,
+    );
   });
 
 const restart = new Command('restart')
@@ -122,5 +124,5 @@ const restart = new Command('restart')
 
 export default new Command('releases')
   .addCommand(list)
-  .addCommand(stop)
+  .addCommand(terminate)
   .addCommand(restart);

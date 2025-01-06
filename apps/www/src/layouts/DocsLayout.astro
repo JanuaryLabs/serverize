@@ -57,7 +57,9 @@ function extractProps(
   post: MarkdownInstance<{ title: string; subtitle: string }>,
 ) {
   return {
-    name: basename(post.file).replace(extname(post.file), ''),
+    name: basename(post.file)
+      .replace(extname(post.file), '')
+      .replace(/^\d\./g, ''),
     title: post.frontmatter.title,
     subtitle: post.frontmatter.subtitle,
     href: post.url!.replaceAll(/\d\./g, ''),
@@ -75,7 +77,7 @@ const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
 <Main title={frontmatter.title} canonical={canonical}>
   <Nav client:load className="border-b" />
   <div
-    class="mx-auto grid min-w-full max-w-[1460px] grid-cols-1 gap-4 gap-x-12 px-6 md:grid-cols-[240px_minmax(0,2fr)] md:gap-x-8 lg:grid-cols-[240px_minmax(0,1fr)_240px] lg:gap-x-4 xl:gap-x-12"
+    class="mx-auto grid max-w-[1400px] grid-cols-1 gap-4 gap-x-12 px-6 xl:px-0 md:grid-cols-[240px_minmax(0,2fr)] md:gap-x-8 lg:grid-cols-[240px_minmax(0,1fr)_240px] lg:gap-x-4 xl:gap-x-12"
   >
     <aside
       class="sticky top-16 hidden h-[calc(100vh-4rem)] overflow-y-auto border-r md:block lg:block"
@@ -84,8 +86,8 @@ const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
     </aside>
 
     <article class="prose mt-16 max-w-full pb-16 pt-6">
-      <h1 class="mb-0 text-3xl font-bold [&_+p]:mt-2">{frontmatter.title}</h1>
-      <p class="text-secondary-foreground/70">{frontmatter.subtitle}</p>
+      <h1 class="mb-0 text-4xl font-bold [&_+p]:mt-2">{frontmatter.title}</h1>
+      <!-- <p class="text-secondary-foreground/70">{frontmatter.subtitle}</p> -->
       <slot />
     </article>
 

@@ -304,3 +304,9 @@ html,
 body {
   overscroll-behavior: none;
 }
+
+.prose {
+  li > p:only-child {
+    margin: 0;
+  }
+}

@@ -1,89 +1,76 @@
-# Serverize
+## Serverize - One step Docker deployment
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+Serverize facilitates the creation of **development**, **testing**, and **preview** environments, each tailored to empower different phases of the product lifecycle without unnecessary complexity.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+It uses Docker to package your application and deploy it to a unique URL, allowing you to share your work with others or test it in a production-like environment.
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## Zero Config Deployment
 
-## Finish your CI setup
+Serverize is built to be as simple as possible and aspires to simplify the deployment process for developers. It can be used with any framework or language, as long as you have a Dockerfile.
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/5JwXCxrAqx)
+Core part of Serverize is the implicit auto setup feature, which can detect the framework you are using and try to set the project up.
 
-## Generate a library
-
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
-```
-
-## Run tasks
-
-To build the library use:
+The logic is encapsulated in the following command.
 
 ```sh
-npx nx build pkg1
+npx serverize
 ```
 
-To run any task with Nx use:
+That is being said, only number of frameworks are supported at the moment including:
 
-```sh
-npx nx <target> <project-name>
+- Node.js
+- Deno
+- Bun
+- Nuxt.js
+- Astro
+- Next.js
+- [and more](./packages/dockerfile/src/lib/frameworks)
+
+
+Bear in mind that you still can customize the Dockerfile to fit your needs.
+
+## Auto Setup
+
+Building on the zero config concept you can use the setup command to choose the framework you are using and let Serverize write the Dockerfile for that can be customized later.
+
+```sh frame=none
+npx serverize setup [framework]
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+Where `framework` is the framework you want to setup, if not provided, serverize will try to guess it otherwise it'll ask you.
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+**Example:**
 
-## Versioning and releasing
+1. **Setup Deno**
 
-To version and release the library use
-
-```
-npx nx release
+```sh frame=none
+npx serverize setup deno
 ```
 
-Pass `--dry-run` to see what would happen without actually releasing the library.
+This command will add Dockerfile as well as dockerignore to your project.
 
-[Learn more about Nx release &raquo;](hhttps://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+2. **Setup Astro**
 
-## Keep TypeScript project references up to date
-
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
-
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
+```sh frame=none
+npx serverize setup astro
 ```
 
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
+3. **Setup Nuxt**
 
-```sh
-npx nx sync:check
+```sh frame=none
+npx serverize setup nuxt
 ```
 
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+4. **Auto setup:**
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+```sh frame=none
+npx serverize setup
+```
 
-## Install Nx Console
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+## Project structure
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+1. [CLI tool](./packages/serverize) to manage your projects, channels, releases, ...etc.
+2. [API](./apps/api/) that handles the deployment process.
+3. [API client](./packages/client) to interact with serverize through the API.
+4. [dockerfile primitives](./packages/dockerfile) to help you build your dockerfile.

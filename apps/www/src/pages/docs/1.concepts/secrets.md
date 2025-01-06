@@ -15,7 +15,9 @@ Secrets are secure pieces of data you can store and use at runtime, such as API 
 
 Serverize assigns secrets to channels, making them accessible to any release made under those channels.
 
-## Setting Secrets
+## Managing Secrets
+
+### Store individual secrets
 
 To set secrets for a channel, use the `secrets set` command along with the project name flag and channel.
 
@@ -29,30 +31,26 @@ npx serverize secrets set NAME=VALUE NAME=VALUE -p <project-name> -c <channel-na
 npx serverize secrets set API_KEY=12345 DB_PASSWORD=secret -p my-project -c dev
 ```
 
-This command sets the `API_KEY` secret to `12345` for channel dev.
-
-> [!NOTE]
-> if channel not specified then it defaults to "dev"
-
 **Example: set multiple secrets**
 
 ```sh
 npx serverize secrets set API_KEY=12345 DB_PASSWORD=secret -p my-project
 ```
 
-This command sets the `API_KEY` and `DB_PASSWORD` secrets for the project `my-project`.
+> [!NOTE]
+> if channel not specified then it defaults to "dev"
 
-## Setting Secrets from a File
+### Store .env file
 
 You can also set secrets from a file, such as an `.env` file, using the `secrets set-file` command.
 
-```sh
+```sh frame=none
 npx serverize secrets set-file <path-to-env-file> -p <project-name> -c preview
 ```
 
 **Example:**
 
-```sh
+```sh frame=none
 npx serverize secrets set-file .env -p my-project -c preview
 ```
 
@@ -61,10 +59,8 @@ This command reads the `.env` file and sets all the environment variables as sec
 > [!NOTE]
 > Ensure that your `.env` file is properly formatted with `KEY=VALUE` pairs, each on a new line.
 
-## List Secrets
+---
 
-List secrets labels that are set for your project channel.
-
-```sh
+```sh frame=none
 npx serverize secrets list -p <project-name> -c <channel-name>
 ```

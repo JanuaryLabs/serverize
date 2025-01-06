@@ -33,11 +33,11 @@ A preview deployment is executed on a preview channel with a named release. Supp
 npx serverize deploy -p <project-name> -c preview -r autumn
 ```
 
-This command returns a URL to a server running the code containing that feature, following this format:
+This command returns a URL to a server running the code, following this format:
 
 ```sh
-https://<project-name>-preview-autumn.january.sh
-# Example: https://foo-preview-autumn.january.sh
+https://<project-name>-preview-<release>-<org-name>.january.sh
+# Example: https://foo-preview-autumn-acme.january.sh
 ```
 
 This works for any use case you might have, as long as the release name is unique. Keep in mind that deploying with the same release name will overwrite the deployment associated with that release.
