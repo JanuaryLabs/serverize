@@ -2,6 +2,7 @@ import { Command } from 'commander';
 
 import { safeFail } from 'serverize/utils';
 import { client } from './lib/api-client';
+import { streamLogs } from './lib/view-logs';
 import {
   channelOption,
   getCurrentProject,
@@ -11,7 +12,6 @@ import {
   spinner,
   tell,
 } from './program';
-import { streamLogs } from './view-logs';
 
 import { box } from '@january/console';
 

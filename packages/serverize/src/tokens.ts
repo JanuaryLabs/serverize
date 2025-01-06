@@ -14,7 +14,7 @@ import { box } from '@january/console';
 
 const create = new Command('create')
   .addOption(projectOption.makeOptionMandatory(false))
-  .action(async ({ name }) => {
+  .action(async ({ projectName }) => {
     const user = await ensureUser();
     if (!user) return;
     const [projects = { records: [] }, getProjectsError] = await client.request(
@@ -33,12 +33,12 @@ const create = new Command('create')
       return;
     }
     let projectId = projects.records.length === 1 ? projects.records[0].id : '';
-    if (name) {
+    if (projectName) {
       const [project] = projects.records.filter(
-        (project) => project.name === name,
+        (project) => project.name === projectName,
       );
       if (!project) {
-        spinner.fail(`Project ${chalk.red(name)} not found`);
+        spinner.fail(`Project ${chalk.red(projectName)} not found`);
         return;
       }
       projectId = project.id;

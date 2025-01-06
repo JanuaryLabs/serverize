@@ -1,19 +1,6 @@
-import chalk from 'chalk';
 import { writeFileSync } from 'fs';
+import chalk from 'chalk';
 
-import {
-  type AST,
-  getCurrentProject,
-  showError,
-  showProgressBar,
-  spinner,
-  tell,
-  toAst,
-} from '../program';
-import { streamLogs } from '../view-logs';
-import { client, makeImageName } from './api-client';
-import { buildCompose, buildImage, saveImage } from './image';
-import { pushImage } from './uploader';
 import { AsyncLocalStorage } from 'async_hooks';
 import {
   from,
@@ -26,6 +13,19 @@ import {
 } from 'rxjs';
 import { isDockerRunning } from 'serverize/docker';
 import { safeFail } from 'serverize/utils';
+import {
+  type AST,
+  getCurrentProject,
+  showError,
+  showProgressBar,
+  spinner,
+  tell,
+  toAst,
+} from '../program';
+import { client, makeImageName } from './api-client';
+import { buildCompose, buildImage, saveImage } from './image';
+import { pushImage } from './uploader';
+import { streamLogs } from './view-logs';
 
 import { box } from '@january/console';
 
