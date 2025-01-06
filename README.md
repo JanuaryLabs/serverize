@@ -6,7 +6,7 @@ It uses Docker to package your application and deploy it to a unique URL, allowi
 
 ## Zero Config Deployment
 
-Serverize is built to be as simple as possible and aspires to simplify the deployment process for developers. It can be used with any framework or language, as long as you have a Dockerfile.
+Serverize is built to be as simple as possible and aspires to simplify the deployment process for developers. It can be used with any framework or language, as long as you have a Dockerfile that exposes a HTTP port.
 
 Core part of Serverize is the implicit auto setup feature, which can detect the framework you are using and try to set the project up.
 

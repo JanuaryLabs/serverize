@@ -51,10 +51,15 @@ async function main() {
   });
 
   await mkdir(dest, { recursive: true });
-  const files = ['package.json', 'README.md', 'CHANGELOG.md'];
+  const files = ['package.json', 'CHANGELOG.md'];
+  console.log('Copying files', process.cwd(), dest);
   for (const file of files) {
     await copyFile(join(process.cwd(), file), join(dest, file));
   }
+  await copyFile(
+    join(process.cwd(), '../../', 'README.md'),
+    join(dest, 'README.md'),
+  );
 
   const packageJson = JSON.parse(
     await readFile(join(dest, 'package.json'), 'utf-8'),

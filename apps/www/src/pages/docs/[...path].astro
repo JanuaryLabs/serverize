@@ -17,7 +17,9 @@ export async function getStaticPaths() {
 
 const { path } = Astro.params;
 const key = Object.keys(posts).find(
-  (key) => join(key.replaceAll(/\d\./g, '').replace(/\.md$/, '')) === path,
+  (key) =>
+    join(key.toLowerCase().replaceAll(/\d\./g, '').replace(/\.md$/, '')) ===
+    path.toLowerCase(),
 )!;
 const { Content } = posts[key] as MarkdownInstance<{
   title: string;

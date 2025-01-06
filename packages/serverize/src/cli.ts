@@ -10,7 +10,7 @@ import setup from './setup';
 import shazam from './shazam';
 import tokens from './tokens';
 
-cli
+export default cli
   .addCommand(deploy)
   .addCommand(secrets)
   .addCommand(logs)

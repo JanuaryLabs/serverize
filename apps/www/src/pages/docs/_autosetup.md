@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/BlogPostLayout.astro
+layout: ../../layouts/DocsLayout.astro
 title: 'Auto Setup'
 subtitle: 'Learn how to Serverize your Bun project'
 author: 'Adam Koskovki'

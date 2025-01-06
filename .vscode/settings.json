@@ -1,4 +1,13 @@
 {
+  "tailwindCSS.files.exclude": [
+    "**/.git/**",
+    "**/node_modules/**",
+    "**/.hg/**",
+    "**/.svn/**",
+    "**/build/**",
+    "**/packages/**",
+    "**/tools/**"
+  ],
   "editor.defaultFormatter": "biomejs.biome",
 
   "[dockercompose]": {

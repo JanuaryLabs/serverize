@@ -29,10 +29,10 @@ const currentPath = Astro.url.pathname;
                 'hover:text-primary heading-link',
                 level === 0
                   ? 'text-lg font-semibold uppercase tracking-wide'
-                  : 'text-secondary-foreground/70 text-[15px]',
+                  : 'text-secondary-foreground/80 text-[15px]',
               ]}
             >
-              {titlecase(value.name || key)}
+              {value.name || key}
             </a>
           ) : (
             <span
