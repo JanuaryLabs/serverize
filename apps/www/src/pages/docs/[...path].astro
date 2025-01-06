@@ -1,6 +1,6 @@
 ---
-import type { MarkdownInstance } from 'astro';
 import { join } from 'path';
+import type { MarkdownInstance } from 'astro';
 const posts = import.meta.glob('./**/*.md', { eager: true });
 export async function getStaticPaths() {
   const files = import.meta.glob('./**/*.md', { eager: true });
@@ -21,6 +21,9 @@ const key = Object.keys(posts).find(
 )!;
 const { Content } = posts[key] as MarkdownInstance<{
   title: string;
+  author: string;
+  date: string;
+  minutesRead: string;
   subtitle: string;
 }>;
 ---

@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/BlogPostLayout.astro
+layout: ../../../layouts/DocsLayout.astro
 title: 'PR Preview Deployments'
 subtitle: 'Preview Deployments let you test and iterate on project changes in a live environment, isolated from other deployments.'
 author: 'Adam Koskovki'

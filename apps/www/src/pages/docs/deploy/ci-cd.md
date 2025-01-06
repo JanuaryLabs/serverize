@@ -19,19 +19,19 @@ Once you've finished adding the required files, your project should look like th
 
 These files are essential for configuring your GitHub Actions workflow and building your Docker image properly. The `.github/workflows` directory contains automation scripts, while Dockerfile creates docker image, and `.dockerignore` ensures irrelevant files aren't included in the Docker build (final stage).
 
-### Understanding GitHub Actions
+## Understanding GitHub Actions
 
 GitHub Actions is a powerful tool that allows you to automate workflows and run logic on your repository when specific events occur. For example, you can trigger deployments upon pushing new code to the main branch, schedule maintenance tasks, test code during pull requests, or respond to custom webhook events.
 
 In this guide, we'll use GitHub Actions to serverize your project whenever there's a push to the main branch. This ensures your changes are deployed promptly without manual intervention.
 
-### Pick your project
+## Pick your project
 
 We have written several [guides](./) on deploying different frameworks to Serverize. Refer to the guide that fits your project and add docker related files.
 
 These guides provide framework-specific deployment instructions to make the process easier for you.
 
-### Create a Serverize token
+## Create a Serverize token
 
 Serverize uses a token to authenticate your deployments, ensuring that only authorized processes can initate deployments.
 
@@ -54,7 +54,7 @@ Since we're using GitHub Actions, you need to create a new secret in your reposi
 
 This step is crucial as it ensures that sensitive information like API tokens is not exposed directly in the workflow file.
 
-### Add a GitHub Actions workflow
+## Add a GitHub Actions workflow
 
 Next, we need to set up a GitHub Actions workflow that will handle your Serverize deployments. Navigate to your repository's `.github/workflows` folder (or create new one) and create a new file named `deploy-serverize.yml`.
 
@@ -108,7 +108,7 @@ Explanation:
 
 > Note: _Make sure to add the `SERVERIZE_API_TOKEN` secret to your repository's settings._
 
-### Send Notifications
+## Send Notifications
 
 It's preferable to send notifications to ensure that everyone knows about the current status of deployments without having to check GitHub manually. This becomes even more important when something goes wrong.
 
@@ -134,7 +134,7 @@ Taking Slack as an example, you can add the following step to your workflow to s
 
 This simple addition can save a lot of time and provide peace of mind for your team.
 
-### Outro
+## Outro
 
 You can customize the workflow further to fit the unique needs of your project and make use of the GitHub Actions Marketplace to explore additional integrations.
 

@@ -1,10 +1,10 @@
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
+import { type PropsWithChildren, useEffect, useState } from 'react';
 import AskAiBox from './AskAi/AskAIBox';
 import SearchInput from './SearchInput';
 import { Button, buttonVariants } from './ui/button';
 import { cn } from './utils';
-import { type PropsWithChildren, useEffect, useState } from 'react';
 
 export default function Background(
   props: React.PropsWithChildren<{ className?: string }>,
@@ -77,7 +77,7 @@ export function Nav(props: { className?: string }) {
         'flex w-full items-center py-3',
         'bg-background dark:bg-background',
         props.className,
-        'sticky top-0 z-50 w-full',
+        'fixed top-0 z-50 w-full',
         scrolled ? 'border-border/70 border-b' : '',
         'px-4 md:px-6',
       )}

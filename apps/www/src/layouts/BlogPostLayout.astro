@@ -1,9 +1,10 @@
 ---
 import type { MarkdownLayoutProps } from 'astro';
-import { Nav } from '../components/background.tsx';
 import CtaFooter from '../components/CtaFooter.tsx';
-import BlogContainer, { TocSpy } from './Blog/BlogContainer.tsx';
+import { Nav } from '../components/background.tsx';
+import BlogContainer from './Blog/BlogContainer.tsx';
 import GuideHeader from './Blog/GuideHeader.tsx';
+import TocSpy from './Blog/TocSpy';
 import Main from './main.astro';
 
 type Props = MarkdownLayoutProps<{

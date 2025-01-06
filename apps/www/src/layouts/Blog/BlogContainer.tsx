@@ -1,7 +1,8 @@
-import { cn } from '../../components/utils';
-import { Card } from './BlogCard';
 import type { MarkdownHeading } from 'astro';
 import { Fragment, type PropsWithChildren, useEffect } from 'react';
+import { cn } from '../../components/utils';
+import { Card } from './BlogCard';
+import Toc from './Toc';
 
 const Ellipses = () => {
   const sharedClasses =
@@ -76,47 +77,6 @@ export default function BlogContainer(props: {
   );
 }
 
-export function TocSpy() {
-  useEffect(() => {
-    document.addEventListener('scroll', () => {
-      const items = document.querySelectorAll(`li[data-heading]`);
-
-      const [header] = new Set(
-        Array.from(document.querySelectorAll('article h1,h2,h3')).filter(
-          isElementVisible,
-        ),
-      );
-      if (!header) return;
-      const item = document.querySelector(`li[data-heading="${header.id}"]`);
-      if (!item) return;
-      items.forEach((item) => {
-        item.classList.remove('active');
-      });
-      item.classList.add('active');
-      const nextElVisible = ['H1', 'H2', 'H3'].includes(
-        header.nextElementSibling?.tagName || '',
-      )
-        ? isElementVisible(header.nextElementSibling!)
-        : false;
-
-      if (!nextElVisible) {
-        item.classList.add('active');
-      }
-    });
-  }, []);
-  return <></>;
-}
-
-interface TocItem {
-  text: string;
-  slug: string;
-  children: TocItem[];
-}
-
-function g() {
-  //
-}
-
 export function BlogSidebar(
   props: PropsWithChildren<{
     className?: string;
@@ -124,39 +84,6 @@ export function BlogSidebar(
     path: string;
   }>,
 ) {
-  const groupToc: TocItem = {
-    text: 'TOC',
-    slug: '#',
-    children: [],
-  };
-  const getToc = (depth: number) => {
-    let item = groupToc;
-    while (--depth) {
-      item = item.children.at(-1)!;
-    }
-    return item;
-  };
-  for (let i = 0; i < props.toc.length; i++) {
-    const it = props.toc[i];
-    if (it.depth === 2) {
-      getToc(it.depth - 1).children.push({
-        text: it.text,
-        slug: it.slug,
-        children: [],
-      });
-    }
-    if (it.depth === 3) {
-      // lone item with no depth-1 parent heading
-      if (!getToc(it.depth - 1)) {
-        continue;
-      }
-      getToc(it.depth - 1).children.push({
-        text: it.text,
-        slug: it.slug,
-        children: [],
-      });
-    }
-  }
   return (
     <div
       className={cn(
@@ -166,45 +93,7 @@ export function BlogSidebar(
     >
       <div className="space-y-2">
         <p className="text-sm font-medium uppercase">In This Page</p>
-        <ul className="space-y-2">
-          {groupToc.children.map((it) => (
-            <Fragment key={it.slug}>
-              <li
-                data-heading={it.slug}
-                className="group relative flex text-xs [&.active_span]:inline-block"
-              >
-                <span className="absolute -left-2 -top-px hidden group-hover:inline-block group-active:bg-blue-500">
-                  {'{'}
-                </span>
-                <a
-                  href={`#${it.slug}`}
-                  className="text-secondary-foreground/70"
-                >
-                  {it.text}
-                </a>
-              </li>
-              <ul className="space-y-2 pl-4">
-                {it.children.map((it) => (
-                  <li
-                    data-heading={it.slug}
-                    key={it.slug}
-                    className="group relative flex text-xs [&.active_span]:inline-block"
-                  >
-                    <span className="absolute -left-2 -top-px hidden group-hover:inline-block [&.active]:inline-block">
-                      {'{'}
-                    </span>
-                    <a
-                      href={`#${it.slug}`}
-                      className="text-secondary-foreground/70"
-                    >
-                      {it.text}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </Fragment>
-          ))}
-        </ul>
+        <Toc toc={props.toc} path={props.path} />
       </div>
       <div className="space-y-2 text-sm">
         <p className="font-medium">Contribute</p>
@@ -287,30 +176,5 @@ export function BlogSidebar(
         </ul>
       </div>
     </div>
-  );
-}
-function isElementVisible(el: Element) {
-  var rect = el.getBoundingClientRect(),
-    vWidth = window.innerWidth || document.documentElement.clientWidth,
-    vHeight = window.innerHeight || document.documentElement.clientHeight,
-    efp = (x: number, y: number) => {
-      return document.elementFromPoint(x, y);
-    };
-
-  // Return false if it's not in the viewport
-  if (
-    rect.right < 0 ||
-    rect.bottom < 0 ||
-    rect.left > vWidth ||
-    rect.top > vHeight
-  )
-    return false;
-
-  // Return true if any of its four corners are visible
-  return (
-    el.contains(efp(rect.left, rect.top)) ||
-    el.contains(efp(rect.right, rect.top)) ||
-    el.contains(efp(rect.right, rect.bottom)) ||
-    el.contains(efp(rect.left, rect.bottom))
   );
 }

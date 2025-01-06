@@ -1,13 +1,17 @@
 ---
 import '@/styles/globals.css';
 
-import type { MarkdownInstance, MarkdownLayoutProps } from 'astro';
-import { Nav } from '../components/background';
+import { basename, extname } from 'path';
+import type { MarkdownInstance } from 'astro';
 import TreeNode from '../components/TreeNode.astro';
+import { Nav } from '../components/background';
 import Main from './main.astro';
 
 const posts = Object.values(
-  import.meta.glob('../pages/docs/**/*.{md,mdx}', { eager: true }),
+  import.meta.glob(
+    ['../pages/docs/**/!(_)*.{md,mdx}', '!../pages/docs/**/_*/**'],
+    { eager: true },
+  ),
 ) as MarkdownInstance<{ title: string; subtitle: string }>[];
 
 function createObject(
@@ -53,60 +57,41 @@ function extractProps(
   post: MarkdownInstance<{ title: string; subtitle: string }>,
 ) {
   return {
+    name: basename(post.file).replace(extname(post.file), ''),
     title: post.frontmatter.title,
     subtitle: post.frontmatter.subtitle,
     href: post.url!.replaceAll(/\d\./g, ''),
     headings: post.getHeadings().map((it) => ({
-      title: it.text,
-      href: `#${it.slug}`,
-      level: it.depth,
+      ...it,
+      slug: `#${it.slug}`,
     })),
   };
 }
 
-type Props = MarkdownLayoutProps<{
-  title: string;
-  author: string;
-  date: string;
-  minutesRead: string;
-  subtitle: string;
-}>;
-const { frontmatter, url, headings } = Astro.props;
+const { frontmatter, url } = Astro.props;
 const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
-console.log({ frontmatter, url, headings, canonical });
 ---
 
 <Main title={frontmatter.title} canonical={canonical}>
   <Nav client:load className="border-b" />
-  <!-- <div
-    class="mx-auto grid max-w-[1460px] grid-cols-1 gap-x-12 md:gap-x-8 px-6 md:grid-cols-7 lg:grid-cols-7 lg:gap-x-4 xl:grid-cols-5 xl:gap-x-12"
-  >
-    <TreeNode
-      className="hidden border-r md:col-span-2 md:block xl:col-span-1"
-      tree={groups}
-    />
-    <article
-      class="prose col-span-full max-w-full pt-6 md:col-span-5 lg:col-span-5 xl:col-span-3"
-    >
-      <slot />
-    </article>
-    <TreeNode
-      className="hidden lg:col-span-2 lg:block xl:col-span-1"
-      tree={groups}
-    />
-  </div> -->
   <div
-    class="mx-auto grid max-w-[1460px] grid-cols-1 gap-4 gap-x-12 px-6 md:grid-cols-[240px_minmax(0,2fr)] md:gap-x-8 lg:grid-cols-[240px_minmax(0,1fr)_240px] lg:gap-x-4 xl:gap-x-12"
+    class="mx-auto grid min-w-full max-w-[1460px] grid-cols-1 gap-4 gap-x-12 px-6 md:grid-cols-[240px_minmax(0,2fr)] md:gap-x-8 lg:grid-cols-[240px_minmax(0,1fr)_240px] lg:gap-x-4 xl:gap-x-12"
   >
-    <aside class="hidden border-r md:block lg:block">
+    <aside
+      class="sticky top-16 hidden h-[calc(100vh-4rem)] overflow-y-auto border-r md:block lg:block"
+    >
       <TreeNode tree={groups} />
     </aside>
 
-    <article class="prose max-w-full pt-6">
+    <article class="prose mt-16 max-w-full pb-16 pt-6">
+      <h1 class="mb-0 text-3xl font-bold [&_+p]:mt-2">{frontmatter.title}</h1>
+      <p class="text-secondary-foreground/70">{frontmatter.subtitle}</p>
       <slot />
     </article>
 
-    <aside class="hidden lg:block">
+    <aside
+      class="sticky top-16 hidden h-[calc(100vh-4rem)] overflow-y-auto lg:block"
+    >
       <TreeNode tree={groups} />
     </aside>
   </div>

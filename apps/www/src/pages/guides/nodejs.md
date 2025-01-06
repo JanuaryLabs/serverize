@@ -112,7 +112,7 @@ Replace `<project-name>` with the actual name of your project. This command will
 
 ## Automating Deployments with CI/CD
 
-You can automate the deployment of your application to Serverize by using Continuous Integration and Continuous Deployment (CI/CD) tools like GitHub Actions. This setup ensures that your application is deployed whenever new code is pushed to the main branch.
+You can automate the deployment of your application to Serverize through tools like GitHub Actions whenever new code is pushed to the remote repository.
 
 For detailed instructions on configuring CI/CD with Serverize and GitHub Actions, refer to our [CI/CD guide](./ci-cd).
 

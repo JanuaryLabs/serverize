@@ -1,5 +1,5 @@
 ---
-layout: ../../../layouts/BlogPostLayout.astro
+layout: ../../../layouts/DocsLayout.astro
 title: 'Projects'
 subtitle: 'Learn how to Serverize your Bun project'
 author: 'Adam Koskovki'

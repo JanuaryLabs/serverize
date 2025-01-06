@@ -8,7 +8,7 @@ date: '2024-10-22T00:00:00.000Z'
 
 Secrets are secure pieces of data you can store and use at runtime, such as API keys, database passwords, or plaintext values. These are made available to your project as environment variables for use as needed.
 
-> [!IMPORTANT]
+> [!CAUTION]
 > Secrets are encrypted before being stored in the database. However, due to the nature of Serverize, **avoid storing sensitive production data** (e.g., production database connection strings or API keys) as secrets.
 
 ## How Secrets Work
@@ -58,11 +58,12 @@ npx serverize secrets set-file .env -p my-project -c preview
 
 This command reads the `.env` file and sets all the environment variables as secrets for the project `my-project` and channel `dev`
 
-**Note:** Ensure that your `.env` file is properly formatted with `KEY=VALUE` pairs, each on a new line.
+> [!NOTE]
+> Ensure that your `.env` file is properly formatted with `KEY=VALUE` pairs, each on a new line.
 
 ## List Secrets
 
-List secrets that are set for your project channel. The list shows only the secret name; the value is not shown as it is a secret.
+List secrets labels that are set for your project channel.
 
 ```sh
 npx serverize secrets list -p <project-name> -c <channel-name>

@@ -2,10 +2,10 @@
 import '@/styles/globals.css';
 
 import type { MarkdownInstance } from 'astro';
+import CtaFooter from '../../components/CtaFooter.tsx';
 import { Nav } from '../../components/background';
 import Main from '../../layouts/main.astro';
 import BlogList from '../../lib/blog/BlogList.tsx';
-import CtaFooter from '../../components/CtaFooter.tsx';
 
 const posts = Object.values(
   import.meta.glob('./*.{md,mdx}', { eager: true }),
@@ -16,9 +16,8 @@ const guides = posts.map((it) => ({
   subtitle: it.frontmatter.subtitle,
   href: it.url!,
   headings: it.getHeadings().map((it) => ({
-    title: it.text,
-    href: `#${it.slug}`,
-    level: it.depth,
+    ...it,
+    slug: `#${it.slug}`,
   })),
 }));
 ---

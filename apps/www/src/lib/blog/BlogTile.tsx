@@ -3,9 +3,9 @@ export interface Guide {
   subtitle: string;
   href: string;
   headings: Array<{
-    title: string;
-    href: string;
-    level: number;
+    text: string;
+    slug: string;
+    depth: number;
   }>;
 }
 export function BlogTile(props: Guide) {

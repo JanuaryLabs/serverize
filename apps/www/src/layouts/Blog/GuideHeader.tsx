@@ -37,3 +37,13 @@ export default function GuideHeader(props: {
     </div>
   );
 }
+export function DocHeader(props: { title: string; subtitle: string }) {
+  return (
+    <div className="flex flex-col justify-center gap-y-1 lg:gap-y-4">
+      <h1 className="mb-0 text-3xl font-bold">{props.title}</h1>
+      <h2 className="text-secondary-foreground/70 m-0 font-medium md:text-lg">
+        {props.subtitle}
+      </h2>
+    </div>
+  );
+}
