@@ -1,5 +1,5 @@
-import { type Releases } from '@serverize/client';
 import { tmpdir } from 'os';
+import { type Releases } from '@serverize/client';
 
 import { join } from 'path';
 import {
@@ -94,7 +94,7 @@ export async function createRemoteContainer(
     Healthcheck?: Record<string, any>;
   },
 ) {
-  const network = await upsertNetwork(releaseInfo.network);
+  // const network = await upsertNetwork(releaseInfo.network);
   for (const volume of releaseInfo.volumes ?? []) {
     await upsertVolume(volume.src);
   }
@@ -138,7 +138,9 @@ export async function createRemoteContainer(
       process.env['NODE_ENV'] === 'production' ? 'linux/amd64' : undefined,
     HostConfig: {
       ...memory(instructions.memory),
-      NetworkMode: 'traefik-network', // needed for traefik to discover the container
+      // needed for traefik to discover the container
+      // do we still need this since we are using http based service discovery?
+      NetworkMode: 'traefik-network',
       Binds: (releaseInfo.volumes ?? []).map(
         (volume) => `${volume.src}:${volume.dest}`,
       ),
@@ -150,16 +152,16 @@ export async function createRemoteContainer(
     },
     Healthcheck: healthcheck,
   });
-  await network.connect({
-    Container: container.id,
-    ...(releaseInfo.serviceName
-      ? {
-          EndpointConfig: {
-            Aliases: [releaseInfo.serviceName],
-          },
-        }
-      : {}),
-  });
+  // await network.connect({
+  //   Container: container.id,
+  //   ...(releaseInfo.serviceName
+  //     ? {
+  //         EndpointConfig: {
+  //           Aliases: [releaseInfo.serviceName],
+  //         },
+  //       }
+  //     : {}),
+  // });
 
   return container;
 }
