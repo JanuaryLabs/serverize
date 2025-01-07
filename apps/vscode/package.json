@@ -20,7 +20,7 @@
   },
   "categories": ["Other"],
   "type": "commonjs",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "repository": "https://github.com/januarylabs/serverize",
   "activationEvents": [],
   "main": "index.js",

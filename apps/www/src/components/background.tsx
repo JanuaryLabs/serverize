@@ -46,17 +46,24 @@ function Logo() {
 export function Nav(props: { className?: string }) {
   const items = [
     {
-      name: 'Docs',
-      href: '/docs/concepts/projects',
+      name: 'VSCode Ext',
+      href: 'https://marketplace.visualstudio.com/items?itemName=january.serverize',
+      target: '_blank',
     },
     {
-      name: 'Guides',
-      href: '/guides',
+      name: 'Docs',
+      href: '/docs/concepts/projects',
     },
     {
       name: 'Roadmap',
       href: 'https://github.com/JanuaryLabs/serverize/issues?q=is:issue+label:%22Feature+request%22+sort:created-desc',
       target: '_blank',
+      className: 'lg:hidden',
+    },
+    {
+      name: 'Guides',
+      href: '/guides',
+      className: 'md:hidden lg:block',
     },
     {
       name: 'Feedback',
@@ -97,6 +104,7 @@ export function Nav(props: { className?: string }) {
               className={cn(
                 buttonVariants({ variant: 'ghost' }),
                 'text-secondary-foreground/70 text-sm font-medium',
+                it.className,
               )}
             >
               {it.name}
@@ -127,7 +135,7 @@ export function Nav(props: { className?: string }) {
           >
             Docs
           </a>
-          <a
+          {/* <a
             href="/guides"
             className={cn(
               buttonVariants({ variant: 'default' }),
@@ -137,7 +145,7 @@ export function Nav(props: { className?: string }) {
             )}
           >
             Guides
-          </a>
+          </a> */}
           <AskAiBox>
             <SearchInput className="mr-3 hidden md:mr-4 md:flex" />
           </AskAiBox>
@@ -159,7 +167,10 @@ export function Nav(props: { className?: string }) {
                   <a
                     href={it.href}
                     key={it.name}
-                    className="font-medium underline-offset-4 hover:underline"
+                    className={cn(
+                      'font-medium underline-offset-4 hover:underline',
+                      it.className,
+                    )}
                   >
                     {it.name}
                   </a>
