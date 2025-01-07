@@ -6,13 +6,13 @@ import {
 } from 'firebase/auth';
 import * as vscode from 'vscode';
 
+import { relative, sep } from 'path';
+import { auth, client, signInWithEmail } from 'serverize';
 import { registerAuthCommands } from './commands/auth-command';
 import { OrganizationDataProvider } from './data/accounts';
 import { ProjectsDataProvider, ReleaseItem } from './data/projects';
 import { ChannelItem, SecretItem, SecretsDataProvider } from './data/secrets';
 import { showError } from './error-handler';
-import { relative, sep } from 'path';
-import { auth, client, signInWithEmail } from 'serverize';
 
 const outputChannel = vscode.window.createOutputChannel('Serverize', {
   log: true,
@@ -319,13 +319,13 @@ export async function activate(context: vscode.ExtensionContext) {
 
     const selectedProject = await showProjectSelector(client);
     if (!selectedProject) {
-      vscode.window.showWarningMessage('shazam Please select a project');
+      vscode.window.showWarningMessage('Please select a project');
       return;
     }
 
     const flags = [
       `-p ${selectedProject.name}`,
-      '--use-dockerfile-if-exists',
+      '--use-dockerfile-if-exists=true',
     ].filter(Boolean);
     const command = `${bin} ${flags.join(' ')}`;
     await runTask(command);

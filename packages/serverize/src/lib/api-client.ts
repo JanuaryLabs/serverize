@@ -40,7 +40,7 @@ export function makeImageName(
   channel: string,
   release: string,
 ) {
-  return `serverize-${projectName}-${channel}:${release}`;
+  return `serverize-${projectName}-${channel}:${release}`.toLowerCase();
 }
 
 export interface RuntimeConfig {
