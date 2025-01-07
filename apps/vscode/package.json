@@ -242,6 +242,10 @@
           "id": "serverizeSecretsView",
           "name": "Secrets",
           "when": "isWorkspaceTrusted"
+        },
+        {
+          "id": "serverizeHelpView",
+          "name": "Help & Feedback"
         }
       ]
     }

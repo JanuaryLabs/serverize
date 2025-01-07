@@ -9,10 +9,10 @@ import * as vscode from 'vscode';
 import { relative, sep } from 'path';
 import { auth, client, signInWithEmail } from 'serverize';
 import { registerAuthCommands } from './commands/auth-command';
-import { OrganizationDataProvider } from './data/accounts';
-import { ProjectsDataProvider, ReleaseItem } from './data/projects';
-import { ChannelItem, SecretItem, SecretsDataProvider } from './data/secrets';
 import { showError } from './error-handler';
+import { OrganizationDataProvider } from './tree/accounts';
+import { ProjectsDataProvider, ReleaseItem } from './tree/projects';
+import { ChannelItem, SecretItem, SecretsDataProvider } from './tree/secrets';
 
 const outputChannel = vscode.window.createOutputChannel('Serverize', {
   log: true,
@@ -88,7 +88,56 @@ export async function activate(context: vscode.ExtensionContext) {
     'serverizeSecretsView',
     secretsDataProvider,
   );
-
+  vscode.window.registerTreeDataProvider('serverizeHelpView', {
+    getTreeItem: (element) => element as vscode.TreeItem,
+    getChildren(element) {
+      const openDiscordItem = (() => {
+        const item = new vscode.TreeItem('Open Discord');
+        item.iconPath = new vscode.ThemeIcon('comment-discussion');
+        item.command = {
+          command: 'vscode.open',
+          title: 'Open Discord',
+          arguments: [vscode.Uri.parse('https://discord.gg/aj9bRtrmNt')],
+        };
+        return item;
+      })();
+      const docsItem = (() => {
+        const item = new vscode.TreeItem('Serverize Docs');
+        item.iconPath = new vscode.ThemeIcon('book');
+        item.command = {
+          command: 'vscode.open',
+          title: 'Open Documentation',
+          arguments: [vscode.Uri.parse('https://serverize.sh/docs')],
+        };
+        return item;
+      })();
+      const reportIssueItem = (() => {
+        const item = new vscode.TreeItem('Report Issue');
+        item.iconPath = new vscode.ThemeIcon('comment');
+        item.command = {
+          command: 'vscode.open',
+          title: 'Open Issue Tracker',
+          arguments: [
+            vscode.Uri.parse(
+              'https://github.com/JanuaryLabs/serverize/issues/new',
+            ),
+          ],
+        };
+        return item;
+      })();
+      const installDockerItem = (() => {
+        const item = new vscode.TreeItem('Install Docker');
+        item.iconPath = new vscode.ThemeIcon('link-external');
+        item.command = {
+          command: 'vscode.open',
+          title: 'Open Docker Installation Guide',
+          arguments: [vscode.Uri.parse('https://docker.com/get-started')],
+        };
+        return item;
+      })();
+      return [openDiscordItem, docsItem, reportIssueItem, installDockerItem];
+    },
+  });
   context.subscriptions.push(
     vscode.commands.registerCommand('serverize.setup', async () => {
       const terminal =

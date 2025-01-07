@@ -309,6 +309,28 @@ export default feature({
         return { traces };
       },
     }),
+    workflow('DeleteRelease', {
+      tag: 'operations',
+      trigger: trigger.http({
+        method: 'delete',
+        path: '/releases/:releaseName',
+        input: (trigger) => ({
+          releaseName: {
+            select: trigger.path.releaseName,
+            against: orgNameValidator,
+          },
+          projectId: {
+            select: trigger.body.projectId,
+            against: z.string().uuid(),
+          },
+          channel: {
+            select: trigger.body.channel,
+            against: channelSchema,
+          },
+        }),
+      }),
+      execute(...args) {},
+    }),
     workflow('GetConfig', {
       tag: 'operations',
       trigger: trigger.http({
