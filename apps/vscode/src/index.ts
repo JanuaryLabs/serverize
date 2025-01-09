@@ -107,7 +107,9 @@ export async function activate(context: vscode.ExtensionContext) {
         item.command = {
           command: 'vscode.open',
           title: 'Open Documentation',
-          arguments: [vscode.Uri.parse('https://serverize.sh/docs')],
+          arguments: [
+            vscode.Uri.parse('https://serverize.sh/docs/concepts/projects'),
+          ],
         };
         return item;
       })();

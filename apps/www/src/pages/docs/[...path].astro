@@ -5,7 +5,13 @@ const posts = import.meta.glob('./**/*.md', { eager: true });
 export async function getStaticPaths() {
   const files = import.meta.glob('./**/*.md', { eager: true });
   const paths = Object.keys(files).map((file) => {
-    const path = join(file.replaceAll(/\d\./g, '').replace(/\.md$/, ''));
+    const path = join(
+      file
+        .toLowerCase()
+        .replaceAll(/\d\./g, '')
+        .replaceAll(/\s/g, '-')
+        .replace(/\.md$/, ''),
+    );
     return {
       params: {
         path,
@@ -18,9 +24,15 @@ export async function getStaticPaths() {
 const { path } = Astro.params;
 const key = Object.keys(posts).find(
   (key) =>
-    join(key.toLowerCase().replaceAll(/\d\./g, '').replace(/\.md$/, '')) ===
-    path.toLowerCase(),
+    join(
+      key
+        .toLowerCase()
+        .replaceAll(/\d\./g, '')
+        .replaceAll(/\s/g, '-')
+        .replace(/\.md$/, ''),
+    ) === path.toLowerCase(),
 )!;
+
 const { Content } = posts[key] as MarkdownInstance<{
   title: string;
   author: string;

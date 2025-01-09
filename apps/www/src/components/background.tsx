@@ -125,7 +125,7 @@ export function Nav(props: { className?: string }) {
             Contact
           </a>
           <a
-            href="/docs"
+            href="/docs/concepts/projects"
             className={cn(
               buttonVariants({ variant: 'default' }),
               'h-8 px-2.5 py-1 shadow-none',

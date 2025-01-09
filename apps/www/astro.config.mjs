@@ -5,13 +5,13 @@ import tailwind from '@astrojs/tailwind';
 import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-sections';
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
 
+import { fileURLToPath } from 'url';
+import expressiveCode from 'astro-expressive-code';
+import { defineConfig } from 'astro/config';
 import {
   remarkCustomCallouts,
   remarkReadingTime,
 } from '../../tools/remark.mjs';
-import expressiveCode from 'astro-expressive-code';
-import { defineConfig } from 'astro/config';
-import { fileURLToPath } from 'url';
 
 // https://astro.build/config
 export default defineConfig({
@@ -21,6 +21,7 @@ export default defineConfig({
     '/guides/next': 'guides/nextjs',
     '/guides/nuxt': 'guides/nuxtjs',
     '/guides/node': 'guides/nodejs',
+    '/docs': '/docs/concepts/projects',
   },
   outDir: '../../dist/apps/www',
   markdown: {
