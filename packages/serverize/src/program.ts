@@ -291,8 +291,8 @@ export async function getCurrentProject(project?: string) {
     const [data, error] = await client.request('GET /tokens/{id}', {
       token: apiToken,
     });
-    if (error || !data) {
-      spinner.fail('Invalid token');
+    if (error) {
+      showError(error);
       process.exit(1);
     }
     return {
@@ -385,6 +385,10 @@ function guessPort(ast: Dockerfile) {
 export function showError(error?: Error) {
   if (!error) return;
   if (error instanceof ValidationError) {
+    // this.flattened = Object.entries(this.errors ?? {}).map(([key, it]) => ({
+    //   path: key,
+    //   message: (it as any[])[0].message,
+    // }));
     const message = `${error.flattened.map((it) => `${it.path}: ${it.message}`).join('\n')}`;
     spinner.fail(`${error.message}\n${message}`);
   } else {

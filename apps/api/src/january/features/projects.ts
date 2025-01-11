@@ -104,10 +104,10 @@ export default feature({
       tag: 'tokens',
       trigger: trigger.http({
         method: 'get',
-        path: '/:id',
+        path: '/:token',
         input: (trigger) => ({
           token: {
-            select: trigger.path.id,
+            select: trigger.path.token,
             against: z.string(),
           },
         }),

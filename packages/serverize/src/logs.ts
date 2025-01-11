@@ -17,7 +17,7 @@ export default new Command('logs')
   .action(async ({ projectName, release, channel }) => {
     const user = await ensureUser();
     if (!user) return;
-    const [stream, error] = await client.stream('GET /container/logs', {
+    const [stream, error] = await client.request('GET /container/logs', {
       projectName: projectName,
       channelName: channel,
       releaseName: release,
