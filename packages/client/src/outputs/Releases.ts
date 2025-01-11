@@ -1,4 +1,3 @@
-import { DateConstructor } from './DateConstructor';
 import { Projects } from './Projects';
 import { Snapshots } from './Snapshots';
 import { Volumes } from './Volumes';
@@ -26,8 +25,8 @@ export interface Releases {
     | 'timed_out';
   status?:
     | null
-    | 'requested'
     | 'in_progress'
+    | 'requested'
     | 'completed'
     | 'queued'
     | 'waiting';

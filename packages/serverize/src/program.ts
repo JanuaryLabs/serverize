@@ -1,11 +1,11 @@
 import { platform } from 'os';
 import ignore from '@balena/dockerignore';
 import { checkbox, input, select } from '@inquirer/prompts';
-import { ValidationError } from '@serverize/client';
+import { ParseError, ProblematicResponse } from '@serverize/client';
 import chalk from 'chalk';
 import cliProgress from 'cli-progress';
 import cliSpinners from 'cli-spinners';
-import { Option, program } from 'commander';
+import { Option } from 'commander';
 import debug from 'debug';
 import { type Dockerfile, DockerfileParser } from 'dockerfile-ast';
 import glob from 'fast-glob';
@@ -288,7 +288,7 @@ export async function getCurrentProject(project?: string) {
     return await useProject();
   } else if (apiToken) {
     // TODO: exchange token for custom jwt instead
-    const [data, error] = await client.request('GET /tokens/{id}', {
+    const [data, error] = await client.request('GET /tokens/{token}', {
       token: apiToken,
     });
     if (error) {
@@ -382,19 +382,37 @@ function guessPort(ast: Dockerfile) {
   return undefined;
 }
 
-export function showError(error?: Error) {
+export function showError(
+  error?: ProblematicResponse | ParseError<any> | Error,
+) {
   if (!error) return;
-  if (error instanceof ValidationError) {
-    // this.flattened = Object.entries(this.errors ?? {}).map(([key, it]) => ({
-    //   path: key,
-    //   message: (it as any[])[0].message,
-    // }));
-    const message = `${error.flattened.map((it) => `${it.path}: ${it.message}`).join('\n')}`;
-    spinner.fail(`${error.message}\n${message}`);
-  } else {
-    const message = error.message;
-    spinner.fail(message);
+  if (typeof error === 'string') {
+    return spinner.fail(error);
   }
+
+  if ('kind' in error) {
+    if (error.kind === 'parse') {
+      const flattened = Object.entries(error.fieldErrors).map(([key, it]) => ({
+        path: key,
+        message: (it as any[])[0].message,
+      }));
+      const message = `${flattened.map((it) => `${it.path}: ${it.message}`).join('\n')}`;
+      return spinner.fail(`${message}\n${message}`);
+    }
+    if (error.kind === 'response') {
+      const errors = (error as any).errors;
+      const flattened = Object.entries(errors ?? {}).map(([key, it]) => ({
+        path: key,
+        message: (it as any[])[0].message,
+      }));
+      const message = `${flattened.map((it) => `${it.path}: ${it.message}`).join('\n')}`;
+      return spinner.fail(`${message}\n${message}`);
+    }
+  }
+  if (error instanceof Error) {
+    return spinner.fail(error.message);
+  }
+  return spinner.fail(JSON.stringify(error));
 }
 
 export function showProgressBar(bars: string[]) {

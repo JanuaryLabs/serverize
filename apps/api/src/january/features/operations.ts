@@ -329,7 +329,7 @@ export default feature({
           },
         }),
       }),
-      execute(...args) {},
+      execute: (...args) => {},
     }),
     workflow('GetConfig', {
       tag: 'operations',

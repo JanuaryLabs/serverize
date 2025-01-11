@@ -4,7 +4,7 @@ import z from 'zod';
 export const orgNameValidator = z
   .string()
   .trim()
-  .min(1)
+  .min(3)
   .refine((value) => validator.isAlpha(value, 'en-US', { ignore: '-' }), {
     message: 'String must contain only English letters and hyphens',
   });

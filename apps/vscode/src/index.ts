@@ -482,10 +482,10 @@ async function signin(
   });
 
   if (error) {
-    if (error instanceof ServerError) {
+    if (error.kind === 'response') {
       console.dir(error, { depth: null });
       console.log(JSON.stringify(error));
-      if (error.status === 404) {
+      if ((error as any).status === 404) {
         await onUserNotFound();
       }
       return;

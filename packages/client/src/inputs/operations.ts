@@ -27,4 +27,9 @@ export const restartChannelSchema = z.object({
   projectName: z.string().trim().min(1),
   jwt: z.any(),
 });
+export const deleteReleaseSchema = z.object({
+  releaseName: orgNameValidator,
+  projectId: z.string().uuid(),
+  channel: channelSchema,
+});
 export const getConfigSchema = z.object({});
