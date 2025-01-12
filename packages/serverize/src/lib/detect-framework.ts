@@ -1,9 +1,9 @@
 import { existsSync } from 'fs';
 import { readFile, readdir, rm } from 'fs/promises';
 
-import { parseRequirements } from './requirements-parser';
 import { basename, dirname, join } from 'path';
 import { exist, getFile, readJsonFile, safeFail } from 'serverize/utils';
+import { parseRequirements } from './requirements-parser';
 
 import { fileBundler } from '@january/bundler';
 import { type Callers, staticEval } from '@january/evaluator';
@@ -236,6 +236,7 @@ const frameworksClues: Record<framework, Clue[]> = {
                 basename(buildTarget.options.main).replace('.ts', '.js'),
               ),
               distDir: buildTarget.options.outputPath,
+              thirdParty: buildTarget.options.thirdParty,
               bundle:
                 buildTarget.options.thirdParty && buildTarget.options.bundle,
             };

@@ -2,12 +2,12 @@ import { input } from '@inquirer/prompts';
 import { detect } from 'detect-package-manager';
 import { rm } from 'fs/promises';
 
-import { writeDockerIgnore } from '../lib/file';
-import { spinner } from '../program';
 import { join } from 'path';
 import semver from 'semver';
 import { type PackageManager, nodejs } from 'serverize/dockerfile';
 import { type PackageJson, getFile, readPackageJson } from 'serverize/utils';
+import { writeDockerIgnore } from '../lib/file';
+import { spinner } from '../program';
 
 interface Setup {
   cwd: string;
@@ -20,6 +20,7 @@ interface Setup {
   distDir?: string;
   entrypoint?: string;
   bundle?: boolean;
+  thirdParty?: boolean;
 }
 
 export async function getNodejsVersion(packageJsonPath: string | PackageJson) {
@@ -74,6 +75,7 @@ export async function setupNodejs(config: Setup) {
       config.packageManager || (await detect({ cwd: config.src })),
     version: userNodeVersion?.alpine,
     bundle: config.bundle,
+    thirdParty: config.thirdParty || false,
   });
   const dockerignorefile = await writeDockerIgnore(
     config.dockerignoreDir || config.dest,

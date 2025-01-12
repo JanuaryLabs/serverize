@@ -1,3 +1,4 @@
+import { basename, dirname } from 'path';
 import { type Stage, dockerfile } from '../docker_file';
 import { nodeServer } from '../servers';
 import {
@@ -7,7 +8,6 @@ import {
   packageManagerCommands,
   stage,
 } from '../utils';
-import { basename, dirname } from 'path';
 
 const base: (config: NodeJsConfig) => Stage = (config) => ({
   from: {
@@ -69,7 +69,7 @@ const builder: (config: NodeJsConfig) => Stage = (config) => ({
   workdir: '/app',
   copy: [
     { from: devDeps, src: '/temp/dev/node_modules', dest: 'node_modules' },
-    ...(config.bundle
+    ...(config.bundle && config.thirdParty // if bundle with node_modules then make sure the build command have all node_modules
       ? [
           {
             from: prodDeps,
@@ -95,6 +95,7 @@ export interface NodeJsConfig {
   port?: string | number;
   version?: string;
   distDir?: string;
+  thirdParty?: boolean;
   bundle?: boolean;
 }
 
@@ -117,7 +118,7 @@ export const nodejs = (config: NodeJsConfig) =>
                 from: builder,
                 link: config.distDir || basename(dirname(config.entrypoint)),
               },
-              ...(config.bundle
+              ...(config.thirdParty
                 ? []
                 : [
                     {
