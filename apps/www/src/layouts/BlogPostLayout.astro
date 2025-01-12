@@ -20,7 +20,7 @@ const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
 
 <Main title={frontmatter.title} canonical={canonical}>
   <Nav client:load />
-  <div class="mx-auto w-full max-w-6xl px-6 md:pl-10 lg:px-10 xl:px-0">
+  <div class="mx-auto mt-16 w-full max-w-6xl px-6 md:pl-10 lg:px-10 xl:px-0">
     <a
       href="/guides"
       class="text-secondary-foreground/70 mb-4 mt-4 flex cursor-pointer items-center gap-x-0.5 text-sm font-medium no-underline hover:underline md:mb-8 md:mt-12"

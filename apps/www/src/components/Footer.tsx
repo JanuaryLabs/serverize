@@ -1,5 +1,5 @@
-import { cn } from './utils';
 import type { PropsWithChildren } from 'react';
+import { cn } from './utils';
 
 export default function Footer(props: { className?: string }) {
   return (
@@ -60,7 +60,7 @@ export default function Footer(props: { className?: string }) {
       <div className="grid w-full gap-y-8 sm:grid-cols-3 lg:col-start-4 lg:col-end-7">
         <div className="space-y-2">
           <a href="/guides" className="font-semibold">
-            Guides
+            Blog
           </a>
           {[
             {
@@ -68,23 +68,23 @@ export default function Footer(props: { className?: string }) {
               href: '/guides',
             },
             {
-              title: 'Next.js',
+              title: 'Deploy Next.js',
               href: '/guides/nextjs',
             },
             {
-              title: 'Nuxt.js',
+              title: 'Deploy Nuxt.js',
               href: '/guides/nuxtjs',
             },
             {
-              title: 'Astro',
+              title: 'Deploy Astro',
               href: '/guides/astro',
             },
             {
-              title: 'Node.js',
+              title: 'Deploy Node.js',
               href: '/guides/nodejs',
             },
             {
-              title: 'Bun',
+              title: 'Deploy Bun',
               href: '/guides/bun',
             },
           ].map((it) => (
@@ -97,14 +97,37 @@ export default function Footer(props: { className?: string }) {
             </a>
           ))}
         </div>
-        <div className="flex flex-col space-y-2">
+        <div className="space-y-2">
+          <a href="/docs" className="font-semibold">
+            Docs
+          </a>
           {[
-            { title: 'CI/CD', href: '/guides/ci-cd' },
-            { title: 'CLI', href: '/guides/cli' },
-            { title: 'CLI', href: '/guides/deployment-previews' },
+            { title: 'CI/CD', href: '/docs/deploy/ci-cd' },
+            { title: 'CLI', href: '/docs/cli/auth' },
+            {
+              title: 'PR previews',
+              href: '/docs/deploy/deployment-previews',
+            },
+          ].map((it) => (
+            <a
+              key={it.title}
+              href={it.href}
+              className="text-secondary-foreground/70 flex items-center gap-x-2 text-sm"
+            >
+              {it.title}
+            </a>
+          ))}
+        </div>
+
+        <div className="space-y-2">
+          <a href="/guides" className="font-semibold">
+            Other links
+          </a>
+          {[
             {
               title: 'Request a demo',
               href: 'https://cal.com/january-sh/30min',
+              target: '_blank',
             },
             {
               title: 'OpenSource',
@@ -114,30 +137,14 @@ export default function Footer(props: { className?: string }) {
             {
               title: 'January',
               href: 'https://january.sh',
+              target: '_blank',
             },
           ].map((it) => (
-            // <a
-            //   key={it.title}
-            //   href={it.href}
-            //   className="flex items-center gap-x-2 text-sm text-secondary-foreground/70"
-            // >
-            //   {it.title}
-            // </a>
-            <a key={it.title} href={it.href} className="font-semibold">
-              {it.title}
-            </a>
-          ))}
-        </div>
-        <div className="flex flex-col space-y-2">
-          {([] as any[]).map((it) => (
-            // <a
-            //   key={it.title}
-            //   href={it.href}
-            //   className="flex items-center gap-x-2 text-sm text-secondary-foreground/70"
-            // >
-            //   {it.title}
-            // </a>
-            <a key={it.title} href={it.href} className="font-semibold">
+            <a
+              key={it.title}
+              href={it.href}
+              className="text-secondary-foreground/70 flex items-center gap-x-2 text-sm"
+            >
               {it.title}
             </a>
           ))}
