@@ -8,20 +8,29 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
-import Projects from '../management/projects.entity.ts';
+import Organizations from './organizations.entity.ts';
+import Projects from './projects.entity.ts';
 
-@Entity('SecretsKeys')
-export default class SecretsKeys {
+@Entity('ApiKeys')
+export default class ApiKeys {
+  @ManyToOne(
+    () => Organizations,
+    (relatedEntity) => relatedEntity.apiKeys,
+    { nullable: false },
+  )
+  organization!: Relation<Organizations>;
+  @Column({ nullable: false, type: 'uuid' })
+  organizationId!: string;
   @ManyToOne(
     () => Projects,
-    (relatedEntity) => relatedEntity.secretsKeys,
+    (relatedEntity) => relatedEntity.apiKeys,
     { nullable: false },
   )
   project!: Relation<Projects>;
   @Column({ nullable: false, type: 'uuid' })
   projectId!: string;
-  @Column({ nullable: false, type: 'bytea' })
-  key!: Uint8Array;
+  @Column({ nullable: false, type: 'varchar' })
+  key!: string;
   @PrimaryGeneratedColumn('uuid')
   id!: string;
   @CreateDateColumn()

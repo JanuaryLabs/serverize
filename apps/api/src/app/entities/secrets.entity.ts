@@ -3,34 +3,38 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  Index,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
-import Organizations from '../management/organizations.entity.ts';
-import Projects from '../management/projects.entity.ts';
+import Projects from './projects.entity.ts';
 
-@Entity('ApiKeys')
-export default class ApiKeys {
-  @ManyToOne(
-    () => Organizations,
-    (relatedEntity) => relatedEntity.apiKeys,
-    { nullable: false },
-  )
-  organization!: Relation<Organizations>;
-  @Column({ nullable: false, type: 'uuid' })
-  organizationId!: string;
+@Entity('Secrets')
+@Index(['projectId', 'label'], { unique: true })
+export default class Secrets {
   @ManyToOne(
     () => Projects,
-    (relatedEntity) => relatedEntity.apiKeys,
+    (relatedEntity) => relatedEntity.secrets,
     { nullable: false },
   )
   project!: Relation<Projects>;
   @Column({ nullable: false, type: 'uuid' })
   projectId!: string;
   @Column({ nullable: false, type: 'varchar' })
-  key!: string;
+  label!: string;
+  @Column({
+    nullable: false,
+    default: 'dev',
+    type: 'enum',
+    enum: ['dev', 'preview'],
+  })
+  channel!: 'dev' | 'preview';
+  @Column({ nullable: false, type: 'bytea' })
+  nonce!: Uint8Array;
+  @Column({ nullable: false, type: 'bytea' })
+  secret!: Uint8Array;
   @PrimaryGeneratedColumn('uuid')
   id!: string;
   @CreateDateColumn()

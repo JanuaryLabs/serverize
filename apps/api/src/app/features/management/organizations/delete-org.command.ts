@@ -4,7 +4,7 @@ import {
   removeEntity,
 } from '@workspace/extensions/postgresql';
 import z from 'zod';
-import Organizations from '../organizations.entity.ts';
+import Organizations from '../../../entities/organizations.entity.ts';
 export const deleteOrgSchema = z.object({ id: z.string().uuid() });
 
 export async function deleteOrg(

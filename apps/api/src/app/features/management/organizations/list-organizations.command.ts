@@ -5,7 +5,7 @@ import {
   execute,
 } from '@workspace/extensions/postgresql';
 import z from 'zod';
-import Organizations from '../organizations.entity.ts';
+import Organizations from '../../../entities/organizations.entity.ts';
 export const listOrganizationsSchema = z.object({
   pageSize: z.coerce.number().int().min(1).max(50).default(50).optional(),
   pageNo: z.coerce.number().int().min(1).optional(),

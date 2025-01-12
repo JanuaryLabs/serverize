@@ -2,7 +2,7 @@ import { trigger } from '@january/declarative';
 import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
 import { channelSchema } from '@workspace/extensions/zod';
 import z from 'zod';
-import Secrets from '../secrets.entity.ts';
+import Secrets from '../../../entities/secrets.entity.ts';
 export const getSecretsSchema = z.object({
   projectId: z.string().uuid(),
   channel: channelSchema,

@@ -5,7 +5,7 @@ import {
 } from '@workspace/extensions/postgresql';
 import { type IdentitySubject } from '@workspace/identity';
 import z from 'zod';
-import ApiKeys from '../api-keys.entity.ts';
+import ApiKeys from '../../../entities/api-keys.entity.ts';
 export const revokeTokenSchema = z.object({ token: z.string() });
 
 export async function revokeToken(

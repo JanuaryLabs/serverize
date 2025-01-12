@@ -21,6 +21,8 @@
     "paths": {
       "@/*": ["apps/www/src/*"],
       "@serverize/client": ["packages/client/src/index.ts"],
+      "@workspace/api/entities/*": ["apps/api/src/app/entities/*"],
+      "@workspace/api/entities": ["apps/api/src/app/features/entities.ts"],
       "@workspace/entities": ["apps/api/src/app/features/entities.ts"],
       "@workspace/extensions/*": ["apps/api/src/app/extensions/*"],
       "@workspace/identity": ["apps/api/src/app/extensions/identity/index.ts"],

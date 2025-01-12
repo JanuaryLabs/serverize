@@ -8,7 +8,7 @@ import {
   RelationId,
   UpdateDateColumn,
 } from 'typeorm';
-import ApiKeys from '../projects/api-keys.entity.ts';
+import ApiKeys from './api-keys.entity.ts';
 import Members from './members.entity.ts';
 import OrganizationsMembers from './organizations-members.entity.ts';
 import Preferences from './preferences.entity.ts';
@@ -16,6 +16,14 @@ import Workspaces from './workspaces.entity.ts';
 
 @Entity('Organizations')
 export default class Organizations {
+  @OneToMany(
+    () => ApiKeys,
+    (relatedEntity) => relatedEntity.organization,
+    { nullable: false },
+  )
+  apiKeys!: ApiKeys[];
+  @RelationId((entity: Organizations) => entity.apiKeys)
+  apiKeysIds!: string[];
   @Column({ nullable: false, unique: true, type: 'varchar' })
   name!: string;
   @PrimaryGeneratedColumn('uuid')
@@ -58,12 +66,4 @@ export default class Organizations {
   preferences?: Preferences[];
   @RelationId((entity: Organizations) => entity.preferences)
   preferencesIds?: string[] | null;
-  @OneToMany(
-    () => ApiKeys,
-    (relatedEntity) => relatedEntity.organization,
-    { nullable: false },
-  )
-  apiKeys!: ApiKeys[];
-  @RelationId((entity: Organizations) => entity.apiKeys)
-  apiKeysIds!: string[];
 }

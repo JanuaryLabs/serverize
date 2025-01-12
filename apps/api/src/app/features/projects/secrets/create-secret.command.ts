@@ -3,7 +3,7 @@ import { upsertEntity } from '@workspace/extensions/postgresql';
 import { encrypt, getProjectKey } from '@workspace/extensions/user';
 import { channelSchema } from '@workspace/extensions/zod';
 import z from 'zod';
-import Secrets from '../secrets.entity.ts';
+import Secrets from '../../../entities/secrets.entity.ts';
 export const createSecretSchema = z.object({
   projectId: z.string().uuid(),
   channel: channelSchema,

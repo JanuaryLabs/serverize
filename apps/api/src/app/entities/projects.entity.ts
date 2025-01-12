@@ -11,42 +11,16 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
-import ApiKeys from '../projects/api-keys.entity.ts';
-import Releases from '../projects/releases.entity.ts';
-import SecretsKeys from '../projects/secrets-keys.entity.ts';
-import Secrets from '../projects/secrets.entity.ts';
+import ApiKeys from './api-keys.entity.ts';
 import Preferences from './preferences.entity.ts';
+import Releases from './releases.entity.ts';
+import SecretsKeys from './secrets-keys.entity.ts';
+import Secrets from './secrets.entity.ts';
 import Workspaces from './workspaces.entity.ts';
 
 @Entity('Projects')
 @Index(['name', 'workspaceId'], { unique: true })
 export default class Projects {
-  @Column({ nullable: false, type: 'varchar' })
-  name!: string;
-  @ManyToOne(
-    () => Workspaces,
-    (relatedEntity) => relatedEntity.projects,
-    { nullable: false },
-  )
-  workspace!: Relation<Workspaces>;
-  @Column({ nullable: false, type: 'uuid' })
-  workspaceId!: string;
-  @PrimaryGeneratedColumn('uuid')
-  id!: string;
-  @CreateDateColumn()
-  createdAt!: Date;
-  @UpdateDateColumn()
-  updatedAt?: Date;
-  @DeleteDateColumn()
-  deletedAt?: Date;
-  @OneToMany(
-    () => Preferences,
-    (relatedEntity) => relatedEntity.project,
-    { nullable: true },
-  )
-  preferences?: Preferences[];
-  @RelationId((entity: Projects) => entity.preferences)
-  preferencesIds?: string[] | null;
   @OneToMany(
     () => Releases,
     (relatedEntity) => relatedEntity.project,
@@ -79,4 +53,30 @@ export default class Projects {
   apiKeys!: ApiKeys[];
   @RelationId((entity: Projects) => entity.apiKeys)
   apiKeysIds!: string[];
+  @Column({ nullable: false, type: 'varchar' })
+  name!: string;
+  @ManyToOne(
+    () => Workspaces,
+    (relatedEntity) => relatedEntity.projects,
+    { nullable: false },
+  )
+  workspace!: Relation<Workspaces>;
+  @Column({ nullable: false, type: 'uuid' })
+  workspaceId!: string;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
+  @CreateDateColumn()
+  createdAt!: Date;
+  @UpdateDateColumn()
+  updatedAt?: Date;
+  @DeleteDateColumn()
+  deletedAt?: Date;
+  @OneToMany(
+    () => Preferences,
+    (relatedEntity) => relatedEntity.project,
+    { nullable: true },
+  )
+  preferences?: Preferences[];
+  @RelationId((entity: Projects) => entity.preferences)
+  preferencesIds?: string[] | null;
 }

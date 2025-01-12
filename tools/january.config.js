@@ -20,9 +20,7 @@ await defineConfig({
   formatGeneratedCode: false,
   extensions: [
     identity,
-    hono({
-      generateSwagger: () => false,
-    }),
+    hono(),
     auth(),
     typeorm({
       database: postgresql(),

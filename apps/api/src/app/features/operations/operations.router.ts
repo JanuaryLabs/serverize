@@ -78,6 +78,22 @@ router.post(
     return output.finalize();
   },
 );
+router.delete(
+  '/operations/releases/:releaseName',
+  authorize(),
+  async (context, next) => {
+    const path = context.req.param();
+    const body = await context.req.json();
+    const input = parseOrThrow(operations.deleteReleaseSchema, {
+      releaseName: path.releaseName,
+      projectId: body.projectId,
+      channel: body.channel,
+    });
+    const output = createOutput(context);
+    await operations.deleteRelease(input, output, context.req.raw.signal);
+    return output.finalize();
+  },
+);
 router.get('/operations/config', authorize(), async (context, next) => {
   const output = createOutput(context);
   await operations.getConfig(output, context.req.raw.signal);

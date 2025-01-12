@@ -1,48 +1,48 @@
-import membersEntity from './management/members.entity';
-import organizationsMembersEntity from './management/organizations-members.entity';
-import organizationsEntity from './management/organizations.entity';
-import preferencesEntity from './management/preferences.entity';
-import projectsEntity from './management/projects.entity';
-import usersEntity from './management/users.entity';
-import workspacesMembersEntity from './management/workspaces-members.entity';
-import workspacesEntity from './management/workspaces.entity';
-import apiKeysEntity from './projects/api-keys.entity';
-import releasesEntity from './projects/releases.entity';
-import secretsKeysEntity from './projects/secrets-keys.entity';
-import secretsEntity from './projects/secrets.entity';
-import snapshotsEntity from './projects/snapshots.entity';
-import volumesEntity from './projects/volumes.entity';
+import apiKeysEntity from '../entities/api-keys.entity';
+import membersEntity from '../entities/members.entity';
+import organizationsMembersEntity from '../entities/organizations-members.entity';
+import organizationsEntity from '../entities/organizations.entity';
+import preferencesEntity from '../entities/preferences.entity';
+import projectsEntity from '../entities/projects.entity';
+import releasesEntity from '../entities/releases.entity';
+import secretsKeysEntity from '../entities/secrets-keys.entity';
+import secretsEntity from '../entities/secrets.entity';
+import snapshotsEntity from '../entities/snapshots.entity';
+import usersEntity from '../entities/users.entity';
+import volumesEntity from '../entities/volumes.entity';
+import workspacesMembersEntity from '../entities/workspaces-members.entity';
+import workspacesEntity from '../entities/workspaces.entity';
 const entities = [
+  apiKeysEntity,
   membersEntity,
   organizationsMembersEntity,
   organizationsEntity,
   preferencesEntity,
   projectsEntity,
-  usersEntity,
-  workspacesMembersEntity,
-  workspacesEntity,
-  apiKeysEntity,
   releasesEntity,
   secretsKeysEntity,
   secretsEntity,
   snapshotsEntity,
+  usersEntity,
   volumesEntity,
+  workspacesMembersEntity,
+  workspacesEntity,
 ];
 
 export const tables = {
+  apiKeys: apiKeysEntity,
   members: membersEntity,
   organizationsMembers: organizationsMembersEntity,
   organizations: organizationsEntity,
   preferences: preferencesEntity,
   projects: projectsEntity,
-  users: usersEntity,
-  workspacesMembers: workspacesMembersEntity,
-  workspaces: workspacesEntity,
-  apiKeys: apiKeysEntity,
   releases: releasesEntity,
   secretsKeys: secretsKeysEntity,
   secrets: secretsEntity,
   snapshots: snapshotsEntity,
+  users: usersEntity,
   volumes: volumesEntity,
+  workspacesMembers: workspacesMembersEntity,
+  workspaces: workspacesEntity,
 } as const;
 export default entities;

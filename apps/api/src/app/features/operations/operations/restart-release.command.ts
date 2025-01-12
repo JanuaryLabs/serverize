@@ -10,7 +10,7 @@ import {
 import { channelSchema, orgNameValidator } from '@workspace/extensions/zod';
 import axios from 'axios';
 import z from 'zod';
-import Releases from '../../projects/releases.entity.ts';
+import Releases from '../../../entities/releases.entity.ts';
 export const restartReleaseSchema = z.object({
   releaseName: orgNameValidator,
   projectId: z.string().uuid(),

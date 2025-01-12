@@ -4,7 +4,7 @@ import { serverizeUrl } from '@workspace/extensions/user';
 import { channelSchema } from '@workspace/extensions/zod';
 import axios from 'axios';
 import z from 'zod';
-import Releases from '../../projects/releases.entity.ts';
+import Releases from '../../../entities/releases.entity.ts';
 export const restartChannelSchema = z.object({
   channel: channelSchema,
   projectId: z.string().uuid(),

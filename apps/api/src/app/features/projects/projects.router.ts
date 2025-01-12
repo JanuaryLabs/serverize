@@ -57,9 +57,9 @@ router.get('/tokens', authorize(), async (context, next) => {
   await tokens.listTokens(output, context.var.subject!, context.req.raw.signal);
   return output.finalize();
 });
-router.get('/tokens/:id', authorize(), async (context, next) => {
+router.get('/tokens/:token', authorize(), async (context, next) => {
   const path = context.req.param();
-  const input = parseOrThrow(tokens.getTokenSchema, { token: path.id });
+  const input = parseOrThrow(tokens.getTokenSchema, { token: path.token });
   const output = createOutput(context);
   await tokens.getToken(input, output, context.req.raw.signal);
   return output.finalize();

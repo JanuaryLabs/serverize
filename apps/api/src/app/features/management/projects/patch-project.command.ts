@@ -4,7 +4,7 @@ import {
   patchEntity,
 } from '@workspace/extensions/postgresql';
 import z from 'zod';
-import Projects from '../projects.entity.ts';
+import Projects from '../../../entities/projects.entity.ts';
 export const patchProjectSchema = z.object({
   id: z.string().uuid(),
   name: z.string().trim().min(1),

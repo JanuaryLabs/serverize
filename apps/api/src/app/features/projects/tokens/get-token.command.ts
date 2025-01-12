@@ -2,7 +2,7 @@ import { trigger } from '@january/declarative';
 import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
-import ApiKeys from '../api-keys.entity.ts';
+import ApiKeys from '../../../entities/api-keys.entity.ts';
 export const getTokenSchema = z.object({ token: z.string() });
 
 export async function getToken(

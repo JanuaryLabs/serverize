@@ -6,7 +6,7 @@ import {
 } from '@workspace/extensions/postgresql';
 import { type IdentitySubject } from '@workspace/identity';
 import z from 'zod';
-import Projects from '../projects.entity.ts';
+import Projects from '../../../entities/projects.entity.ts';
 export const listProjectsSchema = z.object({
   workspaceId: z.string().uuid().optional(),
   name: z.string().trim().min(1).optional(),

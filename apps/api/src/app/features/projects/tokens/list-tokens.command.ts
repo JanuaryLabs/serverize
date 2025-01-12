@@ -2,7 +2,7 @@ import { trigger } from '@january/declarative';
 import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
 import { type IdentitySubject } from '@workspace/identity';
 import z from 'zod';
-import ApiKeys from '../api-keys.entity.ts';
+import ApiKeys from '../../../entities/api-keys.entity.ts';
 
 export async function listTokens(
   output: trigger.http.output,

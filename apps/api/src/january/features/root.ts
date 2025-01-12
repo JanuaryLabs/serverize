@@ -3,7 +3,6 @@ import { dataSource } from '@workspace/extensions/postgresql';
 import { feature, trigger, workflow } from '@january/declarative';
 
 export default feature({
-  tables: {},
   workflows: [
     workflow('EmptyFavicon', {
       tag: 'root',

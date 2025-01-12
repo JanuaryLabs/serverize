@@ -4,7 +4,7 @@ import {
   patchEntity,
 } from '@workspace/extensions/postgresql';
 import z from 'zod';
-import Releases from '../releases.entity.ts';
+import Releases from '../../../entities/releases.entity.ts';
 export const patchReleaseSchema = z.object({
   releaseId: z.string().uuid(),
   status: z.enum(['requested', 'waiting', 'completed']).optional(),

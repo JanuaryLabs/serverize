@@ -25,7 +25,6 @@ import axios from 'axios';
 import { feature, trigger, workflow } from '@january/declarative';
 
 export default feature({
-  tables: {},
   workflows: [
     workflow('StartRelease', {
       tag: 'operations',

@@ -7,7 +7,7 @@ import {
 } from '@workspace/extensions/postgresql';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
-import Releases from '../releases.entity.ts';
+import Releases from '../../../entities/releases.entity.ts';
 export const completeReleaseSchema = z.object({
   releaseId: z.string().uuid(),
   conclusion: z.enum(['success', 'failure']),

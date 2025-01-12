@@ -6,7 +6,7 @@ import {
 } from '@workspace/extensions/postgresql';
 import { channelSchema, orgNameValidator } from '@workspace/extensions/zod';
 import z from 'zod';
-import Releases from '../releases.entity.ts';
+import Releases from '../../../entities/releases.entity.ts';
 export const createReleaseSchema = z.object({
   releaseName: orgNameValidator,
   projectId: z.string().uuid(),

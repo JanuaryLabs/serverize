@@ -3,7 +3,7 @@ import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
 import { toTraefikConfig } from '@workspace/extensions/user';
 import axios from 'axios';
 import z from 'zod';
-import Releases from '../../projects/releases.entity.ts';
+import Releases from '../../../entities/releases.entity.ts';
 
 export async function getConfig(
   output: trigger.http.output,

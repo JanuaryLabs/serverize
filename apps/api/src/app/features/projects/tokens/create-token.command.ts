@@ -3,7 +3,7 @@ import { saveEntity } from '@workspace/extensions/postgresql';
 import { type IdentitySubject } from '@workspace/identity';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
-import ApiKeys from '../api-keys.entity.ts';
+import ApiKeys from '../../../entities/api-keys.entity.ts';
 export const createTokenSchema = z.object({ projectId: z.string().uuid() });
 
 export async function createToken(

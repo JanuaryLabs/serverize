@@ -6,7 +6,7 @@ import {
 } from '@workspace/extensions/postgresql';
 import { channelSchema } from '@workspace/extensions/zod';
 import z from 'zod';
-import Releases from '../releases.entity.ts';
+import Releases from '../../../entities/releases.entity.ts';
 export const listReleasesSchema = z.object({
   projectId: z.string().uuid().optional(),
   channel: channelSchema.optional(),

@@ -6,7 +6,7 @@ import {
 } from '@workspace/extensions/postgresql';
 import { type IdentitySubject } from '@workspace/identity';
 import z from 'zod';
-import Organizations from '../organizations.entity.ts';
+import Organizations from '../../../entities/organizations.entity.ts';
 
 export async function listUserOrganizations(
   output: trigger.http.output,

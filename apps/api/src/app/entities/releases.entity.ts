@@ -11,7 +11,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
-import Projects from '../management/projects.entity.ts';
+import Projects from './projects.entity.ts';
 import Snapshots from './snapshots.entity.ts';
 import Volumes from './volumes.entity.ts';
 

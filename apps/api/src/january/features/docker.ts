@@ -6,7 +6,6 @@ import { docker } from 'serverize/docker';
 import { feature, trigger, workflow } from '@january/declarative';
 
 export default feature({
-  tables: {},
   workflows: [
     workflow('StreamContainerLogs', {
       tag: 'container',
