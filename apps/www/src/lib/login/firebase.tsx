@@ -1,5 +1,3 @@
-'use client';
-
 import { initializeApp } from 'firebase/app';
 import {
   EmailAuthProvider,

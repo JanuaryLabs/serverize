@@ -1,11 +1,68 @@
 ---
 import '@/styles/globals.css';
 
+import { CategoryFaq } from '../components/CategoryFaq';
 import CtaFooter from '../components/CtaFooter';
 import HeroVert from '../layouts/Hero/HeroVert';
 import Main from '../layouts/main.astro';
 import Integrations from '../lib/sections/integrations.astro';
 import { WhatWeBelieve } from '../lib/sections/what-we-beleive';
+// const DEMO_FAQS: FAQItemProps[] = [
+//   {
+//     question: 'What is Serverize?',
+//     answer: `Serverize is a deployment utility that packages your application into a Docker image, spins it up on a remote environment, and gives you a URL. It's built to streamline development, testing, and preview environments without heavy DevOps overhead.`,
+//     // answer:
+//     //   'Serverize is a platform designed to simplify the process of deploying and sharing web applications, especially during development and testing phases.',
+//   },
+//   {
+//     question: 'Why should I use Serverize?',
+//     answer:
+//       'Serverize provides a quick path to show off your work in a real environment. With minimal steps, you get a live URL for any new feature or project, making it easy to share, gather feedback, and iterate.',
+//   },
+//   // {
+//   //   question: 'Do I need any special skills to use Serverize?',
+//   //   answer:
+//   //     'Having  knowledge of Docker and the framework you are using is helpful, however `npx serverize` command tries to make it as easy as possible to implictly create a Dockerfile based on the framework you are using.',
+//   // },
+//   // {
+//   //   question: 'Who can use Serverize?',
+//   //   answer:
+//   //     'Developers, testers, and anyone needing to quickly deploy and share web applications.',
+//   // },
+//   {
+//     question: 'What types of applications can be deployed on Serverize?',
+//     answer:
+//       'Static websites, API projects, and full-stack applications. Essentially, As long as your app can run in a Docker container and expose a HTTP port, it can be deployed on Serverize.',
+//   },
+//   // {
+//   //   question: 'How do I get started with Serverize?',
+//   //   answer:
+//   //     "Create a Dockerfile with a HTTP port exposed, then use Serverize's `npx serverize` command to deploy.",
+//   // },
+//   {
+//     question: 'How does Serverize handle deployment?',
+//     answer:
+//       'It builds a docker image on your device, push it to Serverize servers which would then run it and expose it to the internet.',
+//   },
+//   {
+//     question: 'What happens after deployment?',
+//     answer:
+//       'You receive a link that you can share with others for testing and feedback.',
+//   },
+//   {
+//     question: 'Are there enterprise solutions available?',
+//     answer:
+//       'Yes, personalized demos are offered for those interested in more advanced features or enterprise solutions.',
+//   },
+//   // {
+//   //   question: 'Where can I find help if I need it?',
+//   //   answer: 'There are documentation, guides and Discord.',
+//   // },
+//   {
+//     question: "How does Serverize's pricing work?",
+//     answer: `You can have up to 3 projects, with each project supporting 4 releases across its channels for free while in beta, and we plan to offer self-hosting options when/if pricing is introduced.`,
+//   },
+// ];
 ---
 
 <Main title={'January - Serverize'}>
@@ -45,11 +102,8 @@ import { WhatWeBelieve } from '../lib/sections/what-we-beleive';
         <StaticWebsiteContent />
       </div>
     </section> -->
-    <!-- <section class="md:px-24 px-6 py-20">
-        <div class="content">
-          <FaqContent />
-        </div>
-      </section> -->
+    <CategoryFaq client:idle />
+    <!-- <FaqSection client:idle items={DEMO_FAQS} /> -->
     <div class="px-6 xl:px-0">
       <CtaFooter />
     </div>

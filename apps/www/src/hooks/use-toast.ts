@@ -1,5 +1,3 @@
-'use client';
-
 // Inspired by react-hot-toast library
 import type { ToastActionElement, ToastProps } from '@/components/ui/toast';
 
@@ -188,4 +186,4 @@ function useToast() {
   };
 }
 
-export { useToast, toast };
+export { toast, useToast };
