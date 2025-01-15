@@ -13,5 +13,6 @@ export async function deleteRelease(
   output: trigger.http.output,
   signal: AbortSignal,
 ) {
+  // TODO: implement
   return output.ok();
 }

@@ -9,329 +9,25 @@ import type { ParseError } from './parser';
 import { createUrl, formdata, json, toRequest, urlencoded } from './request';
 import type { StreamEndpoints } from './stream-endpoints';
 export default {
-  'POST /tokens': {
-    schema: projects.createTokenSchema,
+  'GET /container/logs': {
+    schema: docker.streamContainerLogsSchema,
     toRequest(
-      input: Endpoints['POST /tokens']['input'],
+      input: Endpoints['GET /container/logs']['input'],
       init: { baseUrl: string; headers?: Record<string, string> },
     ) {
-      const endpoint = 'POST /tokens';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['projectId'],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'DELETE /tokens': {
-    schema: projects.revokeTokenSchema,
-    toRequest(
-      input: Endpoints['DELETE /tokens']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'DELETE /tokens';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['token'],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'GET /tokens': {
-    schema: projects.listTokensSchema,
-    toRequest(
-      input: Endpoints['GET /tokens']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /tokens';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: [],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'GET /tokens/{token}': {
-    schema: projects.getTokenSchema,
-    toRequest(
-      input: Endpoints['GET /tokens/{token}']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /tokens/{token}';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: [],
-          inputParams: ['token'],
-        }),
-        init,
-      );
-    },
-  },
-  'POST /releases': {
-    schema: projects.createReleaseSchema,
-    toRequest(
-      input: Endpoints['POST /releases']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'POST /releases';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['releaseName', 'projectId', 'channel'],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'PATCH /releases/complete/{releaseId}': {
-    schema: projects.completeReleaseSchema,
-    toRequest(
-      input: Endpoints['PATCH /releases/complete/{releaseId}']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'PATCH /releases/complete/{releaseId}';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['conclusion', 'containerName', 'tarLocation'],
-          inputParams: ['releaseId'],
-        }),
-        init,
-      );
-    },
-  },
-  'PATCH /releases/{releaseId}': {
-    schema: projects.patchReleaseSchema,
-    toRequest(
-      input: Endpoints['PATCH /releases/{releaseId}']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'PATCH /releases/{releaseId}';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['status', 'conclusion', 'containerName'],
-          inputParams: ['releaseId'],
-        }),
-        init,
-      );
-    },
-  },
-  'POST /releases/{releaseId}/snapshots': {
-    schema: projects.createReleaseSnapshotSchema,
-    toRequest(
-      input: Endpoints['POST /releases/{releaseId}/snapshots']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'POST /releases/{releaseId}/snapshots';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['name'],
-          inputParams: ['releaseId'],
-        }),
-        init,
-      );
-    },
-  },
-  'GET /releases': {
-    schema: projects.listReleasesSchema,
-    toRequest(
-      input: Endpoints['GET /releases']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /releases';
+      const endpoint = 'GET /container/logs';
       return toRequest(
         endpoint,
         json(input, {
           inputHeaders: [],
           inputQuery: [
-            'projectId',
-            'channel',
-            'status',
-            'conclusion',
-            'pageSize',
-            'pageNo',
+            'projectName',
+            'channelName',
+            'releaseName',
+            'timestamp',
+            'details',
+            'tail',
           ],
-          inputBody: [],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'DELETE /releases': {
-    schema: projects.terminateReleaseSchema,
-    toRequest(
-      input: Endpoints['DELETE /releases']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'DELETE /releases';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: ['projectId'],
-          inputBody: [],
-          inputParams: ['releaseName', 'channelName'],
-        }),
-        init,
-      );
-    },
-  },
-  'POST /secrets': {
-    schema: projects.createSecretSchema,
-    toRequest(
-      input: Endpoints['POST /secrets']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'POST /secrets';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['projectId', 'channel', 'secretLabel', 'secretValue'],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'GET /secrets': {
-    schema: projects.getSecretsSchema,
-    toRequest(
-      input: Endpoints['GET /secrets']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /secrets';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: ['projectId', 'channel'],
-          inputBody: [],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'DELETE /secrets/{id}': {
-    schema: projects.deleteSecretSchema,
-    toRequest(
-      input: Endpoints['DELETE /secrets/{id}']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'DELETE /secrets/{id}';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: [],
-          inputParams: ['id'],
-        }),
-        init,
-      );
-    },
-  },
-  'GET /secrets/values': {
-    schema: projects.getSecretsValuesSchema,
-    toRequest(
-      input: Endpoints['GET /secrets/values']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /secrets/values';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: ['projectId', 'channel'],
-          inputBody: [],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'GET /root/favicon.ico': {
-    schema: root.emptyFaviconSchema,
-    toRequest(
-      input: Endpoints['GET /root/favicon.ico']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /root/favicon.ico';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: [],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'GET /root': {
-    schema: root.sayHiSchema,
-    toRequest(
-      input: Endpoints['GET /root']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /root';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: [],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'GET /root/health': {
-    schema: root.healthCheckSchema,
-    toRequest(
-      input: Endpoints['GET /root/health']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /root/health';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
           inputBody: [],
           inputParams: [],
         }),
@@ -655,25 +351,329 @@ export default {
       );
     },
   },
-  'GET /container/logs': {
-    schema: docker.streamContainerLogsSchema,
+  'POST /tokens': {
+    schema: projects.createTokenSchema,
     toRequest(
-      input: Endpoints['GET /container/logs']['input'],
+      input: Endpoints['POST /tokens']['input'],
       init: { baseUrl: string; headers?: Record<string, string> },
     ) {
-      const endpoint = 'GET /container/logs';
+      const endpoint = 'POST /tokens';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['projectId'],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'DELETE /tokens': {
+    schema: projects.revokeTokenSchema,
+    toRequest(
+      input: Endpoints['DELETE /tokens']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'DELETE /tokens';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['token'],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'GET /tokens': {
+    schema: projects.listTokensSchema,
+    toRequest(
+      input: Endpoints['GET /tokens']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /tokens';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: [],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'GET /tokens/{token}': {
+    schema: projects.getTokenSchema,
+    toRequest(
+      input: Endpoints['GET /tokens/{token}']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /tokens/{token}';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: [],
+          inputParams: ['token'],
+        }),
+        init,
+      );
+    },
+  },
+  'POST /releases': {
+    schema: projects.createReleaseSchema,
+    toRequest(
+      input: Endpoints['POST /releases']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'POST /releases';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['releaseName', 'projectId', 'channel'],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'PATCH /releases/complete/{releaseId}': {
+    schema: projects.completeReleaseSchema,
+    toRequest(
+      input: Endpoints['PATCH /releases/complete/{releaseId}']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'PATCH /releases/complete/{releaseId}';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['conclusion', 'containerName', 'tarLocation'],
+          inputParams: ['releaseId'],
+        }),
+        init,
+      );
+    },
+  },
+  'PATCH /releases/{releaseId}': {
+    schema: projects.patchReleaseSchema,
+    toRequest(
+      input: Endpoints['PATCH /releases/{releaseId}']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'PATCH /releases/{releaseId}';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['status', 'conclusion', 'containerName'],
+          inputParams: ['releaseId'],
+        }),
+        init,
+      );
+    },
+  },
+  'POST /releases/{releaseId}/snapshots': {
+    schema: projects.createReleaseSnapshotSchema,
+    toRequest(
+      input: Endpoints['POST /releases/{releaseId}/snapshots']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'POST /releases/{releaseId}/snapshots';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['name'],
+          inputParams: ['releaseId'],
+        }),
+        init,
+      );
+    },
+  },
+  'GET /releases': {
+    schema: projects.listReleasesSchema,
+    toRequest(
+      input: Endpoints['GET /releases']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /releases';
       return toRequest(
         endpoint,
         json(input, {
           inputHeaders: [],
           inputQuery: [
-            'projectName',
-            'channelName',
-            'releaseName',
-            'timestamp',
-            'details',
-            'tail',
+            'projectId',
+            'channel',
+            'status',
+            'conclusion',
+            'pageSize',
+            'pageNo',
           ],
+          inputBody: [],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'DELETE /releases': {
+    schema: projects.terminateReleaseSchema,
+    toRequest(
+      input: Endpoints['DELETE /releases']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'DELETE /releases';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: ['projectId'],
+          inputBody: [],
+          inputParams: ['releaseName', 'channelName'],
+        }),
+        init,
+      );
+    },
+  },
+  'POST /secrets': {
+    schema: projects.createSecretSchema,
+    toRequest(
+      input: Endpoints['POST /secrets']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'POST /secrets';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['projectId', 'channel', 'secretLabel', 'secretValue'],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'GET /secrets': {
+    schema: projects.getSecretsSchema,
+    toRequest(
+      input: Endpoints['GET /secrets']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /secrets';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: ['projectId', 'channel'],
+          inputBody: [],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'DELETE /secrets/{id}': {
+    schema: projects.deleteSecretSchema,
+    toRequest(
+      input: Endpoints['DELETE /secrets/{id}']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'DELETE /secrets/{id}';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: [],
+          inputParams: ['id'],
+        }),
+        init,
+      );
+    },
+  },
+  'GET /secrets/values': {
+    schema: projects.getSecretsValuesSchema,
+    toRequest(
+      input: Endpoints['GET /secrets/values']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /secrets/values';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: ['projectId', 'channel'],
+          inputBody: [],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'GET /root/favicon.ico': {
+    schema: root.emptyFaviconSchema,
+    toRequest(
+      input: Endpoints['GET /root/favicon.ico']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /root/favicon.ico';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: [],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'GET /root': {
+    schema: root.sayHiSchema,
+    toRequest(
+      input: Endpoints['GET /root']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /root';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: [],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'GET /root/health': {
+    schema: root.healthCheckSchema,
+    toRequest(
+      input: Endpoints['GET /root/health']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /root/health';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
           inputBody: [],
           inputParams: [],
         }),

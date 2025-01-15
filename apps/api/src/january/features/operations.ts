@@ -328,7 +328,9 @@ export default feature({
           },
         }),
       }),
-      execute: (...args) => {},
+      execute: (...args) => {
+        // TODO: implement
+      },
     }),
     workflow('GetConfig', {
       tag: 'operations',

@@ -95,6 +95,7 @@ const list = new Command('list')
 
     console.table(
       tokens.map((token) => ({
+        Id: token.id,
         Project: token.project.name,
         'Created At': token.createdAt,
       })),

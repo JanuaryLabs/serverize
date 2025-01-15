@@ -25,8 +25,8 @@ export interface Releases {
     | 'timed_out';
   status?:
     | null
-    | 'in_progress'
     | 'requested'
+    | 'in_progress'
     | 'completed'
     | 'queued'
     | 'waiting';

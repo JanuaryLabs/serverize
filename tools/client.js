@@ -27,6 +27,6 @@ await generate({
   },
 });
 
-execSync(`npx biome check packages/client --write`, {
+execSync(`biome check packages/client --write`, {
   cwd: process.cwd(),
 });

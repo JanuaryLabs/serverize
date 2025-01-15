@@ -5,6 +5,14 @@ import { Secrets } from './Secrets';
 import { SecretsKeys } from './SecretsKeys';
 import { Workspaces } from './Workspaces';
 export interface Projects {
+  releases: Releases[];
+  releasesIds: string[];
+  secrets: Secrets[];
+  secretsIds: string[];
+  secretsKeys: SecretsKeys[];
+  secretsKeysIds: string[];
+  apiKeys: ApiKeys[];
+  apiKeysIds: string[];
   name: string;
   workspace: Workspaces;
   workspaceId: string;
@@ -14,12 +22,4 @@ export interface Projects {
   deletedAt?: Date;
   preferences?: Preferences[];
   preferencesIds?: null | string[];
-  releases: Releases[];
-  releasesIds: string[];
-  secrets: Secrets[];
-  secretsIds: string[];
-  secretsKeys: SecretsKeys[];
-  secretsKeysIds: string[];
-  apiKeys: ApiKeys[];
-  apiKeysIds: string[];
 }

@@ -41,6 +41,95 @@ import { TerminateRelease } from './outputs/TerminateRelease';
 import type { ParseError } from './parser';
 import type { ServerError } from './response';
 export interface Endpoints {
+  'GET /container/logs': {
+    input: z.infer<typeof docker.streamContainerLogsSchema>;
+    output: StreamContainerLogs;
+    error: ServerError | ParseError<typeof docker.streamContainerLogsSchema>;
+  };
+  'DELETE /organizations/{id}': {
+    input: z.infer<typeof management.deleteOrgSchema>;
+    output: DeleteOrg;
+    error: ServerError | ParseError<typeof management.deleteOrgSchema>;
+  };
+  'GET /organizations': {
+    input: z.infer<typeof management.listOrganizationsSchema>;
+    output: ListOrganizations;
+    error: ServerError | ParseError<typeof management.listOrganizationsSchema>;
+  };
+  'POST /organizations/default': {
+    input: z.infer<typeof management.createDefaultOrganizationSchema>;
+    output: CreateDefaultOrganization;
+    error:
+      | ServerError
+      | ParseError<typeof management.createDefaultOrganizationSchema>;
+  };
+  'POST /organizations': {
+    input: z.infer<typeof management.createOrganizationSchema>;
+    output: CreateOrganization;
+    error: ServerError | ParseError<typeof management.createOrganizationSchema>;
+  };
+  'POST /workspaces': {
+    input: z.infer<typeof management.createWorkspaceSchema>;
+    output: CreateWorkspace;
+    error: ServerError | ParseError<typeof management.createWorkspaceSchema>;
+  };
+  'POST /projects': {
+    input: z.infer<typeof management.createProjectSchema>;
+    output: CreateProject;
+    error: ServerError | ParseError<typeof management.createProjectSchema>;
+  };
+  'PATCH /projects/{id}': {
+    input: z.infer<typeof management.patchProjectSchema>;
+    output: PatchProject;
+    error: ServerError | ParseError<typeof management.patchProjectSchema>;
+  };
+  'GET /projects': {
+    input: z.infer<typeof management.listProjectsSchema>;
+    output: ListProjects;
+    error: ServerError | ParseError<typeof management.listProjectsSchema>;
+  };
+  'GET /users/organizations': {
+    input: z.infer<typeof management.listUserOrganizationsSchema>;
+    output: ListUserOrganizations;
+    error:
+      | ServerError
+      | ParseError<typeof management.listUserOrganizationsSchema>;
+  };
+  'POST /users/link': {
+    input: z.infer<typeof management.linkUserSchema>;
+    output: LinkUser;
+    error: ServerError | ParseError<typeof management.linkUserSchema>;
+  };
+  'POST /users/signin': {
+    input: z.infer<typeof management.signinSchema>;
+    output: Signin;
+    error: ServerError | ParseError<typeof management.signinSchema>;
+  };
+  'POST /operations/releases/start': {
+    input: z.infer<typeof operations.startReleaseSchema>;
+    output: StartRelease;
+    error: ServerError | ParseError<typeof operations.startReleaseSchema>;
+  };
+  'POST /operations/releases/{releaseName}/restart': {
+    input: z.infer<typeof operations.restartReleaseSchema>;
+    output: RestartRelease;
+    error: ServerError | ParseError<typeof operations.restartReleaseSchema>;
+  };
+  'POST /operations/channels/{channelName}/restart': {
+    input: z.infer<typeof operations.restartChannelSchema>;
+    output: RestartChannel;
+    error: ServerError | ParseError<typeof operations.restartChannelSchema>;
+  };
+  'DELETE /operations/releases/{releaseName}': {
+    input: z.infer<typeof operations.deleteReleaseSchema>;
+    output: DeleteRelease;
+    error: ServerError | ParseError<typeof operations.deleteReleaseSchema>;
+  };
+  'GET /operations/config': {
+    input: z.infer<typeof operations.getConfigSchema>;
+    output: GetConfig;
+    error: ServerError | ParseError<typeof operations.getConfigSchema>;
+  };
   'POST /tokens': {
     input: z.infer<typeof projects.createTokenSchema>;
     output: CreateToken;
@@ -127,94 +216,5 @@ export interface Endpoints {
     input: z.infer<typeof root.healthCheckSchema>;
     output: HealthCheck;
     error: ServerError | ParseError<typeof root.healthCheckSchema>;
-  };
-  'DELETE /organizations/{id}': {
-    input: z.infer<typeof management.deleteOrgSchema>;
-    output: DeleteOrg;
-    error: ServerError | ParseError<typeof management.deleteOrgSchema>;
-  };
-  'GET /organizations': {
-    input: z.infer<typeof management.listOrganizationsSchema>;
-    output: ListOrganizations;
-    error: ServerError | ParseError<typeof management.listOrganizationsSchema>;
-  };
-  'POST /organizations/default': {
-    input: z.infer<typeof management.createDefaultOrganizationSchema>;
-    output: CreateDefaultOrganization;
-    error:
-      | ServerError
-      | ParseError<typeof management.createDefaultOrganizationSchema>;
-  };
-  'POST /organizations': {
-    input: z.infer<typeof management.createOrganizationSchema>;
-    output: CreateOrganization;
-    error: ServerError | ParseError<typeof management.createOrganizationSchema>;
-  };
-  'POST /workspaces': {
-    input: z.infer<typeof management.createWorkspaceSchema>;
-    output: CreateWorkspace;
-    error: ServerError | ParseError<typeof management.createWorkspaceSchema>;
-  };
-  'POST /projects': {
-    input: z.infer<typeof management.createProjectSchema>;
-    output: CreateProject;
-    error: ServerError | ParseError<typeof management.createProjectSchema>;
-  };
-  'PATCH /projects/{id}': {
-    input: z.infer<typeof management.patchProjectSchema>;
-    output: PatchProject;
-    error: ServerError | ParseError<typeof management.patchProjectSchema>;
-  };
-  'GET /projects': {
-    input: z.infer<typeof management.listProjectsSchema>;
-    output: ListProjects;
-    error: ServerError | ParseError<typeof management.listProjectsSchema>;
-  };
-  'GET /users/organizations': {
-    input: z.infer<typeof management.listUserOrganizationsSchema>;
-    output: ListUserOrganizations;
-    error:
-      | ServerError
-      | ParseError<typeof management.listUserOrganizationsSchema>;
-  };
-  'POST /users/link': {
-    input: z.infer<typeof management.linkUserSchema>;
-    output: LinkUser;
-    error: ServerError | ParseError<typeof management.linkUserSchema>;
-  };
-  'POST /users/signin': {
-    input: z.infer<typeof management.signinSchema>;
-    output: Signin;
-    error: ServerError | ParseError<typeof management.signinSchema>;
-  };
-  'POST /operations/releases/start': {
-    input: z.infer<typeof operations.startReleaseSchema>;
-    output: StartRelease;
-    error: ServerError | ParseError<typeof operations.startReleaseSchema>;
-  };
-  'POST /operations/releases/{releaseName}/restart': {
-    input: z.infer<typeof operations.restartReleaseSchema>;
-    output: RestartRelease;
-    error: ServerError | ParseError<typeof operations.restartReleaseSchema>;
-  };
-  'POST /operations/channels/{channelName}/restart': {
-    input: z.infer<typeof operations.restartChannelSchema>;
-    output: RestartChannel;
-    error: ServerError | ParseError<typeof operations.restartChannelSchema>;
-  };
-  'DELETE /operations/releases/{releaseName}': {
-    input: z.infer<typeof operations.deleteReleaseSchema>;
-    output: DeleteRelease;
-    error: ServerError | ParseError<typeof operations.deleteReleaseSchema>;
-  };
-  'GET /operations/config': {
-    input: z.infer<typeof operations.getConfigSchema>;
-    output: GetConfig;
-    error: ServerError | ParseError<typeof operations.getConfigSchema>;
-  };
-  'GET /container/logs': {
-    input: z.infer<typeof docker.streamContainerLogsSchema>;
-    output: StreamContainerLogs;
-    error: ServerError | ParseError<typeof docker.streamContainerLogsSchema>;
   };
 }
