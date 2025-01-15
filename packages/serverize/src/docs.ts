@@ -168,6 +168,7 @@ function main(): void {
 
     const lines = [
       '---',
+      `navName: "\`${cmdName}\`"`,
       `layout: ../../../layouts/DocsLayout.astro`,
       `title: npx serverize ${cmdName}`,
       '---',

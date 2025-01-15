@@ -1,4 +1,5 @@
 ---
+navName: "`logs`"
 layout: ../../../layouts/DocsLayout.astro
 title: npx serverize logs
 ---

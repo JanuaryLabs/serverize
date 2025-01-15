@@ -305,8 +305,14 @@ body {
   overscroll-behavior: none;
 }
 
-.prose {
-  li > p:only-child {
-    margin: 0;
+@layer base {
+  .prose {
+    li > p:only-child {
+      margin: 0;
+    }
   }
+}
+
+code {
+  @apply bg-accent rounded border px-1 pb-0.5;
 }

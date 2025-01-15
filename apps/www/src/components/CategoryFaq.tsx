@@ -191,61 +191,59 @@ export function CategoryFaq() {
   const filteredFaqs = FAQS.filter((faq) => faq.category === activeCategory);
 
   return (
-    <section className="py-8 w-full rounded-xl">
-      <div className="container px-4 mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="max-w-2xl mx-auto text-center mb-12"
-        >
-          <h2 className="text-3xl font-semibold mb-3 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Everything you need to know
-          </p>
-        </motion.div>
+    <div className="mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mx-auto text-center mb-12"
+      >
+        <h2 className="text-3xl font-semibold mb-3 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent">
+          Frequently Asked Questions
+        </h2>
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          Everything you need to know
+        </p>
+      </motion.div>
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-[250px_1fr] gap-8">
-          <div className="bg-white dark:bg-black/5 p-4 rounded-xl border border-gray-100 dark:border-gray-800/60 h-fit">
-            <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3 px-4">
-              Categories
-            </h3>
-            <div className="space-y-1">
-              {categories.map((category) => (
-                <CategoryButton
-                  key={category}
-                  name={category}
-                  isActive={category === activeCategory}
-                  onClick={() => setActiveCategory(category)}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-black/5 p-6 rounded-xl border border-gray-100 dark:border-gray-800/60">
-            <Accordion type="single" collapsible className="space-y-4">
-              {filteredFaqs.map((faq, index) => (
-                <AccordionItem
-                  key={index}
-                  value={`${index}`}
-                  className="border border-gray-100 dark:border-gray-800/60 rounded-lg px-4"
-                >
-                  <AccordionTrigger className="hover:no-underline">
-                    <span className="text-left font-medium text-gray-900 dark:text-gray-200 hover:text-primary">
-                      {faq.question}
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="text-gray-600 dark:text-gray-400 pt-2">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+      <div className="mx-auto grid grid-cols-1 md:grid-cols-[250px_1fr] gap-8">
+        <div className="bg-white dark:bg-black/5 p-4 rounded-xl border border-gray-100 dark:border-gray-800/60 h-fit">
+          <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3 px-4">
+            Categories
+          </h3>
+          <div className="space-y-1">
+            {categories.map((category) => (
+              <CategoryButton
+                key={category}
+                name={category}
+                isActive={category === activeCategory}
+                onClick={() => setActiveCategory(category)}
+              />
+            ))}
           </div>
         </div>
+
+        <div className="bg-white dark:bg-black/5 p-6 rounded-xl border border-gray-100 dark:border-gray-800/60">
+          <Accordion type="single" collapsible className="space-y-4">
+            {filteredFaqs.map((faq, index) => (
+              <AccordionItem
+                key={index}
+                value={`${index}`}
+                className="border border-gray-100 dark:border-gray-800/60 rounded-lg px-4"
+              >
+                <AccordionTrigger className="hover:no-underline">
+                  <span className="text-left font-medium text-gray-900 dark:text-gray-200 hover:text-primary">
+                    {faq.question}
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-600 dark:text-gray-400 pt-2">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }

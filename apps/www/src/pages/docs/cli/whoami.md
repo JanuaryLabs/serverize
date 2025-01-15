@@ -1,4 +1,5 @@
 ---
+navName: "`whoami`"
 layout: ../../../layouts/DocsLayout.astro
 title: npx serverize whoami
 ---

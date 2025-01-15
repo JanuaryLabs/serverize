@@ -1,5 +1,4 @@
 ---
-import { titlecase } from 'stringcase';
 import Toc from '../layouts/Blog/Toc';
 import TocSpy from '../layouts/Blog/TocSpy';
 import type { DocsTree } from '../types/docs';
@@ -31,9 +30,8 @@ const currentPath = Astro.url.pathname;
                   ? 'text-lg font-semibold uppercase tracking-wide'
                   : 'text-secondary-foreground/80 text-[15px]',
               ]}
-            >
-              {value.name || key}
-            </a>
+              set:html={value.navName || key}
+            />
           ) : (
             <span
               style={{

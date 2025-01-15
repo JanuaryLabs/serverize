@@ -1,4 +1,5 @@
 ---
+navName: "`deploy`"
 layout: ../../../layouts/DocsLayout.astro
 title: npx serverize deploy
 ---

@@ -1,8 +1,8 @@
 import svgToDataUri from 'mini-svg-data-uri';
 
 import { join } from 'path';
-import defaultTheme from 'tailwindcss/defaultTheme';
 import { fileURLToPath } from 'url';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 const {
   createGlobPatternsForDependencies,
@@ -92,6 +92,15 @@ export default {
           ring: 'hsl(var(--sidebar-ring))',
         },
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            code: false, // Disable default styling for <code> elements
+            'code::before': false, // Remove the 'before' pseudo-element
+            'code::after': false, // Remove the 'after' pseudo-element
+          },
+        },
+      }),
     },
   },
   plugins: [

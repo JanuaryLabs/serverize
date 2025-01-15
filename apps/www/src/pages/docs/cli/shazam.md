@@ -1,4 +1,5 @@
 ---
+navName: "`shazam`"
 layout: ../../../layouts/DocsLayout.astro
 title: npx serverize shazam
 ---

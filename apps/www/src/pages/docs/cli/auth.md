@@ -1,4 +1,5 @@
 ---
+navName: "`auth`"
 layout: ../../../layouts/DocsLayout.astro
 title: npx serverize auth
 ---

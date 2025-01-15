@@ -1,4 +1,5 @@
 ---
+navName: "`tokens`"
 layout: ../../../layouts/DocsLayout.astro
 title: npx serverize tokens
 ---

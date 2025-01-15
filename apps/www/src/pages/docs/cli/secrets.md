@@ -1,4 +1,5 @@
 ---
+navName: "`secrets`"
 layout: ../../../layouts/DocsLayout.astro
 title: npx serverize secrets
 ---

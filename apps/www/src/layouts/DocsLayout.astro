@@ -1,9 +1,9 @@
 ---
 import '@/styles/globals.css';
+import { marked } from 'marked';
 
 import { basename, extname } from 'path';
 import type { MarkdownInstance } from 'astro';
-import Footer from '../components/Footer';
 import TreeNode from '../components/TreeNode.astro';
 import { Nav } from '../components/background';
 import Main from './main.astro';
@@ -51,16 +51,23 @@ for (const post of posts) {
     .url!.split('/')
     .slice(2)
     .map((it) => it.replaceAll(/-/g, ' ').replace(/^\d./, ''));
-  createObject(groups, dot, extractProps(post));
+  createObject(groups, dot, await extractProps(post));
+  console.log(post.frontmatter);
 }
 
-function extractProps(
-  post: MarkdownInstance<{ title: string; subtitle: string }>,
+async function extractProps(
+  post: MarkdownInstance<{ navName?: string; title: string; subtitle: string }>,
 ) {
+  const name = basename(post.file)
+    .replace(extname(post.file), '')
+    .replace(/^\d\./g, '');
   return {
-    name: basename(post.file)
-      .replace(extname(post.file), '')
-      .replace(/^\d\./g, ''),
+    name,
+    navName: post.frontmatter.navName
+      ? await marked.parseInline(post.frontmatter.navName, {
+          async: true,
+        })
+      : name,
     title: post.frontmatter.title,
     subtitle: post.frontmatter.subtitle,
     href: post
@@ -77,6 +84,8 @@ function extractProps(
 const { frontmatter, url } = Astro.props;
 const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
 const dashes = '-'.repeat(1000);
+
+const content = await marked.parseInline(frontmatter.title, { async: true });
 ---
 
 <Main title={frontmatter.title} canonical={canonical}>
@@ -92,7 +101,10 @@ const dashes = '-'.repeat(1000);
 
     <article class="prose max-w-full pb-16">
       <p class="invisible h-0">{dashes}</p>
-      <h1 class="mb-0 text-4xl font-bold">{frontmatter.title}</h1>
+      <h1
+        class="not-prose mb-0 text-4xl font-bold [&_p]:m-0"
+        set:html={content}
+      />
       <!-- <p class="text-secondary-foreground/70">{frontmatter.subtitle}</p> -->
       <slot />
     </article>

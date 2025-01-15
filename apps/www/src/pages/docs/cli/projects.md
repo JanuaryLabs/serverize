@@ -1,4 +1,5 @@
 ---
+navName: "`projects`"
 layout: ../../../layouts/DocsLayout.astro
 title: npx serverize projects
 ---

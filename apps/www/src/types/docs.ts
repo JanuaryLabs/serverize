@@ -2,6 +2,7 @@ import type { MarkdownHeading } from 'astro';
 
 export interface DocNode {
   title?: string;
+  navName?: string;
   name?: string;
   subtitle?: string;
   href?: string;

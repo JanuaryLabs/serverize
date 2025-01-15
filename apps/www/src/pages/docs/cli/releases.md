@@ -1,4 +1,5 @@
 ---
+navName: "`releases`"
 layout: ../../../layouts/DocsLayout.astro
 title: npx serverize releases
 ---
