@@ -52,7 +52,6 @@ for (const post of posts) {
     .slice(2)
     .map((it) => it.replaceAll(/-/g, ' ').replace(/^\d./, ''));
   createObject(groups, dot, await extractProps(post));
-  console.log(post.frontmatter);
 }
 
 async function extractProps(

@@ -92,6 +92,9 @@ export default {
           ring: 'hsl(var(--sidebar-ring))',
         },
       },
+      fontWeight: {
+        bold: '600',
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {
