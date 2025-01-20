@@ -16,7 +16,7 @@
       "options": {
         "commands": [
           {
-            "description": "Generate code out of January",
+            "description": "Generate API Code",
             "prefix": "generate",
             "color": "yellow",
             "command": "npm run generate:watch"
@@ -41,6 +41,7 @@
         "format": ["esm"],
         "minify": false,
         "sourcemap": true,
+        "deleteOutputPath": false,
         "generatePackageJson": true,
         "esbuildOptions": {
           "alias": {

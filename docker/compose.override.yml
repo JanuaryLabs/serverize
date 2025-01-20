@@ -61,6 +61,15 @@ services:
     ports:
       - '8085:8080'
 
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - '9090:9090'
+    networks:
+      - traefik-network
+
 volumes:
   serverize-uploads:
     driver: local

@@ -56,6 +56,8 @@ const list = new Command('list')
   });
 
 const terminate = new Command('terminate')
+  .alias('delete')
+  .alias('stop')
   .description('Terminate a specific release')
   .usage('[options]')
   .addOption(channelOption.makeOptionMandatory(false))

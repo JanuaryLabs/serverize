@@ -1,6 +1,6 @@
 services:
   traefik:
-    image: traefik:3.2.1
+    image: traefik:3.3.2
     networks:
       - traefik-network
     ports:
@@ -24,12 +24,14 @@ services:
     command:
       - start
       - '--provider.name=docker'
+      - '--storage.file=/sablier/session.txt'
     ports:
       - '10000:10000'
     networks:
       - traefik-network
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
+      - 'sablier:/sablier'
 
   whoami:
     image: traefik/whoami
@@ -90,13 +92,13 @@ services:
       - serverize-uploads:/data:rw
 
 volumes:
+  sablier:
   serverize-uploads:
     driver: local
     driver_opts:
       type: none
       device: /mnt/images
       o: bind
-
 networks:
   traefik-network:
     external: true

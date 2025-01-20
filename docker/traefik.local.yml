@@ -2,6 +2,20 @@ log:
   level: TRACE
   format: json
 
+accessLog:
+  filePath: "/var/log/traefik/access.jsonl"
+  bufferingSize: 100
+  format: json
+  # otlp:
+  #   http:
+  #     endpoint: http://otel-collector:4318/v1/logs
+
+metrics:
+  prometheus:
+    addRoutersLabels: true
+    addEntryPointsLabels: true
+    addServicesLabels: true
+
 api:
   dashboard: true
   debug: true
@@ -9,16 +23,16 @@ api:
 
 entryPoints:
   web:
-    address: ':80'
+    address: ":80"
   websecure:
-    address: ':443'
+    address: ":443"
 
 providers:
   http:
-    endpoint: 'http://api:3000/operations/config'
-
+    endpoint: "http://api:3000/operations/config"
 experimental:
+  otlpLogs: true
   plugins:
     sablier:
-      modulename: 'github.com/sablierapp/sablier'
-      version: 'v1.8.1'
+      modulename: "github.com/sablierapp/sablier"
+      version: "v1.8.1"
