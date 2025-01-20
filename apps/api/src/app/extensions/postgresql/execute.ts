@@ -126,16 +126,17 @@ export async function removeEntity<
   T extends DeepPartial<Entity>,
 >(
   entityType: EntityTarget<Entity>,
-  qbOrEntity: SelectQueryBuilder<T> | Entity,
-) {
+  qbOrEntity: SelectQueryBuilder<T> | T | T[],
+): Promise<Entity[]> {
   const manager = getManager();
   const repo = manager.getRepository(entityType);
-  const entity =
-    qbOrEntity instanceof SelectQueryBuilder
-      ? await qbOrEntity.getOneOrFail()
-      : qbOrEntity;
-  await repo.softRemove(entity);
-  return entity;
+  if (qbOrEntity instanceof SelectQueryBuilder) {
+    return await repo.softRemove(await qbOrEntity.getMany());
+  } else if (Array.isArray(qbOrEntity)) {
+    return await repo.softRemove(qbOrEntity);
+  } else {
+    return [await repo.softRemove(qbOrEntity)];
+  }
 }
 
 export async function patchEntity<

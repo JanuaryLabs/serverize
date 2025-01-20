@@ -146,22 +146,6 @@ router.get('/releases', authorize(), async (context, next) => {
   await releases.listReleases(input, output, context.req.raw.signal);
   return output.finalize();
 });
-router.delete(
-  '/releases',
-  authorize(policies.notImplemented, policies.authenticated),
-  async (context, next) => {
-    const query = context.req.query();
-    const path = context.req.param();
-    const input = parseOrThrow(releases.terminateReleaseSchema, {
-      projectId: query.projectId,
-      releaseName: path.releaseName,
-      channelName: path.channelName,
-    });
-    const output = createOutput(context);
-    await releases.terminateRelease(input, output, context.req.raw.signal);
-    return output.finalize();
-  },
-);
 router.post(
   '/secrets',
   consume('application/json'),

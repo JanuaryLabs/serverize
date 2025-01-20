@@ -21,13 +21,13 @@ export function showError(
       return vscode.window.showErrorMessage(`${message}\n${message}`);
     }
     if (error.kind === 'response') {
-      const errors = (error as any).errors;
+      const { errors, detail } = error.body as any;
       const flattened = Object.entries(errors ?? {}).map(([key, it]) => ({
         path: key,
         message: (it as any[])[0].message,
       }));
-      const message = `${flattened.map((it) => `${it.path}: ${it.message}`).join('\n')}`;
-      return vscode.window.showErrorMessage(`${message}\n${message}`);
+      const validationMessage = `${flattened.map((it) => `${it.path}: ${it.message}`).join('\n')}`;
+      return vscode.window.showErrorMessage(`${detail}\n${validationMessage}`);
     }
   }
 

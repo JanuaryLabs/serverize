@@ -3,8 +3,10 @@ import { policies } from '@workspace/extensions/identity';
 import {
   createQueryBuilder,
   execute,
+  removeEntity,
   saveEntity,
   upsertEntity,
+  useTransaction,
 } from '@workspace/extensions/postgresql';
 import {
   PROTOCOL,
@@ -23,6 +25,8 @@ import z from 'zod';
 import axios from 'axios';
 
 import { feature, trigger, workflow } from '@january/declarative';
+import { ProblemDetailsException } from 'rfc-7807-problem-details';
+import { getContainer, removeContainer } from 'serverize/docker';
 
 export default feature({
   workflows: [
@@ -328,8 +332,46 @@ export default feature({
           },
         }),
       }),
-      execute: (...args) => {
-        // TODO: implement
+      execute: async ({ input }) => {
+        await useTransaction(async () => {
+          const release = await createQueryBuilder(tables.releases, 'releases')
+            .where('releases.name = :name', { name: input.releaseName })
+            .andWhere('releases.status = :status', { status: 'completed' })
+            // .andWhere('releases.conclusion = :conclusion', {
+            //   conclusion: 'success',
+            // })
+            .andWhere('releases.channel = :channel', {
+              channel: input.channel,
+            })
+            .andWhere('releases.projectId = :projectId', {
+              projectId: input.projectId,
+            })
+            .getOneOrFail();
+
+          const container = await getContainer({
+            name: release.containerName!,
+          });
+
+          if (!container) {
+            throw new ProblemDetailsException({
+              title: 'Container not found',
+              detail: `Release ${input.releaseName} have no corresponding container`,
+              status: 404,
+            });
+          }
+
+          await removeEntity(tables.releases, release);
+          await removeEntity(
+            tables.volumes,
+            createQueryBuilder(tables.volumes, 'volumes').where(
+              'volumes.releaseId = :releaseId',
+              {
+                releaseId: release.id,
+              },
+            ),
+          );
+          await removeContainer(container);
+        });
       },
     }),
     workflow('GetConfig', {

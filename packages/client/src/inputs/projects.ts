@@ -33,11 +33,6 @@ export const listReleasesSchema = z.object({
   pageSize: z.coerce.number().int().min(1).max(50).default(50).optional(),
   pageNo: z.coerce.number().int().min(1).optional(),
 });
-export const terminateReleaseSchema = z.object({
-  projectId: z.string().uuid(),
-  releaseName: orgNameValidator,
-  channelName: channelSchema,
-});
 export const createSecretSchema = z.object({
   projectId: z.string().uuid(),
   channel: channelSchema,

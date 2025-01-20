@@ -54,6 +54,7 @@ export class ProjectsDataProvider
         {
           projectId: element.data.id,
           pageSize: 10,
+          conclusion: process.env.NODE_ENV === 'development' ? 'success' : '',
         },
       );
       if (releasesError) {

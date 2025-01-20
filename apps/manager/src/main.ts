@@ -1,21 +1,21 @@
+import { createServer } from 'http';
+import { tmpdir } from 'os';
 import { Releases } from '@serverize/client';
 // import sse from 'better-sse';
 import cors from 'cors';
 import express from 'express';
-import { createServer } from 'http';
 import { StatusCodes } from 'http-status-codes';
 import morgan from 'morgan';
-import { tmpdir } from 'os';
 import { WebSocketServer } from 'ws';
 
-import { observeFile } from './file';
-import { startServer } from './start';
 import { join } from 'path';
 import {
   ProblemDetailsException,
   problemDetailsMiddleware,
 } from 'rfc-7807-problem-details';
 import { getContainer, removeContainer } from 'serverize/docker';
+import { observeFile } from './file';
+import { startServer } from './start';
 
 Object.assign(process.env, {
   NODE_ENV: process.env.NODE_ENV ?? 'development',
@@ -169,42 +169,6 @@ const application = express()
         ),
       ]),
     );
-  })
-  .delete('/terminate', async (req, res) => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    req.on('aborted', () => {
-      console.log('Connection closed');
-      controller.abort('Client closed connection');
-    });
-    const token = req.header('Authorization');
-    if (!token) {
-      res.status(StatusCodes.UNAUTHORIZED).send();
-      return;
-    }
-
-    const xRelease = req.header('x-release');
-    if (!xRelease) {
-      res.status(StatusCodes.BAD_REQUEST).send();
-      return;
-    }
-
-    const releaseInfo: {
-      id: string;
-      containerName: string;
-    } = JSON.parse(Buffer.from(xRelease, 'base64').toString('utf-8'));
-
-    const container = await getContainer({
-      name: releaseInfo.containerName,
-    });
-    if (!container) {
-      res.status(StatusCodes.BAD_REQUEST).send();
-      return;
-    }
-    await removeContainer(container);
-
-    res.json({});
   });
 
 application

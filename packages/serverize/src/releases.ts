@@ -65,11 +65,14 @@ const terminate = new Command('terminate')
   .addOption(projectOption)
   .action(async ({ projectName, channel, release }) => {
     const currentProject = await getCurrentProject(projectName);
-    const [, error] = await client.request('DELETE /releases', {
-      channelName: channel,
-      projectId: currentProject.projectId,
-      releaseName: release,
-    });
+    const [, error] = await client.request(
+      'DELETE /operations/releases/{releaseName}',
+      {
+        channel: channel,
+        projectId: currentProject.projectId,
+        releaseName: release,
+      },
+    );
     if (error) {
       showError(error);
       process.exit(1);
@@ -131,6 +134,7 @@ const restart = new Command('restart')
   });
 
 export default new Command('releases')
+  .alias('r')
   .description('Manage project releases')
   .addCommand(list)
   .addCommand(terminate)

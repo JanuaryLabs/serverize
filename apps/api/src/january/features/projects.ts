@@ -365,46 +365,6 @@ export default feature({
         };
       },
     }),
-    workflow('TerminateRelease', {
-      tag: 'releases',
-      trigger: trigger.http({
-        method: 'delete',
-        path: '/',
-        policies: [policies.notImplemented, policies.authenticated],
-        input: (trigger) => ({
-          projectId: {
-            select: trigger.query.projectId,
-            against: z.string().uuid(),
-          },
-          releaseName: {
-            select: trigger.path.releaseName,
-            against: orgNameValidator,
-          },
-          channelName: {
-            select: trigger.path.channelName,
-            against: channelSchema,
-          },
-        }),
-      }),
-      execute: async ({ input }) => {
-        const qb = createQueryBuilder(tables.releases, 'releases')
-          .where('releases.projectId = :projectId', {
-            projectId: input.projectId,
-          })
-          .andWhere('releases.channel = :channel', {
-            channel: input.channelName,
-          })
-          .andWhere('releases.name = :name', {
-            name: input.releaseName,
-          });
-
-        // TODO: send to manager to terminate
-        // and move it to operations feature
-
-        await removeEntity(tables.releases, qb);
-        return {};
-      },
-    }),
     // #endregion
     // #region Secrets
     workflow('CreateSecret', {

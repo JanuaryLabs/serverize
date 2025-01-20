@@ -46,6 +46,13 @@
         "when": "viewItem == release"
       },
       {
+        "command": "serverize.release.terminate",
+        "title": "Terminate",
+        "category": "Serverize",
+        "icon": "$(stop)",
+        "when": "viewItem == release"
+      },
+      {
         "command": "serverize.release.logs",
         "title": "See logs",
         "category": "Serverize",
@@ -185,7 +192,12 @@
         },
         {
           "command": "serverize.release.logs",
-          "group": "inline",
+          "group": "contextMenu",
+          "when": "viewItem == release-active"
+        },
+        {
+          "command": "serverize.release.terminate",
+          "group": "contextMenu",
           "when": "viewItem == release-active"
         },
         {

@@ -5,6 +5,7 @@ import * as management from './inputs/management';
 import * as operations from './inputs/operations';
 import * as projects from './inputs/projects';
 import * as root from './inputs/root';
+import * as stats from './inputs/stats';
 import type { ParseError } from './parser';
 import { createUrl, formdata, json, toRequest, urlencoded } from './request';
 import type { StreamEndpoints } from './stream-endpoints';
@@ -524,25 +525,6 @@ export default {
           ],
           inputBody: [],
           inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'DELETE /releases': {
-    schema: projects.terminateReleaseSchema,
-    toRequest(
-      input: Endpoints['DELETE /releases']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'DELETE /releases';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: ['projectId'],
-          inputBody: [],
-          inputParams: ['releaseName', 'channelName'],
         }),
         init,
       );

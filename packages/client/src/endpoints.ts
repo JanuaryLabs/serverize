@@ -4,6 +4,7 @@ import * as management from './inputs/management';
 import * as operations from './inputs/operations';
 import * as projects from './inputs/projects';
 import * as root from './inputs/root';
+import * as stats from './inputs/stats';
 import { CompleteRelease } from './outputs/CompleteRelease';
 import { CreateDefaultOrganization } from './outputs/CreateDefaultOrganization';
 import { CreateOrganization } from './outputs/CreateOrganization';
@@ -37,7 +38,6 @@ import { SayHi } from './outputs/SayHi';
 import { Signin } from './outputs/Signin';
 import { StartRelease } from './outputs/StartRelease';
 import { StreamContainerLogs } from './outputs/StreamContainerLogs';
-import { TerminateRelease } from './outputs/TerminateRelease';
 import type { ParseError } from './parser';
 import type { ServerError } from './response';
 export interface Endpoints {
@@ -176,11 +176,6 @@ export interface Endpoints {
     input: z.infer<typeof projects.listReleasesSchema>;
     output: ListReleases;
     error: ServerError | ParseError<typeof projects.listReleasesSchema>;
-  };
-  'DELETE /releases': {
-    input: z.infer<typeof projects.terminateReleaseSchema>;
-    output: TerminateRelease;
-    error: ServerError | ParseError<typeof projects.terminateReleaseSchema>;
   };
   'POST /secrets': {
     input: z.infer<typeof projects.createSecretSchema>;

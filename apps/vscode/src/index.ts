@@ -266,6 +266,29 @@ export async function activate(context: vscode.ExtensionContext) {
       },
     ),
   );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'serverize.release.terminate',
+      async (item: ReleaseItem) => {
+        const flags = [
+          `-p ${item.data.project.name}`,
+          `-c ${item.data.channel}`,
+          `-r ${item.data.name}`,
+        ];
+        const command = `${bin} releases terminate ${flags.join(' ')}`;
+        const task = new vscode.Task(
+          { type: 'serverize' },
+          vscode.TaskScope.Workspace,
+          'terminate',
+          'serverize',
+          new vscode.ShellExecution(command),
+        );
+        await vscode.tasks.executeTask(task);
+      },
+    ),
+  );
+
   context.subscriptions.push(
     vscode.commands.registerCommand(
       'serverize.secrets.add',
