@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { program } from 'commander';
-import auth, { whoami } from './auth';
+import auth, { signin, signout, signup, whoami } from './auth';
 import deploy from './deploy';
 import logs from './logs';
 import project from './project';
@@ -17,6 +17,9 @@ const cli = program
   .addCommand(logs)
   .addCommand(auth)
   .addCommand(whoami)
+  .addCommand(signin)
+  .addCommand(signup)
+  .addCommand(signout)
   .addCommand(project)
   .addCommand(tokens)
   .addCommand(releases)

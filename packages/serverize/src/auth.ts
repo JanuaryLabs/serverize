@@ -197,7 +197,7 @@ export async function register() {
   }
 }
 
-const signin = new Command('signin')
+export const signin = new Command('signin')
   .alias('login')
   .description('Sign in to your Serverize account')
   .action(async () => {
@@ -209,7 +209,7 @@ const signin = new Command('signin')
     spinner.succeed('Signed in');
   });
 
-const signup = new Command('signup')
+export const signup = new Command('signup')
   .alias('register')
   .description('Sign up for a new Serverize account')
   .action(async () => {
@@ -230,7 +230,7 @@ const signup = new Command('signup')
     }
   });
 
-const signout = new Command('signout')
+export const signout = new Command('signout')
   .alias('logout')
   .description('Sign out of your Serverize account')
   .action(async () => {
