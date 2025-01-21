@@ -73,6 +73,7 @@ npx serverize deploy -p backend-api -c preview -r test --terminate-after 1h
 
 ---
 
+- Manage releases with the [CLI](../cli/releases)
 - Learn about [CI/CD Integration](../deploy/ci-cd)
 - Configure [Preview Deployments](../deploy/deployment-previews)
 - Explore [Secrets Management](./secrets)
