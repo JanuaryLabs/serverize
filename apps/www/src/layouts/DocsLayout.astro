@@ -82,7 +82,9 @@ async function extractProps(
   };
 }
 
-const { frontmatter, url } = Astro.props;
+const frontmatter = Astro.props.frontmatter || {};
+const url = (Astro.props.url || '').toLowerCase();
+
 const canonical = Astro.site && url ? new URL(url, Astro.site).pathname : '';
 const dashes = '-'.repeat(1000);
 
@@ -114,8 +116,8 @@ const content = await marked.parseInline(frontmatter.title, { async: true });
     <aside
       class="scroll-pretty sticky top-16 hidden h-[calc(100vh-4rem)] flex-col justify-between space-y-4 overflow-y-auto px-2 lg:flex"
     >
-      <Contribute className="mt-6" path={Astro.props.url!.toLowerCase()} />
-      <Ad client:idle className="mb-6" />
+      <Contribute className="mt-6" path={url} />
+      <Ad client:idle className="mb-4 mt-4" />
     </aside>
   </div>
 </Main>
