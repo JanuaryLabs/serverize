@@ -1,6 +1,3 @@
-import { Button } from '../ui/button';
-import { ChatContext } from './docs-chat';
-import { AssistantMessage, UserMessage } from './docs-messages';
 import type { Message } from 'ai/react';
 import React, {
   type PropsWithChildren,
@@ -11,6 +8,9 @@ import React, {
   useState,
 } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
+import { Button } from '../ui/button';
+import { ChatContext } from './docs-chat';
+import { AssistantMessage, UserMessage } from './docs-messages';
 
 export function ChatList(props: PropsWithChildren) {
   const { messages, submitMessage, append, setInput } = useContext(ChatContext);
@@ -102,8 +102,8 @@ function SuggestedPrompts(props: { onSelectPrompt: (prompt: string) => void }) {
         <p className="text-secondary-foreground/70 my-4 text-sm">
           Hi! I'm an AI assistant trained on documentation, code, and other
           content. I can answer questions about{' '}
-          <strong className="text-foreground">Serverize</strong>, what's on your
-          mind?
+          <span className="font-bold text-foreground">Serverize</span>, what's
+          on your mind?
         </p>
         <p className="text-secondary-foreground/70 mb-4 text-xs">
           Suggested Prompts

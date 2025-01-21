@@ -6,6 +6,8 @@ import { basename, extname } from 'path';
 import type { MarkdownInstance } from 'astro';
 import TreeNode from '../components/TreeNode.astro';
 import { Nav } from '../components/background';
+import Ad from './Blog/Ad';
+import { Contribute } from './Blog/BlogContainer';
 import Main from './main.astro';
 
 const posts = Object.values(
@@ -90,12 +92,13 @@ const content = await marked.parseInline(frontmatter.title, { async: true });
 <Main title={frontmatter.title} canonical={canonical}>
   <Nav client:load className="border-b" />
   <div
-    class="mx-auto mt-16 grid max-w-[1400px] grid-cols-1 gap-4 gap-x-12 px-6 md:grid-cols-[240px_minmax(0,2fr)] md:gap-x-8 lg:grid-cols-[240px_minmax(0,1fr)_240px] lg:gap-x-4 xl:gap-x-12 2xl:px-0"
+    class="mx-auto mt-16 grid max-w-[1470px] grid-cols-1 gap-4 gap-x-12 px-6 md:grid-cols-[240px_minmax(0,2fr)] md:gap-x-8 lg:grid-cols-[240px_minmax(0,1fr)_310px] lg:gap-x-4 xl:gap-x-12 2xl:px-0"
   >
     <aside
-      class="sticky top-16 hidden h-[calc(100vh-4rem)] overflow-y-auto border-r md:block lg:block"
+      class="scroll-pretty sticky top-16 hidden h-[calc(100vh-4rem)] overflow-y-auto border-r md:block lg:block"
     >
       <TreeNode tree={groups} />
+      <div class="mt-6"></div>
     </aside>
 
     <article class="prose max-w-full pb-16">
@@ -109,9 +112,10 @@ const content = await marked.parseInline(frontmatter.title, { async: true });
     </article>
 
     <aside
-      class="sticky top-16 hidden h-[calc(100vh-4rem)] overflow-y-auto lg:block"
+      class="scroll-pretty sticky top-16 hidden h-[calc(100vh-4rem)] flex-col justify-between space-y-4 overflow-y-auto px-2 lg:flex"
     >
-      <TreeNode tree={groups} />
+      <Contribute className="mt-6" path={Astro.props.url!.toLowerCase()} />
+      <Ad client:idle className="mb-6" />
     </aside>
   </div>
 </Main>

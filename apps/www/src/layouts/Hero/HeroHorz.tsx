@@ -1,8 +1,8 @@
+import type { PropsWithChildren } from 'react';
 import Try from '../../components/Box';
 import Background from '../../components/background';
 import { TextGenerateEffect } from '../../components/text-generate-effect';
 import { Button, EyeCatchingButton } from '../../components/ui/button';
-import type { PropsWithChildren } from 'react';
 
 export default function HeroHorz(props: PropsWithChildren) {
   return (
@@ -20,7 +20,9 @@ export default function HeroHorz(props: PropsWithChildren) {
             Serverize optimizes your development workflow by placing your
             development setup in the cloud, allowing for quick feedback,
             immediate testing, easy sharing, and smooth team collaboration.
-            <strong>Deployment happens, but without the usual wait.</strong>
+            <span className="font-bold">
+              Deployment happens, but without the usual wait.
+            </span>
           </h2>
           <div className="items-start md:flex">
             <Try />

@@ -15,16 +15,16 @@ export default function Cta(props: {
     >
       <div className="space-y-4 md:col-span-2">
         <h2 className="text-xl font-medium md:text-2xl">
-          <b className="text-foreground">
+          <span className="text-foreground">
             <span className="text-green-700">Serverize</span> your project!
-          </b>{' '}
+          </span>{' '}
           <span className="text-secondary-foreground/70">
             Start today with a free account.
           </span>
           <br />
           <span className="text-secondary-foreground/70 mt-1 block">
-            Talk to us for a{' '}
-            <span className="font-bold text-blue-600">personalized</span> demo.
+            Talk to us for a <span className="text-blue-600">personalized</span>{' '}
+            demo.
           </span>
         </h2>
         <div className="flex gap-x-4">
@@ -48,7 +48,7 @@ export default function Cta(props: {
       <div className="hidden space-y-4 md:col-start-3">
         <Separator className="mt-6 md:hidden" />
         <p>
-          <b>Would you like to chat?</b>{' '}
+          <span>Would you like to chat?</span>{' '}
           <span className="text-secondary-foreground/70">
             Join our growing community to connect with other Serverize users.
           </span>

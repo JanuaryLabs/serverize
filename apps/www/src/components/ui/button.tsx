@@ -64,7 +64,7 @@ export const EyeCatchingButton = ({ ...props }: ButtonProps) => {
         variant={'ghost'}
         {...props}
         className={cn(
-          'w-full rounded-full bg-zinc-50 font-semibold backdrop-blur-xl dark:bg-zinc-900',
+          'w-full rounded-full bg-zinc-50 font-medium backdrop-blur-xl dark:bg-zinc-900',
           props.className,
         )}
       />

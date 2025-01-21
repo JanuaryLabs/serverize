@@ -1,6 +1,7 @@
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 import { type PropsWithChildren, useEffect, useState } from 'react';
+import { AiOutlineThunderbolt } from 'react-icons/ai';
 import AskAiBox from './AskAi/AskAIBox';
 import SearchInput from './SearchInput';
 import { Button, buttonVariants } from './ui/button';
@@ -35,7 +36,7 @@ export default function Background(
 function Logo() {
   return (
     <a href="/" className="mr-6 flex items-center gap-x-2">
-      <MountainIcon className="size-5" />
+      <AiOutlineThunderbolt className="size-5" />
       <p className="font-mono font-bold md:text-lg">
         Serveri<span className="inline-block">z</span>e
       </p>

@@ -29,17 +29,17 @@ export default function HeroVert() {
           <h2 className="text-secondary-foreground/70 mb-8 lg:text-xl">
             Serverize your static website, API project, or full-stack
             application<span className="mx-1">-</span>
-            <strong className="text-secondary-foreground">
+            <span className="font-bold text-secondary-foreground">
               Give it a Dockerfile with a port and get a link that you can share
               with the world
-            </strong>
+            </span>
             {/* Serverize optimizes your development workflow by placing your
             development setup in the cloud, allowing for quick feedback,
             immediate testing, easy sharing, and smooth team collaboration. */}
             {/* <br /> */}
-            {/* <strong className="text-secondary-foreground pl-0.5 text-lg">
+            {/* <span className="font-bold text-secondary-foreground pl-0.5 text-lg">
               Deployment happens, but without the usual wait.
-            </strong> */}
+            </span> */}
           </h2>
 
           <div className="mt-8 flex flex-col gap-4 md:flex-row md:items-center md:gap-8">

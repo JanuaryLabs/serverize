@@ -53,7 +53,7 @@ export default function Toc(
         <Fragment key={it.slug}>
           <li
             data-heading={it.slug}
-            className="group relative flex text-xs [&.active_span]:inline-block"
+            className="group relative flex text-sm [&.active_span]:inline-block"
           >
             {/* <span className="group-data-[active='true']:after:absolute group-data-[active='true']:after:left-[-1px] group-data-[active='true']:after:h-full group-data-[active='true']:after:w-[1px] group-data-[active='true']:after:bg-red-500"></span> */}
             <span className="absolute -left-2 -top-px hidden group-hover:inline-block group-data-[active='true']:text-blue-500">
@@ -68,7 +68,7 @@ export default function Toc(
               <li
                 data-heading={it.slug}
                 key={it.slug}
-                className="group relative flex text-xs [&.active_span]:inline-block"
+                className="group relative flex text-sm [&.active_span]:inline-block"
               >
                 <span className="absolute -left-2 -top-px hidden group-hover:inline-block [&.active]:inline-block">
                   {'{'}

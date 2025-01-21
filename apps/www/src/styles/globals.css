@@ -311,8 +311,11 @@ body {
       margin: 0;
     }
   }
+  .scroll-pretty {
+    @apply [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-1.5;
+  }
 }
 
 code {
-  @apply bg-accent rounded border px-1 pb-0.5;
+  @apply bg-secondary/10 rounded-sm border px-1 pb-0.5 text-sm;
 }

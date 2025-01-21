@@ -60,7 +60,7 @@ const terminate = new Command('terminate')
   .alias('stop')
   .description('Terminate a specific release')
   .usage('[options]')
-  .addOption(channelOption.makeOptionMandatory(false))
+  .addOption(channelOption)
   .addOption(releaseOption)
   .addOption(projectOption)
   .action(async ({ projectName, channel, release }) => {
