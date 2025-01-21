@@ -223,7 +223,11 @@ export default new Command('shazam')
   .addOption(projectOption)
   .option('--framework [framework]', 'Framework to setup')
   .option('--save', 'Save the setup')
-  .option('--use-dockerfile-if-exists [useDockerfile]')
+  .option(
+    '--use-dockerfile-if-exists',
+    'Use existing Dockerfile if found in [cwd]',
+    false,
+  )
   .option(
     '-f, --file [dockerfilepath]',
     'Name of the Dockerfile or Compose file (default:"$(pwd)/Dockerfile")',
@@ -238,7 +242,7 @@ export default new Command('shazam')
       cwd,
       save: shouldSaveToCwd,
       file,
-      useDockerfile,
+      useDockerfileIfExists,
     }) => {
       await shazam({
         frameworkName,
@@ -249,7 +253,7 @@ export default new Command('shazam')
         cwd,
         shouldSaveToCwd,
         file,
-        useDockerfile,
+        useDockerfile: useDockerfileIfExists,
       });
     },
   );
