@@ -149,6 +149,12 @@ export async function createRemoteContainer(
         MaximumRetryCount: 2,
       },
       CpuPercent: 5,
+      LogConfig: {
+        Type: 'json-file',
+        Config: {
+          'max-size': '50m',
+        },
+      },
     },
     Healthcheck: healthcheck,
   });
