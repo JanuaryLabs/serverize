@@ -57,7 +57,7 @@ This command reads the `.env` file and sets all the environment variables as sec
 > [!NOTE]
 > Ensure that your `.env` file is properly formatted with `KEY=VALUE` pairs, each on a new line.
 
----
+### List secrets
 
 ```sh frame=none
 npx serverize secrets list -p <project-name> -c <channel-name>
