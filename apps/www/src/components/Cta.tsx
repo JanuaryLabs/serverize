@@ -29,7 +29,7 @@ export default function Cta(props: {
         </h2>
         <div className="flex gap-x-4">
           <a
-            href="guides/cli/#deployments"
+            href="/docs/deploy/serverize"
             className={cn(buttonVariants(), 'h-10 rounded-full no-underline')}
           >
             Serverize Now
@@ -41,7 +41,7 @@ export default function Cta(props: {
               'text-foreground dark:bg-background h-10 rounded-full bg-white no-underline',
             )}
           >
-            Contact Sales
+            or later, whatever
           </a>
         </div>
       </div>

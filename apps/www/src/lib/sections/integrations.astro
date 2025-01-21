@@ -4,7 +4,7 @@ const guides = Object.values(await Astro.glob('./guides/*.md'));
 const integrations = guides.map((it: any) => ({
   name: it.frontmatter.name,
   logo: it.frontmatter.logo,
-  Content: it.Content,
+  // Content: it.Content,
 }));
 ---
 
@@ -33,15 +33,15 @@ const integrations = guides.map((it: any) => ({
       ))
     }
   </div>
-  {
+  <!-- {
     integrations.map(({ name, Content }) => (
       <div class="hidden" data-integration-guide={name}>
         <Content />
       </div>
     ))
-  }
+  } -->
 </div>
-
+<!-- 
 <script>
   const urlSearchParams = new URLSearchParams(window.location.search);
   selectIntegration(urlSearchParams.get('integration') || 'Node.js');
@@ -71,4 +71,4 @@ const integrations = guides.map((it: any) => ({
       }
     });
   }
-</script>
+</script> -->

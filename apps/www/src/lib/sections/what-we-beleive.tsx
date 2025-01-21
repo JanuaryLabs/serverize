@@ -25,7 +25,7 @@ export function WhatWeBelieve() {
         </p> */}
         <p className="text-lg">
           <span className="font-bold text-green-900">
-            All you need is a Dockerfile and a terminal.
+            All you need is a Dockerfile.
           </span>{' '}
           Serverize builds your image, deploys it, and sends you the access
           details. It’s built to make feedback, testing, and sharing updates

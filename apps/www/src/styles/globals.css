@@ -86,20 +86,8 @@ body {
   }
   body {
     @apply bg-background text-foreground font-sans;
-    /* antialiased; */
   }
 }
-
-/* body {
-  font-family: 'Inter', sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  background: white;
-  margin: 0;
-  color: #33333d;
-  overflow-y: scroll;
-  overflow-x: hidden;
-} */
 
 h1,
 h2,
@@ -312,7 +300,7 @@ body {
     }
   }
   .scroll-pretty {
-    @apply [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-1.5;
+    @apply [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-1.5;
   }
 }
 

@@ -1,14 +1,17 @@
 ---
 import '@/styles/globals.css';
 
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import '@fontsource/geist-mono/400.css';
 import '@fontsource/geist-mono/500.css';
 import '@fontsource/geist-mono/600.css';
 
-import '@fontsource/geist-sans/300.css';
-import '@fontsource/geist-sans/400.css';
-import '@fontsource/geist-sans/500.css';
-import '@fontsource/geist-sans/600.css';
+// import '@fontsource/geist-sans/300.css';
+// import '@fontsource/geist-sans/400.css';
+// import '@fontsource/geist-sans/500.css';
+// import '@fontsource/geist-sans/600.css';
 
 import PostHog from '../components/posthog.astro';
 import { cn } from '../components/utils';
@@ -43,7 +46,10 @@ const { title, canonical, className } = Astro.props;
     <!-- <ViewTransitions /> -->
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
-  <body class={cn(className, 'flex flex-col h-full antialiased')} vaul-drawer-wrapper="">
+  <body
+    class={cn(className, 'flex flex-col h-full')}
+    vaul-drawer-wrapper=""
+  >
     <slot />
   </body>
 </html>

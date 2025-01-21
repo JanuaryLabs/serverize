@@ -32,7 +32,7 @@ export default {
         4.5: '1.125rem',
       },
       fontFamily: {
-        sans: ['Geist Sans', ...defaultTheme.fontFamily.sans],
+        sans: ['Roboto', ...defaultTheme.fontFamily.sans],
         mono: ['Geist Mono', ...defaultTheme.fontFamily.mono],
       },
       borderRadius: {
@@ -92,33 +92,36 @@ export default {
           ring: 'hsl(var(--sidebar-ring))',
         },
       },
+      fontWeight: {
+        semibold: 700,
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {
             code: false, // Disable default styling for <code> elements
             'code::before': false, // Remove the 'before' pseudo-element
             'code::after': false, // Remove the 'after' pseudo-element
-            strong: {
-              fontWeight: '600', // This targets all <strong> elements
-            },
-            h2: {
-              fontWeight: '500',
-            },
-            'h2 strong': {
-              fontWeight: '600',
-            },
-            h3: {
-              fontWeight: '500',
-            },
-            'h3 strong': {
-              fontWeight: '600',
-            },
-            h4: {
-              fontWeight: '500',
-            },
-            'h4 strong': {
-              fontWeight: '600',
-            },
+            // strong: {
+            //   fontWeight: '600', // This targets all <strong> elements
+            // },
+            // h2: {
+            //   fontWeight: '500',
+            // },
+            // 'h2 strong': {
+            //   fontWeight: '600',
+            // },
+            // h3: {
+            //   fontWeight: '500',
+            // },
+            // 'h3 strong': {
+            //   fontWeight: '600',
+            // },
+            // h4: {
+            //   fontWeight: '500',
+            // },
+            // 'h4 strong': {
+            //   fontWeight: '600',
+            // },
           },
         },
       }),

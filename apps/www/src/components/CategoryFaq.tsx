@@ -119,7 +119,7 @@ const FAQS: FAQItemProps[] = [
   {
     question: 'What about scaling or auto-scaling?',
     answer:
-      'Currently, Serverize focuses on rapid deployments for small-to-medium workloads. Advanced scaling might require manual adjustments.',
+      'Serverize is designed for development and testing environments, so it doesn’t do auto-scaling.',
     category: 'Technical',
   },
   {
