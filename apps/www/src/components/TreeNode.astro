@@ -26,6 +26,7 @@ const currentPath = Astro.url.pathname;
               }}
               class:list={[
                 'hover:text-primary heading-link',
+                isActive && 'font-bold',
                 level === 0
                   ? 'text-lg font-semibold uppercase tracking-wide'
                   : 'text-secondary-foreground/80 text-[15px]',
@@ -45,12 +46,12 @@ const currentPath = Astro.url.pathname;
               {key}
             </span>
           )}
-          {level === 1 && value.headings && isActive && (
+          {/* {level === 1 && value.headings && isActive && (
             <ul class="mt-1 pl-2">
               <Toc toc={value.headings} path={'Astro.props.url!'} />
               <TocSpy client:idle />
             </ul>
-          )}
+          )} */}
           {Object.keys(value.children).length > 0 && (
             <Astro.self tree={value.children} level={level + 1} />
           )}
