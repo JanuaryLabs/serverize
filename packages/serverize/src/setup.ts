@@ -23,7 +23,7 @@ import { box } from '@january/console';
 
 const listCommand = new Command('list')
   .alias('ls')
-  .description('List all supported frameworks')
+  .summary('List all supported frameworks')
   .action(() => {
     const links: Partial<Record<framework, string>> = {
       'gh-pr-preview': 'deployment-previews',
@@ -41,7 +41,7 @@ const listCommand = new Command('list')
   });
 
 const init = new Command('init')
-  .description('Create Dockerfile for a framework')
+  .summary('Create Dockerfile for a framework')
   .argument('[framework]', 'Framework to setup')
   .allowUnknownOption()
   .option('-f, --force', 'Force setup')
@@ -189,6 +189,9 @@ const init = new Command('init')
   );
 
 export default new Command('setup')
-  .description('Automatically create Dockerfile from your codebase')
+  .description(
+    `The setup command inspects your project and sets up the necessary configurations.`,
+  )
+  .summary('Automatically create Dockerfile from your codebase')
   .addCommand(listCommand)
   .addCommand(init, { isDefault: true });

@@ -3,11 +3,12 @@ navName: "`signup`"
 layout: ../../../layouts/DocsLayout.astro
 title: npx serverize signup
 ---
-Sign up for a new Serverize account
+
+
+| **Description** | Sign up for a new Serverize account |
+|------------------|----------------------------------|
+| **Usage**        | `npx serverize signup [options]` |
+
+    
 > [!TIP]
 > Arguments or options enclosed in `<>` are required, while those enclosed in `[]` are optional.
- 
-## Usage
-```sh frame="none"
-npx serverize signup [options]
-```

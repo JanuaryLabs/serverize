@@ -199,7 +199,7 @@ export async function register() {
 
 export const signin = new Command('signin')
   .alias('login')
-  .description('Sign in to your Serverize account')
+  .summary('Sign in to your Serverize account')
   .action(async () => {
     const wants = await askUser();
     if (!wants) {
@@ -211,7 +211,7 @@ export const signin = new Command('signin')
 
 export const signup = new Command('signup')
   .alias('register')
-  .description('Sign up for a new Serverize account')
+  .summary('Sign up for a new Serverize account')
   .action(async () => {
     const wants = await askUser();
     if (!wants) {
@@ -232,7 +232,7 @@ export const signup = new Command('signup')
 
 export const signout = new Command('signout')
   .alias('logout')
-  .description('Sign out of your Serverize account')
+  .summary('Sign out of your Serverize account')
   .action(async () => {
     const user = await initialise();
     if (!user) {
@@ -250,7 +250,7 @@ export const signout = new Command('signout')
   });
 
 export const whoami = new Command('whoami')
-  .description('Show the currently authenticated user')
+  .summary('Show the currently authenticated user')
   .action(async () => {
     const user = await initialise();
     if (user) {
@@ -266,6 +266,7 @@ export default new Command('auth')
   .description(
     `Access Serverize by signing up for a new account using the auth signup command or logging in with the auth signin command if you already have an account. To disconnect, use the auth logout command.`,
   )
+  .summary('Sign in, sign up, or sign out of your Serverize account')
   .addCommand(signin)
   .addCommand(signup)
   .addCommand(signout)

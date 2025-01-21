@@ -1,5 +1,5 @@
 import fs from 'fs';
-import path, { join } from 'path';
+import { join } from 'path';
 import { Command } from 'commander';
 import cli from './cli'; // <-- Import your main CLI (the one with .addCommand(...))
 
@@ -65,29 +65,41 @@ function generateDocsForCommand(
   const nextHeading = '#'.repeat(headingLevel + 1);
 
   const aliasList = cmd.aliases?.() || [];
-  const description = cmd.description() || 'No description provided.';
+  const description = cmd.description();
+  const summary = cmd.summary();
+  const usage = cmd.usage?.();
 
   // Start building the Markdown content
 
   // docs += `**Description:** ${description}\n\n`;
   if (depth !== 0) {
-    lines.push(`${heading} ${cmdName}`);
+    lines.push(`${heading} \`${cmdName}\``);
   }
-  lines.push(`${description}`);
+
+  // Usage
+  // if (usage) {
+  //   lines.push(`${nextHeading} Usage`);
+  // lines.push(`\`${prefix} ${cmdName} ${usage}\``);
+  // }
+  lines.push(
+    `
+
+| **Description** | ${summary} |
+|------------------|----------------------------------|
+| **Usage**        | \`${prefix} ${cmdName} ${usage}\` |
+
+    `,
+  );
+  if (description) {
+    lines.push(`${description}`);
+  }
+
   if (depth === 0) {
     lines.push(
       `> [!TIP]`,
       `> Arguments or options enclosed in \`<>\` are required, while those enclosed in \`[]\` are optional.`,
       ' ',
     );
-  }
-
-  // Usage
-  const usage = cmd.usage?.();
-  if (usage) {
-    // docs += `**Usage:** \`${usage}\`\n\n`;
-    lines.push(`${nextHeading} Usage`);
-    lines.push(`\`\`\`sh frame="none"\n${prefix} ${cmdName} ${usage}\n\`\`\``);
   }
 
   // docs += `**Usage:**\n\n`;
@@ -97,27 +109,38 @@ function generateDocsForCommand(
   // }
   //
 
-  if (cmd.registeredArguments?.length) {
-    lines.push(`${nextHeading} Arguments\n\n`);
-    cmd.registeredArguments.forEach((arg) => {
-      const rawArgName = arg.name(); // e.g., "<file>"
-      const bracketType = getArgumentBracketType(rawArgName);
-      const argDesc = arg.description || 'No description';
-      const variadic = arg.variadic ? ' (variadic)' : '';
+  // IMPORTANT: arugments are confused with subcommands hence we need not use them
+  // if (cmd.registeredArguments?.length) {
+  //   lines.push(`${nextHeading} Arguments\n\n`);
+  //   const rows: string[] = [
+  //     `| **Argument** | **Description** | **Default** |`,
+  //     `|------------|-----------------|-------------|`,
+  //   ];
+  //   cmd.registeredArguments.forEach((arg) => {
+  //     const rawArgName = arg.name(); // e.g., "<file>"
+  //     const bracketType = getArgumentBracketType(rawArgName);
+  //     const argDesc = arg.description || 'No description';
+  //     const variadic = arg.variadic ? ' (variadic)' : '';
 
-      // Clean angle/square brackets from the name for clarity
-      const cleanArgName = rawArgName.replace(/^[\[<]|[\]>]$/g, '');
+  //     // Clean angle/square brackets from the name for clarity
+  //     const cleanArgName = rawArgName.replace(/^[\[<]|[\]>]$/g, '');
 
-      // docs += `- \`${cleanArgName}${variadic}\` **(${bracketType})**: ${argDesc}\n`;
-      lines.push(
-        `- \`${cleanArgName}${variadic}\` **(${bracketType})**: ${argDesc}`,
-      );
-    });
-    // docs += '\n';
-  }
+  //     // docs += `- \`${cleanArgName}${variadic}\` **(${bracketType})**: ${argDesc}\n`;
+  //     // lines.push(
+  //     //   `- \`${cleanArgName}${variadic}\` **(${bracketType})**: ${argDesc}`,
+  //     // );
+  //     rows.push(`| \`${cleanArgName}${variadic}\` | ${argDesc} | |`);
+  //   });
+  //   lines.push(rows.join('\n'));
+  //   // docs += '\n';
+  // }
 
   if (cmd.options?.length) {
-    lines.push(`${nextHeading} Options\n\n`);
+    // lines.push(`${nextHeading} Options\n\n`);
+    const rows: string[] = [
+      `| **Option** | **Description** | **Default** |`,
+      `|------------|-----------------|-------------|`,
+    ];
     cmd.options.forEach((opt) => {
       const {
         flags,
@@ -130,21 +153,32 @@ function generateDocsForCommand(
       const descStr = optDescription || 'No description';
       const cwd = process.cwd();
       // If the default value is the current working directory, show $(pwd) instead
+      // const defValStr =
+      //   defaultValue !== undefined
+      //     ? ` (default: \`${defaultValue === cwd ? '$(pwd)' : defaultValue}\`)`
+      //     : '';
       const defValStr =
         defaultValue !== undefined
-          ? ` (default: \`${defaultValue === cwd ? '$(pwd)' : defaultValue}\`)`
+          ? `\`${defaultValue === cwd ? '$(pwd)' : defaultValue}\``
           : '';
 
       const isRequired = mandatory || required ? ' (required)' : '';
-
-      lines.push(`- \`${flags}\`${isRequired}: ${descStr}${defValStr}`);
+      rows.push(`| \`${flags}\` | ${descStr} | ${defValStr} |`);
+      // return {
+      //   flag: flags,
+      //   mandatory: isRequired,
+      //   description: descStr,
+      // }
+      // lines.push(`- \`${flags}\`${isRequired}: ${descStr}${defValStr}`);
       // docs += `- \`${flags}\`${isRequired}: ${descStr}${defValStr}\n`;
     });
+    lines.push(rows.join('\n'));
+
     // docs += '\n';
   }
 
   if (cmd.commands?.length) {
-    lines.push(`${nextHeading} Subcommands\n\n`);
+    // lines.push(`${nextHeading} Subcommands\n\n`);
     cmd.commands.forEach((sub) => {
       lines.push(
         generateDocsForCommand(`${prefix} ${cmdName}`, sub, depth + 2),

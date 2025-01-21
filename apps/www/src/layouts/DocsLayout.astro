@@ -106,7 +106,7 @@ const content = await marked.parseInline(frontmatter.title, { async: true });
     <article class="prose max-w-full pb-16">
       <p class="invisible h-0">{dashes}</p>
       <h1
-        class="not-prose mb-0 text-4xl font-bold [&_p]:m-0"
+        class="not-prose text-primary mb-0 text-4xl font-bold [&_p]:m-0"
         set:html={content}
       />
       <!-- <p class="text-secondary-foreground/70">{frontmatter.subtitle}</p> -->

@@ -17,7 +17,7 @@ import { box } from '@january/console';
 
 const list = new Command('list')
   .alias('ls')
-  .description('List all releases for a project')
+  .summary('List all releases for a project')
   .addOption(projectOption.makeOptionMandatory(true))
   .addOption(channelOption)
   .action(async ({ projectName, channel }) => {
@@ -58,7 +58,7 @@ const list = new Command('list')
 const terminate = new Command('terminate')
   .alias('delete')
   .alias('stop')
-  .description('Terminate a specific release')
+  .summary('Terminate a specific release')
   .usage('[options]')
   .addOption(channelOption)
   .addOption(releaseOption)
@@ -83,7 +83,7 @@ const terminate = new Command('terminate')
   });
 
 const restart = new Command('restart')
-  .description('Restart a specific release')
+  .summary('Restart a specific release')
   .usage('[options]')
   .addOption(projectOption.makeOptionMandatory(true))
   .addOption(channelOption.makeOptionMandatory(true))
@@ -135,7 +135,10 @@ const restart = new Command('restart')
 
 export default new Command('releases')
   .alias('r')
-  .description('Manage project releases')
+  .summary('Manage project releases')
+  .description(
+    `A release represents a specific version of your deployment within a channel. Each release has a unique name and URL, allowing you to manage multiple versions of your application.`,
+  )
   .addCommand(list)
   .addCommand(terminate)
   .addCommand(restart);

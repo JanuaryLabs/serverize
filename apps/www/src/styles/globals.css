@@ -307,3 +307,12 @@ body {
 code {
   @apply bg-secondary/10 rounded-sm border px-1 pb-0.5 text-sm;
 }
+
+table {
+  tr th {
+    @apply bg-secondary !p-2;
+  }
+  tr td {
+    @apply !p-2;
+  }
+}

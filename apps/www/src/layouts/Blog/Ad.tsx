@@ -28,7 +28,7 @@ interface AdProps {
 
 export default function Ad({
   className,
-  projectName = 'January.sh',
+  projectName = 'JanuaryLabs',
   description = `Specialized API Development Agency`,
   // description = 'Next generation backend experience for developers',
   products = [
@@ -75,7 +75,7 @@ export default function Ad({
                 <div className="p-1.5 rounded-lg bg-emerald-50 dark:bg-zinc-800">
                   <Rocket className="w-4 h-4 text-emerald-500" />
                 </div>
-                <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+                <h2 className="text-lg font-mono font-semibold text-zinc-900 dark:text-zinc-100">
                   {projectName}
                 </h2>
               </div>
@@ -165,7 +165,8 @@ export default function Ad({
                 'transition-colors duration-300',
               )}
             >
-              Get Enterprise Support
+              Talk to us
+              {/* Hire me and my friend */}
             </a>
           </div>
         </div>

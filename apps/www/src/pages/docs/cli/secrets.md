@@ -3,44 +3,40 @@ navName: "`secrets`"
 layout: ../../../layouts/DocsLayout.astro
 title: npx serverize secrets
 ---
-Manage project channel secrets
+
+
+| **Description** | Manage project channel secrets |
+|------------------|----------------------------------|
+| **Usage**        | `npx serverize secrets [options] [command]` |
+
+    
+Secrets are secure pieces of data you can store and use at runtime, such as API keys, database passwords, or plaintext values. These are made available to your project as environment variables for use as needed.
 > [!TIP]
 > Arguments or options enclosed in `<>` are required, while those enclosed in `[]` are optional.
  
-## Usage
-```sh frame="none"
-npx serverize secrets [options] [command]
-```
-## Subcommands
+### `set`
 
 
-### set
+| **Description** |  |
+|------------------|----------------------------------|
+| **Usage**        | `npx serverize secrets set [options] <secrets...>` |
+
+    
 Set one or more environment variables for a project channel
-#### Usage
-```sh frame="none"
-npx serverize secrets set [options] <secrets...>
-```
-#### Arguments
+| **Option** | **Description** | **Default** |
+|------------|-----------------|-------------|
+| `-p, --project-name <projectName>` | The project name |  |
+| `-c, --channel <channel>` | Channel name (dev or preview) | `dev` |
+### `set-file`
 
 
-- `secrets (variadic)` **(required)**: Secrets in format NAME=VALUE
-#### Options
+| **Description** |  |
+|------------------|----------------------------------|
+| **Usage**        | `npx serverize secrets set-file [options] <envFile>` |
 
-
-- `-p, --project-name <projectName>` (required): The project name
-- `-c, --channel <channel>` (required): Channel name (dev or preview) (default: `dev`)
-### set-file
+    
 Import environment variables from a .env file
-#### Usage
-```sh frame="none"
-npx serverize secrets set-file [options] <envFile>
-```
-#### Arguments
-
-
-- `envFile` **(required)**: Path to the file with secrets
-#### Options
-
-
-- `-p, --project-name <projectName>` (required): The project name
-- `-c, --channel <channel>` (required): Channel name (dev or preview) (default: `dev`)
+| **Option** | **Description** | **Default** |
+|------------|-----------------|-------------|
+| `-p, --project-name <projectName>` | The project name |  |
+| `-c, --channel <channel>` | Channel name (dev or preview) | `dev` |

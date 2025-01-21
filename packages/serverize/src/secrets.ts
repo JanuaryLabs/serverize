@@ -73,6 +73,9 @@ const setFileCommand = new Command('set-file')
   });
 
 export default new Command('secrets')
-  .description('Manage project channel secrets')
+  .summary('Manage project channel secrets')
+  .description(
+    `Secrets are secure pieces of data you can store and use at runtime, such as API keys, database passwords, or plaintext values. These are made available to your project as environment variables for use as needed.`,
+  )
   .addCommand(setCommand)
   .addCommand(setFileCommand);

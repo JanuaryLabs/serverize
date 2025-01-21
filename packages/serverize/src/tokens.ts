@@ -13,9 +13,7 @@ import {
 import { box } from '@january/console';
 
 const create = new Command('create')
-  .description(
-    'Generate a new access token for deploying projects in CI environment',
-  )
+  .summary('Generate a new token')
   .addOption(projectOption.makeOptionMandatory(false))
   .action(async ({ projectName }) => {
     const user = await ensureUser();
@@ -59,7 +57,7 @@ const create = new Command('create')
   });
 
 const revoke = new Command('revoke')
-  .description('Permanently revoke an access token')
+  .summary('Permanently revoke an access token')
   .argument('<token>', 'Token to revoke')
   .action(async (token) => {
     const user = await ensureUser();
@@ -75,7 +73,7 @@ const revoke = new Command('revoke')
 
 const list = new Command('list')
   .alias('ls')
-  .description('List all active access tokens')
+  .summary('List all active access tokens')
   .action(async () => {
     const user = await ensureUser();
     if (!user) return;
@@ -103,7 +101,10 @@ const list = new Command('list')
   });
 
 export default new Command('tokens')
-  .description('Manage deployment access tokens')
+  .summary('Manage access tokens for CI/CD')
+  .description(
+    `Tokens are used to authenticate and authorize deployments in continuous integration environments, allowing secure automated deployments without exposing sensitive credentials.`,
+  )
   .addCommand(create)
   .addCommand(list)
   .addCommand(revoke);

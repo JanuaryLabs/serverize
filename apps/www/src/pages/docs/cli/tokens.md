@@ -3,40 +3,39 @@ navName: "`tokens`"
 layout: ../../../layouts/DocsLayout.astro
 title: npx serverize tokens
 ---
-Manage deployment access tokens
+
+
+| **Description** | Manage access tokens for CI/CD |
+|------------------|----------------------------------|
+| **Usage**        | `npx serverize tokens [options] [command]` |
+
+    
+Tokens are used to authenticate and authorize deployments in continuous integration environments, allowing secure automated deployments without exposing sensitive credentials.
 > [!TIP]
 > Arguments or options enclosed in `<>` are required, while those enclosed in `[]` are optional.
  
-## Usage
-```sh frame="none"
-npx serverize tokens [options] [command]
-```
-## Subcommands
+### `create`
 
 
-### create
-Generate a new access token for deploying projects in CI environment
-#### Usage
-```sh frame="none"
-npx serverize tokens create [options]
-```
-#### Options
+| **Description** | Generate a new token |
+|------------------|----------------------------------|
+| **Usage**        | `npx serverize tokens create [options]` |
+
+    
+| **Option** | **Description** | **Default** |
+|------------|-----------------|-------------|
+| `-p, --project-name <projectName>` | The project name |  |
+### `list`
 
 
-- `-p, --project-name <projectName>` (required): The project name
-### list
-List all active access tokens
-#### Usage
-```sh frame="none"
-npx serverize tokens list [options]
-```
-### revoke
-Permanently revoke an access token
-#### Usage
-```sh frame="none"
-npx serverize tokens revoke [options] <token>
-```
-#### Arguments
+| **Description** | List all active access tokens |
+|------------------|----------------------------------|
+| **Usage**        | `npx serverize tokens list [options]` |
+
+    
+### `revoke`
 
 
-- `token` **(required)**: Token to revoke
+| **Description** | Permanently revoke an access token |
+|------------------|----------------------------------|
+| **Usage**        | `npx serverize tokens revoke [options] <token>` |

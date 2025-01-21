@@ -3,35 +3,34 @@ navName: "`setup`"
 layout: ../../../layouts/DocsLayout.astro
 title: npx serverize setup
 ---
-Automatically create Dockerfile from your codebase
+
+
+| **Description** | Automatically create Dockerfile from your codebase |
+|------------------|----------------------------------|
+| **Usage**        | `npx serverize setup [options] [command]` |
+
+    
+The setup command inspects your project and sets up the necessary configurations.
 > [!TIP]
 > Arguments or options enclosed in `<>` are required, while those enclosed in `[]` are optional.
  
-## Usage
-```sh frame="none"
-npx serverize setup [options] [command]
-```
-## Subcommands
+### `list`
 
 
-### list
-List all supported frameworks
-#### Usage
-```sh frame="none"
-npx serverize setup list [options]
-```
-### init
-Create Dockerfile for a framework
-#### Usage
-```sh frame="none"
-npx serverize setup init [options] [framework]
-```
-#### Arguments
+| **Description** | List all supported frameworks |
+|------------------|----------------------------------|
+| **Usage**        | `npx serverize setup list [options]` |
+
+    
+### `init`
 
 
-- `framework` **(required)**: Framework to setup
-#### Options
+| **Description** | Create Dockerfile for a framework |
+|------------------|----------------------------------|
+| **Usage**        | `npx serverize setup init [options] [framework]` |
 
-
-- `-f, --force`: Force setup
-- `--cwd [cwd]`: Project directory (default: `$(pwd)`)
+    
+| **Option** | **Description** | **Default** |
+|------------|-----------------|-------------|
+| `-f, --force` | Force setup |  |
+| `--cwd [cwd]` | Project directory | `$(pwd)` |
