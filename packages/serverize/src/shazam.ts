@@ -17,10 +17,12 @@ import {
 } from './lib/detect-framework';
 import {
   channelOption,
+  contextOption,
   createSpinner,
   cwdOption,
   dropdown,
   logger,
+  outputOption,
   projectOption,
   releaseOption,
   showError,
@@ -39,6 +41,7 @@ interface ShazamConfig {
   file: string;
   useDockerfile: boolean;
   serviceName?: string;
+  context: string;
 }
 async function shazam({
   channel,
@@ -46,6 +49,7 @@ async function shazam({
   file,
   frameworkName,
   outputFile,
+  context,
   projectName,
   release,
   shouldSaveToCwd,
@@ -211,12 +215,14 @@ async function shazam({
     cwd: cwd,
     channel,
     release,
+    context,
     outputFile,
   });
 }
 export default new Command('shazam')
   .description('Detect and deploy a project using a Dockerfile or framework')
-  .option('-o, --output [file]', 'Write output to a file')
+  .addOption(contextOption)
+  .addOption(outputOption)
   .addOption(cwdOption)
   .addOption(channelOption)
   .addOption(releaseOption)
@@ -238,10 +244,11 @@ export default new Command('shazam')
       projectName,
       channel,
       release,
-      output: outputFile,
+      outputFile,
       cwd,
       save: shouldSaveToCwd,
       file,
+      context,
       useDockerfileIfExists,
     }) => {
       await shazam({
@@ -251,6 +258,7 @@ export default new Command('shazam')
         release,
         outputFile,
         cwd,
+        context,
         shouldSaveToCwd,
         file,
         useDockerfile: useDockerfileIfExists,

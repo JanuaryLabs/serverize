@@ -166,7 +166,15 @@ export const askForProjectName = () =>
 export const cwdOption = new Option('--cwd [cwd]', 'Project directory').default(
   process.cwd(),
 );
+export const outputOption = new Option(
+  '-o, --output-file <outputFile>',
+  'Write output to a file',
+);
 
+export const contextOption = new Option(
+  '-c, --context [context]',
+  'Docker build context',
+).default('.');
 export const channelOption = new Option(
   '-c, --channel <channel>',
   'Channel name (dev or preview)',

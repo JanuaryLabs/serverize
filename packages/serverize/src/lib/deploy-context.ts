@@ -155,6 +155,7 @@ export interface DeployContext {
   release: string;
   outputFile?: string;
   cwd: string;
+  context: string;
 }
 
 export async function runInDeployContext(config: DeployContext) {
@@ -191,7 +192,7 @@ export async function runInDeployContext(config: DeployContext) {
         // );
       }
 
-      await buildImage(releaseInfo.image, ast.dockerfile);
+      await buildImage(config.context, releaseInfo.image, ast.dockerfile);
 
       const finalUrl = await lastValueFrom(deployProject());
       spinner.succeed(chalk.yellow('Deployed successfully'));

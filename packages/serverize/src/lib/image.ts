@@ -1,11 +1,12 @@
+import { type ReadStream, createReadStream, readFileSync } from 'fs';
+import { tmpdir } from 'os';
 import chalk from 'chalk';
 import { parse } from 'dotenv';
 import { execa } from 'execa';
-import { type ReadStream, createReadStream, readFileSync } from 'fs';
 import { readFile, stat, writeFile } from 'fs/promises';
 import yaml from 'js-yaml';
-import { tmpdir } from 'os';
 
+import { join } from 'path';
 import {
   type Healthcheck,
   logger,
@@ -14,7 +15,6 @@ import {
   spinner,
   toAst,
 } from '../program';
-import { join } from 'path';
 
 export interface ImageDetails {
   filePath: string;
@@ -43,7 +43,11 @@ export async function saveImage(imageName: string): Promise<ImageDetails> {
   };
 }
 
-export async function buildImage(imageName: string, filePath: string) {
+export async function buildImage(
+  context: string,
+  imageName: string,
+  filePath: string,
+) {
   printDivider();
   logger(
     `Building image ${chalk.green(imageName)} from ${filePath} with context ${process.cwd()}`,
@@ -57,7 +61,7 @@ export async function buildImage(imageName: string, filePath: string) {
     filePath,
     '--platform',
     'linux/amd64',
-    '.',
+    context,
   ].filter(Boolean);
   logger(`docker build ${options.join(' ')}`);
   await execa(`docker`, ['build', ...options], {
