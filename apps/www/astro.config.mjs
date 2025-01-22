@@ -21,7 +21,9 @@ export default defineConfig({
     '/guides/next': 'guides/nextjs',
     '/guides/nuxt': 'guides/nuxtjs',
     '/guides/node': 'guides/nodejs',
-    '/docs': '/docs/concepts/projects',
+    '/docs/concepts': '/docs/concepts/projects',
+    '/docs/deploy': '/docs/deploy/serverize',
+    '/docs/cli': '/docs/cli/auth',
   },
   outDir: '../../dist/apps/www',
   markdown: {

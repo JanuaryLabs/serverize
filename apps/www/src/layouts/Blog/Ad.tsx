@@ -165,8 +165,7 @@ export default function Ad({
                 'transition-colors duration-300',
               )}
             >
-              Talk to us
-              {/* Hire me and my friend */}
+              Hire me and my friend
             </a>
           </div>
         </div>

@@ -42,6 +42,10 @@ jobs:
           production-branch: main
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy from GitHub Actions'
+          enable-github-deployment: false
+          enable-pull-request-comment: false
+          enable-commit-comment: false
+          enable-commit-status: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
