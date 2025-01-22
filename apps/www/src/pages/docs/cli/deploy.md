@@ -16,7 +16,9 @@ Deploy an application using a Dockerfile or Docker Compose file
  
 | **Option** | **Description** | **Default** |
 |------------|-----------------|-------------|
-| `-f, --file [dockerfilepath]` | Path to Dockerfile or Compose file | `Dockerfile` |
+| `-f, --file [dockerfilepath]` | Path to a Dockerfile relative to --cwd. ignored if --image is present | `Dockerfile` |
+| `-i, --image [image]` | Docker image to deploy. |  |
+| `--context [context]` | Docker build context | `.` |
 | `-o, --output-file <outputFile>` | Write output to a file |  |
 | `-c, --channel <channel>` | Channel name (dev or preview) | `dev` |
 | `--cwd [cwd]` | Project directory | `$(pwd)` |

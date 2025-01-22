@@ -33,10 +33,13 @@ services:
     command: node --watch /app
     platform: linux/amd64
     restart: unless-stopped
+    depends_on:
+      - database
     ports:
       - '3000:3000'
     networks:
       - traefik-network
+      - development
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - serverize-uploads:/data:rw
@@ -69,10 +72,26 @@ services:
       - '9090:9090'
     networks:
       - traefik-network
+  database:
+    image: 'postgres:16'
+    volumes:
+      - 'postgres_data:/var/lib/postgresql/data'
+    networks:
+      - 'development'
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: 'yourpassword'
+      POSTGRES_USER: 'youruser'
+      POSTGRES_DB: 'yourdatabase'
 
 volumes:
+  postgres_data:
   serverize-uploads:
     driver: local
     driver_opts: !reset null
 # docker compose -f docker/compose.yml -f docker/compose.override.yml up --remove-orphans
 
+networks:
+  development:
+    external: false

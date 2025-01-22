@@ -4,13 +4,14 @@ import { readFile } from 'fs/promises';
 import { join } from 'path';
 import { Observable, debounceTime, from, switchMap, tap } from 'rxjs';
 import { logger } from '../program';
-import { getAst, getReleaseInfo } from './deploy-context';
+import { getReleaseInfo } from './deploy-context';
 
 export function watchFiles() {
-  const ast = getAst();
+  // const ast = getAst();
+  const ast = null as any;
   return from(ast.getPaths()).pipe(
-    tap((paths) => logger(`Watching files \n${paths.join(', ')}\n`)),
-    switchMap((paths) => createWatcher(paths).pipe(debounceTime(1000))),
+    tap((paths: any) => logger(`Watching files \n${paths.join(', ')}\n`)),
+    switchMap((paths: any) => createWatcher(paths).pipe(debounceTime(1000))),
   );
   // filter((files) => files.some((it) => it.hasChanged)),
   // switchMap((filesToWatch) => readFiles(filesToWatch)),
@@ -49,7 +50,7 @@ function readFiles(files: string[]) {
 function watchMode(token: string) {
   logger('using watch mode');
   const releaseInfo = getReleaseInfo();
-  const ast = getAst();
+  // const ast = getAst();
   // followLogs(releaseInfo);
   // watchFiles()
   //   .pipe(

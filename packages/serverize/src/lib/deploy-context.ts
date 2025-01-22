@@ -16,11 +16,12 @@ import { safeFail } from 'serverize/utils';
 import {
   type AST,
   getCurrentProject,
+  inspectDockerfile,
+  inspectImage,
   showError,
   showProgressBar,
   spinner,
   tell,
-  toAst,
 } from '../program';
 import { client, makeImageName } from './api-client';
 import { buildCompose, buildImage, saveImage } from './image';
@@ -42,7 +43,6 @@ interface ReleaseInfo {
 
 const als = new AsyncLocalStorage<{
   releaseInfo: ReleaseInfo;
-  ast: AST;
   project: string;
 }>();
 
@@ -156,6 +156,7 @@ export interface DeployContext {
   outputFile?: string;
   cwd: string;
   context: string;
+  image?: string;
 }
 
 export async function runInDeployContext(config: DeployContext) {
@@ -165,7 +166,6 @@ export async function runInDeployContext(config: DeployContext) {
     process.exit(1);
   }
   const currentProject = await getCurrentProject(config.projectName);
-  const ast = await toAst(config.dockerignorepath, config.file);
 
   const releaseInfo: ReleaseInfo = {
     channel: config.channel,
@@ -179,22 +179,34 @@ export async function runInDeployContext(config: DeployContext) {
     ),
   };
   return als.run(
-    { ast, project: currentProject.projectName, releaseInfo },
+    { project: currentProject.projectName, releaseInfo },
     async () => {
-      if (!ast.expose) {
-        spinner.warn('No exposed port found, use 3000 as default');
-      }
-      if (!ast.healthCheckOptions) {
-        // NOTE: atm, serverize no longer wait for healthcheck
-        // this might change in the future
-        // spinner.warn(
-        //   `No health check options found, using default health check`,
-        // );
+      let finalUrl: string;
+      if (config.image) {
+        const ast = await inspectImage(config.image);
+        if (!ast.expose) {
+          spinner.warn('No exposed port found, use 3000 as default');
+        }
+        finalUrl = await lastValueFrom(deployProject(config.image, ast));
+      } else {
+        const ast = await inspectDockerfile(
+          config.dockerignorepath,
+          config.file,
+        );
+        if (!ast.expose) {
+          spinner.warn('No exposed port found, use 3000 as default');
+        }
+        if (!ast.healthCheckOptions) {
+          // NOTE: atm, serverize no longer wait for healthcheck
+          // this might change in the future
+          // spinner.warn(
+          //   `No health check options found, using default health check`,
+          // );
+        }
+        await buildImage(config.context, releaseInfo.image, ast.dockerfile);
+        finalUrl = await lastValueFrom(deployProject(releaseInfo.image, ast));
       }
 
-      await buildImage(config.context, releaseInfo.image, ast.dockerfile);
-
-      const finalUrl = await lastValueFrom(deployProject());
       spinner.succeed(chalk.yellow('Deployed successfully'));
       const logsCommand = [
         'npx serverize logs',
@@ -227,16 +239,6 @@ export async function runInDeployContext(config: DeployContext) {
   );
 }
 
-export function getAst() {
-  const value = als.getStore();
-  if (!value) {
-    throw new Error(
-      `Couldn't parse the Dockerfile. This is most likely a bug. Please report it.`,
-    );
-  }
-  return value.ast;
-}
-
 export function getProject() {
   const value = als.getStore();
   if (!value) {
@@ -257,13 +259,12 @@ export function getReleaseInfo() {
   return value.releaseInfo;
 }
 
-export function deployProject() {
+export function deployProject(imageName: string, ast: AST) {
   const releaseInfo = getReleaseInfo();
-  const ast = getAst();
 
   tell('Pushing the image...');
   const port = parseInt(ast.expose || '3000', 10);
-  return from(saveImage(releaseInfo.image)).pipe(
+  return from(saveImage(imageName)).pipe(
     switchMap((details) =>
       pushImage(details, (progress) => tell(`Uploading ${progress}%`)),
     ),

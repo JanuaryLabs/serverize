@@ -1,4 +1,4 @@
-import { ServerError, Serverize } from '@serverize/client';
+import { Serverize } from '@serverize/client';
 import {
   onIdTokenChanged,
   signInWithCustomToken,
@@ -107,9 +107,7 @@ export async function activate(context: vscode.ExtensionContext) {
         item.command = {
           command: 'vscode.open',
           title: 'Open Documentation',
-          arguments: [
-            vscode.Uri.parse('https://serverize.sh/docs/concepts/projects'),
-          ],
+          arguments: [vscode.Uri.parse('https://serverize.sh/docs')],
         };
         return item;
       })();

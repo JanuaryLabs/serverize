@@ -7,6 +7,7 @@ import {
   channelOption,
   contextOption,
   cwdOption,
+  imageOption,
   outputOption,
   projectOption,
   releaseOption,
@@ -36,9 +37,10 @@ export default new Command('deploy')
   )
   .option(
     '-f, --file [dockerfilepath]',
-    'Path to Dockerfile or Compose file',
+    'Path to a Dockerfile relative to --cwd. ignored if --image is present',
     'Dockerfile',
   )
+  .addOption(imageOption)
   .addOption(contextOption)
   .addOption(outputOption)
   .addOption(channelOption)
@@ -54,6 +56,7 @@ export default new Command('deploy')
       channel,
       release,
       outputFile,
+      image,
     }) => {
       if (file.endsWith('.yml') || file.endsWith('.yaml')) {
         spinner.start();
@@ -78,6 +81,7 @@ export default new Command('deploy')
           file: join(cwd, file),
           dockerignorepath: join(cwd, '.dockerignore'),
           cwd,
+          image,
           channel,
           release,
           context,

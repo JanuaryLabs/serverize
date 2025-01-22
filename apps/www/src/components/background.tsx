@@ -53,7 +53,7 @@ export function Nav(props: { className?: string }) {
     },
     {
       name: 'Docs',
-      href: '/docs/concepts/projects',
+      href: '/docs',
     },
     {
       name: 'Roadmap',
@@ -126,7 +126,7 @@ export function Nav(props: { className?: string }) {
             Contact
           </a>
           <a
-            href="/docs/concepts/projects"
+            href="/docs"
             className={cn(
               buttonVariants({ variant: 'default' }),
               'h-8 px-2.5 py-1 shadow-none',

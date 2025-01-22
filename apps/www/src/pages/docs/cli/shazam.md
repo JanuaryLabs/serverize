@@ -16,12 +16,14 @@ Detect and deploy a project using a Dockerfile or framework
  
 | **Option** | **Description** | **Default** |
 |------------|-----------------|-------------|
-| `-o, --output [file]` | Write output to a file |  |
+| `--context [context]` | Docker build context | `.` |
+| `-o, --output-file <outputFile>` | Write output to a file |  |
 | `--cwd [cwd]` | Project directory | `$(pwd)` |
 | `-c, --channel <channel>` | Channel name (dev or preview) | `dev` |
 | `-r, --release <release>` | Release name | `latest` |
 | `-p, --project-name <projectName>` | The project name |  |
+| `-i, --image [image]` | Docker image to deploy. |  |
 | `--framework [framework]` | Framework to setup |  |
 | `--save` | Save the setup |  |
 | `--use-dockerfile-if-exists` | Use existing Dockerfile if found in [cwd] | `false` |
-| `-f, --file [dockerfilepath]` | Name of the Dockerfile or Compose file (default:"$(pwd)/Dockerfile") |  |
+| `-f, --file [dockerfilepath]` | Path to a Dockerfile relative to --cwd. ignored if --image is present (default:"$(pwd)/Dockerfile") |  |

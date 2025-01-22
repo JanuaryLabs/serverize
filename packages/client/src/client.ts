@@ -75,7 +75,8 @@ export async function parseResponse(response: Response) {
   }
   const isChunked = response.headers.get('Transfer-Encoding') === 'chunked';
   if (isChunked) {
-    return handleChunkedResponse(response, contentType);
+    return response.body!;
+    // return handleChunkedResponse(response, contentType);
   }
 
   const { type } = parse(contentType);

@@ -22,6 +22,7 @@ import { initialise } from './lib/auth';
 import { auth } from './lib/firebase';
 
 import { box } from '@january/console';
+import { getImageExposedPorts } from './lib/image';
 
 export interface Healthcheck {
   Test?: string[];
@@ -39,7 +40,7 @@ export interface AST {
   dockerfile: string;
 }
 
-export async function toAst(
+export async function inspectDockerfile(
   dockerignorefilePath: string,
   dockerfilePath: string,
 ): Promise<AST> {
@@ -121,6 +122,23 @@ export async function toAst(
     dockerfile: dockerfilePath,
   };
 }
+export async function inspectImage(image: string): Promise<AST> {
+  const [port] = await getImageExposedPorts(image);
+
+  const portandimage = {
+    port: port,
+    image: image, // should we inspect the image layers, maybe use docker history?
+  };
+
+  return {
+    healthCheckOptions: undefined,
+    getPaths: async () => {
+      return [];
+    },
+    expose: portandimage?.port,
+    dockerfile: '',
+  };
+}
 
 export const logger = debug('serverize');
 const SPINNER_TYPE =
@@ -171,8 +189,13 @@ export const outputOption = new Option(
   'Write output to a file',
 );
 
+export const imageOption = new Option(
+  '-i, --image [image]',
+  `Docker image to deploy.`,
+);
+
 export const contextOption = new Option(
-  '-c, --context [context]',
+  '--context [context]',
   'Docker build context',
 ).default('.');
 export const channelOption = new Option(
@@ -309,7 +332,7 @@ export async function getCurrentProject(project?: string) {
       token: apiToken,
     };
   }
-  spinner.fail('Missing project name. use --project');
+  spinner.fail('Missing project name. use --project-name');
   process.exit(1);
 }
 
@@ -408,13 +431,13 @@ export function showError(
       return spinner.fail(`${message}\n${message}`);
     }
     if (error.kind === 'response') {
-      const { errors, detail } = error.body as any;
+      const { errors, detail, title } = error.body as any;
       const flattened = Object.entries(errors ?? {}).map(([key, it]) => ({
         path: key,
         message: (it as any[])[0].message,
       }));
       const validationMessage = `${flattened.map((it) => `${it.path}: ${it.message}`).join('\n')}`;
-      return spinner.fail(`${detail}\n${validationMessage}`);
+      return spinner.fail(`${detail || title}\n${validationMessage}`);
     }
   }
   if (error instanceof Error) {

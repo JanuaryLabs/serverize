@@ -44,7 +44,7 @@ This works for any use case you might have, as long as the release name is uniqu
 
 ## Environment Variables
 
-To set environment variables, use the `secrets set` command along with the project name flag `-p` or `--project`.
+To set environment variables, use the `secrets set` command along with the project name flag `-p` or `--project-name`.
 
 ```sh
 npx serverize secrets set NAME=VALUE -p <project-name> -c preview

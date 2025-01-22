@@ -20,6 +20,12 @@ Or tell it where your Dockerfile is:
 npx serverize -f ./Dockerfile
 ```
 
+Or deploy an existing local image:
+
+```sh frame=none
+npx serverize -i docker.io/a
+```
+
 ## Core Concepts
 
 - [Projects](./concepts/projects) - Organize your deployments

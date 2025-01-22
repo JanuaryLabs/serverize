@@ -21,6 +21,7 @@ import {
   createSpinner,
   cwdOption,
   dropdown,
+  imageOption,
   logger,
   outputOption,
   projectOption,
@@ -41,6 +42,7 @@ interface ShazamConfig {
   file: string;
   useDockerfile: boolean;
   serviceName?: string;
+  image?: string;
   context: string;
 }
 async function shazam({
@@ -54,6 +56,7 @@ async function shazam({
   release,
   shouldSaveToCwd,
   useDockerfile,
+  image,
   serviceName,
 }: ShazamConfig) {
   const spinner = createSpinner();
@@ -64,7 +67,7 @@ async function shazam({
   let dockerignorepath = join(cwd, '.dockerignore');
   logger(`CWD: ${cwd}`);
 
-  if (!file) {
+  if (!file && !image) {
     let shouldDetectFramework = true;
     if (await exist(dockerfilepath)) {
       if (useDockerfile) {
@@ -202,6 +205,7 @@ async function shazam({
       projectName = await createProject();
     }
   }
+
   if (!projectName) {
     spinner.fail('No project selected');
     process.exit(1);
@@ -215,6 +219,7 @@ async function shazam({
     cwd: cwd,
     channel,
     release,
+    image,
     context,
     outputFile,
   });
@@ -227,6 +232,7 @@ export default new Command('shazam')
   .addOption(channelOption)
   .addOption(releaseOption)
   .addOption(projectOption)
+  .addOption(imageOption)
   .option('--framework [framework]', 'Framework to setup')
   .option('--save', 'Save the setup')
   .option(
@@ -236,7 +242,7 @@ export default new Command('shazam')
   )
   .option(
     '-f, --file [dockerfilepath]',
-    'Name of the Dockerfile or Compose file (default:"$(pwd)/Dockerfile")',
+    'Path to a Dockerfile relative to --cwd. ignored if --image is present (default:"$(pwd)/Dockerfile")',
   )
   .action(
     async ({
@@ -246,9 +252,10 @@ export default new Command('shazam')
       release,
       outputFile,
       cwd,
-      save: shouldSaveToCwd,
+      save,
       file,
       context,
+      image,
       useDockerfileIfExists,
     }) => {
       await shazam({
@@ -259,8 +266,9 @@ export default new Command('shazam')
         outputFile,
         cwd,
         context,
-        shouldSaveToCwd,
+        shouldSaveToCwd: save,
         file,
+        image,
         useDockerfile: useDockerfileIfExists,
       });
     },

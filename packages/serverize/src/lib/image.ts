@@ -9,11 +9,11 @@ import yaml from 'js-yaml';
 import { join } from 'path';
 import {
   type Healthcheck,
+  inspectDockerfile,
   logger,
   printDivider,
   refineHealthcheck,
   spinner,
-  toAst,
 } from '../program';
 
 export interface ImageDetails {
@@ -150,7 +150,7 @@ export async function buildCompose(
           Test: serviceConfig.healthcheck.test,
         })
       : serviceConfig.build
-        ? await toAst(
+        ? await inspectDockerfile(
             join(cwd, '.dockerignore'),
             join(cwd, getDockerfileFromBuild(serviceConfig.build)),
           ).then((ast) => ast.healthCheckOptions)
@@ -257,4 +257,16 @@ function getDockerfileFromBuild(
   return typeof build === 'string'
     ? build
     : join(build.context, build.dockerfile ?? 'Dockerfile');
+}
+
+export async function getImageExposedPorts(imageName: string) {
+  const { stdout } = await execa('docker', ['inspect', imageName]);
+  const inspectData = JSON.parse(stdout);
+  const exposedPorts = inspectData[0]?.Config?.ExposedPorts || {
+    '3000/tcp': {},
+  };
+  const ports = Object.keys(exposedPorts).map((port) =>
+    port.replace('/tcp', ''),
+  );
+  return ports;
 }
