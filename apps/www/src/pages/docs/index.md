@@ -22,8 +22,16 @@ npx serverize -f ./Dockerfile
 
 Or deploy an existing local image:
 
+- Pull the image
+
 ```sh frame=none
-npx serverize -i docker.io/a
+docker pull docker/example-voting-app-vote
+```
+
+- Deploy
+
+```sh frame=none
+npx serverize --image docker/example-voting-app-vote
 ```
 
 ## Core Concepts
