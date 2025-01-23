@@ -64,6 +64,7 @@ const application = express()
           projectId: release.projectId,
           // TODO: create seperate entity for tarLocation, image and runtimeConfig (basically and column that will be updated later on not when the release is created)
           tarLocation: release.tarLocation!,
+          port: release.port,
           image: release.image!,
           domainPrefix: release.domainPrefix,
           releaseId: release.id,
@@ -121,6 +122,7 @@ const application = express()
           domainPrefix: release.domainPrefix,
           volumes: release.volumes,
           releaseId: release.id,
+          port: release.port,
           traceId: req.body.traceId,
           environment: req.body.environment,
           serviceName: req.body.serviceName,

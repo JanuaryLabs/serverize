@@ -24,7 +24,10 @@
       "@workspace/api/entities": ["apps/api/src/app/features/entities.ts"],
       "@workspace/api/entities/*": ["apps/api/src/app/entities/*"],
       "@workspace/entities": ["apps/api/src/app/features/entities.ts"],
-      "@workspace/extensions/*": ["apps/api/src/app/extensions/*"],
+      "@workspace/extensions/*": [
+        "apps/api/src/january/extensions/*",
+        "apps/api/src/app/extensions/*"
+      ],
       "@workspace/identity": ["apps/api/src/app/extensions/identity/index.ts"],
       "@workspace/utils": ["apps/api/src/app/core/utils.ts"],
       "@workspace/validation": ["apps/api/src/app/core/validation.ts"],

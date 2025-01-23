@@ -6,7 +6,9 @@
     "**/.svn/**",
     "**/build/**",
     "**/packages/**",
-    "**/tools/**"
+    "**/tools/**",
+    "**/apps/api/**",
+    "**/apps/manager/**"
   ],
   "editor.defaultFormatter": "biomejs.biome",
   "[typescript]": {

@@ -31,7 +31,7 @@ docker pull docker/example-voting-app-vote
 - Deploy
 
 ```sh frame=none
-npx serverize --image docker/example-voting-app-vote
+npx serverize --image docker/image-that-exposes-http-port
 ```
 
 ## Core Concepts

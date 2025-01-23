@@ -374,21 +374,5 @@ export default feature({
         });
       },
     }),
-    workflow('GetConfig', {
-      tag: 'operations',
-      trigger: trigger.http({
-        method: 'get',
-        path: '/config',
-      }),
-      execute: async () => {
-        const qb = createQueryBuilder(tables.releases, 'releases')
-          .where('releases.status = :status', { status: 'completed' })
-          .andWhere('releases.conclusion = :conclusion', {
-            conclusion: 'success',
-          });
-        const releases = await execute(qb);
-        return toTraefikConfig(releases);
-      },
-    }),
   ],
 });

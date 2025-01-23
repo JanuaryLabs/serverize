@@ -28,16 +28,16 @@ export const SERVERIZE_DOMAIN =
 
 export const PROTOCOL =
   process.env.NODE_ENV === 'development' ? 'http' : 'https';
+interface ReleaseConfig {
+  port: string;
+  domainPrefix: string;
+}
 
-export function toTraefikConfig(
-  releases: InstanceType<typeof tables.releases>[],
-) {
+export function toTraefikConfig(releases: ReleaseConfig[]) {
   const services = releases.reduce<Record<string, TraefikService>>(
     (acc, release) => {
       // TODO: guess the port instead of defaulting to 3000
-      const port =
-        release.port ||
-        safeFail(() => JSON.parse(release.runtimeConfig || '{}').port, 3000);
+      const port = release.port || 3000;
       acc[release.domainPrefix] = {
         loadBalancer: {
           servers: [{ url: `http://${release.domainPrefix}:${port}` }],

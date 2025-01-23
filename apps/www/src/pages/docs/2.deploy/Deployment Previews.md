@@ -9,7 +9,7 @@ date: '2024-11-15T00:00:00.000Z'
 Deployment Previews enable developers to deploy and test changes in a live environment, separate from other deployments. This is an inherent feature in Serverize, utilizing preview channels and releases.
 
 > [!IMPORTANT]
-> Preview channel releases remain live for 5 minutes before going to sleep to save on resources, as they are not intended to be always available. If you require an always-on server, consider creating a dedicated project for that purpose.
+> Preview channel releases remain live for ~15 minutes before going to sleep to save on resources, as they are not intended to be always available. If you require an always-on server, consider creating a dedicated project for that purpose.
 
 ## Use Cases
 

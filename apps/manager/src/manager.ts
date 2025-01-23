@@ -19,6 +19,7 @@ export interface ReleaseInfo {
   tarLocation: string;
   image: string;
   domainPrefix: string;
+  port?: number | null;
   traceId: string;
   releaseId: string;
   network: string;
@@ -33,7 +34,6 @@ export async function createRemoteServer(
   instructions: {
     memory?: number;
     Healthcheck?: Record<string, any>;
-    hostPort?: string;
   },
 ) {
   const recorder = createRecorder({
@@ -90,7 +90,6 @@ export async function createRemoteContainer(
   imageTag: string,
   instructions: {
     memory?: number;
-    hostPort?: string;
     Healthcheck?: Record<string, any>;
   },
 ) {
@@ -125,6 +124,9 @@ export async function createRemoteContainer(
     Labels: {
       'sablier.enable': 'true',
       'sablier.group': releaseInfo.domainPrefix,
+      'serverize.enable': 'true',
+      'serverize.port': String(releaseInfo.port),
+      'serverize.prefix': releaseInfo.domainPrefix,
       'serverize.release': releaseInfo.id,
       'serverize.releaseName': releaseInfo.name,
       'serverize.project': releaseInfo.projectId,

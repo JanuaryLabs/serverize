@@ -29,7 +29,8 @@ entryPoints:
 
 providers:
   http:
-    endpoint: "http://api:3000/operations/config"
+    endpoint: "http://api:3000/containers/discovery"
+
 experimental:
   otlpLogs: true
   plugins:

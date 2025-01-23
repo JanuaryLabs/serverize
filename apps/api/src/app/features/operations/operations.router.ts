@@ -94,9 +94,4 @@ router.delete(
     return output.finalize();
   },
 );
-router.get('/operations/config', authorize(), async (context, next) => {
-  const output = createOutput(context);
-  await operations.getConfig(output, context.req.raw.signal);
-  return output.finalize();
-});
 export default ['/', router] as const;

@@ -1,9 +1,12 @@
+import { tables } from '@workspace/entities';
 import { orgNameValidator } from '@workspace/extensions/zod';
 import z from 'zod';
 
 import { docker } from 'serverize/docker';
 
 import { feature, trigger, workflow } from '@january/declarative';
+import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
+import { toTraefikConfig } from '@workspace/extensions/user';
 
 export default feature({
   workflows: [
@@ -70,6 +73,40 @@ export default feature({
         // docker.modem.demuxStream(logsStream, stdout, stderr);
         // return concatStreams(stdout, stderr);
         return logsStream;
+      },
+    }),
+    workflow('ConfigDiscovery', {
+      tag: 'containers',
+      trigger: trigger.http({
+        method: 'get',
+        path: '/discovery',
+      }),
+      execute: async () => {
+        // const qb = createQueryBuilder(tables.releases, 'releases')
+        //   .select(['releases.port', 'releases.domainPrefix'])
+        //   .where('releases.status = :status', { status: 'completed' })
+        //   .andWhere('releases.conclusion = :conclusion', {
+        //     conclusion: 'success',
+        //   });
+        // const releases = await execute(qb);
+        // return toTraefikConfig(
+        //   releases.map((it) => ({
+        //     port: it.port || 3000,
+        //     domainPrefix: it.domainPrefix,
+        //   })),
+        // );
+        const containers = await docker.listContainers({
+          all: true,
+          filters: {
+            label: ['serverize.enable=true'],
+          },
+        });
+        return toTraefikConfig(
+          containers.map((it) => ({
+            domainPrefix: it.Labels['serverize.prefix'],
+            port: it.Labels['serverize.port'],
+          })),
+        );
       },
     }),
   ],
