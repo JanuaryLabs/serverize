@@ -20,7 +20,6 @@ export interface ImageDetails {
   filePath: string;
   fileSize: number;
   fileStream: ReadStream;
-  image: string;
 }
 export async function saveImage(imageName: string): Promise<ImageDetails> {
   const tarFilePath = join(tmpdir(), `${crypto.randomUUID()}.tar`);
@@ -36,7 +35,6 @@ export async function saveImage(imageName: string): Promise<ImageDetails> {
   const fileSize = (await stat(tarFilePath)).size;
   const fileStream = createReadStream(tarFilePath);
   return {
-    image: imageName,
     filePath: tarFilePath,
     fileSize: fileSize,
     fileStream: fileStream,

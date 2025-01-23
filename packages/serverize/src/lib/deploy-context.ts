@@ -29,6 +29,7 @@ import { pushImage } from './uploader';
 import { streamLogs } from './view-logs';
 
 import { box } from '@january/console';
+import { execa } from 'execa';
 
 interface ReleaseInfo {
   channel: 'dev' | 'preview';
@@ -187,7 +188,9 @@ export async function runInDeployContext(config: DeployContext) {
         if (!ast.expose) {
           spinner.warn('No exposed port found, use 3000 as default');
         }
-        finalUrl = await lastValueFrom(deployProject(config.image, ast));
+
+        await execa('docker', ['tag', config.image, releaseInfo.image]);
+        finalUrl = await lastValueFrom(deployProject(releaseInfo.image, ast));
       } else {
         const ast = await inspectDockerfile(
           config.dockerignorepath,
