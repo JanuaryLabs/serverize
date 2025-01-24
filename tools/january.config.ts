@@ -7,7 +7,7 @@ import { auth } from '@january/extensions/firebase';
 import { hono } from '@january/extensions/hono';
 import { identity } from '@january/extensions/identity';
 import { postgresql, typeorm } from '@january/extensions/typeorm';
-import { fileWatch } from './file-watcher';
+import { fileWatch } from './file-watcher.ts';
 const appDir = join(process.cwd(), 'apps', 'api');
 
 await defineConfig({

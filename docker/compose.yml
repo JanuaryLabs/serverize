@@ -9,7 +9,7 @@ services:
       - '8080:8080'
     volumes:
       - './letsencrypt:/letsencrypt'
-      - './tmp/log:/var/log'
+      - logs:/var/log'
       - ./traefik.yml:/etc/traefik/traefik.yml:ro
     env_file:
       - .env # Make sure your Hetzner API token is in this file
@@ -69,6 +69,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - serverize-uploads:/serverize/uploads:rw
+      - logs:/logs
     env_file:
       - .env.api
     environment:
@@ -93,6 +94,7 @@ services:
 
 volumes:
   sablier:
+  logs:
   serverize-uploads:
     driver: local
     driver_opts:

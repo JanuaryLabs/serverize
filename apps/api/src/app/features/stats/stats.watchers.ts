@@ -9,8 +9,8 @@ export default function (gracefulController: AbortController) {
       gracefulController.signal,
     ]);
     const stream = observeFile({
-      filePath: '/var/log/nginx/access.jsonl',
-      autoRestart: false,
+      filePath: './logs/access.jsonl',
+      autoRestart: true,
       signal: signal,
     });
     why.watchAccessLog(stream, {

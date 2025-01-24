@@ -3,7 +3,7 @@ log:
   format: json
 
 accessLog:
-  filePath: "/var/log/traefik/access.jsonl"
+  filePath: "/var/log/access.jsonl"
   bufferingSize: 100
   format: json
   # otlp:

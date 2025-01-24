@@ -1,15 +1,16 @@
 import { feature, trigger, workflow } from '@january/declarative';
+import { safeFail } from '@workspace/extensions/user';
 export default feature({
   workflows: [
     workflow('WatchAccessLog', {
       tag: 'why',
       trigger: trigger.watchFile({
-        filePath: '/var/log/nginx/access.jsonl',
-        autoRestart: false,
+        filePath: './logs/access.jsonl',
+        autoRestart: true,
       }),
       execute: async (stream) => {
         for await (const line of stream) {
-          console.log(line);
+          console.log(safeFail(() => JSON.parse(line), null));
         }
       },
     }),

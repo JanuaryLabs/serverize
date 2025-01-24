@@ -6,7 +6,10 @@ import { mkdir, rm, writeFile } from 'fs/promises';
 import { dirname, join } from 'path';
 import { getFile } from 'serverize/utils';
 
-const file = 'serverize.txt';
+const file =
+  process.env.NODE_ENV === 'development'
+    ? 'serverize.dev.txt'
+    : 'serverize.txt';
 
 class FilePersistence {
   public static type = 'LOCAL' as const;

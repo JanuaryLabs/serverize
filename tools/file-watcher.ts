@@ -1,7 +1,7 @@
 import { camelcase, dotcase, spinalcase } from 'stringcase';
 
 import { join } from 'node:path';
-import { Extension } from '@january/extensions';
+import type { Extension } from '@january/extensions';
 import { refineExecute } from '@january/generator';
 export const makeFeatureFile = (featureName: string, fileName: string) =>
   join('./src/app/features', spinalcase(featureName), fileName);
@@ -82,8 +82,8 @@ export const fileWatch: () => Extension = () => {
                 gracefulController.signal,
               ]);
               const stream = observeFile({
-                filePath: '/var/log/nginx/access.jsonl',
-                autoRestart: false,
+                filePath: '${workflow.trigger.details.filePath}',
+                autoRestart: ${workflow.trigger.details.autoRestart || false},
                 signal: signal,
               });
               ${operationName}(stream, {
