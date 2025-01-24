@@ -6,6 +6,7 @@ import { logger } from 'hono/logger';
 import { type StatusCode } from 'hono/utils/http-status';
 
 import './features/crons';
+import './features/watchers';
 import './features/listeners';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import routes from './features/routes';

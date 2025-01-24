@@ -7,7 +7,7 @@ import { auth } from '@january/extensions/firebase';
 import { hono } from '@january/extensions/hono';
 import { identity } from '@january/extensions/identity';
 import { postgresql, typeorm } from '@january/extensions/typeorm';
-
+import { fileWatch } from './file-watcher';
 const appDir = join(process.cwd(), 'apps', 'api');
 
 await defineConfig({
@@ -22,6 +22,7 @@ await defineConfig({
     identity,
     hono(),
     auth(),
+    fileWatch(),
     typeorm({
       database: postgresql(),
     }),

@@ -18,6 +18,6 @@
     }
   ],
   "parserOptions": {
-    "project": ["apps/serverize/tsconfig.*?.json"]
+    "project": ["apps/api/tsconfig.*?.json"]
   }
 }
