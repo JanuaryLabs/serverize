@@ -1,4 +1,3 @@
-import { join } from 'node:path';
 import { feature, trigger, workflow } from '@january/declarative';
 export default feature({
   workflows: [

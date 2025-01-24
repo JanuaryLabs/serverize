@@ -95,7 +95,6 @@ export const fileWatch: () => Extension = () => {
       }
       lines.push(`}`);
 
-      console.log(makeControllerPath(contract.displayName, 'watchers'));
       return {
         [makeControllerPath(contract.displayName, 'watchers')]: [
           ...imports,

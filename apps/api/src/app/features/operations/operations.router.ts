@@ -1,4 +1,3 @@
-import { apiReference } from '@scalar/hono-api-reference';
 import { consume, createOutput } from '@workspace/extensions/hono';
 import { policies } from '@workspace/extensions/identity';
 import { authorize } from '@workspace/identity';
@@ -8,14 +7,7 @@ import axios from 'axios';
 import { Hono } from 'hono';
 import z from 'zod';
 import * as operations from './operations';
-import swagger from './operations.swagger.json';
 const router = new Hono<HonoEnv>();
-router.get(
-  '/operations/swagger',
-  apiReference({
-    spec: { url: swagger as any },
-  }),
-);
 router.post(
   '/operations/releases/start',
   consume('application/json'),

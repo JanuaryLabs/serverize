@@ -1,4 +1,3 @@
-import { apiReference } from '@scalar/hono-api-reference';
 import { createOutput } from '@workspace/extensions/hono';
 import { authorize } from '@workspace/identity';
 import { type HonoEnv } from '@workspace/utils';
@@ -8,14 +7,7 @@ import { streamText } from 'hono/streaming';
 import z from 'zod';
 import * as container from './container';
 import * as containers from './containers';
-import swagger from './docker.swagger.json';
 const router = new Hono<HonoEnv>();
-router.get(
-  '/docker/swagger',
-  apiReference({
-    spec: { url: swagger as any },
-  }),
-);
 router.get('/container/logs', authorize(), async (context, next) => {
   const query = context.req.query();
   const input = parseOrThrow(container.streamContainerLogsSchema, {
