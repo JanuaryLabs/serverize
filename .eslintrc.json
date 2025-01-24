@@ -6,6 +6,7 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx", "*.vue"],
       "rules": {
+        "@typescript-eslint/consistent-type-imports": "error",
         "@nx/enforce-module-boundaries": [
           "error",
           {

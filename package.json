@@ -25,6 +25,7 @@
     "@january/declarative": "https://github.com/JanuaryLabs/dist/raw/main/declarative.tar.gz?v=1.1.4",
     "@january/extensions": "https://github.com/JanuaryLabs/dist/raw/main/extensions.tar.gz?v=1.1.4",
     "@january/openapi": "https://github.com/JanuaryLabs/dist/raw/main/openapi.tar.gz?v=1.1.4",
+    "@january/generator": "https://github.com/JanuaryLabs/dist/raw/main/generator.tar.gz?v=1.1.4",
     "@nx/esbuild": "^20.3.0",
     "@nx/js": "20.3.0",
     "@shikijs/rehype": "^1.22.1",

@@ -1,11 +1,10 @@
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'fs';
 
-import { dirname } from 'path';
-import { basename, join, relative, resolve } from 'path';
+import { basename, dirname, relative } from 'path';
 
-const filterFiles = (dir, fileName) => {
+const filterFiles = (dir: string, fileName: string) => {
   const dirName = basename(dir);
-  if (dirName.endsWith('e2e') || dirName.endsWith('native-reader')) {
+  if (dirName.endsWith('e2e')) {
     return false;
   }
   return fileName.endsWith('.eslintrc.json');
@@ -68,7 +67,7 @@ function getFiles(
 }
 
 const entries = [
-  // ...getFiles('apps', filterFiles),
+  ...getFiles('apps', filterFiles),
   ...getFiles('packages', filterFiles),
 ];
 
