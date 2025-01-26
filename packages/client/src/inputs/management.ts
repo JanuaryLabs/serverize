@@ -38,5 +38,5 @@ export const linkUserSchema = z.object({
 export const signinSchema = z.object({
   token: z.string(),
   providerId: z.enum(['github.com', 'google.com', 'password']),
-  source: z.enum(['vscode', 'api', 'browser']),
+  source: z.enum(['vscode', 'api', 'browser']).optional(),
 });

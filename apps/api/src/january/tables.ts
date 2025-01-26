@@ -203,10 +203,6 @@ export default {
         references: tables.workspaces,
         relationship: 'many-to-one',
       }),
-      project: field.relation({
-        references: tables.projects,
-        relationship: 'many-to-one',
-      }),
     },
   }),
 };

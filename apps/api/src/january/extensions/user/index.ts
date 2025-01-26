@@ -122,7 +122,6 @@ export async function createUser(input: { uid: string }) {
 export interface Claims {
   organizationId: string;
   workspaceId: string;
-  projectId: string;
   // FIXME: use blocking functions instead of this
   aknowledged: boolean;
 }
@@ -131,12 +130,10 @@ export async function setUserClaims(input: {
   uid: string;
   organizationId: string;
   workspaceId: string;
-  projectId: string;
 }) {
   const claims: Claims = {
     organizationId: input.organizationId,
     workspaceId: input.workspaceId,
-    projectId: input.projectId,
     aknowledged: true,
   };
   await getAuth(firebaseApp).setCustomUserClaims(input.uid, claims);
@@ -168,13 +165,11 @@ export async function createDefaultOrg(input: {
     userId: input.uid,
     organizationId: organization.id,
     workspaceId: workspace.id,
-    projectId: project.id,
   });
   return {
     organizationId: organization.id,
     workspaceId: workspace.id,
     memberId: member.id,
-    projectId: project.id,
   };
 }
 

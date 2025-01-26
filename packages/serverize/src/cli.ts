@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { program } from 'commander';
+import { Command, program } from 'commander';
 import auth, { signin, signout, signup, whoami } from './auth';
 import deploy from './deploy';
 import logs from './logs';
@@ -25,6 +25,12 @@ const cli = program
   .addCommand(releases)
   .addCommand(setup)
   .addCommand(shazam, { isDefault: true })
+  .addCommand(
+    new Command('_internal').action(() => {
+      // do nothing
+    }),
+    { hidden: true },
+  )
   .parse(process.argv);
 
 export default cli;

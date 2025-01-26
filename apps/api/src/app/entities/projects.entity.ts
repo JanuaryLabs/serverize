@@ -12,7 +12,6 @@ import {
 } from 'typeorm';
 import { type Relation } from 'typeorm';
 import ApiKeys from './api-keys.entity.ts';
-import Preferences from './preferences.entity.ts';
 import Releases from './releases.entity.ts';
 import SecretsKeys from './secrets-keys.entity.ts';
 import Secrets from './secrets.entity.ts';
@@ -71,12 +70,4 @@ export default class Projects {
   updatedAt?: Date;
   @DeleteDateColumn()
   deletedAt?: Date;
-  @OneToMany(
-    () => Preferences,
-    (relatedEntity) => relatedEntity.project,
-    { nullable: true },
-  )
-  preferences?: Preferences[];
-  @RelationId((entity: Projects) => entity.preferences)
-  preferencesIds?: string[] | null;
 }

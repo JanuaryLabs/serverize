@@ -55,7 +55,6 @@ export async function signin(
     ...({
       organizationId: preferences.organizationId as string,
       workspaceId: preferences.workspaceId as string,
-      projectId: preferences.projectId as string,
       aknowledged: true,
     } satisfies Claims),
   });

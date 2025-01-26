@@ -199,6 +199,9 @@ function main(): void {
         'A Commander command is missing a name. Please specify one.',
       );
     }
+    if (cmdName.startsWith('_')) {
+      return;
+    }
 
     const lines = [
       '---',

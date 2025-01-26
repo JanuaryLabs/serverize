@@ -33,9 +33,17 @@ Tokens are used to authenticate and authorize deployments in continuous integrat
 | **Usage**        | `npx serverize tokens list [options]` |
 
     
+| **Option** | **Description** | **Default** |
+|------------|-----------------|-------------|
+| `-p, --project-name <projectName>` | The project name |  |
 ### `revoke`
 
 
 | **Description** | Permanently revoke an access token |
 |------------------|----------------------------------|
 | **Usage**        | `npx serverize tokens revoke [options] <token>` |
+
+    
+| **Option** | **Description** | **Default** |
+|------------|-----------------|-------------|
+| `-p, --project-name <projectName>` | The project name |  |

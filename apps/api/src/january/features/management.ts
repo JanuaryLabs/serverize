@@ -169,7 +169,6 @@ export default feature({
             uid: input.uid,
             organizationId: data.organizationId,
             workspaceId: data.workspaceId,
-            projectId: data.projectId,
           });
 
           return output.ok(claims);
@@ -430,7 +429,6 @@ export default feature({
                     ...({
                       organizationId: data.organizationId,
                       workspaceId: data.workspaceId,
-                      projectId: data.projectId,
                       aknowledged: true,
                     } satisfies Claims),
                   }),
@@ -499,7 +497,6 @@ export default feature({
           ...({
             organizationId: preferences.organizationId as string,
             workspaceId: preferences.workspaceId as string,
-            projectId: preferences.projectId as string,
             aknowledged: true,
           } satisfies Claims),
         });

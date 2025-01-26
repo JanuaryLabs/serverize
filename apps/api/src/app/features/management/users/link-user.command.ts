@@ -69,7 +69,6 @@ export async function linkUser(
               ...({
                 organizationId: data.organizationId,
                 workspaceId: data.workspaceId,
-                projectId: data.projectId,
                 aknowledged: true,
               } satisfies Claims),
             }),

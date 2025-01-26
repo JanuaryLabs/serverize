@@ -50,7 +50,6 @@ export async function createDefaultOrganization(
       uid: input.uid,
       organizationId: data.organizationId,
       workspaceId: data.workspaceId,
-      projectId: data.projectId,
     });
 
     return output.ok(claims);

@@ -11,7 +11,6 @@ import {
 } from 'typeorm';
 import { type Relation } from 'typeorm';
 import Organizations from './organizations.entity.ts';
-import Projects from './projects.entity.ts';
 import Users from './users.entity.ts';
 import Workspaces from './workspaces.entity.ts';
 
@@ -42,14 +41,6 @@ export default class Preferences {
   workspace?: Relation<Workspaces>;
   @Column({ nullable: true, type: 'uuid' })
   workspaceId?: string | null;
-  @ManyToOne(
-    () => Projects,
-    (relatedEntity) => relatedEntity.preferences,
-    { nullable: true },
-  )
-  project?: Relation<Projects>;
-  @Column({ nullable: true, type: 'uuid' })
-  projectId?: string | null;
   @PrimaryGeneratedColumn('uuid')
   id!: string;
   @CreateDateColumn()
