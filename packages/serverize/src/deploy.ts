@@ -2,11 +2,14 @@ import chalk from 'chalk';
 import { Command, Option } from 'commander';
 
 import { join } from 'path';
+import { client } from './lib/api-client';
 import { runInComposeContext, runInDeployContext } from './lib/deploy-context';
 import {
+  SERVERIZE_API_TOKEN,
   channelOption,
   contextOption,
   cwdOption,
+  getCurrentProject,
   imageOption,
   outputOption,
   projectOption,
@@ -58,6 +61,10 @@ export default new Command('deploy')
       outputFile,
       image,
     }) => {
+      if (SERVERIZE_API_TOKEN) {
+        client.setOptions({ token: SERVERIZE_API_TOKEN });
+      }
+
       if (file.endsWith('.yml') || file.endsWith('.yaml')) {
         spinner.start();
         spinner.info(`Deploying (${chalk.green(projectName)})...`);
@@ -74,10 +81,8 @@ export default new Command('deploy')
         });
       } else {
         spinner.start();
-        spinner.info(`Deploying (${chalk.green(projectName)})...`);
-
         await runInDeployContext({
-          projectName,
+          projectName: projectName,
           file: join(cwd, file),
           dockerignorepath: join(cwd, '.dockerignore'),
           cwd,

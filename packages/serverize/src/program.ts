@@ -18,7 +18,7 @@ import parse from 'parse-duration';
 import { coerceArray, nodeServer } from 'serverize/dockerfile';
 import { exist } from 'serverize/utils';
 import { client } from './lib/api-client';
-import { initialise } from './lib/auth';
+import { initialise } from './lib/auth-methods';
 import { auth } from './lib/firebase';
 
 import { box } from '@january/console';
@@ -284,9 +284,9 @@ export async function dropdown<
   });
 }
 
+export const SERVERIZE_API_TOKEN = process.env.SERVERIZE_API_TOKEN?.trim();
 export async function getCurrentProject(project?: string) {
-  const apiToken = process.env.SERVERIZE_API_TOKEN?.trim();
-
+  const apiToken = SERVERIZE_API_TOKEN;
   const useProject = async () => {
     const user = await ensureUser();
     if (!user) {

@@ -7,7 +7,7 @@ import { ensureDockerRunning } from 'serverize/docker';
 import { exist } from 'serverize/utils';
 import { login, register } from './auth';
 import { client } from './lib/api-client';
-import { initialise } from './lib/auth';
+import { initialise } from './lib/auth-methods';
 import { runInDeployContext } from './lib/deploy-context';
 import {
   detectFramework,

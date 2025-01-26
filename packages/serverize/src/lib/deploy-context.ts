@@ -167,6 +167,7 @@ export async function runInDeployContext(config: DeployContext) {
     process.exit(1);
   }
   const currentProject = await getCurrentProject(config.projectName);
+  spinner.info(`Deploying (${chalk.green(currentProject.projectName)})...`);
 
   const releaseInfo: ReleaseInfo = {
     channel: config.channel,

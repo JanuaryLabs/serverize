@@ -9,7 +9,7 @@ import {
   signInWithEmail,
   signInWithGoogle,
   signUpWithEmail,
-} from './lib/auth';
+} from './lib/auth-methods';
 import { auth } from './lib/firebase';
 import { askForProjectName, showError, spinner, tell } from './program';
 
