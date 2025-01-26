@@ -459,6 +459,10 @@ export default feature({
             select: trigger.body.providerId,
             against: z.enum(['github.com', 'google.com', 'password']),
           },
+          source: {
+            select: trigger.body.source,
+            against: z.enum(['vscode', 'api', 'browser']).optional(),
+          },
         }),
       }),
       execute: async ({ input, output }) => {
@@ -491,13 +495,13 @@ export default feature({
         );
         console.log(uid, preferences);
         const token = await auth.createCustomToken(uid, {
-          source: 'vscode',
-          ...{
-            organizationId: preferences.organizationId,
-            workspaceId: preferences.workspaceId,
-            projectId: preferences.projectId,
+          source: input.source,
+          ...({
+            organizationId: preferences.organizationId as string,
+            workspaceId: preferences.workspaceId as string,
+            projectId: preferences.projectId as string,
             aknowledged: true,
-          },
+          } satisfies Claims),
         });
         return output.ok({
           accessToken: token,

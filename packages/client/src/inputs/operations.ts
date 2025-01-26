@@ -32,4 +32,3 @@ export const deleteReleaseSchema = z.object({
   projectId: z.string().uuid(),
   channel: channelSchema,
 });
-export const getConfigSchema = z.object({});

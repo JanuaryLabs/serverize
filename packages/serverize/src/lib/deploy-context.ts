@@ -15,6 +15,7 @@ import { isDockerRunning } from 'serverize/docker';
 import { safeFail } from 'serverize/utils';
 import {
   type AST,
+  ensureUser,
   getCurrentProject,
   inspectDockerfile,
   inspectImage,
@@ -166,6 +167,9 @@ export async function runInDeployContext(config: DeployContext) {
     spinner.fail('Docker is not running. Please start it then try again.');
     process.exit(1);
   }
+  const user = await ensureUser();
+  if (!user) process.exit(1);
+
   const currentProject = await getCurrentProject(config.projectName);
   spinner.info(`Deploying (${chalk.green(currentProject.projectName)})...`);
 

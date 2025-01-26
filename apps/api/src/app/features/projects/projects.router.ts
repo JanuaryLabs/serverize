@@ -16,15 +16,10 @@ router.post(
   async (context, next) => {
     const body = await context.req.json();
     const input = parseOrThrow(tokens.createTokenSchema, {
-      projectId: body.projectId,
+      projectName: body.projectName,
     });
     const output = createOutput(context);
-    await tokens.createToken(
-      input,
-      output,
-      context.var.subject!,
-      context.req.raw.signal,
-    );
+    await tokens.createToken(input, output, context.req.raw.signal);
     return output.finalize();
   },
 );
@@ -33,22 +28,28 @@ router.delete(
   authorize(policies.authenticated),
   async (context, next) => {
     const body = await context.req.json();
-    const input = parseOrThrow(tokens.revokeTokenSchema, { token: body.token });
+    const input = parseOrThrow(tokens.revokeTokenSchema, {
+      projectName: body.projectName,
+      token: body.token,
+    });
     const output = createOutput(context);
-    await tokens.revokeToken(
-      input,
-      output,
-      context.var.subject!,
-      context.req.raw.signal,
-    );
+    await tokens.revokeToken(input, output, context.req.raw.signal);
     return output.finalize();
   },
 );
-router.get('/tokens', authorize(), async (context, next) => {
-  const output = createOutput(context);
-  await tokens.listTokens(output, context.var.subject!, context.req.raw.signal);
-  return output.finalize();
-});
+router.get(
+  '/tokens',
+  authorize(policies.authenticated),
+  async (context, next) => {
+    const query = context.req.query();
+    const input = parseOrThrow(tokens.listTokensSchema, {
+      projectName: query.projectName,
+    });
+    const output = createOutput(context);
+    await tokens.listTokens(input, output, context.req.raw.signal);
+    return output.finalize();
+  },
+);
 router.get('/tokens/:token', authorize(), async (context, next) => {
   const path = context.req.param();
   const input = parseOrThrow(tokens.getTokenSchema, { token: path.token });
@@ -183,6 +184,37 @@ router.get(
     });
     const output = createOutput(context);
     await secrets.getSecretsValues(input, output, context.req.raw.signal);
+    return output.finalize();
+  },
+);
+router.post(
+  '/tokens/exchange',
+  consume('application/json'),
+  authorize(),
+  async (context, next) => {
+    const body = await context.req.json();
+    const input = parseOrThrow(tokens.exchangeTokenSchema, {
+      token: body.token,
+    });
+    const output = createOutput(context);
+    await tokens.exchangeToken(input, output, context.req.raw.signal);
+    return output.finalize();
+  },
+);
+router.delete(
+  '/tokens/organization/:organizationId',
+  authorize(policies.authenticated),
+  async (context, next) => {
+    const path = context.req.param();
+    const input = parseOrThrow(tokens.invalidateOrganizationTokensSchema, {
+      organizationId: path.organizationId,
+    });
+    const output = createOutput(context);
+    await tokens.invalidateOrganizationTokens(
+      input,
+      output,
+      context.req.raw.signal,
+    );
     return output.finalize();
   },
 );

@@ -1,8 +1,11 @@
 import z from 'zod';
 import { channelSchema, orgNameValidator } from '../zod';
-export const createTokenSchema = z.object({ projectId: z.string().uuid() });
-export const revokeTokenSchema = z.object({ token: z.string() });
-export const listTokensSchema = z.object({});
+export const createTokenSchema = z.object({ projectName: orgNameValidator });
+export const revokeTokenSchema = z.object({
+  projectName: z.string(),
+  token: z.string(),
+});
+export const listTokensSchema = z.object({ projectName: z.string() });
 export const getTokenSchema = z.object({ token: z.string() });
 export const createReleaseSchema = z.object({
   releaseName: orgNameValidator,
@@ -47,4 +50,8 @@ export const deleteSecretSchema = z.object({ id: z.string().uuid() });
 export const getSecretsValuesSchema = z.object({
   projectId: z.string().uuid(),
   channel: channelSchema,
+});
+export const exchangeTokenSchema = z.object({ token: z.string() });
+export const invalidateOrganizationTokensSchema = z.object({
+  organizationId: z.string().uuid(),
 });

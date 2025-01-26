@@ -1,17 +1,30 @@
 import { trigger } from '@january/declarative';
 import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
-import { type IdentitySubject } from '@workspace/identity';
+import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
 import ApiKeys from '../../../entities/api-keys.entity.ts';
+import Projects from '../../../entities/projects.entity.ts';
+export const listTokensSchema = z.object({ projectName: z.string() });
 
 export async function listTokens(
+  input: z.infer<typeof listTokensSchema>,
   output: trigger.http.output,
-  subject: IdentitySubject,
   signal: AbortSignal,
 ) {
+  const projectQb = createQueryBuilder(Projects, 'projects')
+    .where('projects.name = :name', { name: input.projectName })
+    .select(['projects.id']);
+  const [project] = await execute(projectQb);
+  if (!project) {
+    throw new ProblemDetailsException({
+      status: 404,
+      title: 'Project not found',
+      detail: `Project with name '${input.projectName}' not found`,
+    });
+  }
   const qb = createQueryBuilder(ApiKeys, 'apiKeys')
-    .where('apiKeys.organizationId = :organizationId', {
-      organizationId: subject.claims.organizationId,
+    .where('apiKeys.projectId = :projectId', {
+      projectId: project.id,
     })
     .innerJoinAndSelect('apiKeys.project', 'projects');
 

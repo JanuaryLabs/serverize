@@ -1,8 +1,5 @@
-import { Organizations } from './Organizations';
 import { Projects } from './Projects';
 export interface ApiKeys {
-  organization: Organizations;
-  organizationId: string;
   project: Projects;
   projectId: string;
   key: string;

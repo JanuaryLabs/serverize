@@ -18,7 +18,7 @@ import { box } from '@january/console';
 const list = new Command('list')
   .alias('ls')
   .summary('List all releases for a project')
-  .addOption(projectOption.makeOptionMandatory(true))
+  .addOption(projectOption)
   .addOption(channelOption)
   .action(async ({ projectName, channel }) => {
     const currentProject = await getCurrentProject(projectName);
@@ -85,9 +85,9 @@ const terminate = new Command('terminate')
 const restart = new Command('restart')
   .summary('Restart a specific release')
   .usage('[options]')
-  .addOption(projectOption.makeOptionMandatory(true))
-  .addOption(channelOption.makeOptionMandatory(true))
-  .addOption(releaseOption.makeOptionMandatory(true))
+  .addOption(projectOption)
+  .addOption(channelOption)
+  .addOption(releaseOption)
   .action(async ({ project: projectName, channel, release: releaseName }) => {
     const currentProject = await getCurrentProject(projectName);
 

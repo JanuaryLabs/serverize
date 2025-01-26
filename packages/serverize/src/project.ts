@@ -7,7 +7,7 @@ import { box } from '@january/console';
 
 export async function createProject(name?: string) {
   const user = await ensureUser();
-  if (!user) return;
+  if (!user) process.exit();
 
   name ??= await askForProjectName();
 
@@ -34,7 +34,7 @@ const list = new Command('list')
   .description('List all projects')
   .action(async () => {
     const user = await ensureUser();
-    if (!user) return;
+    if (!user) process.exit();
 
     const [projects, error] = await client.request('GET /projects', {});
     if (error) {

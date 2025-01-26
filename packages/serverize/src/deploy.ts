@@ -61,10 +61,6 @@ export default new Command('deploy')
       outputFile,
       image,
     }) => {
-      if (SERVERIZE_API_TOKEN) {
-        client.setOptions({ token: SERVERIZE_API_TOKEN });
-      }
-
       if (file.endsWith('.yml') || file.endsWith('.yaml')) {
         spinner.start();
         spinner.info(`Deploying (${chalk.green(projectName)})...`);

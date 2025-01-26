@@ -8,3 +8,4 @@ export const streamContainerLogsSchema = z.object({
   details: z.boolean().default(true).optional(),
   tail: z.number().max(250).default(250).optional(),
 });
+export const configDiscoverySchema = z.object({});

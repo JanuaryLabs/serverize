@@ -36,6 +36,25 @@ export default {
       );
     },
   },
+  'GET /containers/discovery': {
+    schema: docker.configDiscoverySchema,
+    toRequest(
+      input: Endpoints['GET /containers/discovery']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /containers/discovery';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: [],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
   'DELETE /organizations/{id}': {
     schema: management.deleteOrgSchema,
     toRequest(
@@ -238,7 +257,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: ['token', 'providerId'],
+          inputBody: ['token', 'providerId', 'source'],
           inputParams: [],
         }),
         init,
@@ -333,25 +352,6 @@ export default {
       );
     },
   },
-  'GET /operations/config': {
-    schema: operations.getConfigSchema,
-    toRequest(
-      input: Endpoints['GET /operations/config']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /operations/config';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: [],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
   'POST /tokens': {
     schema: projects.createTokenSchema,
     toRequest(
@@ -364,7 +364,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: ['projectId'],
+          inputBody: ['projectName'],
           inputParams: [],
         }),
         init,
@@ -383,7 +383,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: ['token'],
+          inputBody: ['projectName', 'token'],
           inputParams: [],
         }),
         init,
@@ -401,7 +401,7 @@ export default {
         endpoint,
         json(input, {
           inputHeaders: [],
-          inputQuery: [],
+          inputQuery: ['projectName'],
           inputBody: [],
           inputParams: [],
         }),
@@ -601,6 +601,44 @@ export default {
           inputQuery: ['projectId', 'channel'],
           inputBody: [],
           inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'POST /tokens/exchange': {
+    schema: projects.exchangeTokenSchema,
+    toRequest(
+      input: Endpoints['POST /tokens/exchange']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'POST /tokens/exchange';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['token'],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'DELETE /tokens/organization/{organizationId}': {
+    schema: projects.invalidateOrganizationTokensSchema,
+    toRequest(
+      input: Endpoints['DELETE /tokens/organization/{organizationId}']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'DELETE /tokens/organization/{organizationId}';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: [],
+          inputParams: ['organizationId'],
         }),
         init,
       );

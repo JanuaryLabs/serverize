@@ -6,6 +6,7 @@ import * as projects from './inputs/projects';
 import * as root from './inputs/root';
 import * as stats from './inputs/stats';
 import { CompleteRelease } from './outputs/CompleteRelease';
+import { ConfigDiscovery } from './outputs/ConfigDiscovery';
 import { CreateDefaultOrganization } from './outputs/CreateDefaultOrganization';
 import { CreateOrganization } from './outputs/CreateOrganization';
 import { CreateProject } from './outputs/CreateProject';
@@ -18,11 +19,12 @@ import { DeleteOrg } from './outputs/DeleteOrg';
 import { DeleteRelease } from './outputs/DeleteRelease';
 import { DeleteSecret } from './outputs/DeleteSecret';
 import { EmptyFavicon } from './outputs/EmptyFavicon';
-import { GetConfig } from './outputs/GetConfig';
+import { ExchangeToken } from './outputs/ExchangeToken';
 import { GetSecrets } from './outputs/GetSecrets';
 import { GetSecretsValues } from './outputs/GetSecretsValues';
 import { GetToken } from './outputs/GetToken';
 import { HealthCheck } from './outputs/HealthCheck';
+import { InvalidateOrganizationTokens } from './outputs/InvalidateOrganizationTokens';
 import { LinkUser } from './outputs/LinkUser';
 import { ListOrganizations } from './outputs/ListOrganizations';
 import { ListProjects } from './outputs/ListProjects';
@@ -45,6 +47,11 @@ export interface Endpoints {
     input: z.infer<typeof docker.streamContainerLogsSchema>;
     output: StreamContainerLogs;
     error: ServerError | ParseError<typeof docker.streamContainerLogsSchema>;
+  };
+  'GET /containers/discovery': {
+    input: z.infer<typeof docker.configDiscoverySchema>;
+    output: ConfigDiscovery;
+    error: ServerError | ParseError<typeof docker.configDiscoverySchema>;
   };
   'DELETE /organizations/{id}': {
     input: z.infer<typeof management.deleteOrgSchema>;
@@ -125,11 +132,6 @@ export interface Endpoints {
     output: DeleteRelease;
     error: ServerError | ParseError<typeof operations.deleteReleaseSchema>;
   };
-  'GET /operations/config': {
-    input: z.infer<typeof operations.getConfigSchema>;
-    output: GetConfig;
-    error: ServerError | ParseError<typeof operations.getConfigSchema>;
-  };
   'POST /tokens': {
     input: z.infer<typeof projects.createTokenSchema>;
     output: CreateToken;
@@ -196,6 +198,18 @@ export interface Endpoints {
     input: z.infer<typeof projects.getSecretsValuesSchema>;
     output: GetSecretsValues;
     error: ServerError | ParseError<typeof projects.getSecretsValuesSchema>;
+  };
+  'POST /tokens/exchange': {
+    input: z.infer<typeof projects.exchangeTokenSchema>;
+    output: ExchangeToken;
+    error: ServerError | ParseError<typeof projects.exchangeTokenSchema>;
+  };
+  'DELETE /tokens/organization/{organizationId}': {
+    input: z.infer<typeof projects.invalidateOrganizationTokensSchema>;
+    output: InvalidateOrganizationTokens;
+    error:
+      | ServerError
+      | ParseError<typeof projects.invalidateOrganizationTokensSchema>;
   };
   'GET /root/favicon.ico': {
     input: z.infer<typeof root.emptyFaviconSchema>;

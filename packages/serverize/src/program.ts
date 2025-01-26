@@ -9,7 +9,7 @@ import { Option } from 'commander';
 import debug from 'debug';
 import { type Dockerfile, DockerfileParser } from 'dockerfile-ast';
 import glob from 'fast-glob';
-import { signOut } from 'firebase/auth';
+import { signInWithCustomToken, signOut } from 'firebase/auth';
 import { readFile } from 'fs/promises';
 import ora from 'ora';
 import validator from 'validator';
@@ -209,20 +209,45 @@ export const releaseOption = new Option(
 export const projectOption = new Option(
   '-p, --project-name <projectName>',
   'The project name',
-).makeOptionMandatory(true);
-if (process.env.SERVERIZE_PROJECT) {
-  projectOption.default(process.env.SERVERIZE_PROJECT);
-}
-if (process.env.SERVERIZE_PROJECT || process.env.SERVERIZE_API_TOKEN) {
-  projectOption.makeOptionMandatory(false);
-}
+)
+  .makeOptionMandatory(
+    !!!(process.env.SERVERIZE_PROJECT || process.env.SERVERIZE_API_TOKEN),
+  )
+  .default(process.env.SERVERIZE_PROJECT);
+
+/**
+ * use it if you want optional project name flag
+ */
+export const projectOptionsArg = [
+  '-p, --project-name <projectName>',
+  'The project name',
+  process.env.SERVERIZE_PROJECT,
+] as const;
 
 export async function ensureUser() {
-  const user = await initialise();
+  let user = await initialise();
+
+  if (!user && SERVERIZE_API_TOKEN) {
+    const [result, error] = await client.request('POST /tokens/exchange', {
+      token: SERVERIZE_API_TOKEN,
+    });
+    if (error) {
+      showError(error);
+      return;
+    }
+    const userCredential = await signInWithCustomToken(
+      auth,
+      result.accessToken,
+    );
+    client.setOptions({ token: result.accessToken });
+    user = userCredential.user;
+  }
+
   if (!user) {
     ensureUser.say();
     return null;
   }
+
   const { claims } = await user.getIdTokenResult(true);
   if (!claims.aknowledged) {
     // in case the user created but the server didn't process it correctly.
@@ -285,9 +310,24 @@ export async function dropdown<
 }
 
 export const SERVERIZE_API_TOKEN = process.env.SERVERIZE_API_TOKEN?.trim();
+
 export async function getCurrentProject(project?: string) {
   const apiToken = SERVERIZE_API_TOKEN;
-  const useProject = async () => {
+
+  if (apiToken) {
+    const [data, error] = await client.request('GET /tokens/{token}', {
+      token: apiToken,
+    });
+    if (error) {
+      showError(error);
+      process.exit(1);
+    }
+    return {
+      projectId: data.project.id,
+      projectName: data.project.name,
+      token: apiToken,
+    };
+  } else if (project) {
     const user = await ensureUser();
     if (!user) {
       process.exit(1);
@@ -311,27 +351,8 @@ export async function getCurrentProject(project?: string) {
       projectName: data.records[0].name,
       token: await user.user.getIdToken(),
     };
-  };
-
-  if (project && apiToken) {
-    return await useProject();
-  } else if (project) {
-    return await useProject();
-  } else if (apiToken) {
-    // TODO: exchange token for custom jwt instead
-    const [data, error] = await client.request('GET /tokens/{token}', {
-      token: apiToken,
-    });
-    if (error) {
-      showError(error);
-      process.exit(1);
-    }
-    return {
-      projectId: data.project.id,
-      projectName: data.project.name,
-      token: apiToken,
-    };
   }
+
   spinner.fail('Missing project name. use --project-name');
   process.exit(1);
 }

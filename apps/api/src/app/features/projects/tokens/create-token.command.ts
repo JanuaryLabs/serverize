@@ -1,27 +1,36 @@
 import { trigger } from '@january/declarative';
-import { saveEntity } from '@workspace/extensions/postgresql';
-import { type IdentitySubject } from '@workspace/identity';
+import {
+  createQueryBuilder,
+  execute,
+  saveEntity,
+} from '@workspace/extensions/postgresql';
+import { orgNameValidator } from '@workspace/extensions/zod';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
 import ApiKeys from '../../../entities/api-keys.entity.ts';
-export const createTokenSchema = z.object({ projectId: z.string().uuid() });
+import Projects from '../../../entities/projects.entity.ts';
+export const createTokenSchema = z.object({ projectName: orgNameValidator });
 
 export async function createToken(
   input: z.infer<typeof createTokenSchema>,
   output: trigger.http.output,
-  subject: IdentitySubject,
   signal: AbortSignal,
 ) {
-  const token = crypto.randomUUID().replaceAll('-', '');
-  if (!subject) {
+  const qb = createQueryBuilder(Projects, 'projects')
+    .where('projects.name = :name', { name: input.projectName })
+    .select(['projects.id']);
+  const [project] = await execute(qb);
+  if (!project) {
     throw new ProblemDetailsException({
-      status: 401,
+      status: 404,
+      title: 'Project not found',
+      detail: `Project with name '${input.projectName}' not found`,
     });
   }
+  const token = crypto.randomUUID().replaceAll('-', '');
   await saveEntity(ApiKeys, {
     key: token,
-    projectId: input.projectId,
-    organizationId: subject.claims.organizationId,
+    projectId: project.id,
   });
   return output.ok(token);
 }

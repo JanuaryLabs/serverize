@@ -187,6 +187,7 @@ router.post(
     const input = parseOrThrow(users.signinSchema, {
       token: body.token,
       providerId: body.providerId,
+      source: body.source,
     });
     const output = createOutput(context);
     await users.signin(input, output, context.req.raw.signal);

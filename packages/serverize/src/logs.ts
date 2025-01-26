@@ -11,12 +11,12 @@ import {
 
 export default new Command('logs')
   .description('View logs for a specific project and release')
-  .addOption(projectOption.makeOptionMandatory())
+  .addOption(projectOption)
   .addOption(channelOption)
   .addOption(releaseOption)
   .action(async ({ projectName, release, channel }) => {
     const user = await ensureUser();
-    if (!user) return;
+    if (!user) process.exit();
     const [stream, error] = await client.request('GET /container/logs', {
       projectName: projectName,
       channelName: channel,

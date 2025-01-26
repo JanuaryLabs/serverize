@@ -7,7 +7,7 @@
     "generate": "node --experimental-transform-types tools/january.config.ts",
     "generate:watch": "node --experimental-transform-types --watch-path apps/api/src/january --watch-path tools tools/january.config.ts",
     "openai": "node ./tools/openapi.js # this should generate openapi.json",
-    "client": "node ./tools/client.js # this should take openapi.json and generate client code",
+    "client": "node --experimental-transform-types ./tools/client.ts # this should take openapi.json and generate client code",
     "dev": "npx concurrently -k -p \"[{name}]\" -n \"server,build\" -c \"blue.bold,green.bold\" \"npm run start:watch\" \"npm run generate:watch\"",
     "prepare": "husky"
   },

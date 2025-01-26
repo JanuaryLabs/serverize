@@ -18,13 +18,11 @@
           {
             "description": "Generate API Code",
             "prefix": "generate",
-            "color": "yellow",
             "command": "npm run generate:watch"
           },
           {
             "description": "Start the server",
             "prefix": "server",
-            "color": "green",
             "command": "nx run api:serve:development --watch"
           }
         ],

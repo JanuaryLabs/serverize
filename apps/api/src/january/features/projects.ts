@@ -21,6 +21,8 @@ import z from 'zod';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 
 import { feature, trigger, workflow } from '@january/declarative';
+import { firebaseApp } from '@workspace/extensions/firebase-auth';
+import { getAuth } from 'firebase-admin/auth';
 
 export default feature({
   workflows: [
@@ -31,23 +33,28 @@ export default feature({
         path: '/',
         policies: [policies.authenticated],
         input: (trigger) => ({
-          projectId: {
-            select: trigger.body.projectId,
-            against: z.string().uuid(),
+          projectName: {
+            select: trigger.body.projectName,
+            against: orgNameValidator,
           },
         }),
       }),
-      execute: async ({ input, subject }) => {
-        const token = crypto.randomUUID().replaceAll('-', '');
-        if (!subject) {
+      execute: async ({ input }) => {
+        const qb = createQueryBuilder(tables.projects, 'projects')
+          .where('projects.name = :name', { name: input.projectName })
+          .select(['projects.id']);
+        const [project] = await execute(qb);
+        if (!project) {
           throw new ProblemDetailsException({
-            status: 401,
+            status: 404,
+            title: 'Project not found',
+            detail: `Project with name '${input.projectName}' not found`,
           });
         }
+        const token = crypto.randomUUID().replaceAll('-', '');
         await saveEntity(tables.apiKeys, {
           key: token,
-          projectId: input.projectId,
-          organizationId: subject.claims.organizationId,
+          projectId: project.id,
         });
         return token;
       },
@@ -59,16 +66,31 @@ export default feature({
         path: '/',
         policies: [policies.authenticated],
         input: (trigger) => ({
+          projectName: {
+            select: trigger.body.projectName,
+            against: z.string(),
+          },
           token: {
             select: trigger.body.token,
             against: z.string(),
           },
         }),
       }),
-      execute: async ({ input, subject }) => {
+      execute: async ({ input }) => {
+        const projectQb = createQueryBuilder(tables.projects, 'projects')
+          .where('projects.name = :name', { name: input.projectName })
+          .select(['projects.id']);
+        const [project] = await execute(projectQb);
+        if (!project) {
+          throw new ProblemDetailsException({
+            status: 404,
+            title: 'Project not found',
+            detail: `Project with name '${input.projectName}' not found`,
+          });
+        }
         const qb = createQueryBuilder(tables.apiKeys, 'apiKeys')
-          .where('apiKeys.organizationId = :organizationId', {
-            organizationId: subject.claims.organizationId,
+          .where('apiKeys.projectId = :projectId', {
+            projectId: project.id,
           })
           .andWhere('apiKeys.key = :key', { key: input.token });
         await removeEntity(tables.apiKeys, qb);
@@ -77,13 +99,31 @@ export default feature({
     workflow('ListTokens', {
       tag: 'tokens',
       trigger: trigger.http({
+        policies: [policies.authenticated],
         method: 'get',
         path: '/',
+        input: (trigger) => ({
+          projectName: {
+            select: trigger.query.projectName,
+            against: z.string(),
+          },
+        }),
       }),
-      execute: async ({ subject }) => {
+      execute: async ({ input }) => {
+        const projectQb = createQueryBuilder(tables.projects, 'projects')
+          .where('projects.name = :name', { name: input.projectName })
+          .select(['projects.id']);
+        const [project] = await execute(projectQb);
+        if (!project) {
+          throw new ProblemDetailsException({
+            status: 404,
+            title: 'Project not found',
+            detail: `Project with name '${input.projectName}' not found`,
+          });
+        }
         const qb = createQueryBuilder(tables.apiKeys, 'apiKeys')
-          .where('apiKeys.organizationId = :organizationId', {
-            organizationId: subject.claims.organizationId,
+          .where('apiKeys.projectId = :projectId', {
+            projectId: project.id,
           })
           .innerJoinAndSelect('apiKeys.project', 'projects');
 
@@ -483,6 +523,69 @@ export default feature({
           channel: input.channel,
         });
         return env;
+      },
+    }),
+    workflow('ExchangeToken', {
+      tag: 'tokens',
+      trigger: trigger.http({
+        method: 'post',
+        path: '/exchange',
+        input: (trigger) => ({
+          token: {
+            select: trigger.body.token,
+            against: z.string(),
+          },
+        }),
+      }),
+      execute: async ({ input }) => {
+        const qb = createQueryBuilder(tables.apiKeys, 'apiKeys')
+          .where('apiKeys.key = :key', { key: input.token })
+          .innerJoinAndSelect('apiKeys.project', 'projects')
+          .innerJoinAndSelect('projects.workspace', 'workspace');
+
+        const [apiKey] = await execute(qb);
+        if (!apiKey) {
+          throw new ProblemDetailsException({
+            status: 401,
+            title: 'Invalid API token',
+            detail: 'The provided API token is invalid or has been revoked',
+          });
+        }
+
+        const auth = getAuth(firebaseApp);
+        const customToken = await auth.createCustomToken(crypto.randomUUID(), {
+          source: 'api',
+          organizationId: apiKey.project.workspace.organizationId,
+          workspaceId: apiKey.project.workspaceId,
+          projectId: apiKey.projectId,
+          aknowledged: true,
+        });
+        return { accessToken: customToken };
+      },
+    }),
+    workflow('InvalidateOrganizationTokens', {
+      tag: 'tokens',
+      trigger: trigger.http({
+        method: 'delete',
+        path: '/organization/:organizationId',
+        policies: [policies.authenticated],
+        input: (trigger) => ({
+          organizationId: {
+            select: trigger.path.organizationId,
+            against: z.string().uuid(),
+          },
+        }),
+      }),
+      execute: async ({ input }) => {
+        const qb = createQueryBuilder(tables.apiKeys, 'apiKeys')
+          .innerJoin('apiKeys.project', 'projects')
+          .innerJoin('projects.workspace', 'workspace')
+          .where('workspace.organizationId = :organizationId', {
+            organizationId: input.organizationId,
+          });
+
+        await removeEntity(tables.apiKeys, qb);
+        return {};
       },
     }),
   ],

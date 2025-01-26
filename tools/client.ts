@@ -3,11 +3,12 @@ import { join } from 'node:path';
 
 import { hono } from '@january/extensions/hono';
 import { generate } from '@january/openapi';
+import { fileWatch } from './file-watcher.ts';
 
 const appDir = join(process.cwd(), 'apps', 'api');
 
 await generate({
-  primitives: [hono().primitives],
+  primitives: [hono().primitives, fileWatch().primitives],
   fs: {
     features: join(appDir, 'src/january/features'),
     extensions: join(appDir, 'src/january/extensions'),

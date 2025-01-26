@@ -2,6 +2,7 @@ import { trigger } from '@january/declarative';
 import { Octokit } from '@octokit/core';
 import { firebaseApp } from '@workspace/extensions/firebase-auth';
 import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
+import { type Claims } from '@workspace/extensions/user';
 import {
   AuthClientErrorCode,
   FirebaseAuthError,
@@ -13,6 +14,7 @@ import Preferences from '../../../entities/preferences.entity.ts';
 export const signinSchema = z.object({
   token: z.string(),
   providerId: z.enum(['github.com', 'google.com', 'password']),
+  source: z.enum(['vscode', 'api', 'browser']).optional(),
 });
 
 export async function signin(
@@ -49,13 +51,13 @@ export async function signin(
   );
   console.log(uid, preferences);
   const token = await auth.createCustomToken(uid, {
-    source: 'vscode',
-    ...{
-      organizationId: preferences.organizationId,
-      workspaceId: preferences.workspaceId,
-      projectId: preferences.projectId,
+    source: input.source,
+    ...({
+      organizationId: preferences.organizationId as string,
+      workspaceId: preferences.workspaceId as string,
+      projectId: preferences.projectId as string,
       aknowledged: true,
-    },
+    } satisfies Claims),
   });
   return output.ok({
     accessToken: token,

@@ -2,8 +2,7 @@
   "name": "serverize",
   "version": "0.0.16",
   "bin": {
-    "serverize": "./cli.js",
-    "szd": "./cli.js"
+    "serverize": "./cli.js"
   },
   "type": "module",
   "main": "./index.js",

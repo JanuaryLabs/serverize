@@ -1,11 +1,8 @@
-import { ApiKeys } from './ApiKeys';
 import { Members } from './Members';
 import { OrganizationsMembers } from './OrganizationsMembers';
 import { Preferences } from './Preferences';
 import { Workspaces } from './Workspaces';
 export interface Organizations {
-  apiKeys: ApiKeys[];
-  apiKeysIds: string[];
   name: string;
   id: string;
   createdAt: Date;

@@ -110,11 +110,6 @@ export default {
   }),
   apiKeys: table({
     fields: {
-      organization: field.relation({
-        references: tables.organizations,
-        relationship: 'many-to-one',
-        validations: [mandatory()],
-      }),
       project: field.relation({
         references: tables.projects,
         relationship: 'many-to-one',

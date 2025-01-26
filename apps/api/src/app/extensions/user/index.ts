@@ -123,6 +123,7 @@ export interface Claims {
   organizationId: string;
   workspaceId: string;
   projectId: string;
+  // FIXME: use blocking functions instead of this
   aknowledged: boolean;
 }
 
