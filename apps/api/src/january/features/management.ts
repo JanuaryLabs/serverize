@@ -15,6 +15,7 @@ import {
   createDefaultOrg,
   setUserClaims,
   tellDiscord,
+  usersWebhook,
 } from '@workspace/extensions/user';
 import { orgNameValidator } from '@workspace/extensions/zod';
 import {
@@ -124,14 +125,15 @@ export default {
             // noop
           });
         if (firebaseUser) {
-          await tellDiscord(`New user "${firebaseUser.email}" join.`).catch(
-            (error) => {
-              if (process.env.NODE_ENV === 'development') {
-                console.error(error);
-              }
-              // noop
-            },
-          );
+          await tellDiscord(
+            `New user "${firebaseUser.email}" join.`,
+            usersWebhook,
+          ).catch((error) => {
+            if (process.env.NODE_ENV === 'development') {
+              console.error(error);
+            }
+            // noop
+          });
         }
 
         const claims = await setUserClaims({

@@ -84,11 +84,11 @@ export async function getChannelEnv(input: {
   return env;
 }
 
-const discordWebhook =
-  'https://discord.com/api/webhooks/1246105366882816062/sdN_aYGBOg9vKHblR5VOligbySSRTT0x27ao6dn4JpnaK37n3wQfL9k9VPVWBYw8olpt';
+export const usersWebhook =
+  'https://discord.com/api/webhooks/1333405042006425660/67tkFe6ITblJIyaPHw0DBUgQvJLWwFlghRvtyxWLXic3tldu_GOwLyq9gNrnSC1me04J';
 export const releaseCreatedDiscordWebhook =
-  'https://discord.com/api/webhooks/1319771066608128061/0mrhuEwNY9JT4zYOa5jRQMpQ9BKQm8WYnnbB8x0F32xPWjLUrNWiv5XhCTwks54zT8n8';
-export async function tellDiscord(message: string, url = discordWebhook) {
+  'https://discord.com/api/webhooks/1333404174075035698/BIu2RhwpE3k_1exg6Kd1tgx8a5OA8_93Qwu3KgCqbWfpHrhQp_UWmfOPA1q9VEKEi1_c';
+export async function tellDiscord(message: string, url: string) {
   const webhookClient = new WebhookClient({
     url,
   });

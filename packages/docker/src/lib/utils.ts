@@ -1,12 +1,12 @@
 import crypto from 'crypto';
-import type { Container } from 'dockerode';
 import { createReadStream, existsSync } from 'fs';
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'os';
+import type { Container } from 'dockerode';
 
-import { docker } from './instance';
 import { basename, dirname, join } from 'path';
 import type internal from 'stream';
+import { docker } from './instance';
 
 export function followProgress(
   stream: NodeJS.ReadableStream,
@@ -118,9 +118,9 @@ export function computeChecksum(filePath: string | internal.Readable) {
     const stream =
       typeof filePath === 'string' ? createReadStream(filePath) : filePath;
 
-    stream.on('data', (data) => hash.update(data));
+    stream.on('data', (data: any) => hash.update(data));
     stream.on('end', () => resolve(hash.digest('hex')));
-    stream.on('error', (err) => reject(err));
+    stream.on('error', (err: Error) => reject(err));
   });
 }
 
