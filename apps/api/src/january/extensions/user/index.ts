@@ -84,10 +84,8 @@ export async function getChannelEnv(input: {
   return env;
 }
 
-export const usersWebhook =
-  'https://discord.com/api/webhooks/1333405042006425660/67tkFe6ITblJIyaPHw0DBUgQvJLWwFlghRvtyxWLXic3tldu_GOwLyq9gNrnSC1me04J';
-export const releaseCreatedDiscordWebhook =
-  'https://discord.com/api/webhooks/1333404174075035698/BIu2RhwpE3k_1exg6Kd1tgx8a5OA8_93Qwu3KgCqbWfpHrhQp_UWmfOPA1q9VEKEi1_c';
+export const usersWebhook = process.env.USERS_DISCORD;
+export const releaseCreatedDiscordWebhook = process.env.RELEASES_DISCORD;
 export async function tellDiscord(message: string, url: string) {
   const webhookClient = new WebhookClient({
     url,

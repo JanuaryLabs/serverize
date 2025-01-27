@@ -14,8 +14,6 @@ await defineConfig({
   fs: {
     cwd: appDir,
   },
-  tsconfigFilePaths: join(process.cwd(), 'tsconfig.base.json'),
-  baseTsConfig: '../tsconfig.json',
   tsconfigName: join(appDir, 'tsconfig.app.json'),
   formatGeneratedCode: false,
   extensions: [
