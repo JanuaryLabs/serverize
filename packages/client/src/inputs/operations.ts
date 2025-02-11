@@ -8,6 +8,7 @@ export const startReleaseSchema = z.object({
   tarLocation: z.string(),
   runtimeConfig: z.string(),
   port: z.number().optional(),
+  protocol: z.enum(['https', 'tcp']).optional(),
   image: z.string().trim().min(1),
   volumes: z.array(z.string()).optional(),
   serviceName: z.any().optional(),

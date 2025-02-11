@@ -19,6 +19,7 @@ export interface ReleaseInfo {
   tarLocation: string;
   image: string;
   domainPrefix: string;
+  protocol?: string | null;
   port?: number | null;
   traceId: string;
   releaseId: string;
@@ -125,6 +126,9 @@ export async function createRemoteContainer(
       'sablier.enable': 'true',
       'sablier.group': releaseInfo.domainPrefix,
       'serverize.enable': 'true',
+      'serverize.protocol': releaseInfo.protocol
+        ? String(releaseInfo.protocol)
+        : 'https',
       'serverize.port': String(releaseInfo.port),
       'serverize.prefix': releaseInfo.domainPrefix,
       'serverize.release': releaseInfo.id,

@@ -86,7 +86,7 @@ export async function getChannelEnv(input: {
 
 export const usersWebhook = process.env.USERS_DISCORD;
 export const releaseCreatedDiscordWebhook = process.env.RELEASES_DISCORD;
-export async function tellDiscord(message: string, url: string) {
+export async function tellDiscord(message: string, url?: string) {
   if (!url) {
     console.warn('No Discord webhook URL provided');
     return;

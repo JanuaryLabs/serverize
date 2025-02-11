@@ -22,6 +22,7 @@ router.post(
       tarLocation: body.tarLocation,
       runtimeConfig: body.runtimeConfig,
       port: body.port,
+      protocol: body.protocol,
       image: body.image,
       volumes: body.volumes,
       serviceName: body.serviceName,

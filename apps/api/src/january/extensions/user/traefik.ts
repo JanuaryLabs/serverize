@@ -2,7 +2,7 @@ import { tables } from '@workspace/entities';
 
 interface TraefikService {
   loadBalancer: {
-    servers: { url: string }[];
+    servers: { url?: string; address?: string }[];
   };
 }
 
@@ -31,32 +31,15 @@ export const PROTOCOL =
 interface ReleaseConfig {
   port: string;
   domainPrefix: string;
+  protocol?: string;
 }
-
 export function toTraefikConfig(releases: ReleaseConfig[]) {
-  const services = releases.reduce<Record<string, TraefikService>>(
-    (acc, release) => {
-      // TODO: guess the port instead of defaulting to 3000
-      const port = release.port || 3000;
-      acc[release.domainPrefix] = {
-        loadBalancer: {
-          servers: [{ url: `http://${release.domainPrefix}:${port}` }],
-        },
-      };
-      return acc;
-    },
-    {},
-  );
   const defaultEntrypoint =
     process.env.NODE_ENV === 'development' ? 'web' : 'websecure';
   const productionRouteProps: Partial<TraefikRouter> =
     process.env.NODE_ENV === 'development'
       ? {}
-      : {
-          tls: {
-            certresolver: 'letsencrypt',
-          },
-        };
+      : { tls: { certresolver: 'letsencrypt' } };
   const sablierMiddlewares = releases.reduce<
     Record<string, ReturnType<typeof createSablierMiddleware>>
   >((acc, release) => {
@@ -65,9 +48,42 @@ export function toTraefikConfig(releases: ReleaseConfig[]) {
     );
     return acc;
   }, {});
-  const routers = releases.reduce<Record<string, TraefikRouter>>(
-    (acc, release) => {
-      acc[release.domainPrefix] = {
+
+  const tcp: {
+    routers: Record<string, TraefikRouter>;
+    services: Record<string, TraefikService>;
+  } = { routers: {}, services: {} };
+  const http: {
+    routers: Record<string, TraefikRouter>;
+    services: Record<string, TraefikService>;
+  } = { routers: {}, services: {} };
+
+  for (const release of releases) {
+    if (release.protocol === 'tcp') {
+      tcp.services[release.domainPrefix] = {
+        loadBalancer: {
+          servers: [
+            {
+              address: `${release.domainPrefix}:${release.port}`,
+            },
+          ],
+        },
+      };
+      tcp.routers[release.domainPrefix] = {
+        entrypoints: ['tcpsecure'],
+        service: release.domainPrefix,
+        rule: `HostSNI(\`${release.domainPrefix}.${SERVERIZE_DOMAIN}\`)`,
+        ...productionRouteProps,
+      };
+    } else {
+      // TODO: guess the port instead of defaulting to 3000
+      const port = release.port || 3000;
+      http.services[release.domainPrefix] = {
+        loadBalancer: {
+          servers: [{ url: `http://${release.domainPrefix}:${port}` }],
+        },
+      };
+      http.routers[release.domainPrefix] = {
         service: release.domainPrefix,
         entrypoints: [defaultEntrypoint],
         rule: `Host(\`${release.domainPrefix}.${SERVERIZE_DOMAIN}\`)`,
@@ -77,10 +93,8 @@ export function toTraefikConfig(releases: ReleaseConfig[]) {
         ],
         ...productionRouteProps,
       };
-      return acc;
-    },
-    {},
-  );
+    }
+  }
 
   return {
     http: {
@@ -116,7 +130,7 @@ export function toTraefikConfig(releases: ReleaseConfig[]) {
             servers: [{ url: 'http://api:3000' }],
           },
         },
-        ...services,
+        ...http.services,
       },
       routers: {
         dashboard: {
@@ -154,7 +168,15 @@ export function toTraefikConfig(releases: ReleaseConfig[]) {
           middlewares: ['rate-limit@http'],
           ...productionRouteProps,
         },
-        ...routers,
+        ...http.routers,
+      },
+    },
+    tcp: {
+      services: {
+        ...tcp.services,
+      },
+      routers: {
+        ...tcp.routers,
       },
     },
     ...(process.env.NODE_ENV !== 'development'

@@ -28,6 +28,9 @@ export default {
         validations: [mandatory()],
       }),
       port: field.integer(),
+      protocol: field.enum({
+        values: ['https', 'tcp'],
+      }),
       image: field.shortText(),
       runtimeConfig: field({ type: 'json' }),
       name: field.shortText({

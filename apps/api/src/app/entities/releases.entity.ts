@@ -35,6 +35,8 @@ export default class Releases {
   domainPrefix!: string;
   @Column({ nullable: true, type: 'integer' })
   port?: number | null;
+  @Column({ nullable: true, type: 'enum', enum: ['https', 'tcp'] })
+  protocol?: 'https' | 'tcp' | null;
   @Column({ nullable: true, type: 'varchar' })
   image?: string | null;
   @Column({ nullable: true, type: 'json' })

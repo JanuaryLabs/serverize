@@ -10,348 +10,6 @@ import type { ParseError } from './parser';
 import { createUrl, formdata, json, toRequest, urlencoded } from './request';
 import type { StreamEndpoints } from './stream-endpoints';
 export default {
-  'GET /container/logs': {
-    schema: docker.streamContainerLogsSchema,
-    toRequest(
-      input: Endpoints['GET /container/logs']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /container/logs';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [
-            'projectName',
-            'channelName',
-            'releaseName',
-            'timestamp',
-            'details',
-            'tail',
-          ],
-          inputBody: [],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'GET /containers/discovery': {
-    schema: docker.configDiscoverySchema,
-    toRequest(
-      input: Endpoints['GET /containers/discovery']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /containers/discovery';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: [],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'DELETE /organizations/{id}': {
-    schema: management.deleteOrgSchema,
-    toRequest(
-      input: Endpoints['DELETE /organizations/{id}']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'DELETE /organizations/{id}';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: [],
-          inputParams: ['id'],
-        }),
-        init,
-      );
-    },
-  },
-  'GET /organizations': {
-    schema: management.listOrganizationsSchema,
-    toRequest(
-      input: Endpoints['GET /organizations']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /organizations';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: ['pageSize', 'pageNo'],
-          inputBody: [],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'POST /organizations/default': {
-    schema: management.createDefaultOrganizationSchema,
-    toRequest(
-      input: Endpoints['POST /organizations/default']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'POST /organizations/default';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['name', 'projectName', 'uid'],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'POST /organizations': {
-    schema: management.createOrganizationSchema,
-    toRequest(
-      input: Endpoints['POST /organizations']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'POST /organizations';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['name'],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'POST /workspaces': {
-    schema: management.createWorkspaceSchema,
-    toRequest(
-      input: Endpoints['POST /workspaces']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'POST /workspaces';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['name', 'organizationId'],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'POST /projects': {
-    schema: management.createProjectSchema,
-    toRequest(
-      input: Endpoints['POST /projects']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'POST /projects';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['name'],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'PATCH /projects/{id}': {
-    schema: management.patchProjectSchema,
-    toRequest(
-      input: Endpoints['PATCH /projects/{id}']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'PATCH /projects/{id}';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['name'],
-          inputParams: ['id'],
-        }),
-        init,
-      );
-    },
-  },
-  'GET /projects': {
-    schema: management.listProjectsSchema,
-    toRequest(
-      input: Endpoints['GET /projects']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /projects';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: ['workspaceId', 'name', 'pageSize', 'pageNo'],
-          inputBody: [],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'GET /users/organizations': {
-    schema: management.listUserOrganizationsSchema,
-    toRequest(
-      input: Endpoints['GET /users/organizations']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'GET /users/organizations';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: [],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'POST /users/link': {
-    schema: management.linkUserSchema,
-    toRequest(
-      input: Endpoints['POST /users/link']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'POST /users/link';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['token', 'providerId', 'orgName', 'projectName'],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'POST /users/signin': {
-    schema: management.signinSchema,
-    toRequest(
-      input: Endpoints['POST /users/signin']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'POST /users/signin';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['token', 'providerId', 'source'],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'POST /operations/releases/start': {
-    schema: operations.startReleaseSchema,
-    toRequest(
-      input: Endpoints['POST /operations/releases/start']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'POST /operations/releases/start';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: [
-            'releaseName',
-            'projectId',
-            'projectName',
-            'channel',
-            'tarLocation',
-            'runtimeConfig',
-            'port',
-            'image',
-            'volumes',
-            'serviceName',
-            'environment',
-          ],
-          inputParams: [],
-        }),
-        init,
-      );
-    },
-  },
-  'POST /operations/releases/{releaseName}/restart': {
-    schema: operations.restartReleaseSchema,
-    toRequest(
-      input: Endpoints['POST /operations/releases/{releaseName}/restart']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'POST /operations/releases/{releaseName}/restart';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['projectId', 'projectName', 'channel'],
-          inputParams: ['releaseName'],
-        }),
-        init,
-      );
-    },
-  },
-  'POST /operations/channels/{channelName}/restart': {
-    schema: operations.restartChannelSchema,
-    toRequest(
-      input: Endpoints['POST /operations/channels/{channelName}/restart']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'POST /operations/channels/{channelName}/restart';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['projectId', 'projectName'],
-          inputParams: ['channel'],
-        }),
-        init,
-      );
-    },
-  },
-  'DELETE /operations/releases/{releaseName}': {
-    schema: operations.deleteReleaseSchema,
-    toRequest(
-      input: Endpoints['DELETE /operations/releases/{releaseName}']['input'],
-      init: { baseUrl: string; headers?: Record<string, string> },
-    ) {
-      const endpoint = 'DELETE /operations/releases/{releaseName}';
-      return toRequest(
-        endpoint,
-        json(input, {
-          inputHeaders: [],
-          inputQuery: [],
-          inputBody: ['projectId', 'channel'],
-          inputParams: ['releaseName'],
-        }),
-        init,
-      );
-    },
-  },
   'POST /tokens': {
     schema: projects.createTokenSchema,
     toRequest(
@@ -689,6 +347,349 @@ export default {
       init: { baseUrl: string; headers?: Record<string, string> },
     ) {
       const endpoint = 'GET /root/health';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: [],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'DELETE /organizations/{id}': {
+    schema: management.deleteOrgSchema,
+    toRequest(
+      input: Endpoints['DELETE /organizations/{id}']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'DELETE /organizations/{id}';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: [],
+          inputParams: ['id'],
+        }),
+        init,
+      );
+    },
+  },
+  'GET /organizations': {
+    schema: management.listOrganizationsSchema,
+    toRequest(
+      input: Endpoints['GET /organizations']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /organizations';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: ['pageSize', 'pageNo'],
+          inputBody: [],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'POST /organizations/default': {
+    schema: management.createDefaultOrganizationSchema,
+    toRequest(
+      input: Endpoints['POST /organizations/default']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'POST /organizations/default';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['name', 'projectName', 'uid'],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'POST /organizations': {
+    schema: management.createOrganizationSchema,
+    toRequest(
+      input: Endpoints['POST /organizations']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'POST /organizations';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['name'],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'POST /workspaces': {
+    schema: management.createWorkspaceSchema,
+    toRequest(
+      input: Endpoints['POST /workspaces']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'POST /workspaces';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['name', 'organizationId'],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'POST /projects': {
+    schema: management.createProjectSchema,
+    toRequest(
+      input: Endpoints['POST /projects']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'POST /projects';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['name'],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'PATCH /projects/{id}': {
+    schema: management.patchProjectSchema,
+    toRequest(
+      input: Endpoints['PATCH /projects/{id}']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'PATCH /projects/{id}';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['name'],
+          inputParams: ['id'],
+        }),
+        init,
+      );
+    },
+  },
+  'GET /projects': {
+    schema: management.listProjectsSchema,
+    toRequest(
+      input: Endpoints['GET /projects']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /projects';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: ['workspaceId', 'name', 'pageSize', 'pageNo'],
+          inputBody: [],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'GET /users/organizations': {
+    schema: management.listUserOrganizationsSchema,
+    toRequest(
+      input: Endpoints['GET /users/organizations']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /users/organizations';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: [],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'POST /users/link': {
+    schema: management.linkUserSchema,
+    toRequest(
+      input: Endpoints['POST /users/link']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'POST /users/link';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['token', 'providerId', 'orgName', 'projectName'],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'POST /users/signin': {
+    schema: management.signinSchema,
+    toRequest(
+      input: Endpoints['POST /users/signin']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'POST /users/signin';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['token', 'providerId', 'source'],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'POST /operations/releases/start': {
+    schema: operations.startReleaseSchema,
+    toRequest(
+      input: Endpoints['POST /operations/releases/start']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'POST /operations/releases/start';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: [
+            'releaseName',
+            'projectId',
+            'projectName',
+            'channel',
+            'tarLocation',
+            'runtimeConfig',
+            'port',
+            'protocol',
+            'image',
+            'volumes',
+            'serviceName',
+            'environment',
+          ],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'POST /operations/releases/{releaseName}/restart': {
+    schema: operations.restartReleaseSchema,
+    toRequest(
+      input: Endpoints['POST /operations/releases/{releaseName}/restart']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'POST /operations/releases/{releaseName}/restart';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['projectId', 'projectName', 'channel'],
+          inputParams: ['releaseName'],
+        }),
+        init,
+      );
+    },
+  },
+  'POST /operations/channels/{channelName}/restart': {
+    schema: operations.restartChannelSchema,
+    toRequest(
+      input: Endpoints['POST /operations/channels/{channelName}/restart']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'POST /operations/channels/{channelName}/restart';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['projectId', 'projectName'],
+          inputParams: ['channel'],
+        }),
+        init,
+      );
+    },
+  },
+  'DELETE /operations/releases/{releaseName}': {
+    schema: operations.deleteReleaseSchema,
+    toRequest(
+      input: Endpoints['DELETE /operations/releases/{releaseName}']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'DELETE /operations/releases/{releaseName}';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [],
+          inputBody: ['projectId', 'channel'],
+          inputParams: ['releaseName'],
+        }),
+        init,
+      );
+    },
+  },
+  'GET /container/logs': {
+    schema: docker.streamContainerLogsSchema,
+    toRequest(
+      input: Endpoints['GET /container/logs']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /container/logs';
+      return toRequest(
+        endpoint,
+        json(input, {
+          inputHeaders: [],
+          inputQuery: [
+            'projectName',
+            'channelName',
+            'releaseName',
+            'timestamp',
+            'details',
+            'tail',
+          ],
+          inputBody: [],
+          inputParams: [],
+        }),
+        init,
+      );
+    },
+  },
+  'GET /containers/discovery': {
+    schema: docker.configDiscoverySchema,
+    toRequest(
+      input: Endpoints['GET /containers/discovery']['input'],
+      init: { baseUrl: string; headers?: Record<string, string> },
+    ) {
+      const endpoint = 'GET /containers/discovery';
       return toRequest(
         endpoint,
         json(input, {

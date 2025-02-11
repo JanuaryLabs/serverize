@@ -259,12 +259,14 @@ function getDockerfileFromBuild(
 
 export async function getImageExposedPorts(imageName: string) {
   const { stdout } = await execa('docker', ['inspect', imageName]);
-  const inspectData = JSON.parse(stdout);
-  const exposedPorts = inspectData[0]?.Config?.ExposedPorts || {
+  const [data] = JSON.parse(stdout) || [];
+  const exposedPorts = data?.Config?.ExposedPorts || {
     '3000/tcp': {},
   };
+  const protocol = data?.Config?.Labels?.['serverize.protocol'] || 'https';
   const ports = Object.keys(exposedPorts).map((port) =>
     port.replace('/tcp', ''),
   );
-  return ports;
+  return { ports, protocol };
 }
+

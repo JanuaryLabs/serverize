@@ -4,9 +4,10 @@ services:
     networks:
       - traefik-network
     ports:
-      - '443:443'
-      - '80:80'
-      - '8080:8080'
+      - '443:443' # HTTPS
+      - '80:80' # HTTP
+      - '4443:4443' # TCP
+      - '8080:8080' # Dashboard
     volumes:
       - './letsencrypt:/letsencrypt'
       - logs:/var/log'
@@ -93,14 +94,14 @@ services:
       - serverize-uploads:/data:rw
 
 volumes:
-  sablier:
-  logs:
   serverize-uploads:
     driver: local
     driver_opts:
       type: none
       device: /mnt/images
       o: bind
+  sablier:
+  logs:
 networks:
   traefik-network:
     external: true

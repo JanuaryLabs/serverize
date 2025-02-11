@@ -44,5 +44,13 @@
   "[jsonc]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
+  "editor.codeActionsOnSave": {
+    "source.addMissingImports.ts": "explicit",
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never",
+    "tailwindcss.format": "always",
+    "source.organizeImports.biome": "explicit"
+  },
   "typescript.tsdk": "node_modules/typescript/lib"
 }

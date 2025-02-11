@@ -45,7 +45,6 @@ interface ReleaseInfo {
 
 const als = new AsyncLocalStorage<{
   releaseInfo: ReleaseInfo;
-  project: string;
 }>();
 
 export async function runInComposeContext(config: DeployContext) {
@@ -184,77 +183,61 @@ export async function runInDeployContext(config: DeployContext) {
       config.release,
     ),
   };
-  return als.run(
-    { project: currentProject.projectName, releaseInfo },
-    async () => {
-      let finalUrl: string;
-      if (config.image) {
-        const ast = await inspectImage(config.image);
-        if (!ast.expose) {
-          spinner.warn('No exposed port found, use 3000 as default');
-        }
-
-        await execa('docker', ['tag', config.image, releaseInfo.image]);
-        finalUrl = await lastValueFrom(deployProject(releaseInfo.image, ast));
-      } else {
-        const ast = await inspectDockerfile(
-          config.dockerignorepath,
-          config.file,
-        );
-        if (!ast.expose) {
-          spinner.warn('No exposed port found, use 3000 as default');
-        }
-        if (!ast.healthCheckOptions) {
-          // NOTE: atm, serverize no longer wait for healthcheck
-          // this might change in the future
-          // spinner.warn(
-          //   `No health check options found, using default health check`,
-          // );
-        }
-        await buildImage(config.context, releaseInfo.image, ast.dockerfile);
-        finalUrl = await lastValueFrom(deployProject(releaseInfo.image, ast));
+  return als.run({ releaseInfo }, async () => {
+    let finalUrl: string;
+    if (config.image) {
+      const ast = await inspectImage(config.image);
+      if (!ast.expose) {
+        spinner.warn('No exposed port found, use 3000 as default');
       }
 
-      spinner.succeed(chalk.yellow('Deployed successfully'));
-      const logsCommand = [
-        'npx serverize logs',
-        `-p ${releaseInfo.projectName}`,
-        releaseInfo.channel !== 'dev' ? `-c ${releaseInfo.channel}` : '',
-        releaseInfo.releaseName !== 'latest'
-          ? `-r ${releaseInfo.releaseName}`
-          : '',
-      ]
-        .filter(Boolean)
-        .join(' ');
-      box.print(
-        `${releaseInfo.projectName} Deployed`,
-        `Accessible at ${finalUrl}`,
-        `Logs: ${logsCommand}`,
-        `Stuck? Join us at https://discord.gg/aj9bRtrmNt`,
-      );
-
-      if (config.outputFile) {
-        writeFileSync(
-          config.outputFile,
-          JSON.stringify({
-            project: releaseInfo.projectName,
-            url: finalUrl,
-          }),
-          'utf-8',
-        );
+      await execa('docker', ['tag', config.image, releaseInfo.image]);
+      finalUrl = await lastValueFrom(deployProject(releaseInfo.image, ast));
+    } else {
+      const ast = await inspectDockerfile(config.dockerignorepath, config.file);
+      if (!ast.expose) {
+        spinner.warn('No exposed port found, use 3000 as default');
       }
-    },
-  );
-}
+      if (!ast.healthCheckOptions) {
+        // NOTE: atm, serverize no longer wait for healthcheck
+        // this might change in the future
+        // spinner.warn(
+        //   `No health check options found, using default health check`,
+        // );
+      }
+      await buildImage(config.context, releaseInfo.image, ast.dockerfile);
+      finalUrl = await lastValueFrom(deployProject(releaseInfo.image, ast));
+    }
 
-export function getProject() {
-  const value = als.getStore();
-  if (!value) {
-    throw new Error(
-      `Couldn't get project name. This is most likely a bug. Please report it.`,
+    spinner.succeed(chalk.yellow('Deployed successfully'));
+    const logsCommand = [
+      'npx serverize logs',
+      `-p ${releaseInfo.projectName}`,
+      releaseInfo.channel !== 'dev' ? `-c ${releaseInfo.channel}` : '',
+      releaseInfo.releaseName !== 'latest'
+        ? `-r ${releaseInfo.releaseName}`
+        : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+    box.print(
+      `${releaseInfo.projectName} Deployed`,
+      `Accessible at ${finalUrl}`,
+      `Logs: ${logsCommand}`,
+      `Stuck? Join us at https://discord.gg/aj9bRtrmNt`,
     );
-  }
-  return value.project;
+
+    if (config.outputFile) {
+      writeFileSync(
+        config.outputFile,
+        JSON.stringify({
+          project: releaseInfo.projectName,
+          url: finalUrl,
+        }),
+        'utf-8',
+      );
+    }
+  });
 }
 
 export function getReleaseInfo() {
@@ -286,13 +269,14 @@ export function deployProject(imageName: string, ast: AST) {
     }),
     switchMap((tarLocation) =>
       client.request('POST /operations/releases/start', {
+        ...releaseInfo,
         runtimeConfig: JSON.stringify({
           image: ast.finalImageName,
           Healthcheck: ast.healthCheckOptions,
         }),
         tarLocation: tarLocation,
         port: port,
-        ...releaseInfo,
+        protocol: ast.protocol === 'tcp' ? 'tcp' : 'https',
       }),
     ),
     mergeMap(([data, error]) => {

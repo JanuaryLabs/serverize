@@ -16,8 +16,8 @@ import validator from 'validator';
 
 import parse from 'parse-duration';
 import { coerceArray, nodeServer } from 'serverize/dockerfile';
-import { exist } from 'serverize/utils';
-import { client } from './lib/api-client';
+import { exist, notNullOrUndefined, safeFail } from 'serverize/utils';
+import { client, serverizeApiUrl } from './lib/api-client';
 import { initialise } from './lib/auth-methods';
 import { auth } from './lib/firebase';
 
@@ -36,6 +36,8 @@ export interface AST {
   healthCheckOptions: Healthcheck | undefined;
   getPaths: () => Promise<string[]>;
   expose?: string;
+  protocol: string;
+  tcp?: boolean;
   finalImageName?: string | null;
   dockerfile: string;
 }
@@ -63,6 +65,29 @@ export async function inspectDockerfile(
   logger('Reading Dockerfile at %s', dockerfilePath);
   const dockerfile = await readFile(dockerfilePath, 'utf-8');
   const ast = DockerfileParser.parse(dockerfile);
+
+  const labels: Record<string, any> = Object.fromEntries(
+    ast
+      .getInstructions()
+      .filter((instruction) => instruction.getInstruction() === 'LABEL')
+      .map((instruction) => instruction.getArgumentsContent())
+      .filter(notNullOrUndefined)
+      .map((it) => it.split('='))
+      .map(([key, value]) =>
+        safeFail(
+          () => [JSON.parse(key), JSON.parse(value)],
+          [key, safeFail(() => JSON.parse(value), value)],
+        ),
+      ),
+  );
+
+  let protocol = labels['serverize.protocol'] as string;
+  if (protocol && !['http', 'https', 'tcp'].includes(protocol)) {
+    throw new Error(
+      `Invalid protocol ${protocol}. Must be "http", "https" or "tcp"`,
+    );
+  }
+
   const exposeInstructions = ast
     .getInstructions()
     .find((instruction) => instruction.getInstruction() === 'EXPOSE');
@@ -119,14 +144,17 @@ export async function inspectDockerfile(
     },
     finalImageName: portandimage?.image,
     expose: portandimage?.port,
+    protocol,
     dockerfile: dockerfilePath,
   };
 }
 export async function inspectImage(image: string): Promise<AST> {
-  const [port] = await getImageExposedPorts(image);
+  const {
+    ports: [port],
+    protocol,
+  } = await getImageExposedPorts(image);
 
   const portandimage = {
-    port: port,
     image: image, // should we inspect the image layers, maybe use docker history?
   };
 
@@ -135,12 +163,14 @@ export async function inspectImage(image: string): Promise<AST> {
     getPaths: async () => {
       return [];
     },
-    expose: portandimage?.port,
+    protocol,
+    expose: port,
     dockerfile: '',
   };
 }
 
 export const logger = debug('serverize');
+logger(`API_URL: ${serverizeApiUrl}`);
 const SPINNER_TYPE =
   platform() === 'win32' ? cliSpinners.material : cliSpinners.pipe;
 

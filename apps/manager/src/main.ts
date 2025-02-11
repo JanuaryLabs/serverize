@@ -62,9 +62,10 @@ const application = express()
           projectName: release.projectName,
           channel: release.channel,
           projectId: release.projectId,
-          // TODO: create seperate entity for tarLocation, image and runtimeConfig (basically and column that will be updated later on not when the release is created)
+          // TODO: create seperate entity (or just get them from the docker image assuming we are going to have a registry around) for tarLocation, image and runtimeConfig (basically and column that will be updated later on not when the release is created)
           tarLocation: release.tarLocation!,
           port: release.port,
+          protocol: (release as any).protocol,
           image: release.image!,
           domainPrefix: release.domainPrefix,
           releaseId: release.id,

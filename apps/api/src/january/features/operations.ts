@@ -63,6 +63,10 @@ export default {
           select: trigger.body.port,
           against: z.number().optional(),
         },
+        protocol: {
+          select: trigger.body.protocol,
+          against: z.enum(['https', 'tcp']).optional(),
+        },
         image: {
           select: trigger.body.image,
           against: z.string().trim().min(1),
@@ -107,6 +111,7 @@ export default {
         name: input.releaseName,
         tarLocation: input.tarLocation,
         port: input.port,
+        protocol: input.protocol,
         runtimeConfig: JSON.stringify({
           ...runtimeConfig,
           Healthcheck: Object.assign(

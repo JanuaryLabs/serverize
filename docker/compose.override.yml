@@ -2,7 +2,7 @@ services:
   traefik:
     volumes:
       - ./traefik.local.yml:/etc/traefik/traefik.yml:ro
-      - logs:/var/log'
+      - logs:/var/log
     env_file: !reset []
 
   manager:
@@ -44,7 +44,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - serverize-uploads:/data:rw
-      - logs:./logs
+      - logs:/tmp/logs
       - /Users/ezzabuzaid/Desktop/january/serverize/dist/apps/api:/app:rw
       - /Users/ezzabuzaid/Desktop/january/serverize/node_modules:/app/node_modules:rw
     env_file: !override

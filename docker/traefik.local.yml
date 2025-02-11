@@ -26,6 +26,8 @@ entryPoints:
     address: ":80"
   websecure:
     address: ":443"
+  tcpsecure:
+    address: ":4443"
 
 providers:
   http:

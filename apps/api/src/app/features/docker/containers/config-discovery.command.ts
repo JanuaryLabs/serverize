@@ -31,6 +31,7 @@ export async function configDiscovery(
       containers.map((it) => ({
         domainPrefix: it.Labels['serverize.prefix'],
         port: it.Labels['serverize.port'],
+        protocol: it.Labels['serverize.protocol'],
       })),
     ),
   );
