@@ -1,6 +1,6 @@
-import { orgNameValidator } from '@workspace/extensions/zod';
 import { docker } from 'serverize/docker';
 import z from 'zod';
+import { orgNameValidator } from '#extensions/zod/index.ts';
 export const streamContainerLogsSchema = z.object({
   projectName: orgNameValidator,
   channelName: orgNameValidator,

@@ -1,5 +1,6 @@
-import { tables } from '@workspace/entities';
-import { policies } from '@workspace/extensions/identity';
+import z from 'zod';
+import { policies } from '#core/identity';
+import { tables } from '#entities';
 import {
   createQueryBuilder,
   deferredJoinPagination,
@@ -9,20 +10,19 @@ import {
   saveEntity,
   upsertEntity,
   useTransaction,
-} from '@workspace/extensions/postgresql';
+} from '#extensions/postgresql/index.ts';
 import {
   encrypt,
   getChannelEnv,
   getProjectKey,
-} from '@workspace/extensions/user';
-import { channelSchema, orgNameValidator } from '@workspace/extensions/zod';
-import z from 'zod';
+} from '#extensions/user/index.ts';
+import { channelSchema, orgNameValidator } from '#extensions/zod/index.ts';
 
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 
 import { trigger, workflow } from '@january/declarative';
-import { firebaseApp } from '@workspace/extensions/firebase-auth';
 import { getAuth } from 'firebase-admin/auth';
+import { firebaseApp } from '#extensions/firebase-auth/index.ts';
 
 export default {
   CreateToken: workflow({

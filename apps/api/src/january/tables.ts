@@ -1,8 +1,7 @@
 import { table } from 'console';
 import { field, index, mandatory, unique } from '@january/declarative';
 
-import { tables } from '@workspace/entities';
-
+import { tables } from '#entities';
 export default {
   volumes: table({
     fields: {

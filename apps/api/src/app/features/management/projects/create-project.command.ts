@@ -1,9 +1,9 @@
-import { trigger } from '@january/declarative';
-import { saveEntity } from '@workspace/extensions/postgresql';
-import { orgNameValidator } from '@workspace/extensions/zod';
-import { type IdentitySubject } from '@workspace/identity';
+import { type trigger } from '@january/declarative';
 import z from 'zod';
-import Projects from '../../../entities/projects.entity.ts';
+import { type IdentitySubject } from '#core/identity/subject.ts';
+import Projects from '#entities/projects.entity.ts';
+import { saveEntity } from '#extensions/postgresql/index.ts';
+import { orgNameValidator } from '#extensions/zod/index.ts';
 export const createProjectSchema = z.object({ name: orgNameValidator });
 
 export async function createProject(

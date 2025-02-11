@@ -63,7 +63,7 @@ export const fileWatch: () => Extension = () => {
         return {};
       }
       const imports = [
-        `import { observeFile } from '@workspace/extensions/user';`,
+        `import { observeFile } from '#extensions/user/index.ts';`,
       ];
       const lines: string[] = [
         `export default function (gracefulController: AbortController) {`,

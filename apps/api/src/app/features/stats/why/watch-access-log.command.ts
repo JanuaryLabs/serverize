@@ -1,5 +1,5 @@
 import { Readable } from 'node:stream';
-import { safeFail } from '@workspace/extensions/user';
+import { safeFail } from '#extensions/user/index.ts';
 
 export async function watchAccessLog(
   stream: Readable,

@@ -1,10 +1,10 @@
-import { initialize } from '@workspace/extensions/postgresql';
-import { parse } from '@workspace/validation';
 import z from 'zod';
+import { parse } from '#core/validation.ts';
+import { initialize } from '#extensions/postgresql/index.ts';
 
 const env = z.object({
-  ...(await import('@workspace/extensions/postgresql')).env,
-  ...(await import('@workspace/extensions/firebase-auth')).env,
+  ...(await import('#extensions/postgresql/index.ts')).env,
+  ...(await import('#extensions/firebase-auth/index.ts')).env,
   CONNECTION_STRING: z.string().url(),
   NODE_ENV: z.enum(['development', 'production']),
 });

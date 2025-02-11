@@ -1,10 +1,9 @@
-import { consume, createOutput } from '@workspace/extensions/hono';
-import { policies } from '@workspace/extensions/identity';
-import { authorize } from '@workspace/identity';
-import { type HonoEnv } from '@workspace/utils';
-import { parseOrThrow } from '@workspace/validation';
 import { Hono } from 'hono';
 import z from 'zod';
+import { authorize, policies } from '#core/identity';
+import { type HonoEnv } from '#core/utils.ts';
+import { parseOrThrow } from '#core/validation.ts';
+import { consume, createOutput } from '#hono';
 import * as organizations from './organizations';
 import * as projects from './projects';
 import * as users from './users';

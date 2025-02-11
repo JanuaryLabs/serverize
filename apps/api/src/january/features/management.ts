@@ -1,7 +1,13 @@
 import { Octokit } from '@octokit/core';
-import { tables } from '@workspace/entities';
-import { firebaseApp } from '@workspace/extensions/firebase-auth';
-import { policies } from '@workspace/extensions/identity';
+import {
+  AuthClientErrorCode,
+  FirebaseAuthError,
+  getAuth,
+} from 'firebase-admin/auth';
+import z from 'zod';
+import { policies } from '#core/identity';
+import { tables } from '#entities';
+import { firebaseApp } from '#extensions/firebase-auth/index.ts';
 import {
   createQueryBuilder,
   deferredJoinPagination,
@@ -9,21 +15,15 @@ import {
   patchEntity,
   removeEntity,
   saveEntity,
-} from '@workspace/extensions/postgresql';
+} from '#extensions/postgresql/index.ts';
 import {
   type Claims,
   createDefaultOrg,
   setUserClaims,
   tellDiscord,
   usersWebhook,
-} from '@workspace/extensions/user';
-import { orgNameValidator } from '@workspace/extensions/zod';
-import {
-  AuthClientErrorCode,
-  FirebaseAuthError,
-  getAuth,
-} from 'firebase-admin/auth';
-import z from 'zod';
+} from '#extensions/user/index.ts';
+import { orgNameValidator } from '#extensions/zod/index.ts';
 
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 

@@ -1,5 +1,5 @@
-import { type HonoEnv } from '@workspace/utils';
 import { Hono } from 'hono';
+import { type HonoEnv } from '#core/utils.ts';
 import dockerRouter from './docker/docker.router';
 import managementRouter from './management/management.router';
 import operationsRouter from './operations/operations.router';

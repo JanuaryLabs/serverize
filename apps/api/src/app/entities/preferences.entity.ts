@@ -10,9 +10,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
-import Organizations from './organizations.entity.ts';
-import Users from './users.entity.ts';
-import Workspaces from './workspaces.entity.ts';
+import Organizations from '#entities/organizations.entity.ts';
+import Users from '#entities/users.entity.ts';
+import Workspaces from '#entities/workspaces.entity.ts';
 
 @Entity('Preferences')
 export default class Preferences {
@@ -43,10 +43,22 @@ export default class Preferences {
   workspaceId?: string | null;
   @PrimaryGeneratedColumn('uuid')
   id!: string;
-  @CreateDateColumn()
-  createdAt!: Date;
-  @UpdateDateColumn()
-  updatedAt?: Date;
+  @CreateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  createdAt!: string;
+  @UpdateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  updatedAt?: string;
   @DeleteDateColumn()
   deletedAt?: Date;
 }

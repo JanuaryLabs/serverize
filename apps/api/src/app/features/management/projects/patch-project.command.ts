@@ -1,10 +1,10 @@
-import { trigger } from '@january/declarative';
+import { type trigger } from '@january/declarative';
+import z from 'zod';
+import Projects from '#entities/projects.entity.ts';
 import {
   createQueryBuilder,
   patchEntity,
-} from '@workspace/extensions/postgresql';
-import z from 'zod';
-import Projects from '../../../entities/projects.entity.ts';
+} from '#extensions/postgresql/index.ts';
 export const patchProjectSchema = z.object({
   id: z.string().uuid(),
   name: z.string().trim().min(1),

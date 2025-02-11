@@ -8,8 +8,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
-import Members from './members.entity.ts';
-import Workspaces from './workspaces.entity.ts';
+import Members from '#entities/members.entity.ts';
+import Workspaces from '#entities/workspaces.entity.ts';
 
 @Entity('WorkspacesMembers')
 export default class WorkspacesMembers {
@@ -31,10 +31,22 @@ export default class WorkspacesMembers {
   memberId?: string | null;
   @PrimaryGeneratedColumn('uuid')
   id!: string;
-  @CreateDateColumn()
-  createdAt!: Date;
-  @UpdateDateColumn()
-  updatedAt?: Date;
+  @CreateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  createdAt!: string;
+  @UpdateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  updatedAt?: string;
   @DeleteDateColumn()
   deletedAt?: Date;
 }

@@ -1,12 +1,12 @@
-import { trigger } from '@january/declarative';
+import { type trigger } from '@january/declarative';
+import z from 'zod';
+import Releases from '#entities/releases.entity.ts';
 import {
   createQueryBuilder,
   deferredJoinPagination,
   execute,
-} from '@workspace/extensions/postgresql';
-import { channelSchema } from '@workspace/extensions/zod';
-import z from 'zod';
-import Releases from '../../../entities/releases.entity.ts';
+} from '#extensions/postgresql/index.ts';
+import { channelSchema } from '#extensions/zod/index.ts';
 export const listReleasesSchema = z.object({
   projectId: z.string().uuid().optional(),
   channel: channelSchema.optional(),

@@ -1,9 +1,9 @@
-import { trigger } from '@january/declarative';
-import { upsertEntity } from '@workspace/extensions/postgresql';
-import { encrypt, getProjectKey } from '@workspace/extensions/user';
-import { channelSchema } from '@workspace/extensions/zod';
+import { type trigger } from '@january/declarative';
 import z from 'zod';
-import Secrets from '../../../entities/secrets.entity.ts';
+import Secrets from '#entities/secrets.entity.ts';
+import { upsertEntity } from '#extensions/postgresql/index.ts';
+import { encrypt, getProjectKey } from '#extensions/user/index.ts';
+import { channelSchema } from '#extensions/zod/index.ts';
 export const createSecretSchema = z.object({
   projectId: z.string().uuid(),
   channel: channelSchema,

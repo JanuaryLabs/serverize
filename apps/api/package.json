@@ -12,10 +12,6 @@
   },
   "dependencies": {
     "rfc-7807-problem-details": "^1.1.0",
-    "ajv": "8.12.0",
-    "ajv-formats": "2.1.1",
-    "ajv-errors": "3.0.0",
-    "ajv-keywords": "5.1.0",
     "validator": "13.9.0",
     "lodash-es": "^4.17.21",
     "http-status-codes": "2.2.0",
@@ -38,8 +34,28 @@
     "pg": "8.11.5",
     "pg-query-stream": "^4.7.0"
   },
-  "exports": {
-    "./validation": "./src/app/core/validation.ts"
+  "imports": {
+    "#hono": {
+      "default": "./src/app/extensions/hono/index.ts"
+    },
+    "#entities": {
+      "default": "./src/app/features/entities.ts"
+    },
+    "#entities/*": {
+      "default": "./src/app/entities/*"
+    },
+    "#extensions/*": {
+      "default": "./src/app/extensions/*"
+    },
+    "#core/*": {
+      "default": "./src/app/core/*"
+    },
+    "#core/identity": {
+      "default": "./src/app/extensions/identity/index.ts"
+    },
+    "#core/identity/subject.ts": {
+      "default": "./src/app/extensions/firebase-auth/subject.ts"
+    }
   },
   "devDependencies": {
     "esbuild": "^0.24.2",

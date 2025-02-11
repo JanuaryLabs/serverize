@@ -1,16 +1,16 @@
-import { trigger } from '@january/declarative';
-import { createQueryBuilder } from '@workspace/extensions/postgresql';
+import { type trigger } from '@january/declarative';
+import axios from 'axios';
+import z from 'zod';
+import Releases from '#entities/releases.entity.ts';
+import { createQueryBuilder } from '#extensions/postgresql/index.ts';
 import {
   PROTOCOL,
   SERVERIZE_DOMAIN,
   releaseCreatedDiscordWebhook,
   serverizeUrl,
   tellDiscord,
-} from '@workspace/extensions/user';
-import { channelSchema, orgNameValidator } from '@workspace/extensions/zod';
-import axios from 'axios';
-import z from 'zod';
-import Releases from '../../../entities/releases.entity.ts';
+} from '#extensions/user/index.ts';
+import { channelSchema, orgNameValidator } from '#extensions/zod/index.ts';
 export const restartReleaseSchema = z.object({
   releaseName: orgNameValidator,
   projectId: z.string().uuid(),

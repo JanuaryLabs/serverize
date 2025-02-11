@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
-import Releases from './releases.entity.ts';
+import Releases from '#entities/releases.entity.ts';
 
 @Entity('Volumes')
 export default class Volumes {
@@ -26,10 +26,22 @@ export default class Volumes {
   dest!: string;
   @PrimaryGeneratedColumn('uuid')
   id!: string;
-  @CreateDateColumn()
-  createdAt!: Date;
-  @UpdateDateColumn()
-  updatedAt?: Date;
+  @CreateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  createdAt!: string;
+  @UpdateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  updatedAt?: string;
   @DeleteDateColumn()
   deletedAt?: Date;
 }

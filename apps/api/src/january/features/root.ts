@@ -1,4 +1,4 @@
-import { dataSource } from '@workspace/extensions/postgresql';
+import { dataSource } from '#extensions/postgresql/index.ts';
 
 import { feature, trigger, workflow } from '@january/declarative';
 

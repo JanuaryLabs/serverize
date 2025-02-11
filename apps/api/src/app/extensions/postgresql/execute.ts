@@ -247,12 +247,12 @@ export async function upsertEntity<
     .into(entityType)
     .values(entity as T)
     .orUpdate(
-      options.upsertColumns ?? ['id'],
-      options.conflictColumns ??
+      options.upsertColumns ??
         (Object.keys(entity) as Extract<
           keyof (Entity & { id: string }),
           string
         >[]),
+      options.conflictColumns ?? ['id'],
     )
     .execute();
 }

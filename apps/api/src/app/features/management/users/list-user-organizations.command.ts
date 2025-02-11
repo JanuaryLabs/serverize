@@ -1,12 +1,12 @@
-import { trigger } from '@january/declarative';
+import { type trigger } from '@january/declarative';
+import z from 'zod';
+import { type IdentitySubject } from '#core/identity/subject.ts';
+import Organizations from '#entities/organizations.entity.ts';
 import {
   createQueryBuilder,
   deferredJoinPagination,
   execute,
-} from '@workspace/extensions/postgresql';
-import { type IdentitySubject } from '@workspace/identity';
-import z from 'zod';
-import Organizations from '../../../entities/organizations.entity.ts';
+} from '#extensions/postgresql/index.ts';
 
 export async function listUserOrganizations(
   output: trigger.http.output,

@@ -1,10 +1,10 @@
-import { trigger } from '@january/declarative';
-import { firebaseApp } from '@workspace/extensions/firebase-auth';
-import { createQueryBuilder, execute } from '@workspace/extensions/postgresql';
+import { type trigger } from '@january/declarative';
 import { getAuth } from 'firebase-admin/auth';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
-import ApiKeys from '../../../entities/api-keys.entity.ts';
+import ApiKeys from '#entities/api-keys.entity.ts';
+import { firebaseApp } from '#extensions/firebase-auth/index.ts';
+import { createQueryBuilder, execute } from '#extensions/postgresql/index.ts';
 export const exchangeTokenSchema = z.object({ token: z.string() });
 
 export async function exchangeToken(

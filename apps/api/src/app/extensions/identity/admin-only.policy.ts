@@ -1,5 +1,5 @@
-import { type HonoEnv } from '@workspace/utils';
 import { type Context } from 'hono';
+import { HonoEnv } from '#core/utils.ts';
 
 export async function adminOnly(context: Context<HonoEnv>): Promise<boolean> {
   if (!context.var.subject) {

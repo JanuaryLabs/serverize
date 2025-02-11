@@ -10,15 +10,20 @@ services:
       - '8080:8080' # Dashboard
     volumes:
       - './letsencrypt:/letsencrypt'
-      - logs:/var/log'
-      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - 'logs:/var/log'
+      - './traefik.yml:/etc/traefik/traefik.yml:ro'
     env_file:
-      - .env # Make sure your Hetzner API token is in this file
+      - .env # Ensure your Hetzner API token is in this file
     depends_on:
       api:
         condition: service_healthy
       manager:
         condition: service_healthy
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '500m'
+        max-file: '5'
 
   sablier:
     image: sablierapp/sablier:1.8.1
@@ -33,6 +38,11 @@ services:
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
       - 'sablier:/sablier'
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+        max-file: '5'
 
   whoami:
     image: traefik/whoami
@@ -41,6 +51,11 @@ services:
     labels:
       - 'sablier.enable=true'
       - 'sablier.group=whoami'
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '1'
 
   manager:
     image: docker.io/ezzabuzaid/serverize-manager:latest
@@ -60,6 +75,11 @@ services:
       - UPLOAD_DIR=/serverize/uploads
     healthcheck:
       test: wget --no-verbose --spider --tries=1 http://localhost:3000/health || exit 1
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+        max-file: '5'
 
   api:
     image: docker.io/ezzabuzaid/serverize-api:latest
@@ -81,6 +101,11 @@ services:
       - MANAGEMENT_API_URL=http://manager:3000
     healthcheck:
       test: wget --no-verbose --spider --tries=1 http://localhost:3000/health || exit 1
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+        max-file: '5'
 
   tusd:
     image: tusproject/tusd:latest
@@ -92,6 +117,11 @@ services:
       - traefik-network
     volumes:
       - serverize-uploads:/data:rw
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+        max-file: '5'
 
 volumes:
   serverize-uploads:
@@ -102,6 +132,7 @@ volumes:
       o: bind
   sablier:
   logs:
+
 networks:
   traefik-network:
     external: true

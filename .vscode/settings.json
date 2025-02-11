@@ -5,9 +5,7 @@
     "**/.hg": true,
     "**/CVS": true,
     "**/.DS_Store": true,
-    "**/Thumbs.db": true,
-    "**/packages/client": true,
-    "**/apps/api/src/app": true
+    "**/Thumbs.db": true
   },
   "tailwindCSS.files.exclude": [
     "**/.git/**",
@@ -20,7 +18,7 @@
     "**/apps/api/**",
     "**/apps/manager/**"
   ],
-  "typescript.preferences.importModuleSpecifier": "project-relative",
+  "typescript.preferences.importModuleSpecifier": "shortest",
   "typescript.preferences.importModuleSpecifierEnding": "auto",
   "editor.defaultFormatter": "biomejs.biome",
   "[typescript]": {

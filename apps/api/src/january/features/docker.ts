@@ -1,10 +1,10 @@
-import { orgNameValidator } from '@workspace/extensions/zod';
 import z from 'zod';
+import { orgNameValidator } from '#extensions/zod/index.ts';
 
 import { docker } from 'serverize/docker';
 
 import { trigger, workflow } from '@january/declarative';
-import { toTraefikConfig } from '@workspace/extensions/user';
+import { toTraefikConfig } from '#extensions/user/index.ts';
 
 export default {
   StreamContainerLogs: workflow({

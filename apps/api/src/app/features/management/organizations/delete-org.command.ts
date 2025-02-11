@@ -1,10 +1,10 @@
-import { trigger } from '@january/declarative';
+import { type trigger } from '@january/declarative';
+import z from 'zod';
+import Organizations from '#entities/organizations.entity.ts';
 import {
   createQueryBuilder,
   removeEntity,
-} from '@workspace/extensions/postgresql';
-import z from 'zod';
-import Organizations from '../../../entities/organizations.entity.ts';
+} from '#extensions/postgresql/index.ts';
 export const deleteOrgSchema = z.object({ id: z.string().uuid() });
 
 export async function deleteOrg(

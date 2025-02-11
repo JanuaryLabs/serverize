@@ -1,9 +1,5 @@
-import { trigger } from '@january/declarative';
+import { type trigger } from '@january/declarative';
 import { Octokit } from '@octokit/core';
-import { firebaseApp } from '@workspace/extensions/firebase-auth';
-import { createDefaultOrg } from '@workspace/extensions/user';
-import { type Claims } from '@workspace/extensions/user';
-import { orgNameValidator } from '@workspace/extensions/zod';
 import {
   AuthClientErrorCode,
   FirebaseAuthError,
@@ -11,6 +7,10 @@ import {
 } from 'firebase-admin/auth';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
+import { firebaseApp } from '#extensions/firebase-auth/index.ts';
+import { createDefaultOrg } from '#extensions/user/index.ts';
+import { type Claims } from '#extensions/user/index.ts';
+import { orgNameValidator } from '#extensions/zod/index.ts';
 export const linkUserSchema = z.object({
   token: z.string(),
   providerId: z.enum(['github.com', 'google.com', 'password']),

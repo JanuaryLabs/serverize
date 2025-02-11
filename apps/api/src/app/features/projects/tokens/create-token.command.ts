@@ -1,14 +1,14 @@
-import { trigger } from '@january/declarative';
+import { type trigger } from '@january/declarative';
+import { ProblemDetailsException } from 'rfc-7807-problem-details';
+import z from 'zod';
+import ApiKeys from '#entities/api-keys.entity.ts';
+import Projects from '#entities/projects.entity.ts';
 import {
   createQueryBuilder,
   execute,
   saveEntity,
-} from '@workspace/extensions/postgresql';
-import { orgNameValidator } from '@workspace/extensions/zod';
-import { ProblemDetailsException } from 'rfc-7807-problem-details';
-import z from 'zod';
-import ApiKeys from '../../../entities/api-keys.entity.ts';
-import Projects from '../../../entities/projects.entity.ts';
+} from '#extensions/postgresql/index.ts';
+import { orgNameValidator } from '#extensions/zod/index.ts';
 export const createTokenSchema = z.object({ projectName: orgNameValidator });
 
 export async function createToken(

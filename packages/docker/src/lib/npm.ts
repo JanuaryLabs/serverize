@@ -1,10 +1,10 @@
 import type { Container } from 'dockerode';
 
+import { PassThrough } from 'stream';
+import { extractError } from 'serverize/utils';
+import tarStream, { type Pack } from 'tar-stream';
 import { docker } from './instance';
 import { followLogs, removeContainer, startContainer } from './utils';
-import { extractError } from 'serverize/utils';
-import { PassThrough } from 'stream';
-import tarStream, { type Pack } from 'tar-stream';
 
 interface SourceData {
   scope?: string;
@@ -107,11 +107,6 @@ export async function installPackage(sourceData: SourceData) {
         'ua-parser-js': '^1.0.37',
         'request-ip': '^3.3.0',
         'rfc-7807-problem-details': '^1.1.0',
-        ajv: '8.12.0',
-        'ajv-formats': '2.1.1',
-        'ajv-errors': '3.0.0',
-        'ajv-keywords': '5.1.0',
-        validator: '13.9.0',
         'lodash-es': '^4.17.21',
         'http-status-codes': '2.2.0',
         hono: '^4.4.0',

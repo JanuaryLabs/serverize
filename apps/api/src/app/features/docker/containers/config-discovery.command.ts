@@ -1,7 +1,7 @@
-import { trigger } from '@january/declarative';
-import { toTraefikConfig } from '@workspace/extensions/user';
+import { type trigger } from '@january/declarative';
 import { docker } from 'serverize/docker';
 import z from 'zod';
+import { toTraefikConfig } from '#extensions/user/index.ts';
 
 export async function configDiscovery(
   output: trigger.http.output,

@@ -1,15 +1,15 @@
-import { trigger } from '@january/declarative';
-import { firebaseApp } from '@workspace/extensions/firebase-auth';
+import { type trigger } from '@january/declarative';
+import { getAuth } from 'firebase-admin/auth';
+import { ProblemDetailsException } from 'rfc-7807-problem-details';
+import z from 'zod';
+import { firebaseApp } from '#extensions/firebase-auth/index.ts';
 import {
   createDefaultOrg,
   setUserClaims,
   tellDiscord,
   usersWebhook,
-} from '@workspace/extensions/user';
-import { orgNameValidator } from '@workspace/extensions/zod';
-import { getAuth } from 'firebase-admin/auth';
-import { ProblemDetailsException } from 'rfc-7807-problem-details';
-import z from 'zod';
+} from '#extensions/user/index.ts';
+import { orgNameValidator } from '#extensions/zod/index.ts';
 export const createDefaultOrganizationSchema = z.object({
   name: orgNameValidator,
   projectName: orgNameValidator,

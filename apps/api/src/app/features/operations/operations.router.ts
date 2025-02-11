@@ -1,11 +1,10 @@
-import { consume, createOutput } from '@workspace/extensions/hono';
-import { policies } from '@workspace/extensions/identity';
-import { authorize } from '@workspace/identity';
-import { type HonoEnv } from '@workspace/utils';
-import { parseOrThrow } from '@workspace/validation';
 import axios from 'axios';
 import { Hono } from 'hono';
 import z from 'zod';
+import { authorize, policies } from '#core/identity';
+import { type HonoEnv } from '#core/utils.ts';
+import { parseOrThrow } from '#core/validation.ts';
+import { consume, createOutput } from '#hono';
 import * as operations from './operations';
 const router = new Hono<HonoEnv>();
 router.post(
@@ -24,7 +23,7 @@ router.post(
       port: body.port,
       protocol: body.protocol,
       image: body.image,
-      volumes: body.volumes,
+      volumes: context.req.queries('undefined'),
       serviceName: body.serviceName,
       environment: body.environment,
       jwt: context.req.header('Authorization'),

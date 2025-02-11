@@ -1,16 +1,16 @@
-import { trigger } from '@january/declarative';
-import {
-  createQueryBuilder,
-  removeEntity,
-  useTransaction,
-} from '@workspace/extensions/postgresql';
-import { channelSchema, orgNameValidator } from '@workspace/extensions/zod';
+import { type trigger } from '@january/declarative';
 import axios from 'axios';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import { getContainer, removeContainer } from 'serverize/docker';
 import z from 'zod';
-import Releases from '../../../entities/releases.entity.ts';
-import Volumes from '../../../entities/volumes.entity.ts';
+import Releases from '#entities/releases.entity.ts';
+import Volumes from '#entities/volumes.entity.ts';
+import {
+  createQueryBuilder,
+  removeEntity,
+  useTransaction,
+} from '#extensions/postgresql/index.ts';
+import { channelSchema, orgNameValidator } from '#extensions/zod/index.ts';
 export const deleteReleaseSchema = z.object({
   releaseName: orgNameValidator,
   projectId: z.string().uuid(),

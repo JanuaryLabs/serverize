@@ -1,10 +1,15 @@
-import { trigger } from '@january/declarative';
+import { type trigger } from '@january/declarative';
+import axios from 'axios';
+import z from 'zod';
+import Projects from '#entities/projects.entity.ts';
+import Releases from '#entities/releases.entity.ts';
+import Volumes from '#entities/volumes.entity.ts';
 import {
   createQueryBuilder,
   execute,
   saveEntity,
   upsertEntity,
-} from '@workspace/extensions/postgresql';
+} from '#extensions/postgresql/index.ts';
 import {
   PROTOCOL,
   SERVERIZE_DOMAIN,
@@ -12,13 +17,8 @@ import {
   defaultHealthCheck,
   getChannelEnv,
   serverizeUrl,
-} from '@workspace/extensions/user';
-import { channelSchema, orgNameValidator } from '@workspace/extensions/zod';
-import axios from 'axios';
-import z from 'zod';
-import Projects from '../../../entities/projects.entity.ts';
-import Releases from '../../../entities/releases.entity.ts';
-import Volumes from '../../../entities/volumes.entity.ts';
+} from '#extensions/user/index.ts';
+import { channelSchema, orgNameValidator } from '#extensions/zod/index.ts';
 export const startReleaseSchema = z.object({
   releaseName: orgNameValidator,
   projectId: z.string().uuid(),

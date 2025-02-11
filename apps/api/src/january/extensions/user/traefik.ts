@@ -1,5 +1,4 @@
-import { tables } from '@workspace/entities';
-
+import { tables } from '#entities';
 interface TraefikService {
   loadBalancer: {
     servers: { url?: string; address?: string }[];

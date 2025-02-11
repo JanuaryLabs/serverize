@@ -1,7 +1,7 @@
-import { createOutput } from '@workspace/extensions/hono';
-import { authorize } from '@workspace/identity';
-import { type HonoEnv } from '@workspace/utils';
 import { Hono } from 'hono';
+import { authorize } from '#core/identity';
+import { type HonoEnv } from '#core/utils.ts';
+import { createOutput } from '#hono';
 import * as root from './root';
 const router = new Hono<HonoEnv>();
 router.get('/favicon.ico', authorize(), async (context, next) => {

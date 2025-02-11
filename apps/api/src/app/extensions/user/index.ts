@@ -1,12 +1,12 @@
-import { tables } from '@workspace/entities';
-import { firebaseApp } from '@workspace/extensions/firebase-auth';
+import { WebhookClient } from 'discord.js';
+import { getAuth } from 'firebase-admin/auth';
+import { tables } from '#entities';
+import { firebaseApp } from '#extensions/firebase-auth/index.ts';
 import {
   createQueryBuilder,
   execute,
   saveEntity,
-} from '@workspace/extensions/postgresql';
-import { WebhookClient } from 'discord.js';
-import { getAuth } from 'firebase-admin/auth';
+} from '#extensions/postgresql/index.ts';
 
 export async function generateKey() {
   const sodium = await import('libsodium-wrappers').then(

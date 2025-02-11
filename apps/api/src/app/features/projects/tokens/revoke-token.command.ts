@@ -1,13 +1,13 @@
-import { trigger } from '@january/declarative';
+import { type trigger } from '@january/declarative';
+import { ProblemDetailsException } from 'rfc-7807-problem-details';
+import z from 'zod';
+import ApiKeys from '#entities/api-keys.entity.ts';
+import Projects from '#entities/projects.entity.ts';
 import {
   createQueryBuilder,
   execute,
   removeEntity,
-} from '@workspace/extensions/postgresql';
-import { ProblemDetailsException } from 'rfc-7807-problem-details';
-import z from 'zod';
-import ApiKeys from '../../../entities/api-keys.entity.ts';
-import Projects from '../../../entities/projects.entity.ts';
+} from '#extensions/postgresql/index.ts';
 export const revokeTokenSchema = z.object({
   projectName: z.string(),
   token: z.string(),

@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
-import Projects from './projects.entity.ts';
+import Projects from '#entities/projects.entity.ts';
 
 @Entity('Secrets')
 @Index(['projectId', 'label'], { unique: true })
@@ -37,10 +37,22 @@ export default class Secrets {
   secret!: Uint8Array;
   @PrimaryGeneratedColumn('uuid')
   id!: string;
-  @CreateDateColumn()
-  createdAt!: Date;
-  @UpdateDateColumn()
-  updatedAt?: Date;
+  @CreateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  createdAt!: string;
+  @UpdateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  updatedAt?: string;
   @DeleteDateColumn()
   deletedAt?: Date;
 }

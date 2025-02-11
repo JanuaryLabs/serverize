@@ -1,4 +1,4 @@
-import { observeFile } from '@workspace/extensions/user';
+import { observeFile } from '#extensions/user/index.ts';
 import * as why from './why';
 
 export default function (gracefulController: AbortController) {

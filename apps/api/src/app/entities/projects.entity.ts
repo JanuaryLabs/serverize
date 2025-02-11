@@ -11,11 +11,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
-import ApiKeys from './api-keys.entity.ts';
-import Releases from './releases.entity.ts';
-import SecretsKeys from './secrets-keys.entity.ts';
-import Secrets from './secrets.entity.ts';
-import Workspaces from './workspaces.entity.ts';
+import ApiKeys from '#entities/api-keys.entity.ts';
+import Releases from '#entities/releases.entity.ts';
+import SecretsKeys from '#entities/secrets-keys.entity.ts';
+import Secrets from '#entities/secrets.entity.ts';
+import Workspaces from '#entities/workspaces.entity.ts';
 
 @Entity('Projects')
 @Index(['name', 'workspaceId'], { unique: true })
@@ -64,10 +64,22 @@ export default class Projects {
   workspaceId!: string;
   @PrimaryGeneratedColumn('uuid')
   id!: string;
-  @CreateDateColumn()
-  createdAt!: Date;
-  @UpdateDateColumn()
-  updatedAt?: Date;
+  @CreateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  createdAt!: string;
+  @UpdateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  updatedAt?: string;
   @DeleteDateColumn()
   deletedAt?: Date;
 }

@@ -1,10 +1,10 @@
-import { trigger } from '@january/declarative';
+import { type trigger } from '@january/declarative';
+import z from 'zod';
+import ApiKeys from '#entities/api-keys.entity.ts';
 import {
   createQueryBuilder,
   removeEntity,
-} from '@workspace/extensions/postgresql';
-import z from 'zod';
-import ApiKeys from '../../../entities/api-keys.entity.ts';
+} from '#extensions/postgresql/index.ts';
 export const invalidateOrganizationTokensSchema = z.object({
   organizationId: z.string().uuid(),
 });

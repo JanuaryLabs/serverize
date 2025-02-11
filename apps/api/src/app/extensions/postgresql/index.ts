@@ -6,8 +6,17 @@ import { z } from 'zod';
 
 export const env = {
   CONNECTION_STRING: z.string(),
-  ORM_MIGRATIONS_RUN: z.coerce.boolean().optional(),
-  ORM_SYNCHRONIZE: z.coerce.boolean().optional(),
-  ORM_LOGGING: z.coerce.boolean().optional(),
   ORM_ENTITY_PREFIX: z.string().optional(),
+  ORM_MIGRATIONS_RUN: z
+    .enum(['true', 'false'])
+    .transform((value) => value === 'true')
+    .optional(),
+  ORM_SYNCHRONIZE: z
+    .enum(['true', 'false'])
+    .transform((value) => value === 'true')
+    .optional(),
+  ORM_LOGGING: z
+    .enum(['true', 'false'])
+    .transform((value) => value === 'true')
+    .optional(),
 };

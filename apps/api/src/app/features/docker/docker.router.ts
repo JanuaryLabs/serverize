@@ -1,10 +1,10 @@
-import { createOutput } from '@workspace/extensions/hono';
-import { authorize } from '@workspace/identity';
-import { type HonoEnv } from '@workspace/utils';
-import { parseOrThrow } from '@workspace/validation';
 import { Hono } from 'hono';
 import { streamText } from 'hono/streaming';
 import z from 'zod';
+import { authorize } from '#core/identity';
+import { type HonoEnv } from '#core/utils.ts';
+import { parseOrThrow } from '#core/validation.ts';
+import { createOutput } from '#hono';
 import * as container from './container';
 import * as containers from './containers';
 const router = new Hono<HonoEnv>();

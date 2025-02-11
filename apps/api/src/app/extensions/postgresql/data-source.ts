@@ -1,5 +1,5 @@
-import entities from '@workspace/entities';
 import { DataSource, DefaultNamingStrategy } from 'typeorm';
+import entities from '#entities';
 
 class NamingStrategy extends DefaultNamingStrategy {
   override tableName(

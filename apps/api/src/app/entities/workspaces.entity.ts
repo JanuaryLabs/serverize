@@ -10,10 +10,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { type Relation } from 'typeorm';
-import Organizations from './organizations.entity.ts';
-import Preferences from './preferences.entity.ts';
-import Projects from './projects.entity.ts';
-import WorkspacesMembers from './workspaces-members.entity.ts';
+import Organizations from '#entities/organizations.entity.ts';
+import Preferences from '#entities/preferences.entity.ts';
+import Projects from '#entities/projects.entity.ts';
+import WorkspacesMembers from '#entities/workspaces-members.entity.ts';
 
 @Entity('Workspaces')
 export default class Workspaces {
@@ -29,10 +29,22 @@ export default class Workspaces {
   organizationId?: string | null;
   @PrimaryGeneratedColumn('uuid')
   id!: string;
-  @CreateDateColumn()
-  createdAt!: Date;
-  @UpdateDateColumn()
-  updatedAt?: Date;
+  @CreateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  createdAt!: string;
+  @UpdateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  updatedAt?: string;
   @DeleteDateColumn()
   deletedAt?: Date;
   @OneToMany(

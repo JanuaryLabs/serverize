@@ -1,5 +1,6 @@
-import { tables } from '@workspace/entities';
-import { policies } from '@workspace/extensions/identity';
+import z from 'zod';
+import { policies } from '#core/identity';
+import { tables } from '#entities';
 import {
   createQueryBuilder,
   execute,
@@ -7,7 +8,7 @@ import {
   saveEntity,
   upsertEntity,
   useTransaction,
-} from '@workspace/extensions/postgresql';
+} from '#extensions/postgresql/index.ts';
 import {
   PROTOCOL,
   SERVERIZE_DOMAIN,
@@ -17,9 +18,8 @@ import {
   releaseCreatedDiscordWebhook,
   serverizeUrl,
   tellDiscord,
-} from '@workspace/extensions/user';
-import { channelSchema, orgNameValidator } from '@workspace/extensions/zod';
-import z from 'zod';
+} from '#extensions/user/index.ts';
+import { channelSchema, orgNameValidator } from '#extensions/zod/index.ts';
 
 import axios from 'axios';
 

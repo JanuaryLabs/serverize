@@ -1,4 +1,4 @@
-import { trigger } from '@january/declarative';
+import type { trigger } from '@january/declarative';
 import type { Context } from 'hono';
 import { createMiddleware } from 'hono/factory';
 import { type RedirectStatusCode } from 'hono/utils/http-status';

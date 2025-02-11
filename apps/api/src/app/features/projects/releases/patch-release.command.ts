@@ -1,10 +1,10 @@
-import { trigger } from '@january/declarative';
+import { type trigger } from '@january/declarative';
+import z from 'zod';
+import Releases from '#entities/releases.entity.ts';
 import {
   createQueryBuilder,
   patchEntity,
-} from '@workspace/extensions/postgresql';
-import z from 'zod';
-import Releases from '../../../entities/releases.entity.ts';
+} from '#extensions/postgresql/index.ts';
 export const patchReleaseSchema = z.object({
   releaseId: z.string().uuid(),
   status: z.enum(['requested', 'waiting', 'completed']).optional(),

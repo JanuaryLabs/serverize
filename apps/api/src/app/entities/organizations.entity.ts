@@ -8,10 +8,10 @@ import {
   RelationId,
   UpdateDateColumn,
 } from 'typeorm';
-import Members from './members.entity.ts';
-import OrganizationsMembers from './organizations-members.entity.ts';
-import Preferences from './preferences.entity.ts';
-import Workspaces from './workspaces.entity.ts';
+import Members from '#entities/members.entity.ts';
+import OrganizationsMembers from '#entities/organizations-members.entity.ts';
+import Preferences from '#entities/preferences.entity.ts';
+import Workspaces from '#entities/workspaces.entity.ts';
 
 @Entity('Organizations')
 export default class Organizations {
@@ -19,10 +19,22 @@ export default class Organizations {
   name!: string;
   @PrimaryGeneratedColumn('uuid')
   id!: string;
-  @CreateDateColumn()
-  createdAt!: Date;
-  @UpdateDateColumn()
-  updatedAt?: Date;
+  @CreateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  createdAt!: string;
+  @UpdateDateColumn({
+    transformer: {
+      to: (value: unknown) => value,
+      from: (value: unknown) =>
+        value instanceof Date ? value.toISOString() : value,
+    },
+  })
+  updatedAt?: string;
   @DeleteDateColumn()
   deletedAt?: Date;
   @OneToMany(
