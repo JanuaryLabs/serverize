@@ -31,8 +31,7 @@
     "typeorm": "0.3.20",
     "sql-template-tag": "5.2.1",
     "pg": "8.11.5",
-    "pg-query-stream": "^4.7.0",
-    "@january/console": "https://github.com/JanuaryLabs/dist/raw/main/console.tar.gz"
+    "pg-query-stream": "^4.7.0"
   },
   "imports": {
     "#hono": {
