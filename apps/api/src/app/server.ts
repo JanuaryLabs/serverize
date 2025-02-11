@@ -6,8 +6,6 @@ import { showRoutes } from 'hono/dev';
 import application from './app';
 import './startup';
 
-import { pretty } from '@january/console';
-
 const dirRelativeToCwd = relative(process.cwd(), import.meta.dirname);
 
 application.use('/:filename{.+.png$}', serveStatic({ root: dirRelativeToCwd }));
@@ -30,4 +28,4 @@ if (process.env.NODE_ENV === 'development') {
   showRoutes(application, { verbose: true, colorize: true });
 }
 
-pretty.network(port);
+console.log(`Server running on http://localhost:${port}`);

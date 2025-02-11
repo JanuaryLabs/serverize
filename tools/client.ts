@@ -14,6 +14,7 @@ await generate({
     extensions: join(appDir, 'src/january/extensions'),
     tsconfig: join(appDir, 'tsconfig.january.json'),
   },
+  zod: join(appDir, 'src/january/extensions/zod/index.ts'),
   client: {
     name: 'Serverize',
     output: join(process.cwd(), 'packages', 'client', 'src'),
