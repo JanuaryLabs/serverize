@@ -170,14 +170,7 @@ export function toTraefikConfig(releases: ReleaseConfig[]) {
         ...http.routers,
       },
     },
-    tcp: {
-      services: {
-        ...tcp.services,
-      },
-      routers: {
-        ...tcp.routers,
-      },
-    },
+    ...(isEmptyConfig(tcp) ? {} : { tcp }),
     ...(process.env.NODE_ENV !== 'development'
       ? {
           tls: {
@@ -211,4 +204,14 @@ function createSablierMiddleware(groupName: string) {
       },
     },
   };
+}
+
+function isEmptyConfig(config: {
+  routers: Record<string, TraefikRouter>;
+  services: Record<string, TraefikService>;
+}) {
+  return (
+    Object.keys(config.routers).length === 0 &&
+    Object.keys(config.services).length === 0
+  );
 }
