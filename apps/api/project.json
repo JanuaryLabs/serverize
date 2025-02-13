@@ -5,30 +5,6 @@
   "projectType": "application",
   "tags": [],
   "targets": {
-    "generate": {
-      "executor": "nx:run-script",
-      "options": {
-        "script": "generate"
-      }
-    },
-    "dev": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          {
-            "description": "Generate API Code",
-            "prefix": "generate",
-            "command": "npm run generate:watch"
-          },
-          {
-            "description": "Start the server",
-            "prefix": "server",
-            "command": "nx run api:serve:development --watch"
-          }
-        ],
-        "parallel": true
-      }
-    },
     "build": {
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
@@ -37,18 +13,12 @@
         "tsConfig": "apps/api/tsconfig.app.json",
         "outputPath": "dist/apps/api",
         "format": ["esm"],
+        "platform": "node",
         "minify": false,
         "sourcemap": true,
         "deleteOutputPath": false,
         "generatePackageJson": true,
-        "esbuildOptions": {
-          "alias": {
-            "lodash": "lodash-es"
-          },
-          "banner": {
-            "js": "import { createRequire } from 'module'; const require = createRequire(import.meta.url);"
-          }
-        }
+        "esbuildConfig": "apps/api/esbuild.cjs"
       }
     },
     "serve": {

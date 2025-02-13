@@ -5,7 +5,7 @@ import {
   getAuth,
 } from 'firebase-admin/auth';
 import { type IResult } from 'ua-parser-js';
-import { UnauthorizedException } from '#core/identity';
+import { UnauthorizedException } from '#core/authorize.ts';
 import { firebaseApp } from './firebase';
 
 export interface ClientInfo {

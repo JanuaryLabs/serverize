@@ -294,7 +294,7 @@ export default {
           }),
       );
 
-      let traces: string[] = [];
+      const traces: string[] = [];
       for (const release of releases) {
         const traceId = crypto.randomUUID();
         await axios.post(
@@ -374,6 +374,62 @@ export default {
           ),
         );
         await removeContainer(container);
+      });
+    },
+  }),
+  RestoreRelease: workflow({
+    tag: 'operations',
+    trigger: trigger.http({
+      method: 'post',
+      path: '/releases/:releaseName/restore',
+      policies: [policies.authenticated, policies.notImplemented],
+      input: (trigger) => ({
+        releaseName: {
+          select: trigger.path.releaseName,
+          against: orgNameValidator,
+        },
+        projectId: {
+          select: trigger.body.projectId,
+          against: z.string().uuid(),
+        },
+        channel: {
+          select: trigger.body.channel,
+          against: channelSchema,
+        },
+      }),
+    }),
+    execute: async ({ input }) => {
+      await useTransaction(async () => {
+        const releaseQb = createQueryBuilder(tables.releases, 'releases')
+          .withDeleted()
+          .where('releases.name = :name', { name: input.releaseName })
+          .andWhere('releases.channel = :channel', {
+            channel: input.channel,
+          })
+          .andWhere('releases.projectId = :projectId', {
+            projectId: input.projectId,
+          });
+
+        const release = await releaseQb.getOne();
+
+        if (!release) {
+          throw new ProblemDetailsException({
+            title: 'Release not found',
+            detail: `Release ${input.releaseName} not found`,
+            status: 404,
+          });
+        }
+
+        await releaseQb.restore().execute();
+
+        // Restore associated volumes
+        const volumesQb = createQueryBuilder(tables.volumes, 'volumes')
+          .withDeleted()
+          .where('volumes.releaseId = :releaseId', {
+            releaseId: release.id,
+          });
+
+        await volumesQb.restore().execute();
       });
     },
   }),

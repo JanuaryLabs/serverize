@@ -1,5 +1,6 @@
-import { execSync } from 'node:child_process';
+import { execFileSync, execSync } from 'node:child_process';
 import { join } from 'node:path';
+import { npmRunPathEnv } from 'npm-run-path';
 
 import { hono } from '@january/extensions/hono';
 import { generate } from '@january/openapi';
@@ -31,4 +32,8 @@ await generate({
 
 execSync(`biome check packages/client --write`, {
   cwd: process.cwd(),
+});
+
+execFileSync('biome', ['check', 'packages/client', '--write'], {
+  env: npmRunPathEnv(),
 });

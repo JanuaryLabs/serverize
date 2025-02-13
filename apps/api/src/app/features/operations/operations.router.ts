@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Hono } from 'hono';
 import z from 'zod';
-import { authorize, policies } from '#core/identity';
+import { authorize } from '#core/authorize.ts';
+import { policies } from '#core/identity';
 import { type HonoEnv } from '#core/utils.ts';
 import { parseOrThrow } from '#core/validation.ts';
 import { consume, createOutput } from '#hono';
@@ -83,6 +84,23 @@ router.delete(
     });
     const output = createOutput(context);
     await operations.deleteRelease(input, output, context.req.raw.signal);
+    return output.finalize();
+  },
+);
+router.post(
+  '/operations/releases/:releaseName/restore',
+  consume('application/json'),
+  authorize(policies.authenticated, policies.notImplemented),
+  async (context, next) => {
+    const path = context.req.param();
+    const body = await context.req.json();
+    const input = parseOrThrow(operations.restoreReleaseSchema, {
+      releaseName: path.releaseName,
+      projectId: body.projectId,
+      channel: body.channel,
+    });
+    const output = createOutput(context);
+    await operations.restoreRelease(input, output, context.req.raw.signal);
     return output.finalize();
   },
 );

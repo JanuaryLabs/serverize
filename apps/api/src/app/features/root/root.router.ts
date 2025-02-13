@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { authorize } from '#core/identity';
+import { authorize } from '#core/authorize.ts';
 import { type HonoEnv } from '#core/utils.ts';
 import { createOutput } from '#hono';
 import * as root from './root';

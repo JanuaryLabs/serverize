@@ -27,9 +27,6 @@ entryPoints:
               - "*.january.sh"
   tcpsecure:
     address: ":4443"
-    tcp:
-      tls:
-        certResolver: letsencrypt
 
 certificatesResolvers:
   letsencrypt:
