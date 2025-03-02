@@ -1,11 +1,11 @@
-import { Releases } from './Releases';
+import type { Releases } from './releases.ts';
 export interface Volumes {
   release: Releases;
   releaseId: string;
   src: string;
   dest: string;
   id: string;
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: string;
+  updatedAt?: string;
   deletedAt?: Date;
 }

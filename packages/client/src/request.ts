@@ -1,4 +1,3 @@
-import { BodyInit } from 'undici-types'; // for node
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 type ContentType = 'xml' | 'json' | 'urlencoded' | 'multipart';
 type Endpoint = `${ContentType} ${Method} ${string}` | `${Method} ${string}`;

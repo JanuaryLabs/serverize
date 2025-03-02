@@ -1,12 +1,12 @@
-import { Members } from './Members';
-import { OrganizationsMembers } from './OrganizationsMembers';
-import { Preferences } from './Preferences';
-import { Workspaces } from './Workspaces';
+import type { Members } from './members.ts';
+import type { OrganizationsMembers } from './organizations-members.ts';
+import type { Preferences } from './preferences.ts';
+import type { Workspaces } from './workspaces.ts';
 export interface Organizations {
   name: string;
   id: string;
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: string;
+  updatedAt?: string;
   deletedAt?: Date;
   workspaces?: Workspaces[];
   workspacesIds?: null | string[];

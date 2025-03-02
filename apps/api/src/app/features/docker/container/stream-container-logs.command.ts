@@ -1,10 +1,10 @@
 import { docker } from 'serverize/docker';
 import z from 'zod';
-import { orgNameValidator } from '#extensions/zod/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const streamContainerLogsSchema = z.object({
-  projectName: orgNameValidator,
-  channelName: orgNameValidator,
-  releaseName: orgNameValidator,
+  projectName: commonZod.orgNameValidator,
+  channelName: commonZod.orgNameValidator,
+  releaseName: commonZod.orgNameValidator,
   timestamp: z.boolean().default(true).optional(),
   details: z.boolean().default(true).optional(),
   tail: z.number().max(250).default(250).optional(),

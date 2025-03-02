@@ -5,6 +5,7 @@ import {
   createQueryBuilder,
   patchEntity,
 } from '#extensions/postgresql/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const patchReleaseSchema = z.object({
   releaseId: z.string().uuid(),
   status: z.enum(['requested', 'waiting', 'completed']).optional(),

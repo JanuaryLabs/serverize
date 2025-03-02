@@ -5,6 +5,7 @@ import {
   createQueryBuilder,
   removeEntity,
 } from '#extensions/postgresql/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const invalidateOrganizationTokensSchema = z.object({
   organizationId: z.string().uuid(),
 });

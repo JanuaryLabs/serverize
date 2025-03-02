@@ -23,7 +23,7 @@ import {
   tellDiscord,
   usersWebhook,
 } from '#extensions/user/index.ts';
-import { orgNameValidator } from '#extensions/zod/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 
@@ -96,11 +96,11 @@ export default {
       input: (trigger) => ({
         name: {
           select: trigger.body.name,
-          against: orgNameValidator,
+          against: commonZod.orgNameValidator,
         },
         projectName: {
           select: trigger.body.projectName,
-          against: orgNameValidator,
+          against: commonZod.orgNameValidator,
         },
         uid: {
           select: trigger.body.uid,
@@ -207,7 +207,7 @@ export default {
       input: (trigger) => ({
         name: {
           select: trigger.body.name,
-          against: orgNameValidator,
+          against: commonZod.orgNameValidator,
         },
       }),
     }),
@@ -345,11 +345,11 @@ export default {
         },
         orgName: {
           select: trigger.body.orgName,
-          against: orgNameValidator,
+          against: commonZod.orgNameValidator,
         },
         projectName: {
           select: trigger.body.projectName,
-          against: orgNameValidator,
+          against: commonZod.orgNameValidator,
         },
       }),
     }),

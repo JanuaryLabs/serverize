@@ -1,9 +1,10 @@
 import { Hono } from 'hono';
 import { streamText } from 'hono/streaming';
 import z from 'zod';
-import { authorize } from '#core/identity';
+import { authorize } from '#core/authorize.ts';
 import { type HonoEnv } from '#core/utils.ts';
 import { parseOrThrow } from '#core/validation.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 import { createOutput } from '#hono';
 import * as container from './container';
 import * as containers from './containers';

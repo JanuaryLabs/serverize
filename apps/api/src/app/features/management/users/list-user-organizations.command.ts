@@ -7,6 +7,7 @@ import {
   deferredJoinPagination,
   execute,
 } from '#extensions/postgresql/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 
 export async function listUserOrganizations(
   output: trigger.http.output,

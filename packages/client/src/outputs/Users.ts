@@ -1,11 +1,11 @@
-import { Members } from './Members';
-import { Preferences } from './Preferences';
+import type { Members } from './members.ts';
+import type { Preferences } from './preferences.ts';
 export interface Users {
   members?: Members[];
   membersIds?: null | string[];
   id: string;
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: string;
+  updatedAt?: string;
   deletedAt?: Date;
   preference?: Preferences;
   preferenceId?: null | string;

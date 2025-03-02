@@ -19,7 +19,7 @@ import {
   serverizeUrl,
   tellDiscord,
 } from '#extensions/user/index.ts';
-import { channelSchema, orgNameValidator } from '#extensions/zod/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 
 import axios from 'axios';
 
@@ -37,7 +37,7 @@ export default {
       input: (trigger) => ({
         releaseName: {
           select: trigger.body.releaseName,
-          against: orgNameValidator,
+          against: commonZod.orgNameValidator,
         },
         projectId: {
           select: trigger.body.projectId,
@@ -49,7 +49,7 @@ export default {
         },
         channel: {
           select: trigger.body.channel,
-          against: channelSchema,
+          against: commonZod.channelSchema,
         },
         tarLocation: {
           select: trigger.body.tarLocation,
@@ -198,7 +198,7 @@ export default {
       input: (trigger) => ({
         releaseName: {
           select: trigger.path.releaseName,
-          against: orgNameValidator,
+          against: commonZod.orgNameValidator,
         },
         projectId: {
           select: trigger.body.projectId,
@@ -210,7 +210,7 @@ export default {
         },
         channel: {
           select: trigger.body.channel,
-          against: channelSchema,
+          against: commonZod.channelSchema,
         },
         jwt: trigger.headers.Authorization,
       }),
@@ -266,7 +266,7 @@ export default {
       input: (trigger) => ({
         channel: {
           select: trigger.path.channelName,
-          against: channelSchema,
+          against: commonZod.channelSchema,
         },
         projectId: {
           select: trigger.body.projectId,
@@ -323,7 +323,7 @@ export default {
       input: (trigger) => ({
         releaseName: {
           select: trigger.path.releaseName,
-          against: orgNameValidator,
+          against: commonZod.orgNameValidator,
         },
         projectId: {
           select: trigger.body.projectId,
@@ -331,7 +331,7 @@ export default {
         },
         channel: {
           select: trigger.body.channel,
-          against: channelSchema,
+          against: commonZod.channelSchema,
         },
       }),
     }),

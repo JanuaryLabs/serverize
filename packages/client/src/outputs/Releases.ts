@@ -1,6 +1,6 @@
-import { Projects } from './Projects';
-import { Snapshots } from './Snapshots';
-import { Volumes } from './Volumes';
+import type { Projects } from './projects.ts';
+import type { Snapshots } from './snapshots.ts';
+import type { Volumes } from './volumes.ts';
 export interface Releases {
   volumes: Volumes[];
   volumesIds: string[];
@@ -9,6 +9,7 @@ export interface Releases {
   tarLocation?: null | string;
   domainPrefix: string;
   port?: null | number;
+  protocol?: null | 'https' | 'tcp';
   image?: null | string;
   runtimeConfig?: null | string;
   name: string;
@@ -31,8 +32,8 @@ export interface Releases {
     | 'queued'
     | 'waiting';
   id: string;
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: string;
+  updatedAt?: string;
   deletedAt?: Date;
   snapshot: Snapshots;
   snapshotId: string;

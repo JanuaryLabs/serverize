@@ -1,7 +1,6 @@
-import { Organizations } from './Organizations';
-import { Projects } from './Projects';
-import { Users } from './Users';
-import { Workspaces } from './Workspaces';
+import type { Organizations } from './organizations.ts';
+import type { Users } from './users.ts';
+import type { Workspaces } from './workspaces.ts';
 export interface Preferences {
   user?: Users;
   userId?: null | string;
@@ -9,10 +8,8 @@ export interface Preferences {
   organizationId?: null | string;
   workspace?: Workspaces;
   workspaceId?: null | string;
-  project?: Projects;
-  projectId?: null | string;
   id: string;
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: string;
+  updatedAt?: string;
   deletedAt?: Date;
 }

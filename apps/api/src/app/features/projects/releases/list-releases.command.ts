@@ -6,10 +6,10 @@ import {
   deferredJoinPagination,
   execute,
 } from '#extensions/postgresql/index.ts';
-import { channelSchema } from '#extensions/zod/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const listReleasesSchema = z.object({
   projectId: z.string().uuid().optional(),
-  channel: channelSchema.optional(),
+  channel: commonZod.channelSchema.optional(),
   status: z.string().optional(),
   conclusion: z.string().optional(),
   pageSize: z.coerce.number().int().min(1).max(50).default(50).optional(),

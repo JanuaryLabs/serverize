@@ -3,8 +3,10 @@ import z from 'zod';
 import { type IdentitySubject } from '#core/identity/subject.ts';
 import Projects from '#entities/projects.entity.ts';
 import { saveEntity } from '#extensions/postgresql/index.ts';
-import { orgNameValidator } from '#extensions/zod/index.ts';
-export const createProjectSchema = z.object({ name: orgNameValidator });
+import * as commonZod from '#extensions/zod/index.ts';
+export const createProjectSchema = z.object({
+  name: commonZod.orgNameValidator,
+});
 
 export async function createProject(
   input: z.infer<typeof createProjectSchema>,

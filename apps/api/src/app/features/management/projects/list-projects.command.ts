@@ -7,6 +7,7 @@ import {
   deferredJoinPagination,
   execute,
 } from '#extensions/postgresql/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const listProjectsSchema = z.object({
   workspaceId: z.string().uuid().optional(),
   name: z.string().trim().min(1).optional(),

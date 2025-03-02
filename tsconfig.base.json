@@ -16,6 +16,7 @@
     "lib": ["ESNext"],
     "skipLibCheck": true,
     "noEmit": true,
+    "forceConsistentCasingInFileNames": true,
     "skipDefaultLibCheck": true,
     "allowImportingTsExtensions": true,
     "paths": {

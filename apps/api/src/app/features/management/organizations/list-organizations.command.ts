@@ -6,6 +6,7 @@ import {
   deferredJoinPagination,
   execute,
 } from '#extensions/postgresql/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const listOrganizationsSchema = z.object({
   pageSize: z.coerce.number().int().min(1).max(50).default(50).optional(),
   pageNo: z.coerce.number().int().min(1).optional(),

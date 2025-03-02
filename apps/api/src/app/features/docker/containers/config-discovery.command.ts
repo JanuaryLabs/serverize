@@ -2,6 +2,7 @@ import { type trigger } from '@january/declarative';
 import { docker } from 'serverize/docker';
 import z from 'zod';
 import { toTraefikConfig } from '#extensions/user/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 
 export async function configDiscovery(
   output: trigger.http.output,

@@ -18,12 +18,12 @@ import {
   getChannelEnv,
   serverizeUrl,
 } from '#extensions/user/index.ts';
-import { channelSchema, orgNameValidator } from '#extensions/zod/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const startReleaseSchema = z.object({
-  releaseName: orgNameValidator,
+  releaseName: commonZod.orgNameValidator,
   projectId: z.string().uuid(),
   projectName: z.string().trim().min(1),
-  channel: channelSchema,
+  channel: commonZod.channelSchema,
   tarLocation: z.string(),
   runtimeConfig: z.string(),
   port: z.number().optional(),

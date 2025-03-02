@@ -11,6 +11,7 @@ import Preferences from '#entities/preferences.entity.ts';
 import { firebaseApp } from '#extensions/firebase-auth/index.ts';
 import { createQueryBuilder, execute } from '#extensions/postgresql/index.ts';
 import { type Claims } from '#extensions/user/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const signinSchema = z.object({
   token: z.string(),
   providerId: z.enum(['github.com', 'google.com', 'password']),

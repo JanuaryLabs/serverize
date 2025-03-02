@@ -1,4 +1,4 @@
-import { Projects } from './Projects';
+import type { Projects } from './projects.ts';
 export interface Secrets {
   project: Projects;
   projectId: string;
@@ -7,7 +7,7 @@ export interface Secrets {
   nonce: Uint8Array<ArrayBufferLike>;
   secret: Uint8Array<ArrayBufferLike>;
   id: string;
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: string;
+  updatedAt?: string;
   deletedAt?: Date;
 }

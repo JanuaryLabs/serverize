@@ -1,8 +1,8 @@
+import { writeFileSync } from 'fs';
+import { tmpdir } from 'os';
 import Docker, { type Container } from 'dockerode';
 import esbuild from 'esbuild';
 import { nodeExternalsPlugin } from 'esbuild-node-externals';
-import { writeFileSync } from 'fs';
-import { tmpdir } from 'os';
 
 import { join } from 'path';
 import { createRecorder } from 'serverize/utils';
@@ -36,12 +36,12 @@ function build(userCode: string) {
     sourcemap: false,
     minify: false,
     drop: ['debugger', 'console'],
+    packages: 'external',
     keepNames: true,
     // dropLabels: [], staticly list all labels
     format: 'cjs',
     bundle: true,
     target: 'es2022',
-    plugins: [nodeExternalsPlugin()],
   });
 }
 

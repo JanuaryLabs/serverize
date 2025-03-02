@@ -8,8 +8,10 @@ import {
   execute,
   saveEntity,
 } from '#extensions/postgresql/index.ts';
-import { orgNameValidator } from '#extensions/zod/index.ts';
-export const createTokenSchema = z.object({ projectName: orgNameValidator });
+import * as commonZod from '#extensions/zod/index.ts';
+export const createTokenSchema = z.object({
+  projectName: commonZod.orgNameValidator,
+});
 
 export async function createToken(
   input: z.infer<typeof createTokenSchema>,

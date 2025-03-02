@@ -1,9 +1,8 @@
-import { ApiKeys } from './ApiKeys';
-import { Preferences } from './Preferences';
-import { Releases } from './Releases';
-import { Secrets } from './Secrets';
-import { SecretsKeys } from './SecretsKeys';
-import { Workspaces } from './Workspaces';
+import type { ApiKeys } from './api-keys.ts';
+import type { Releases } from './releases.ts';
+import type { SecretsKeys } from './secrets-keys.ts';
+import type { Secrets } from './secrets.ts';
+import type { Workspaces } from './workspaces.ts';
 export interface Projects {
   releases: Releases[];
   releasesIds: string[];
@@ -17,9 +16,7 @@ export interface Projects {
   workspace: Workspaces;
   workspaceId: string;
   id: string;
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: string;
+  updatedAt?: string;
   deletedAt?: Date;
-  preferences?: Preferences[];
-  preferencesIds?: null | string[];
 }

@@ -16,7 +16,7 @@ import {
   getChannelEnv,
   getProjectKey,
 } from '#extensions/user/index.ts';
-import { channelSchema, orgNameValidator } from '#extensions/zod/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 
@@ -34,7 +34,7 @@ export default {
       input: (trigger) => ({
         projectName: {
           select: trigger.body.projectName,
-          against: orgNameValidator,
+          against: commonZod.orgNameValidator,
         },
       }),
     }),
@@ -166,7 +166,7 @@ export default {
       input: (trigger) => ({
         releaseName: {
           select: trigger.body.releaseName,
-          against: orgNameValidator,
+          against: commonZod.orgNameValidator,
         },
         projectId: {
           select: trigger.body.projectId,
@@ -174,7 +174,7 @@ export default {
         },
         channel: {
           select: trigger.body.channel,
-          against: channelSchema,
+          against: commonZod.channelSchema,
         },
       }),
     }),
@@ -349,7 +349,7 @@ export default {
         },
         channel: {
           select: trigger.query.channel,
-          against: channelSchema.optional(),
+          against: commonZod.channelSchema.optional(),
         },
         status: {
           select: trigger.query.status,
@@ -418,7 +418,7 @@ export default {
         },
         channel: {
           select: trigger.body.channel,
-          against: channelSchema,
+          against: commonZod.channelSchema,
         },
         secretLabel: {
           select: trigger.body.secretLabel,
@@ -462,7 +462,7 @@ export default {
         },
         channel: {
           select: trigger.query.channel,
-          against: channelSchema,
+          against: commonZod.channelSchema,
         },
       }),
     }),
@@ -512,7 +512,7 @@ export default {
         },
         channel: {
           select: trigger.query.channel,
-          against: channelSchema,
+          against: commonZod.channelSchema,
         },
       }),
     }),

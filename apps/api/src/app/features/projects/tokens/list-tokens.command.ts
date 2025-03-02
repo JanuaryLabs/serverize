@@ -4,6 +4,7 @@ import z from 'zod';
 import ApiKeys from '#entities/api-keys.entity.ts';
 import Projects from '#entities/projects.entity.ts';
 import { createQueryBuilder, execute } from '#extensions/postgresql/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const listTokensSchema = z.object({ projectName: z.string() });
 
 export async function listTokens(

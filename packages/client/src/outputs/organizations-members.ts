@@ -1,12 +1,12 @@
-import { Members } from './Members';
-import { Organizations } from './Organizations';
+import type { Members } from './members.ts';
+import type { Organizations } from './organizations.ts';
 export interface OrganizationsMembers {
   organization?: Organizations;
   organizationId?: null | string;
   member?: Members;
   memberId?: null | string;
   id: string;
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: string;
+  updatedAt?: string;
   deletedAt?: Date;
 }

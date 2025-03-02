@@ -9,10 +9,10 @@ import {
   tellDiscord,
   usersWebhook,
 } from '#extensions/user/index.ts';
-import { orgNameValidator } from '#extensions/zod/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const createDefaultOrganizationSchema = z.object({
-  name: orgNameValidator,
-  projectName: orgNameValidator,
+  name: commonZod.orgNameValidator,
+  projectName: commonZod.orgNameValidator,
   uid: z.string().trim().min(1),
 });
 

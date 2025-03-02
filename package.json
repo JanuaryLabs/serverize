@@ -7,7 +7,7 @@
     "generate": "node --experimental-transform-types tools/january.config.ts",
     "generate:watch": "node --experimental-transform-types --watch-path apps/api/src/january --watch-path tools tools/january.config.ts",
     "openai": "node ./tools/openapi.js # this should generate openapi.json",
-    "client": "node --experimental-transform-types ./tools/client.ts # this should take openapi.json and generate client code",
+    "client": "bun ./tools/client.ts # this should take openapi.json and generate client code",
     "dev": "npx concurrently -k -p \"[{name}]\" -n \"server,build\" -c \"blue.bold,green.bold\" \"npm run start:watch\" \"npm run generate:watch\"",
     "prepare": "husky"
   },
@@ -21,10 +21,10 @@
     "@biomejs/biome": "1.9.4",
     "@expressive-code/plugin-collapsible-sections": "^0.37.1",
     "@expressive-code/plugin-line-numbers": "^0.37.1",
-    "@january/canary": "https://github.com/JanuaryLabs/dist/raw/main/canary.tar.gz?v=1.1.13",
-    "@january/declarative": "https://github.com/JanuaryLabs/dist/raw/main/declarative.tar.gz?v=1.1.13",
-    "@january/extensions": "https://github.com/JanuaryLabs/dist/raw/main/extensions.tar.gz?v=1.1.13",
-    "@january/openapi": "https://github.com/JanuaryLabs/dist/raw/main/openapi.tar.gz?v=1.1.13",
+    "@january/canary": "https://github.com/JanuaryLabs/dist/raw/main/canary.tar.gz?v=1.1.14",
+    "@january/declarative": "https://github.com/JanuaryLabs/dist/raw/main/declarative.tar.gz?v=1.1.14",
+    "@january/extensions": "https://github.com/JanuaryLabs/dist/raw/main/extensions.tar.gz?v=1.1.14",
+    "@january/openapi": "https://github.com/JanuaryLabs/dist/raw/main/openapi.tar.gz?v=1.1.14",
     "@nx/esbuild": "^20.3.0",
     "@nx/js": "20.3.0",
     "@shikijs/rehype": "^1.22.1",
@@ -44,7 +44,7 @@
     "@types/tar-stream": "^3.1.3",
     "astro": "^4.3.5",
     "dprint": "^0.48.0",
-    "esbuild": "^0.19.2",
+    "esbuild": "^0.25.0",
     "husky": "^9.1.7",
     "nx": "20.3.0",
     "prettier": "^3.4.2",
@@ -69,11 +69,11 @@
     "@fontsource/roboto": "^5.1.0",
     "@heroicons/react": "^2.1.5",
     "@inquirer/prompts": "^7.2.1",
-    "@january/bundler": "https://github.com/JanuaryLabs/dist/raw/main/bundler.tar.gz?v=1.1.13",
-    "@january/console": "https://github.com/JanuaryLabs/dist/raw/main/console.tar.gz?v=1.1.13",
-    "@january/evaluator": "https://github.com/JanuaryLabs/dist/raw/main/evaluator.tar.gz?v=1.1.13",
-    "@january/parser": "https://github.com/JanuaryLabs/dist/raw/main/parser.tar.gz?v=1.1.13",
-    "@january/generator": "https://github.com/JanuaryLabs/dist/raw/main/generator.tar.gz?v=1.1.13",
+    "@january/bundler": "https://github.com/JanuaryLabs/dist/raw/main/bundler.tar.gz?v=1.1.14",
+    "@january/console": "https://github.com/JanuaryLabs/dist/raw/main/console.tar.gz?v=1.1.14",
+    "@january/evaluator": "https://github.com/JanuaryLabs/dist/raw/main/evaluator.tar.gz?v=1.1.14",
+    "@january/parser": "https://github.com/JanuaryLabs/dist/raw/main/parser.tar.gz?v=1.1.14",
+    "@january/generator": "https://github.com/JanuaryLabs/dist/raw/main/generator.tar.gz?v=1.1.14",
     "@mdx-js/mdx": "^3.1.0",
     "@nanostores/react": "^0.8.0",
     "@octokit/core": "^6.1.2",
@@ -117,7 +117,6 @@
     "dockerfile-ast": "^0.7.0",
     "dockerode": "^4.0.2",
     "dom-parser": "^1.1.5",
-    "esbuild-node-externals": "^1.16.0",
     "eventsource": "^3.0.2",
     "execa": "^9.5.2",
     "express": "^4.21.2",
@@ -166,5 +165,8 @@
     "*": [
       "biome check --no-errors-on-unmatched --files-ignore-unknown=true --write"
     ]
+  },
+  "overrides": {
+    "esbuild": "^0.25.0"
   }
 }

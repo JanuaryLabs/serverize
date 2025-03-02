@@ -6,11 +6,11 @@ import {
   execute,
   saveEntity,
 } from '#extensions/postgresql/index.ts';
-import { channelSchema, orgNameValidator } from '#extensions/zod/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const createReleaseSchema = z.object({
-  releaseName: orgNameValidator,
+  releaseName: commonZod.orgNameValidator,
   projectId: z.string().uuid(),
-  channel: channelSchema,
+  channel: commonZod.channelSchema,
 });
 
 export async function createRelease(

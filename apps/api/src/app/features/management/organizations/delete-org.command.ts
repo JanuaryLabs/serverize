@@ -5,6 +5,7 @@ import {
   createQueryBuilder,
   removeEntity,
 } from '#extensions/postgresql/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const deleteOrgSchema = z.object({ id: z.string().uuid() });
 
 export async function deleteOrg(

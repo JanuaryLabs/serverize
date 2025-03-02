@@ -5,6 +5,7 @@ import {
   createQueryBuilder,
   patchEntity,
 } from '#extensions/postgresql/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const patchProjectSchema = z.object({
   id: z.string().uuid(),
   name: z.string().trim().min(1),

@@ -1,10 +1,10 @@
 import { type trigger } from '@january/declarative';
 import z from 'zod';
 import { getChannelEnv } from '#extensions/user/index.ts';
-import { channelSchema } from '#extensions/zod/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const getSecretsValuesSchema = z.object({
   projectId: z.string().uuid(),
-  channel: channelSchema,
+  channel: commonZod.channelSchema,
 });
 
 export async function getSecretsValues(

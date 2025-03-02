@@ -4,9 +4,9 @@ import z from 'zod';
 import Releases from '#entities/releases.entity.ts';
 import { createQueryBuilder, execute } from '#extensions/postgresql/index.ts';
 import { serverizeUrl } from '#extensions/user/index.ts';
-import { channelSchema } from '#extensions/zod/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const restartChannelSchema = z.object({
-  channel: channelSchema,
+  channel: commonZod.channelSchema,
   projectId: z.string().uuid(),
   projectName: z.string().trim().min(1),
   jwt: z.any(),

@@ -8,6 +8,7 @@ import {
   patchEntity,
   useTransaction,
 } from '#extensions/postgresql/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const completeReleaseSchema = z.object({
   releaseId: z.string().uuid(),
   conclusion: z.enum(['success', 'failure']),

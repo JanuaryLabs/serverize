@@ -1,5 +1,5 @@
 import z from 'zod';
-import { orgNameValidator } from '#extensions/zod/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 
 import { docker } from 'serverize/docker';
 
@@ -15,15 +15,15 @@ export default {
       input: (trigger) => ({
         projectName: {
           select: trigger.query.projectName,
-          against: orgNameValidator,
+          against: commonZod.orgNameValidator,
         },
         channelName: {
           select: trigger.query.channelName,
-          against: orgNameValidator,
+          against: commonZod.orgNameValidator,
         },
         releaseName: {
           select: trigger.query.releaseName,
-          against: orgNameValidator,
+          against: commonZod.orgNameValidator,
         },
         timestamp: {
           select: trigger.query.timestamp,

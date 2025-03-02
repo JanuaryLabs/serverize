@@ -1,10 +1,10 @@
-import { Projects } from './Projects';
+import type { Projects } from './projects.ts';
 export interface SecretsKeys {
   project: Projects;
   projectId: string;
   key: Uint8Array<ArrayBufferLike>;
   id: string;
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: string;
+  updatedAt?: string;
   deletedAt?: Date;
 }

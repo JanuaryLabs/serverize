@@ -5,6 +5,7 @@ import z from 'zod';
 import ApiKeys from '#entities/api-keys.entity.ts';
 import { firebaseApp } from '#extensions/firebase-auth/index.ts';
 import { createQueryBuilder, execute } from '#extensions/postgresql/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const exchangeTokenSchema = z.object({ token: z.string() });
 
 export async function exchangeToken(

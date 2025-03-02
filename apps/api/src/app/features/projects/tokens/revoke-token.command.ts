@@ -8,6 +8,7 @@ import {
   execute,
   removeEntity,
 } from '#extensions/postgresql/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const revokeTokenSchema = z.object({
   projectName: z.string(),
   token: z.string(),

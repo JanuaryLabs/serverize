@@ -1,8 +1,10 @@
 import { Hono } from 'hono';
 import z from 'zod';
-import { authorize, policies } from '#core/identity';
+import { authorize } from '#core/authorize.ts';
+import { policies } from '#core/identity';
 import { type HonoEnv } from '#core/utils.ts';
 import { parseOrThrow } from '#core/validation.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 import { consume, createOutput } from '#hono';
 import * as releases from './releases';
 import * as secrets from './secrets';

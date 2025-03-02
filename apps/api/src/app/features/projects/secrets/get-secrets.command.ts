@@ -2,10 +2,10 @@ import { type trigger } from '@january/declarative';
 import z from 'zod';
 import Secrets from '#entities/secrets.entity.ts';
 import { createQueryBuilder, execute } from '#extensions/postgresql/index.ts';
-import { channelSchema } from '#extensions/zod/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const getSecretsSchema = z.object({
   projectId: z.string().uuid(),
-  channel: channelSchema,
+  channel: commonZod.channelSchema,
 });
 
 export async function getSecrets(

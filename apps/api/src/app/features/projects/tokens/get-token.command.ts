@@ -3,6 +3,7 @@ import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
 import ApiKeys from '#entities/api-keys.entity.ts';
 import { createQueryBuilder, execute } from '#extensions/postgresql/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const getTokenSchema = z.object({ token: z.string() });
 
 export async function getToken(

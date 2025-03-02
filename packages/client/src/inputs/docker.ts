@@ -1,9 +1,9 @@
 import z from 'zod';
-import { channelSchema, orgNameValidator } from '../zod';
+import * as commonZod from '../zod';
 export const streamContainerLogsSchema = z.object({
-  projectName: orgNameValidator,
-  channelName: orgNameValidator,
-  releaseName: orgNameValidator,
+  projectName: commonZod.orgNameValidator,
+  channelName: commonZod.orgNameValidator,
+  releaseName: commonZod.orgNameValidator,
   timestamp: z.boolean().default(true).optional(),
   details: z.boolean().default(true).optional(),
   tail: z.number().max(250).default(250).optional(),

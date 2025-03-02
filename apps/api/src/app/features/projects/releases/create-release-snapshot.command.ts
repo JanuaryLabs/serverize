@@ -2,6 +2,7 @@ import { type trigger } from '@january/declarative';
 import z from 'zod';
 import Snapshots from '#entities/snapshots.entity.ts';
 import { saveEntity } from '#extensions/postgresql/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const createReleaseSnapshotSchema = z.object({
   releaseId: z.string().uuid(),
   name: z.string().trim().min(1),

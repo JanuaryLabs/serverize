@@ -10,12 +10,12 @@ import z from 'zod';
 import { firebaseApp } from '#extensions/firebase-auth/index.ts';
 import { createDefaultOrg } from '#extensions/user/index.ts';
 import { type Claims } from '#extensions/user/index.ts';
-import { orgNameValidator } from '#extensions/zod/index.ts';
+import * as commonZod from '#extensions/zod/index.ts';
 export const linkUserSchema = z.object({
   token: z.string(),
   providerId: z.enum(['github.com', 'google.com', 'password']),
-  orgName: orgNameValidator,
-  projectName: orgNameValidator,
+  orgName: commonZod.orgNameValidator,
+  projectName: commonZod.orgNameValidator,
 });
 
 export async function linkUser(
