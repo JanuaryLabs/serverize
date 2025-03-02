@@ -5,7 +5,7 @@ import {
   getAuth,
 } from 'firebase-admin/auth';
 import { type IResult } from 'ua-parser-js';
-import { UnauthorizedException } from '#core/authorize.ts';
+import { UnauthorizedException } from '#core/exceptions.ts';
 import { firebaseApp } from './firebase';
 
 export interface ClientInfo {
@@ -34,16 +34,13 @@ function isBearerToken(
   return true;
 }
 
-export async function verifyToken(
-  token: string | null | undefined,
-): Promise<boolean> {
+export async function verifyToken(token: string | null | undefined) {
   if (!isBearerToken(token)) {
     throw new UnauthorizedException();
   }
 
   try {
-    await auth.verifyIdToken(token.replace('Bearer ', ''));
-    return true;
+    return await auth.verifyIdToken(token.replace('Bearer ', ''));
   } catch (error) {
     if (error instanceof FirebaseAuthError) {
       if (error.hasCode(AuthClientErrorCode.ID_TOKEN_EXPIRED.code)) {

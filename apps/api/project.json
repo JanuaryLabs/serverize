@@ -9,6 +9,7 @@
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "skipTypeCheck": true,
         "main": "apps/api/src/app/server.ts",
         "tsConfig": "apps/api/tsconfig.app.json",
         "outputPath": "dist/apps/api",

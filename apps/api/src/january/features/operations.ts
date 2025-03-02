@@ -1,5 +1,5 @@
 import z from 'zod';
-import { policies } from '#core/identity';
+import policies from '#core/policies.ts';
 import { tables } from '#entities';
 import {
   createQueryBuilder,
@@ -197,7 +197,7 @@ export default {
       policies: [policies.authenticated],
       input: (trigger) => ({
         releaseName: {
-          select: trigger.path.releaseName,
+          select: trigger.params.releaseName,
           against: commonZod.orgNameValidator,
         },
         projectId: {
@@ -265,7 +265,7 @@ export default {
       policies: [policies.authenticated],
       input: (trigger) => ({
         channel: {
-          select: trigger.path.channelName,
+          select: trigger.params.channelName,
           against: commonZod.channelSchema,
         },
         projectId: {
@@ -322,7 +322,7 @@ export default {
       path: '/releases/:releaseName',
       input: (trigger) => ({
         releaseName: {
-          select: trigger.path.releaseName,
+          select: trigger.params.releaseName,
           against: commonZod.orgNameValidator,
         },
         projectId: {
@@ -385,7 +385,7 @@ export default {
       policies: [policies.authenticated, policies.notImplemented],
       input: (trigger) => ({
         releaseName: {
-          select: trigger.path.releaseName,
+          select: trigger.params.releaseName,
           against: commonZod.orgNameValidator,
         },
         projectId: {

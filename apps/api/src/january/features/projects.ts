@@ -1,5 +1,5 @@
 import z from 'zod';
-import { policies } from '#core/identity';
+import policies from '#core/policies.ts';
 import { tables } from '#entities';
 import {
   createQueryBuilder,
@@ -137,7 +137,7 @@ export default {
       path: '/:token',
       input: (trigger) => ({
         token: {
-          select: trigger.path.token,
+          select: trigger.params.token,
           against: z.string(),
         },
       }),
@@ -192,7 +192,7 @@ export default {
         //
       }
 
-      let { id } = await saveEntity(tables.releases, {
+      const { id } = await saveEntity(tables.releases, {
         projectId: input.projectId,
         status: 'in_progress',
         channel: input.channel,
@@ -208,7 +208,7 @@ export default {
       path: '/complete/:releaseId',
       input: (trigger) => ({
         releaseId: {
-          select: trigger.path.releaseId,
+          select: trigger.params.releaseId,
           against: z.string().uuid(),
         },
         conclusion: {
@@ -281,7 +281,7 @@ export default {
       path: '/:releaseId',
       input: (trigger) => ({
         releaseId: {
-          select: trigger.path.releaseId,
+          select: trigger.params.releaseId,
           against: z.string().uuid(),
         },
         status: {
@@ -320,7 +320,7 @@ export default {
       method: 'post',
       input: (trigger) => ({
         releaseId: {
-          select: trigger.path.releaseId,
+          select: trigger.params.releaseId,
           against: z.string().uuid(),
         },
         name: {
@@ -486,7 +486,7 @@ export default {
       path: '/:id',
       input: (trigger) => ({
         id: {
-          select: trigger.path.id,
+          select: trigger.params.id,
           against: z.string().uuid(),
         },
       }),
@@ -570,7 +570,7 @@ export default {
       policies: [policies.authenticated],
       input: (trigger) => ({
         organizationId: {
-          select: trigger.path.organizationId,
+          select: trigger.params.organizationId,
           against: z.string().uuid(),
         },
       }),

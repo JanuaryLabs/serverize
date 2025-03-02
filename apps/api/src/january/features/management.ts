@@ -5,7 +5,7 @@ import {
   getAuth,
 } from 'firebase-admin/auth';
 import z from 'zod';
-import { policies } from '#core/identity';
+import policies from '#core/policies.ts';
 import { tables } from '#entities';
 import { firebaseApp } from '#extensions/firebase-auth/index.ts';
 import {
@@ -38,7 +38,7 @@ export default {
       policies: [policies.adminOnly],
       input: (trigger) => ({
         id: {
-          select: trigger.path.id,
+          select: trigger.params.id,
           against: z.string().uuid(),
         },
       }),
@@ -230,7 +230,7 @@ export default {
       policies: [policies.notImplemented],
       input: (trigger) => ({
         id: {
-          select: trigger.path.id,
+          select: trigger.params.id,
           against: z.string().uuid(),
         },
         name: {
@@ -304,7 +304,7 @@ export default {
       });
     },
   }),
-  ListUserOrganizations: workflow({
+  listUserOrganizations: workflow({
     tag: 'users',
     trigger: trigger.http({
       policies: [policies.authenticated],

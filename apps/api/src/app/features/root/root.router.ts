@@ -1,22 +1,13 @@
 import { Hono } from 'hono';
-import { authorize } from '#core/authorize.ts';
 import { type HonoEnv } from '#core/utils.ts';
-import { createOutput } from '#hono';
-import * as root from './root';
 const router = new Hono<HonoEnv>();
-router.get('/favicon.ico', authorize(), async (context, next) => {
-  const output = createOutput(context);
-  await root.emptyFavicon(output, context.req.raw.signal);
-  return output.finalize();
-});
-router.get('/', authorize(), async (context, next) => {
-  const output = createOutput(context);
-  await root.sayHi(output, context.req.raw.signal);
-  return output.finalize();
-});
-router.get('/health', authorize(), async (context, next) => {
-  const output = createOutput(context);
-  await root.healthCheck(output, context.req.raw.signal);
-  return output.finalize();
-});
+
+for await (const route of [
+  import('./empty-favicon.route.ts'),
+  import('./say-hi.route.ts'),
+  import('./health-check.route.ts'),
+]) {
+  route.default(router);
+}
+
 export default ['/', router] as const;
