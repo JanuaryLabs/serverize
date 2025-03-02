@@ -31,7 +31,7 @@ export async function restartChannel(
       }),
   );
 
-  let traces: string[] = [];
+  const traces: string[] = [];
   for (const release of releases) {
     const traceId = crypto.randomUUID();
     await axios.post(

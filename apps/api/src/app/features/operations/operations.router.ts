@@ -88,4 +88,21 @@ router.delete(
     return output.finalize();
   },
 );
+router.post(
+  '/operations/releases/:releaseName/restore',
+  consume('application/json'),
+  authorize(policies.authenticated, policies.notImplemented),
+  async (context, next) => {
+    const path = context.req.param();
+    const body = await context.req.json();
+    const input = parseOrThrow(operations.restoreReleaseSchema, {
+      releaseName: path.releaseName,
+      projectId: body.projectId,
+      channel: body.channel,
+    });
+    const output = createOutput(context);
+    await operations.restoreRelease(input, output, context.req.raw.signal);
+    return output.finalize();
+  },
+);
 export default ['/', router] as const;

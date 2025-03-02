@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/january/**/*.ts", "../../references.d.ts", "ext.d.ts"],
+  "include": ["src/january/**/*.ts", "references.d.ts"],
   "exclude": [],
   "compilerOptions": {
     "jsx": "preserve",
