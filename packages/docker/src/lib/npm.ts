@@ -108,7 +108,6 @@ export async function installPackage(sourceData: SourceData) {
         'request-ip': '^3.3.0',
         'rfc-7807-problem-details': '^1.1.0',
         'lodash-es': '^4.17.21',
-        'http-status-codes': '2.2.0',
         hono: '^4.4.0',
         '@hono/node-server': '^1.11.1',
         '@scalar/hono-api-reference': '^0.5.145',

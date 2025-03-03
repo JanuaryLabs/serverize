@@ -1,10 +1,9 @@
 import { createServer } from 'http';
 import { tmpdir } from 'os';
-import { Releases } from '@serverize/client';
+import type { Releases } from '@serverize/client';
 // import sse from 'better-sse';
 import cors from 'cors';
 import express from 'express';
-import { StatusCodes } from 'http-status-codes';
 import morgan from 'morgan';
 import { WebSocketServer } from 'ws';
 
@@ -13,7 +12,6 @@ import {
   ProblemDetailsException,
   problemDetailsMiddleware,
 } from 'rfc-7807-problem-details';
-import { getContainer, removeContainer } from 'serverize/docker';
 import { observeFile } from './file';
 import { startServer } from './start';
 
@@ -48,7 +46,7 @@ const application = express()
 
       const token = req.header('Authorization');
       if (!token) {
-        res.status(StatusCodes.UNAUTHORIZED).send();
+        res.status(401).send();
         return;
       }
 
@@ -103,7 +101,7 @@ const application = express()
 
       const token = req.header('Authorization');
       if (!token) {
-        res.status(StatusCodes.UNAUTHORIZED).send();
+        res.status(401).send();
         return;
       }
 
@@ -179,8 +177,8 @@ application
     // Not found handler
     if (!res.headersSent) {
       throw new ProblemDetailsException({
-        status: StatusCodes.NOT_FOUND,
-        type: `${StatusCodes.NOT_FOUND}`,
+        status: 404,
+        type: `${404}`,
         detail: "The requested resource couldn't be found.",
       });
     }
@@ -192,11 +190,11 @@ application
       if (process.env['NODE_ENV'] === 'development') {
         options.rethrow(Error);
       }
-      options.mapToStatusCode(Error, StatusCodes.INTERNAL_SERVER_ERROR);
+      options.mapToStatusCode(Error, 500);
     }),
   );
 
-const port = parseInt(process.env.PORT || '3100', 10);
+const port = Number.parseInt(process.env.PORT || '3100', 10);
 const server = createServer(application);
 
 const wss = new WebSocketServer({ server });

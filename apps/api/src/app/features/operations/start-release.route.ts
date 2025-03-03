@@ -7,6 +7,7 @@ import { validate } from '#core/validator.ts';
 import Projects from '#entities/projects.entity.ts';
 import Releases from '#entities/releases.entity.ts';
 import Volumes from '#entities/volumes.entity.ts';
+import { consume } from '#extensions/hono/consume.ts';
 import {
   createQueryBuilder,
   execute,
@@ -22,7 +23,6 @@ import {
   serverizeUrl,
 } from '#extensions/user/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
-import { consume, createOutput } from '#hono';
 
 export default async function (router: Hono<HonoEnv>) {
   router.post(
@@ -70,7 +70,6 @@ export default async function (router: Hono<HonoEnv>) {
     })),
     async (context, next) => {
       const { input } = context.var;
-      const output = createOutput(context);
       const traceId = crypto.randomUUID();
       const getOrgIdQb = createQueryBuilder(Projects, 'projects')
         .innerJoinAndSelect('projects.workspace', 'workspace')

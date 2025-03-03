@@ -6,6 +6,8 @@ import policies from '#core/policies.ts';
 import { type HonoEnv } from '#core/utils.ts';
 import { validate } from '#core/validator.ts';
 import { firebaseApp } from '#extensions/firebase-auth/index.ts';
+import { consume } from '#extensions/hono/consume.ts';
+import output from '#extensions/hono/output.ts';
 import {
   createDefaultOrg,
   setUserClaims,
@@ -13,7 +15,6 @@ import {
   usersWebhook,
 } from '#extensions/user/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
-import { consume, createOutput } from '#hono';
 
 export default async function (router: Hono<HonoEnv>) {
   router.post(
@@ -29,7 +30,6 @@ export default async function (router: Hono<HonoEnv>) {
     })),
     async (context, next) => {
       const { input } = context.var;
-      const output = createOutput(context);
       try {
         const data = await createDefaultOrg({
           uid: input.uid,

@@ -4,6 +4,7 @@ import { docker } from 'serverize/docker';
 import z from 'zod';
 import { type HonoEnv } from '#core/utils.ts';
 import { validate } from '#core/validator.ts';
+import output from '#extensions/hono/output.ts';
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
@@ -36,10 +37,9 @@ export default async function (router: Hono<HonoEnv>) {
       },
     })),
     async (context, next) => {
-      const { input, signal } = context.var;
+      const { input } = context.var;
       const signal = context.req.raw.signal;
       return streamText(context, async (stream) => {
-        const output = stream;
         const containers = await docker.listContainers({
           all: true,
           filters: {
@@ -68,7 +68,7 @@ export default async function (router: Hono<HonoEnv>) {
           abortSignal: signal,
         });
         for await (const chunk of logsStream) {
-          await output.write(chunk);
+          await stream.write(chunk);
         }
       });
     },

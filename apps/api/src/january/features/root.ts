@@ -1,6 +1,7 @@
+import output from '#extensions/hono/output.ts';
 import { dataSource } from '#extensions/postgresql/index.ts';
 
-import { feature, trigger, workflow } from '@january/declarative';
+import { trigger, workflow } from '@january/declarative';
 
 export default {
   EmptyFavicon: workflow({
@@ -9,7 +10,7 @@ export default {
       method: 'get',
       path: '/favicon.ico',
     }),
-    execute: async ({ output }) => {
+    execute: async () => {
       return output.ok();
     },
   }),

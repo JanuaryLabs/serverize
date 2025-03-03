@@ -4,9 +4,10 @@ import policies from '#core/policies.ts';
 import { type HonoEnv } from '#core/utils.ts';
 import { validate } from '#core/validator.ts';
 import Projects from '#entities/projects.entity.ts';
+import { consume } from '#extensions/hono/consume.ts';
+import output from '#extensions/hono/output.ts';
 import { saveEntity } from '#extensions/postgresql/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
-import { consume, createOutput } from '#hono';
 
 export default async function (router: Hono<HonoEnv>) {
   router.post(
@@ -18,7 +19,7 @@ export default async function (router: Hono<HonoEnv>) {
     })),
     async (context, next) => {
       const { input, subject } = context.var;
-      const output = createOutput(context); // FIXME: workspaceId should come from the body
+      // FIXME: workspaceId should come from the body
       // user should select in what workspace the project should be created
       // there's no use of it in the claims.
       // IMPORTANT: at the moment project can be created without workspaceId (floating project) must be fixed

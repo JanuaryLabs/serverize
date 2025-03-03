@@ -12,10 +12,11 @@ import { type HonoEnv } from '#core/utils.ts';
 import { validate } from '#core/validator.ts';
 import Preferences from '#entities/preferences.entity.ts';
 import { firebaseApp } from '#extensions/firebase-auth/index.ts';
+import { consume } from '#extensions/hono/consume.ts';
+import output from '#extensions/hono/output.ts';
 import { createQueryBuilder, execute } from '#extensions/postgresql/index.ts';
 import { type Claims } from '#extensions/user/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
-import { consume, createOutput } from '#hono';
 
 export default async function (router: Hono<HonoEnv>) {
   router.post(
@@ -34,7 +35,6 @@ export default async function (router: Hono<HonoEnv>) {
     })),
     async (context, next) => {
       const { input } = context.var;
-      const output = createOutput(context);
       const auth = getAuth(firebaseApp);
       const octokit = new Octokit({
         auth: input.token,

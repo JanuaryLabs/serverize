@@ -14,7 +14,6 @@ import {
   useTransaction,
 } from '#extensions/postgresql/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
-import { createOutput } from '#hono';
 
 export default async function (router: Hono<HonoEnv>) {
   router.delete(
@@ -32,7 +31,6 @@ export default async function (router: Hono<HonoEnv>) {
     })),
     async (context, next) => {
       const { input } = context.var;
-      const output = createOutput(context);
       await useTransaction(async () => {
         const release = await createQueryBuilder(Releases, 'releases')
           .where('releases.name = :name', { name: input.releaseName })

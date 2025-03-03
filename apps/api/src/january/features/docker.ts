@@ -1,4 +1,5 @@
 import z from 'zod';
+import output from '#extensions/hono/output.ts';
 import * as commonZod from '#extensions/zod/index.ts';
 
 import { docker } from 'serverize/docker';
@@ -39,7 +40,7 @@ export default {
         },
       }),
     }),
-    execute: async ({ input, signal, output }) => {
+    execute: async ({ input, signal }) => {
       const containers = await docker.listContainers({
         all: true,
         filters: {
@@ -67,13 +68,10 @@ export default {
         tail: input.tail,
         abortSignal: signal,
       });
-      for await (const chunk of logsStream) {
-        await output.write(chunk);
-      }
-      // return output.stream(logsStream);
+
       // docker.modem.demuxStream(logsStream, stdout, stderr);
       // return concatStreams(stdout, stderr);
-      // return logsStream;
+      return logsStream;
     },
   }),
   ConfigDiscovery: workflow({

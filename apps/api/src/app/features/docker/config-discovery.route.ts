@@ -2,14 +2,13 @@ import { Hono } from 'hono';
 import { docker } from 'serverize/docker';
 import z from 'zod';
 import { type HonoEnv } from '#core/utils.ts';
+import output from '#extensions/hono/output.ts';
 import { toTraefikConfig } from '#extensions/user/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
-import { createOutput } from '#hono';
 
 export default async function (router: Hono<HonoEnv>) {
   router.get('/containers/discovery', async (context, next) => {
-    const {} = context.var;
-    const output = createOutput(context); // const qb = createQueryBuilder(tables.releases, 'releases')
+    // const qb = createQueryBuilder(tables.releases, 'releases')
     //   .select(['releases.port', 'releases.domainPrefix'])
     //   .where('releases.status = :status', { status: 'completed' })
     //   .andWhere('releases.conclusion = :conclusion', {

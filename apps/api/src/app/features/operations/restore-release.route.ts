@@ -7,13 +7,13 @@ import { type HonoEnv } from '#core/utils.ts';
 import { validate } from '#core/validator.ts';
 import Releases from '#entities/releases.entity.ts';
 import Volumes from '#entities/volumes.entity.ts';
+import { consume } from '#extensions/hono/consume.ts';
 import {
   createQueryBuilder,
   execute,
   useTransaction,
 } from '#extensions/postgresql/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
-import { consume, createOutput } from '#hono';
 
 export default async function (router: Hono<HonoEnv>) {
   router.post(
@@ -34,7 +34,6 @@ export default async function (router: Hono<HonoEnv>) {
     })),
     async (context, next) => {
       const { input } = context.var;
-      const output = createOutput(context);
       await useTransaction(async () => {
         const releaseQb = createQueryBuilder(Releases, 'releases')
           .withDeleted()

@@ -6,13 +6,14 @@ import { type HonoEnv } from '#core/utils.ts';
 import { validate } from '#core/validator.ts';
 import ApiKeys from '#entities/api-keys.entity.ts';
 import Projects from '#entities/projects.entity.ts';
+import { consume } from '#extensions/hono/consume.ts';
+import output from '#extensions/hono/output.ts';
 import {
   createQueryBuilder,
   execute,
   saveEntity,
 } from '#extensions/postgresql/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
-import { consume, createOutput } from '#hono';
 
 export default async function (router: Hono<HonoEnv>) {
   router.post(
@@ -27,7 +28,6 @@ export default async function (router: Hono<HonoEnv>) {
     })),
     async (context, next) => {
       const { input } = context.var;
-      const output = createOutput(context);
       const qb = createQueryBuilder(Projects, 'projects')
         .where('projects.name = :name', { name: input.projectName })
         .select(['projects.id']);

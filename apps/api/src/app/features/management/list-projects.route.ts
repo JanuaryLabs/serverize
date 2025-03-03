@@ -4,13 +4,13 @@ import policies from '#core/policies.ts';
 import { type HonoEnv } from '#core/utils.ts';
 import { validate } from '#core/validator.ts';
 import Projects from '#entities/projects.entity.ts';
+import output from '#extensions/hono/output.ts';
 import {
   createQueryBuilder,
   deferredJoinPagination,
   execute,
 } from '#extensions/postgresql/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
-import { createOutput } from '#hono';
 
 export default async function (router: Hono<HonoEnv>) {
   router.get(
@@ -36,7 +36,6 @@ export default async function (router: Hono<HonoEnv>) {
     })),
     async (context, next) => {
       const { input, subject } = context.var;
-      const output = createOutput(context);
       const qb = createQueryBuilder(Projects, 'projects').where(
         'projects.workspaceId = :workspaceId',
         { workspaceId: subject.claims.workspaceId },

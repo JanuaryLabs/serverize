@@ -4,12 +4,12 @@ import policies from '#core/policies.ts';
 import { type HonoEnv } from '#core/utils.ts';
 import { validate } from '#core/validator.ts';
 import ApiKeys from '#entities/api-keys.entity.ts';
+import output from '#extensions/hono/output.ts';
 import {
   createQueryBuilder,
   removeEntity,
 } from '#extensions/postgresql/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
-import { createOutput } from '#hono';
 
 export default async function (router: Hono<HonoEnv>) {
   router.delete(
@@ -23,7 +23,6 @@ export default async function (router: Hono<HonoEnv>) {
     })),
     async (context, next) => {
       const { input } = context.var;
-      const output = createOutput(context);
       const qb = createQueryBuilder(ApiKeys, 'apiKeys')
         .innerJoin('apiKeys.project', 'projects')
         .innerJoin('projects.workspace', 'workspace')

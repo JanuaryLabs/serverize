@@ -1,6 +1,7 @@
 import z from 'zod';
 import policies from '#core/policies.ts';
 import { tables } from '#entities';
+import output from '#extensions/hono/output.ts';
 import {
   createQueryBuilder,
   deferredJoinPagination,
@@ -225,7 +226,7 @@ export default {
         },
       }),
     }),
-    execute: async ({ input, output }) => {
+    execute: async ({ input }) => {
       await useTransaction(async () => {
         const patchObject: Record<string, any> = {};
         (['conclusion', 'containerName', 'tarLocation'] as const).forEach(

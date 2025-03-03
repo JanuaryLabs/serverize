@@ -3,13 +3,13 @@ import z from 'zod';
 import policies from '#core/policies.ts';
 import { type HonoEnv } from '#core/utils.ts';
 import Organizations from '#entities/organizations.entity.ts';
+import output from '#extensions/hono/output.ts';
 import {
   createQueryBuilder,
   deferredJoinPagination,
   execute,
 } from '#extensions/postgresql/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
-import { createOutput } from '#hono';
 
 export default async function (router: Hono<HonoEnv>) {
   router.get(
@@ -17,7 +17,6 @@ export default async function (router: Hono<HonoEnv>) {
     policies.authenticated,
     async (context, next) => {
       const { subject } = context.var;
-      const output = createOutput(context);
       const qb = createQueryBuilder(Organizations, 'organizations')
         .innerJoin('organizations.members', 'members')
         .where('members.userId = :userId', { userId: subject.claims.uid });

@@ -8,6 +8,7 @@ import z from 'zod';
 import policies from '#core/policies.ts';
 import { tables } from '#entities';
 import { firebaseApp } from '#extensions/firebase-auth/index.ts';
+import output from '#extensions/hono/output.ts';
 import {
   createQueryBuilder,
   deferredJoinPagination,
@@ -74,7 +75,7 @@ export default {
         },
       }),
     }),
-    execute: async ({ input, output }) => {
+    execute: async ({ input }) => {
       const qb = createQueryBuilder(tables.organizations, 'organizations');
       const paginationMetadata = deferredJoinPagination(qb, {
         pageSize: input.pageSize,
@@ -108,7 +109,7 @@ export default {
         },
       }),
     }),
-    execute: async ({ input, output }) => {
+    execute: async ({ input }) => {
       try {
         const data = await createDefaultOrg({
           uid: input.uid,
@@ -280,7 +281,7 @@ export default {
         },
       }),
     }),
-    execute: async ({ input, subject, output }) => {
+    execute: async ({ input, subject }) => {
       const qb = createQueryBuilder(tables.projects, 'projects').where(
         'projects.workspaceId = :workspaceId',
         { workspaceId: subject.claims.workspaceId },
@@ -311,7 +312,7 @@ export default {
       path: 'organizations',
       method: 'get',
     }),
-    execute: async ({ subject, output }) => {
+    execute: async ({ subject }) => {
       const qb = createQueryBuilder(tables.organizations, 'organizations')
         .innerJoin('organizations.members', 'members')
         .where('members.userId = :userId', { userId: subject.claims.uid });
@@ -353,7 +354,7 @@ export default {
         },
       }),
     }),
-    execute: async ({ input, output }) => {
+    execute: async ({ input }) => {
       const auth = getAuth(firebaseApp);
       const octokit = new Octokit({
         auth: input.token,
@@ -434,7 +435,7 @@ export default {
         },
       }),
     }),
-    execute: async ({ input, output }) => {
+    execute: async ({ input }) => {
       const auth = getAuth(firebaseApp);
       const octokit = new Octokit({
         auth: input.token,
