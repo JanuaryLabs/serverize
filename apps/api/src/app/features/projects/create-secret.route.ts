@@ -11,6 +11,10 @@ import { encrypt, getProjectKey } from '#extensions/user/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
+  /**
+   * @openapi CreateSecret
+   * @tags secrets
+   */
   router.post(
     '/secrets',
     consume('application/json'),

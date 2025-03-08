@@ -18,6 +18,10 @@ import { type Claims } from '#extensions/user/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
+  /**
+   * @openapi linkUser
+   * @tags users
+   */
   router.post(
     '/users/link',
     consume('application/json'),

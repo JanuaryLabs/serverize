@@ -7,6 +7,10 @@ import { toTraefikConfig } from '#extensions/user/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
+  /**
+   * @openapi ConfigDiscovery
+   * @tags containers
+   */
   router.get('/containers/discovery', async (context, next) => {
     // const qb = createQueryBuilder(tables.releases, 'releases')
     //   .select(['releases.port', 'releases.domainPrefix'])

@@ -12,6 +12,10 @@ import {
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
+  /**
+   * @openapi DeleteSecret
+   * @tags secrets
+   */
   router.delete(
     '/secrets/:id',
     validate((payload) => ({

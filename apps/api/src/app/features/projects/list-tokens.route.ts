@@ -11,6 +11,10 @@ import { createQueryBuilder, execute } from '#extensions/postgresql/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
+  /**
+   * @openapi ListTokens
+   * @tags tokens
+   */
   router.get(
     '/tokens',
     policies.authenticated,

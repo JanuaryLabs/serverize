@@ -8,6 +8,10 @@ import { getChannelEnv } from '#extensions/user/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
+  /**
+   * @openapi GetSecretsValues
+   * @tags secrets
+   */
   router.get(
     '/secrets/values',
     policies.authenticated,

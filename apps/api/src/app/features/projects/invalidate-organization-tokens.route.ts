@@ -12,6 +12,10 @@ import {
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
+  /**
+   * @openapi InvalidateOrganizationTokens
+   * @tags tokens
+   */
   router.delete(
     '/tokens/organization/:organizationId',
     policies.authenticated,

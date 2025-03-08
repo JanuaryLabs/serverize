@@ -16,6 +16,10 @@ import {
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
+  /**
+   * @openapi RestoreRelease
+   * @tags operations
+   */
   router.post(
     '/operations/releases/:releaseName/restore',
     policies.authenticated,

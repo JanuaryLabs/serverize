@@ -10,6 +10,10 @@ import { saveEntity } from '#extensions/postgresql/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
+  /**
+   * @openapi CreateReleaseSnapshot
+   * @tags releases
+   */
   router.post(
     '/releases/:releaseId/snapshots',
     consume('application/json'),

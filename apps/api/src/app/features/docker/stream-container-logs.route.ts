@@ -8,6 +8,10 @@ import output from '#extensions/hono/output.ts';
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
+  /**
+   * @openapi StreamContainerLogs
+   * @tags container
+   */
   router.get(
     '/container/logs',
     validate((payload) => ({

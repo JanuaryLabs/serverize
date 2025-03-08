@@ -17,6 +17,10 @@ import {
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
+  /**
+   * @openapi createDefaultOrganization
+   * @tags organizations
+   */
   router.post(
     '/organizations/default',
     consume('application/json'),

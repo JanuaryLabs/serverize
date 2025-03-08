@@ -31,7 +31,7 @@ import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import { trigger, workflow } from '@january/declarative';
 
 export default {
-  DeleteOrg: workflow({
+  deleteOrg: workflow({
     tag: 'organizations',
     trigger: trigger.http({
       method: 'delete',
@@ -52,7 +52,7 @@ export default {
       await removeEntity(tables.organizations, qb);
     },
   }),
-  ListOrganizations: workflow({
+  listOrganizations: workflow({
     tag: 'organizations',
     trigger: trigger.http({
       path: '/',
@@ -89,7 +89,7 @@ export default {
       });
     },
   }),
-  CreateDefaultOrganization: workflow({
+  createDefaultOrganization: workflow({
     tag: 'organizations',
     trigger: trigger.http({
       path: '/default',
@@ -156,7 +156,7 @@ export default {
       }
     },
   }),
-  CreateOrganization: workflow({
+  createOrganization: workflow({
     tag: 'organizations',
     trigger: trigger.http({
       path: '/',
@@ -174,7 +174,7 @@ export default {
       });
     },
   }),
-  CreateWorkspace: workflow({
+  createWorkspace: workflow({
     tag: 'workspaces',
     trigger: trigger.http({
       path: '/',
@@ -199,7 +199,7 @@ export default {
   }),
   // #endregion
   // #region Project
-  CreateProject: workflow({
+  createProject: workflow({
     tag: 'projects',
     trigger: trigger.http({
       path: '/',
@@ -223,7 +223,7 @@ export default {
       });
     },
   }),
-  PatchProject: workflow({
+  patchProject: workflow({
     tag: 'projects',
     trigger: trigger.http({
       path: '/:id',
@@ -250,7 +250,7 @@ export default {
       });
     },
   }),
-  ListProjects: workflow({
+  listProjects: workflow({
     tag: 'projects',
     trigger: trigger.http({
       path: '/',
@@ -329,7 +329,7 @@ export default {
       });
     },
   }),
-  LinkUser: workflow({
+  linkUser: workflow({
     tag: 'users',
     trigger: trigger.http({
       policies: [],
@@ -415,7 +415,7 @@ export default {
       }
     },
   }),
-  Signin: workflow({
+  signin: workflow({
     tag: 'users',
     trigger: trigger.http({
       method: 'post',

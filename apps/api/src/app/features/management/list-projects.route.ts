@@ -13,6 +13,10 @@ import {
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
+  /**
+   * @openapi listProjects
+   * @tags projects
+   */
   router.get(
     '/projects',
     policies.authenticated,
