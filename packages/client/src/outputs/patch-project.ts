@@ -1,1 +1,2 @@
-export type PatchProject = void;
+import z from 'zod';
+export type PatchProjectOutput = ReadableStream;

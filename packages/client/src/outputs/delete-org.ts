@@ -1,1 +1,2 @@
-export type DeleteOrg = void;
+import z from 'zod';
+export type DeleteOrgOutput = ReadableStream;

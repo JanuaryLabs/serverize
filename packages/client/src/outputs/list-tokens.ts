@@ -1,2 +1,3 @@
-import type { ApiKeys } from './api-keys.ts';
-export type ListTokens = ApiKeys[];
+import z from 'zod';
+import { type ApiKeys } from '../models/ApiKeys.ts';
+export type ListTokensOutput = ApiKeys[];

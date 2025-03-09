@@ -1,1 +1,2 @@
-export type DeleteRelease = void;
+import z from 'zod';
+export type DeleteReleaseOutput = ReadableStream;

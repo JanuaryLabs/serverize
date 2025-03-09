@@ -1,1 +1,2 @@
-export interface InvalidateOrganizationTokens {}
+import z from 'zod';
+export type InvalidateOrganizationTokensOutput = {};

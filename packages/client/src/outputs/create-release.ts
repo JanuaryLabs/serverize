@@ -1,3 +1,2 @@
-export interface CreateRelease {
-  id: string;
-}
+import z from 'zod';
+export type CreateReleaseOutput = { id: string };

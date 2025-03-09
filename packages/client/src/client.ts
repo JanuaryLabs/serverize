@@ -1,101 +1,50 @@
-import { parse } from 'fast-content-type-parse';
+import z from 'zod';
+import type { Endpoints } from './endpoints.ts';
+import { fetchType, sendRequest } from './http/send-request.ts';
+import schemas from './schemas.ts';
+export const servers = [
+  'https://serverize-api.january.sh',
+  'http://localhost:3000',
+] as const;
+const optionsSchema = z.object({
+  token: z.string().optional(),
+  fetch: fetchType,
+  baseUrl: z.enum(servers).default(servers[0]),
+});
+export type Servers = (typeof servers)[number];
 
-import type { Endpoints } from './endpoints';
+type ServerizeOptions = z.infer<typeof optionsSchema>;
 
-export interface RequestInterface<D extends object = object> {
-  /**
-   * Sends a request based on endpoint options
-   *
-   * @param {string} route Request method + URL. Example: 'GET /orgs/{org}'
-   * @param {object} [parameters] URL, query or body parameters, as well as headers, mediaType.{format|previews}, request, or baseUrl.
-   */
-  <R extends keyof Endpoints>(
-    route: R,
-    options?: Endpoints[R]['input'],
-  ): Promise<Endpoints[R]['output']>;
-}
+export class Serverize {
+  constructor(public options: ServerizeOptions) {}
 
-export async function handleError(response: Response) {
-  try {
-    if (response.status >= 400 && response.status < 500) {
-      const body = (await response.json()) as Record<string, any>;
-      return {
-        status: response.status,
-        body: body,
-      };
-    }
-    return new Error(
-      `An error occurred while fetching the data. Status: ${response.status}`,
-    );
-  } catch (error) {
-    return error as any;
+  async request<E extends keyof Endpoints>(
+    endpoint: E,
+    input: Endpoints[E]['input'],
+  ): Promise<readonly [Endpoints[E]['output'], Endpoints[E]['error'] | null]> {
+    const route = schemas[endpoint];
+    return sendRequest(Object.assign(this.#defaultInputs, input), route, {
+      baseUrl: this.options.baseUrl,
+      fetch: this.options.fetch,
+      headers: this.defaultHeaders,
+    });
   }
-}
 
-async function handleChunkedResponse(response: Response, contentType: string) {
-  const { type } = parse(contentType);
+  get defaultHeaders() {
+    return { authorization: this.options['token'] };
+  }
 
-  switch (type) {
-    case 'application/json': {
-      let buffer = '';
-      const reader = response.body!.getReader();
-      const decoder = new TextDecoder();
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value);
+  get #defaultInputs() {
+    return {};
+  }
+
+  setOptions(options: Partial<ServerizeOptions>) {
+    const validated = optionsSchema.partial().parse(options);
+
+    for (const key of Object.keys(validated) as (keyof ServerizeOptions)[]) {
+      if (validated[key] !== undefined) {
+        (this.options[key] as (typeof validated)[typeof key]) = validated[key]!;
       }
-      return JSON.parse(buffer);
     }
-    case 'text/html':
-    case 'text/plain': {
-      let buffer = '';
-      const reader = response.body!.getReader();
-      const decoder = new TextDecoder();
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value);
-      }
-      return buffer;
-    }
-    default:
-      return response.body;
-  }
-}
-
-export async function parseResponse(response: Response) {
-  const contentType = response.headers.get('Content-Type');
-  if (!contentType) {
-    throw new Error('Content-Type header is missing');
-  }
-
-  if (response.status === 204) {
-    return null;
-  }
-  const isChunked = response.headers.get('Transfer-Encoding') === 'chunked';
-  if (isChunked) {
-    return response.body!;
-    // return handleChunkedResponse(response, contentType);
-  }
-
-  const { type } = parse(contentType);
-  switch (type) {
-    case 'application/json':
-      return response.json();
-    case 'text/plain':
-      return response.text();
-    case 'text/html':
-      return response.text();
-    case 'text/xml':
-    case 'application/xml':
-      return response.text();
-    case 'application/x-www-form-urlencoded':
-      const text = await response.text();
-      return Object.fromEntries(new URLSearchParams(text));
-    case 'multipart/form-data':
-      return response.formData();
-    default:
-      throw new Error(`Unsupported content type: ${contentType}`);
   }
 }

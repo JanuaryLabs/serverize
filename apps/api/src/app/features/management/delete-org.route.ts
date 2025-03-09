@@ -15,7 +15,6 @@ export default async function (router: Hono<HonoEnv>) {
   /**
    * @openapi deleteOrg
    * @tags organizations
-   * @description Create a snapshot for a release
    */
   router.delete(
     '/organizations/:id',

@@ -1,5 +1,6 @@
-export interface StartRelease {
-  traceId: `${string}-${string}-${string}-${string}-${string}`;
+import z from 'zod';
+export type StartReleaseOutput = {
+  traceId: string;
   releaseId: string;
   finalUrl: string;
-}
+};

@@ -1,1 +1,2 @@
-export type CreateProject = void;
+import z from 'zod';
+export type CreateProjectOutput = ReadableStream;

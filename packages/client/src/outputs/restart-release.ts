@@ -1,5 +1,6 @@
-export interface RestartRelease {
-  traceId: `${string}-${string}-${string}-${string}-${string}`;
+import z from 'zod';
+export type RestartReleaseOutput = {
+  traceId: string;
   releaseId: string;
   finalUrl: string;
-}
+};

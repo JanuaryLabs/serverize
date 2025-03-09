@@ -1,6 +1,7 @@
-import type { PaginationMetadata } from './pagination-metadata.ts';
-import type { Projects } from './projects.ts';
-export interface ListProjects {
+import z from 'zod';
+import { type PaginationMetadata } from '../models/PaginationMetadata.ts';
+import { type Projects } from '../models/Projects.ts';
+export type ListProjectsOutput = {
   records: Projects[];
   meta: PaginationMetadata;
-}
+};

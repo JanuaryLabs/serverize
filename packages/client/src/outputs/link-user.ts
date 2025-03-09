@@ -1,3 +1,2 @@
-export interface LinkUser {
-  accessToken: string;
-}
+import z from 'zod';
+export type LinkUserOutput = { accessToken: string };

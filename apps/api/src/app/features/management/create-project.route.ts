@@ -13,7 +13,6 @@ export default async function (router: Hono<HonoEnv>) {
   /**
    * @openapi createProject
    * @tags projects
-   * @description Create a new project
    */
   router.post(
     '/projects',

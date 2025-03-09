@@ -1,3 +1,2 @@
-export interface ExchangeToken {
-  accessToken: string;
-}
+import z from 'zod';
+export type ExchangeTokenOutput = { accessToken: string };

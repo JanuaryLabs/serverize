@@ -1,40 +1,10 @@
 import { EventSource } from 'eventsource';
 import fetch from 'node-fetch';
-import { WebSocket } from 'ws';
 
 import { createInterface } from 'readline';
 import { Observable, from, switchMap } from 'rxjs';
 import { safeFail } from 'serverize/utils';
-import { logger } from '../program';
-import { serverizeManagementUrl, serverizeManagementWs } from './api-client';
-
-export function followLogs(next?: boolean) {
-  const ws = new WebSocket(`${serverizeManagementWs}?apiKey=`);
-  ws.on('open', () => {
-    logger('Connected to runner server');
-    ws.send(
-      JSON.stringify({
-        command: 'logs',
-        payload: {
-          next: next ?? true,
-        },
-      }),
-    );
-  });
-
-  ws.on('message', (data) => {
-    logger('Received message from runner server');
-    console.log(data.toString());
-  });
-
-  ws.on('close', () => {
-    logger('Disconnected from source server');
-    // in case serverize closes the connection we need to exit
-    // otherwise the process will keep running for nothing
-    // TODO: implement retry logic or use rxjs/websocket
-    process.exit(0);
-  });
-}
+import { serverizeManagementUrl } from './api-client';
 
 export function toBase64(data: any) {
   return Buffer.from(JSON.stringify(data)).toString('base64');
@@ -92,7 +62,7 @@ export function streamLogs(logId: string) {
         switchMap((response) =>
           createInterface({
             input: response.body!,
-            crlfDelay: Infinity,
+            crlfDelay: Number.POSITIVE_INFINITY,
             terminal: false,
           }),
         ),

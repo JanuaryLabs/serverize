@@ -1,1 +1,2 @@
-export interface CompleteRelease {}
+import z from 'zod';
+export type CompleteReleaseOutput = {};

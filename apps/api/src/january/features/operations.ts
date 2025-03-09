@@ -26,6 +26,7 @@ import axios from 'axios';
 import { trigger, workflow } from '@january/declarative';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import { getContainer, removeContainer } from 'serverize/docker';
+import output from '#extensions/hono/output.ts';
 
 export default {
   StartRelease: workflow({
@@ -182,11 +183,11 @@ export default {
           },
         },
       );
-      return {
+      return output.ok({
         traceId,
         releaseId: release.id,
         finalUrl: `${PROTOCOL}://${release.domainPrefix}.${SERVERIZE_DOMAIN}`,
-      };
+      });
     },
   }),
   RestartRelease: workflow({

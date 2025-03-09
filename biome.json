@@ -53,16 +53,13 @@
   },
   "overrides": [
     {
-      "include": ["*.ts", "*.tsx", "*.js", "*.jsx", "*.vue"],
-      "linter": { "rules": {} }
-    },
-    {
       "include": ["*.ts", "*.tsx"],
       "linter": {
         "rules": {
           "correctness": {
             "noInnerDeclarations": "off",
-            "noUnusedVariables": "off"
+            "noUnusedVariables": "off",
+            "noUnusedImports": "error"
           },
           "style": { "noNamespace": "off" },
           "suspicious": {

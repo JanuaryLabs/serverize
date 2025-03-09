@@ -1,1 +1,2 @@
-export interface PatchRelease {}
+import z from 'zod';
+export type PatchReleaseOutput = {};

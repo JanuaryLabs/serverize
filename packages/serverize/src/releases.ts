@@ -66,7 +66,7 @@ const terminate = new Command('terminate')
   .action(async ({ projectName, channel, release }) => {
     const currentProject = await getCurrentProject(projectName);
     const [, error] = await client.request(
-      'DELETE /operations/releases/{releaseName}',
+      'DELETE /operations/releases/:releaseName',
       {
         channel: channel,
         projectId: currentProject.projectId,
@@ -92,7 +92,7 @@ const restart = new Command('restart')
     const currentProject = await getCurrentProject(projectName);
 
     const [data, error] = await client.request(
-      'POST /operations/releases/{releaseName}/restart',
+      'POST /operations/releases/:releaseName/restart',
       {
         projectId: currentProject.projectId,
         projectName: currentProject.projectName,

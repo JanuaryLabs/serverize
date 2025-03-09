@@ -1,1 +1,2 @@
-export type RevokeToken = void;
+import z from 'zod';
+export type RevokeTokenOutput = ReadableStream;

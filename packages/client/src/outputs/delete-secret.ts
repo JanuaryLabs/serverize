@@ -1,1 +1,2 @@
-export type DeleteSecret = void;
+import z from 'zod';
+export type DeleteSecretOutput = ReadableStream;

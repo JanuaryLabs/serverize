@@ -1,35 +1,39 @@
 import z from 'zod';
-import * as commonZod from '../zod';
 export const startReleaseSchema = z.object({
-  releaseName: commonZod.orgNameValidator,
+  releaseName: z.string().optional(),
   projectId: z.string().uuid(),
-  projectName: z.string().trim().min(1),
-  channel: commonZod.channelSchema,
+  projectName: z.string(),
+  channel: z.enum(['dev', 'preview']),
   tarLocation: z.string(),
   runtimeConfig: z.string(),
   port: z.number().optional(),
   protocol: z.enum(['https', 'tcp']).optional(),
-  image: z.string().trim().min(1),
+  image: z.string(),
   volumes: z.array(z.string()).optional(),
-  serviceName: z.any().optional(),
-  environment: z.any().optional(),
-  jwt: z.any(),
+  serviceName: z.unknown().optional(),
+  environment: z.unknown().optional(),
+  jwt: z.unknown(),
 });
 export const restartReleaseSchema = z.object({
-  releaseName: commonZod.orgNameValidator,
-  projectId: z.string().uuid(),
-  projectName: z.string().trim().min(1),
-  channel: commonZod.channelSchema,
-  jwt: z.any(),
+  projectId: z.string().uuid().optional(),
+  projectName: z.string().optional(),
+  channel: z.enum(['dev', 'preview']),
+  releaseName: z.string(),
+  jwt: z.unknown(),
 });
 export const restartChannelSchema = z.object({
-  channel: commonZod.channelSchema,
-  projectId: z.string().uuid(),
-  projectName: z.string().trim().min(1),
-  jwt: z.any(),
+  projectId: z.string().uuid().optional(),
+  projectName: z.string().optional(),
+  channel: z.enum(['dev', 'preview']),
+  jwt: z.unknown(),
 });
 export const deleteReleaseSchema = z.object({
-  releaseName: commonZod.orgNameValidator,
-  projectId: z.string().uuid(),
-  channel: commonZod.channelSchema,
+  projectId: z.string().uuid().optional(),
+  channel: z.enum(['dev', 'preview']),
+  releaseName: z.string(),
+});
+export const restoreReleaseSchema = z.object({
+  projectId: z.string().uuid().optional(),
+  channel: z.enum(['dev', 'preview']),
+  releaseName: z.string(),
 });

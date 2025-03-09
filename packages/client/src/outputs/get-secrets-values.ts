@@ -1,1 +1,2 @@
-export type GetSecretsValues = Record<string, string>;
+import z from 'zod';
+export type GetSecretsValuesOutput = { [key: string]: string };

@@ -1,2 +1,3 @@
-import type { Secrets } from './secrets.ts';
-export type GetSecrets = Secrets[];
+import z from 'zod';
+import { type Secrets } from '../models/Secrets.ts';
+export type GetSecretsOutput = Secrets[];

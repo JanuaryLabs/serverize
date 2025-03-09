@@ -56,6 +56,7 @@ export default async function (router: Hono<HonoEnv>) {
         pageNo: input.pageNo,
         count: await qb.getCount(),
       });
+
       const records = await execute(qb);
       return output.ok({
         records,

@@ -1,0 +1,2719 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Serverize API",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API Support",
+      "url": "https://serverize.sh",
+      "email": "admin@january.sh"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://serverize-api.january.sh",
+      "description": "Prod server"
+    },
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/container/logs": {
+      "get": {
+        "operationId": "StreamContainerLogs",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectName",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3
+            }
+          },
+          {
+            "in": "query",
+            "name": "channelName",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3
+            }
+          },
+          {
+            "in": "query",
+            "name": "releaseName",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3
+            }
+          },
+          {
+            "in": "query",
+            "name": "timestamp",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "in": "query",
+            "name": "details",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "in": "query",
+            "name": "tail",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 250,
+              "default": 250
+            }
+          }
+        ],
+        "tags": ["container"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organizations/:id": {
+      "delete": {
+        "operationId": "deleteOrg",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "tags": ["organizations"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Response for 200"
+          }
+        }
+      }
+    },
+    "/organizations": {
+      "get": {
+        "operationId": "listOrganizations",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pageSize",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 50
+            }
+          },
+          {
+            "in": "query",
+            "name": "pageNo",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "tags": ["organizations"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "records": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Organizations"
+                      }
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/PaginationMetadata"
+                    }
+                  },
+                  "required": ["records", "meta"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createOrganization",
+        "parameters": [],
+        "tags": ["organizations"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["name"],
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200"
+          }
+        }
+      }
+    },
+    "/organizations/default": {
+      "post": {
+        "operationId": "createDefaultOrganization",
+        "parameters": [],
+        "tags": ["organizations"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["name", "projectName", "uid"],
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "projectName": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "uid": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Claims"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/workspaces": {
+      "post": {
+        "operationId": "createWorkspace",
+        "parameters": [],
+        "tags": ["workspaces"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["name", "organizationId"],
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "organizationId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200"
+          }
+        }
+      }
+    },
+    "/projects": {
+      "post": {
+        "operationId": "createProject",
+        "parameters": [],
+        "tags": ["projects"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["name"],
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200"
+          }
+        }
+      },
+      "get": {
+        "operationId": "listProjects",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "workspaceId",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 50
+            }
+          },
+          {
+            "in": "query",
+            "name": "pageNo",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "tags": ["projects"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "records": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Projects"
+                      }
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/PaginationMetadata"
+                    }
+                  },
+                  "required": ["records", "meta"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/:id": {
+      "patch": {
+        "operationId": "patchProject",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "tags": ["projects"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["name"],
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200"
+          }
+        }
+      }
+    },
+    "/users/link": {
+      "post": {
+        "operationId": "linkUser",
+        "parameters": [],
+        "tags": ["users"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["token", "providerId", "orgName", "projectName"],
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "providerId": {
+                    "type": "string",
+                    "enum": ["github.com", "google.com", "password"]
+                  },
+                  "orgName": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "projectName": {
+                    "type": "string",
+                    "minLength": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["accessToken"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/signin": {
+      "post": {
+        "operationId": "signin",
+        "parameters": [],
+        "tags": ["users"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["token", "providerId"],
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "providerId": {
+                    "type": "string",
+                    "enum": ["github.com", "google.com", "password"]
+                  },
+                  "source": {
+                    "type": "string",
+                    "enum": ["vscode", "api", "browser"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["accessToken"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operations/releases/start": {
+      "post": {
+        "operationId": "StartRelease",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "jwt",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "tags": ["operations"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "releaseName",
+                  "projectId",
+                  "projectName",
+                  "channel",
+                  "tarLocation",
+                  "runtimeConfig",
+                  "image"
+                ],
+                "type": "object",
+                "properties": {
+                  "releaseName": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "projectId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "projectName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "channel": {
+                    "type": "string",
+                    "enum": ["dev", "preview"],
+                    "default": "dev"
+                  },
+                  "tarLocation": {
+                    "type": "string"
+                  },
+                  "runtimeConfig": {
+                    "type": "string"
+                  },
+                  "port": {
+                    "type": "number"
+                  },
+                  "protocol": {
+                    "type": "string",
+                    "enum": ["https", "tcp"]
+                  },
+                  "image": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "volumes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "serviceName": {},
+                  "environment": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "traceId": {
+                      "type": "string"
+                    },
+                    "releaseId": {
+                      "type": "string"
+                    },
+                    "finalUrl": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["traceId", "releaseId", "finalUrl"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operations/releases/:releaseName/restart": {
+      "post": {
+        "operationId": "RestartRelease",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "releaseName",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3
+            }
+          },
+          {
+            "in": "header",
+            "name": "jwt",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "tags": ["operations"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["projectId", "projectName", "channel"],
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "projectName": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "channel": {
+                    "type": "string",
+                    "enum": ["dev", "preview"],
+                    "default": "dev"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "traceId": {
+                      "type": "string"
+                    },
+                    "releaseId": {
+                      "type": "string"
+                    },
+                    "finalUrl": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["traceId", "releaseId", "finalUrl"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operations/channels/:channelName/restart": {
+      "post": {
+        "operationId": "RestartChannel",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "channel",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["dev", "preview"],
+              "default": "dev"
+            }
+          },
+          {
+            "in": "header",
+            "name": "jwt",
+            "required": true,
+            "schema": {}
+          }
+        ],
+        "tags": ["operations"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["projectId", "projectName"],
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "projectName": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "traces": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": ["traces"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operations/releases/:releaseName": {
+      "delete": {
+        "operationId": "DeleteRelease",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "releaseName",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3
+            }
+          }
+        ],
+        "tags": ["operations"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["projectId", "channel"],
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "channel": {
+                    "type": "string",
+                    "enum": ["dev", "preview"],
+                    "default": "dev"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200"
+          }
+        }
+      }
+    },
+    "/operations/releases/:releaseName/restore": {
+      "post": {
+        "operationId": "RestoreRelease",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "releaseName",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 3
+            }
+          }
+        ],
+        "tags": ["operations"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["projectId", "channel"],
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "channel": {
+                    "type": "string",
+                    "enum": ["dev", "preview"],
+                    "default": "dev"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200"
+          }
+        }
+      }
+    },
+    "/tokens": {
+      "post": {
+        "operationId": "CreateToken",
+        "parameters": [],
+        "tags": ["tokens"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["projectName"],
+                "type": "object",
+                "properties": {
+                  "projectName": {
+                    "type": "string",
+                    "minLength": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "RevokeToken",
+        "parameters": [],
+        "tags": ["tokens"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["projectName", "token"],
+                "type": "object",
+                "properties": {
+                  "projectName": {
+                    "type": "string"
+                  },
+                  "token": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200"
+          }
+        }
+      },
+      "get": {
+        "operationId": "ListTokens",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": ["tokens"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApiKeys"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tokens/:token": {
+      "get": {
+        "operationId": "GetToken",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "tags": ["tokens"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiKeys"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/releases": {
+      "post": {
+        "operationId": "CreateRelease",
+        "parameters": [],
+        "tags": ["releases"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["releaseName", "projectId", "channel"],
+                "type": "object",
+                "properties": {
+                  "releaseName": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "projectId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "channel": {
+                    "type": "string",
+                    "enum": ["dev", "preview"],
+                    "default": "dev"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["id"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "ListReleases",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectId",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["dev", "preview"],
+              "default": "dev"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "conclusion",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "pageSize",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 50
+            }
+          },
+          {
+            "in": "query",
+            "name": "pageNo",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "tags": ["releases"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "records": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Releases"
+                      }
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/PaginationMetadata"
+                    }
+                  },
+                  "required": ["records", "meta"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/releases/complete/:releaseId": {
+      "patch": {
+        "operationId": "CompleteRelease",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "releaseId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "tags": ["releases"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["conclusion"],
+                "type": "object",
+                "properties": {
+                  "conclusion": {
+                    "type": "string",
+                    "enum": ["success", "failure"]
+                  },
+                  "containerName": {
+                    "type": "string"
+                  },
+                  "tarLocation": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "required": [],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/releases/:releaseId": {
+      "patch": {
+        "operationId": "PatchRelease",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "releaseId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "tags": ["releases"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": ["requested", "waiting", "completed"]
+                  },
+                  "conclusion": {
+                    "type": "string",
+                    "enum": ["success", "failure"]
+                  },
+                  "containerName": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "required": [],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/releases/:releaseId/snapshots": {
+      "post": {
+        "operationId": "CreateReleaseSnapshot",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "releaseId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "tags": ["releases"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["name"],
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["id"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/secrets": {
+      "post": {
+        "operationId": "CreateSecret",
+        "parameters": [],
+        "tags": ["secrets"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "projectId",
+                  "channel",
+                  "secretLabel",
+                  "secretValue"
+                ],
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "channel": {
+                    "type": "string",
+                    "enum": ["dev", "preview"],
+                    "default": "dev"
+                  },
+                  "secretLabel": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "secretValue": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "required": [],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetSecrets",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["dev", "preview"],
+              "default": "dev"
+            }
+          }
+        ],
+        "tags": ["secrets"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Secrets"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/secrets/:id": {
+      "delete": {
+        "operationId": "DeleteSecret",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "tags": ["secrets"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Response for 200"
+          }
+        }
+      }
+    },
+    "/secrets/values": {
+      "get": {
+        "operationId": "GetSecretsValues",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["dev", "preview"],
+              "default": "dev"
+            }
+          }
+        ],
+        "tags": ["secrets"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tokens/exchange": {
+      "post": {
+        "operationId": "ExchangeToken",
+        "parameters": [],
+        "tags": ["tokens"],
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": ["token"],
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "accessToken": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["accessToken"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tokens/organization/:organizationId": {
+      "delete": {
+        "operationId": "InvalidateOrganizationTokens",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "organizationId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "tags": ["tokens"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "required": [],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Organizations": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "workspaces": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Workspaces"
+                }
+              }
+            ]
+          },
+          "workspacesIds": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "members": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Members"
+                }
+              }
+            ]
+          },
+          "membersIds": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "organizationsMembers": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrganizationsMembers"
+                }
+              }
+            ]
+          },
+          "organizationsMembersIds": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "preferences": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Preferences"
+                }
+              }
+            ]
+          },
+          "preferencesIds": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          }
+        },
+        "required": ["name", "id", "createdAt"],
+        "additionalProperties": false
+      },
+      "Workspaces": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "organization": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Organizations"
+              }
+            ]
+          },
+          "organizationId": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "projects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Projects"
+            }
+          },
+          "projectsIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "workspacesMembers": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/WorkspacesMembers"
+                }
+              }
+            ]
+          },
+          "workspacesMembersIds": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "preferences": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Preferences"
+                }
+              }
+            ]
+          },
+          "preferencesIds": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          }
+        },
+        "required": ["name", "id", "createdAt", "projects", "projectsIds"],
+        "additionalProperties": false
+      },
+      "Projects": {
+        "type": "object",
+        "properties": {
+          "releases": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Releases"
+            }
+          },
+          "releasesIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "secrets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Secrets"
+            }
+          },
+          "secretsIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "secretsKeys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SecretsKeys"
+            }
+          },
+          "secretsKeysIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "apiKeys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApiKeys"
+            }
+          },
+          "apiKeysIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "workspace": {
+            "$ref": "#/components/schemas/Workspaces"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "required": [
+          "releases",
+          "releasesIds",
+          "secrets",
+          "secretsIds",
+          "secretsKeys",
+          "secretsKeysIds",
+          "apiKeys",
+          "apiKeysIds",
+          "name",
+          "workspace",
+          "workspaceId",
+          "id",
+          "createdAt"
+        ],
+        "additionalProperties": false
+      },
+      "Releases": {
+        "type": "object",
+        "properties": {
+          "volumes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Volumes"
+            }
+          },
+          "volumesIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "serviceName": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "containerName": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "tarLocation": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "domainPrefix": {
+            "type": "string"
+          },
+          "port": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "protocol": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "enum": ["https"],
+                "type": "string"
+              },
+              {
+                "enum": ["tcp"],
+                "type": "string"
+              }
+            ]
+          },
+          "image": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "runtimeConfig": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "project": {
+            "$ref": "#/components/schemas/Projects"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "channel": {
+            "anyOf": [
+              {
+                "enum": ["dev"],
+                "type": "string"
+              },
+              {
+                "enum": ["preview"],
+                "type": "string"
+              }
+            ]
+          },
+          "conclusion": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "enum": ["processing"],
+                "type": "string"
+              },
+              {
+                "enum": ["published"],
+                "type": "string"
+              },
+              {
+                "enum": ["success"],
+                "type": "string"
+              },
+              {
+                "enum": ["failure"],
+                "type": "string"
+              },
+              {
+                "enum": ["cancelled"],
+                "type": "string"
+              },
+              {
+                "enum": ["timed_out"],
+                "type": "string"
+              }
+            ]
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "enum": ["requested"],
+                "type": "string"
+              },
+              {
+                "enum": ["in_progress"],
+                "type": "string"
+              },
+              {
+                "enum": ["completed"],
+                "type": "string"
+              },
+              {
+                "enum": ["queued"],
+                "type": "string"
+              },
+              {
+                "enum": ["waiting"],
+                "type": "string"
+              }
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/Snapshots"
+          },
+          "snapshotId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "volumes",
+          "volumesIds",
+          "domainPrefix",
+          "name",
+          "project",
+          "projectId",
+          "channel",
+          "id",
+          "createdAt",
+          "snapshot",
+          "snapshotId"
+        ],
+        "additionalProperties": false
+      },
+      "Volumes": {
+        "type": "object",
+        "properties": {
+          "release": {
+            "$ref": "#/components/schemas/Releases"
+          },
+          "releaseId": {
+            "type": "string"
+          },
+          "src": {
+            "type": "string"
+          },
+          "dest": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "required": ["release", "releaseId", "src", "dest", "id", "createdAt"],
+        "additionalProperties": false
+      },
+      "Snapshots": {
+        "type": "object",
+        "properties": {
+          "release": {
+            "$ref": "#/components/schemas/Releases"
+          },
+          "releaseId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "required": ["release", "releaseId", "name", "id", "createdAt"],
+        "additionalProperties": false
+      },
+      "Secrets": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "$ref": "#/components/schemas/Projects"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "channel": {
+            "anyOf": [
+              {
+                "enum": ["dev"],
+                "type": "string"
+              },
+              {
+                "enum": ["preview"],
+                "type": "string"
+              }
+            ]
+          },
+          "nonce": {
+            "type": "any"
+          },
+          "secret": {
+            "type": "any"
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "required": [
+          "project",
+          "projectId",
+          "label",
+          "channel",
+          "nonce",
+          "secret",
+          "id",
+          "createdAt"
+        ],
+        "additionalProperties": false
+      },
+      "SecretsKeys": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "$ref": "#/components/schemas/Projects"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "key": {
+            "type": "any"
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "required": ["project", "projectId", "key", "id", "createdAt"],
+        "additionalProperties": false
+      },
+      "ApiKeys": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "$ref": "#/components/schemas/Projects"
+          },
+          "projectId": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "required": ["project", "projectId", "key", "id", "createdAt"],
+        "additionalProperties": false
+      },
+      "WorkspacesMembers": {
+        "type": "object",
+        "properties": {
+          "workspace": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Workspaces"
+              }
+            ]
+          },
+          "workspaceId": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "member": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Members"
+              }
+            ]
+          },
+          "memberId": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "required": ["id", "createdAt"],
+        "additionalProperties": false
+      },
+      "Members": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Users"
+              }
+            ]
+          },
+          "userId": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "organization": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Organizations"
+              }
+            ]
+          },
+          "organizationId": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "organizationsMembers": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrganizationsMembers"
+                }
+              }
+            ]
+          },
+          "organizationsMembersIds": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "workspacesMembers": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/WorkspacesMembers"
+                }
+              }
+            ]
+          },
+          "workspacesMembersIds": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          }
+        },
+        "required": ["id", "createdAt"],
+        "additionalProperties": false
+      },
+      "Users": {
+        "type": "object",
+        "properties": {
+          "members": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Members"
+                }
+              }
+            ]
+          },
+          "membersIds": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "preference": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Preferences"
+              }
+            ]
+          },
+          "preferenceId": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "required": ["id", "createdAt"],
+        "additionalProperties": false
+      },
+      "Preferences": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Users"
+              }
+            ]
+          },
+          "userId": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "organization": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Organizations"
+              }
+            ]
+          },
+          "organizationId": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "workspace": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Workspaces"
+              }
+            ]
+          },
+          "workspaceId": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "required": ["id", "createdAt"],
+        "additionalProperties": false
+      },
+      "OrganizationsMembers": {
+        "type": "object",
+        "properties": {
+          "organization": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Organizations"
+              }
+            ]
+          },
+          "organizationId": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "member": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Members"
+              }
+            ]
+          },
+          "memberId": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "required": ["id", "createdAt"],
+        "additionalProperties": false
+      },
+      "PaginationMetadata": {
+        "type": "object",
+        "properties": {
+          "hasNextPage": {
+            "type": "boolean"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "pageSize": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "currentPage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "totalCount": {
+            "type": "number"
+          },
+          "totalPages": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "hasNextPage",
+          "hasPreviousPage",
+          "totalCount",
+          "totalPages"
+        ],
+        "additionalProperties": false
+      },
+      "Claims": {
+        "type": "object",
+        "properties": {
+          "organizationId": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "aknowledged": {
+            "type": "boolean"
+          }
+        },
+        "required": ["organizationId", "workspaceId", "aknowledged"],
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "tags": []
+}

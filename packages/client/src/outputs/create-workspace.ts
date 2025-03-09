@@ -1,1 +1,2 @@
-export type CreateWorkspace = void;
+import z from 'zod';
+export type CreateWorkspaceOutput = ReadableStream;
