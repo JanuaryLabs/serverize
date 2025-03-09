@@ -1,5 +1,5 @@
 import { execFile } from 'node:child_process';
-import { rm, writeFile } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { analyze, responseAnalyzer } from '@sdk-it/generic';
 import { generate } from '@sdk-it/typescript';
@@ -73,11 +73,6 @@ await writeFile(
   join(process.cwd(), 'openapi.json'),
   JSON.stringify(spec, null, 2),
 );
-
-await rm(join(process.cwd(), 'packages/client/src'), {
-  recursive: true,
-  force: true,
-});
 
 await generate(spec, {
   output: join(process.cwd(), 'packages/client/src'),
