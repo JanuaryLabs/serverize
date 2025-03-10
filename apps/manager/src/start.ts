@@ -1,13 +1,13 @@
+import { tmpdir } from 'os';
 import { Serverize } from '@serverize/client';
 import type { Container } from 'dockerode';
-import { tmpdir } from 'os';
 
-import { fileWriter } from './file';
-import { ReleaseInfo, createRemoteServer } from './manager';
 import { join } from 'path';
 import type { RuntimeConfig } from 'serverize';
 import { docker, followProgress, getContainer } from 'serverize/docker';
 import { extractError } from 'serverize/utils';
+import { fileWriter } from './file';
+import { ReleaseInfo, createRemoteServer } from './manager';
 
 export const UPLOADS_DIR =
   process.env.UPLOAD_DIR ||
@@ -194,7 +194,7 @@ export async function startServer(
 function makeRelease(id: string, token: string) {
   const client = new Serverize({
     token,
-    baseUrl: process.env.API_URL!,
+    baseUrl: process.env.API_URL as any,
   });
   return {
     waiting: () =>

@@ -8,6 +8,7 @@ import { validate } from '#core/validator.ts';
 import Releases from '#entities/releases.entity.ts';
 import Volumes from '#entities/volumes.entity.ts';
 import { consume } from '#extensions/hono/consume.ts';
+import output from '#extensions/hono/output.ts';
 import {
   createQueryBuilder,
   execute,

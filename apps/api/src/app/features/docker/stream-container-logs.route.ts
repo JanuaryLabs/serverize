@@ -11,7 +11,6 @@ export default async function (router: Hono<HonoEnv>) {
   /**
    * @openapi StreamContainerLogs
    * @tags container
-   * @stream text
    */
   router.get(
     '/container/logs',

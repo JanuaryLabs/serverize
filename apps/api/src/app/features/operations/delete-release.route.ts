@@ -8,6 +8,7 @@ import { type HonoEnv } from '#core/utils.ts';
 import { validate } from '#core/validator.ts';
 import Releases from '#entities/releases.entity.ts';
 import Volumes from '#entities/volumes.entity.ts';
+import output from '#extensions/hono/output.ts';
 import {
   createQueryBuilder,
   removeEntity,

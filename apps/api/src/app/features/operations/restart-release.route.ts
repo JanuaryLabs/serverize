@@ -6,6 +6,7 @@ import { type HonoEnv } from '#core/utils.ts';
 import { validate } from '#core/validator.ts';
 import Releases from '#entities/releases.entity.ts';
 import { consume } from '#extensions/hono/consume.ts';
+import output from '#extensions/hono/output.ts';
 import { createQueryBuilder } from '#extensions/postgresql/index.ts';
 import {
   PROTOCOL,

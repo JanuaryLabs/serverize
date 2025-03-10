@@ -6,6 +6,7 @@ import { type HonoEnv } from '#core/utils.ts';
 import { validate } from '#core/validator.ts';
 import Releases from '#entities/releases.entity.ts';
 import { consume } from '#extensions/hono/consume.ts';
+import output from '#extensions/hono/output.ts';
 import { createQueryBuilder, execute } from '#extensions/postgresql/index.ts';
 import { serverizeUrl } from '#extensions/user/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
