@@ -345,7 +345,7 @@ export async function getCurrentProject(project?: string) {
   const apiToken = SERVERIZE_API_TOKEN;
 
   if (apiToken) {
-    const [data, error] = await client.request('GET /tokens/:token', {
+    const [data, error] = await client.request('GET /tokens/{token}', {
       token: apiToken,
     });
     if (error) {

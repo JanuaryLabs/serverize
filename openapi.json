@@ -96,7 +96,7 @@
         }
       }
     },
-    "/organizations/:id": {
+    "/organizations/{id}": {
       "delete": {
         "operationId": "deleteOrg",
         "parameters": [
@@ -376,7 +376,7 @@
         }
       }
     },
-    "/projects/:id": {
+    "/projects/{id}": {
       "patch": {
         "operationId": "patchProject",
         "parameters": [
@@ -621,7 +621,7 @@
         }
       }
     },
-    "/operations/releases/:releaseName/restart": {
+    "/operations/releases/{releaseName}/restart": {
       "post": {
         "operationId": "RestartRelease",
         "parameters": [
@@ -695,7 +695,7 @@
         }
       }
     },
-    "/operations/channels/:channelName/restart": {
+    "/operations/channels/{channelName}/restart": {
       "post": {
         "operationId": "RestartChannel",
         "parameters": [
@@ -762,7 +762,7 @@
         }
       }
     },
-    "/operations/releases/:releaseName": {
+    "/operations/releases/{releaseName}": {
       "delete": {
         "operationId": "DeleteRelease",
         "parameters": [
@@ -806,7 +806,7 @@
         }
       }
     },
-    "/operations/releases/:releaseName/restore": {
+    "/operations/releases/{releaseName}/restore": {
       "post": {
         "operationId": "RestoreRelease",
         "parameters": [
@@ -945,7 +945,7 @@
         }
       }
     },
-    "/tokens/:token": {
+    "/tokens/{token}": {
       "get": {
         "operationId": "GetToken",
         "parameters": [
@@ -1113,7 +1113,7 @@
         }
       }
     },
-    "/releases/complete/:releaseId": {
+    "/releases/complete/{releaseId}": {
       "patch": {
         "operationId": "CompleteRelease",
         "parameters": [
@@ -1168,7 +1168,7 @@
         }
       }
     },
-    "/releases/:releaseId": {
+    "/releases/{releaseId}": {
       "patch": {
         "operationId": "PatchRelease",
         "parameters": [
@@ -1223,7 +1223,7 @@
         }
       }
     },
-    "/releases/:releaseId/snapshots": {
+    "/releases/{releaseId}/snapshots": {
       "post": {
         "operationId": "CreateReleaseSnapshot",
         "parameters": [
@@ -1374,7 +1374,7 @@
         }
       }
     },
-    "/secrets/:id": {
+    "/secrets/{id}": {
       "delete": {
         "operationId": "DeleteSecret",
         "parameters": [
@@ -1482,7 +1482,7 @@
         }
       }
     },
-    "/tokens/organization/:organizationId": {
+    "/tokens/organization/{organizationId}": {
       "delete": {
         "operationId": "InvalidateOrganizationTokens",
         "parameters": [

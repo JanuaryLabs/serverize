@@ -47,7 +47,7 @@ export interface Endpoints {
     output: StreamContainerLogsOutput;
     error: ServerError | ParseError<typeof container.streamContainerLogsSchema>;
   };
-  'DELETE /organizations/:id': {
+  'DELETE /organizations/{id}': {
     input: z.infer<typeof organizations.deleteOrgSchema>;
     output: DeleteOrgOutput;
     error: ServerError | ParseError<typeof organizations.deleteOrgSchema>;
@@ -88,7 +88,7 @@ export interface Endpoints {
     output: ListProjectsOutput;
     error: ServerError | ParseError<typeof projects.listProjectsSchema>;
   };
-  'PATCH /projects/:id': {
+  'PATCH /projects/{id}': {
     input: z.infer<typeof projects.patchProjectSchema>;
     output: PatchProjectOutput;
     error: ServerError | ParseError<typeof projects.patchProjectSchema>;
@@ -108,22 +108,22 @@ export interface Endpoints {
     output: StartReleaseOutput;
     error: ServerError | ParseError<typeof operations.startReleaseSchema>;
   };
-  'POST /operations/releases/:releaseName/restart': {
+  'POST /operations/releases/{releaseName}/restart': {
     input: z.infer<typeof operations.restartReleaseSchema>;
     output: RestartReleaseOutput;
     error: ServerError | ParseError<typeof operations.restartReleaseSchema>;
   };
-  'POST /operations/channels/:channelName/restart': {
+  'POST /operations/channels/{channelName}/restart': {
     input: z.infer<typeof operations.restartChannelSchema>;
     output: RestartChannelOutput;
     error: ServerError | ParseError<typeof operations.restartChannelSchema>;
   };
-  'DELETE /operations/releases/:releaseName': {
+  'DELETE /operations/releases/{releaseName}': {
     input: z.infer<typeof operations.deleteReleaseSchema>;
     output: DeleteReleaseOutput;
     error: ServerError | ParseError<typeof operations.deleteReleaseSchema>;
   };
-  'POST /operations/releases/:releaseName/restore': {
+  'POST /operations/releases/{releaseName}/restore': {
     input: z.infer<typeof operations.restoreReleaseSchema>;
     output: RestoreReleaseOutput;
     error: ServerError | ParseError<typeof operations.restoreReleaseSchema>;
@@ -143,7 +143,7 @@ export interface Endpoints {
     output: ListTokensOutput;
     error: ServerError | ParseError<typeof tokens.listTokensSchema>;
   };
-  'GET /tokens/:token': {
+  'GET /tokens/{token}': {
     input: z.infer<typeof tokens.getTokenSchema>;
     output: GetTokenOutput;
     error: ServerError | ParseError<typeof tokens.getTokenSchema>;
@@ -153,7 +153,7 @@ export interface Endpoints {
     output: ExchangeTokenOutput;
     error: ServerError | ParseError<typeof tokens.exchangeTokenSchema>;
   };
-  'DELETE /tokens/organization/:organizationId': {
+  'DELETE /tokens/organization/{organizationId}': {
     input: z.infer<typeof tokens.invalidateOrganizationTokensSchema>;
     output: InvalidateOrganizationTokensOutput;
     error:
@@ -170,17 +170,17 @@ export interface Endpoints {
     output: ListReleasesOutput;
     error: ServerError | ParseError<typeof releases.listReleasesSchema>;
   };
-  'PATCH /releases/complete/:releaseId': {
+  'PATCH /releases/complete/{releaseId}': {
     input: z.infer<typeof releases.completeReleaseSchema>;
     output: CompleteReleaseOutput;
     error: ServerError | ParseError<typeof releases.completeReleaseSchema>;
   };
-  'PATCH /releases/:releaseId': {
+  'PATCH /releases/{releaseId}': {
     input: z.infer<typeof releases.patchReleaseSchema>;
     output: PatchReleaseOutput;
     error: ServerError | ParseError<typeof releases.patchReleaseSchema>;
   };
-  'POST /releases/:releaseId/snapshots': {
+  'POST /releases/{releaseId}/snapshots': {
     input: z.infer<typeof releases.createReleaseSnapshotSchema>;
     output: CreateReleaseSnapshotOutput;
     error:
@@ -197,7 +197,7 @@ export interface Endpoints {
     output: GetSecretsOutput;
     error: ServerError | ParseError<typeof secrets.getSecretsSchema>;
   };
-  'DELETE /secrets/:id': {
+  'DELETE /secrets/{id}': {
     input: z.infer<typeof secrets.deleteSecretSchema>;
     output: DeleteSecretOutput;
     error: ServerError | ParseError<typeof secrets.deleteSecretSchema>;

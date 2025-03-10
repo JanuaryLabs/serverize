@@ -44,13 +44,13 @@ export default {
       );
     },
   },
-  'DELETE /organizations/:id': {
+  'DELETE /organizations/{id}': {
     schema: organizations.deleteOrgSchema,
     toRequest(
-      input: Endpoints['DELETE /organizations/:id']['input'],
+      input: Endpoints['DELETE /organizations/{id}']['input'],
       init: { baseUrl: string; headers?: Partial<Record<string, string>> },
     ) {
-      const endpoint = 'DELETE /organizations/:id';
+      const endpoint = 'DELETE /organizations/{id}';
       return toRequest(
         endpoint,
         json(input, {
@@ -177,13 +177,13 @@ export default {
       );
     },
   },
-  'PATCH /projects/:id': {
+  'PATCH /projects/{id}': {
     schema: projects.patchProjectSchema,
     toRequest(
-      input: Endpoints['PATCH /projects/:id']['input'],
+      input: Endpoints['PATCH /projects/{id}']['input'],
       init: { baseUrl: string; headers?: Partial<Record<string, string>> },
     ) {
-      const endpoint = 'PATCH /projects/:id';
+      const endpoint = 'PATCH /projects/{id}';
       return toRequest(
         endpoint,
         json(input, {
@@ -253,13 +253,13 @@ export default {
       );
     },
   },
-  'POST /operations/releases/:releaseName/restart': {
+  'POST /operations/releases/{releaseName}/restart': {
     schema: operations.restartReleaseSchema,
     toRequest(
-      input: Endpoints['POST /operations/releases/:releaseName/restart']['input'],
+      input: Endpoints['POST /operations/releases/{releaseName}/restart']['input'],
       init: { baseUrl: string; headers?: Partial<Record<string, string>> },
     ) {
-      const endpoint = 'POST /operations/releases/:releaseName/restart';
+      const endpoint = 'POST /operations/releases/{releaseName}/restart';
       return toRequest(
         endpoint,
         json(input, {
@@ -272,13 +272,13 @@ export default {
       );
     },
   },
-  'POST /operations/channels/:channelName/restart': {
+  'POST /operations/channels/{channelName}/restart': {
     schema: operations.restartChannelSchema,
     toRequest(
-      input: Endpoints['POST /operations/channels/:channelName/restart']['input'],
+      input: Endpoints['POST /operations/channels/{channelName}/restart']['input'],
       init: { baseUrl: string; headers?: Partial<Record<string, string>> },
     ) {
-      const endpoint = 'POST /operations/channels/:channelName/restart';
+      const endpoint = 'POST /operations/channels/{channelName}/restart';
       return toRequest(
         endpoint,
         json(input, {
@@ -291,13 +291,13 @@ export default {
       );
     },
   },
-  'DELETE /operations/releases/:releaseName': {
+  'DELETE /operations/releases/{releaseName}': {
     schema: operations.deleteReleaseSchema,
     toRequest(
-      input: Endpoints['DELETE /operations/releases/:releaseName']['input'],
+      input: Endpoints['DELETE /operations/releases/{releaseName}']['input'],
       init: { baseUrl: string; headers?: Partial<Record<string, string>> },
     ) {
-      const endpoint = 'DELETE /operations/releases/:releaseName';
+      const endpoint = 'DELETE /operations/releases/{releaseName}';
       return toRequest(
         endpoint,
         json(input, {
@@ -310,13 +310,13 @@ export default {
       );
     },
   },
-  'POST /operations/releases/:releaseName/restore': {
+  'POST /operations/releases/{releaseName}/restore': {
     schema: operations.restoreReleaseSchema,
     toRequest(
-      input: Endpoints['POST /operations/releases/:releaseName/restore']['input'],
+      input: Endpoints['POST /operations/releases/{releaseName}/restore']['input'],
       init: { baseUrl: string; headers?: Partial<Record<string, string>> },
     ) {
-      const endpoint = 'POST /operations/releases/:releaseName/restore';
+      const endpoint = 'POST /operations/releases/{releaseName}/restore';
       return toRequest(
         endpoint,
         json(input, {
@@ -386,13 +386,13 @@ export default {
       );
     },
   },
-  'GET /tokens/:token': {
+  'GET /tokens/{token}': {
     schema: tokens.getTokenSchema,
     toRequest(
-      input: Endpoints['GET /tokens/:token']['input'],
+      input: Endpoints['GET /tokens/{token}']['input'],
       init: { baseUrl: string; headers?: Partial<Record<string, string>> },
     ) {
-      const endpoint = 'GET /tokens/:token';
+      const endpoint = 'GET /tokens/{token}';
       return toRequest(
         endpoint,
         json(input, {
@@ -424,13 +424,13 @@ export default {
       );
     },
   },
-  'DELETE /tokens/organization/:organizationId': {
+  'DELETE /tokens/organization/{organizationId}': {
     schema: tokens.invalidateOrganizationTokensSchema,
     toRequest(
-      input: Endpoints['DELETE /tokens/organization/:organizationId']['input'],
+      input: Endpoints['DELETE /tokens/organization/{organizationId}']['input'],
       init: { baseUrl: string; headers?: Partial<Record<string, string>> },
     ) {
-      const endpoint = 'DELETE /tokens/organization/:organizationId';
+      const endpoint = 'DELETE /tokens/organization/{organizationId}';
       return toRequest(
         endpoint,
         json(input, {
@@ -488,13 +488,13 @@ export default {
       );
     },
   },
-  'PATCH /releases/complete/:releaseId': {
+  'PATCH /releases/complete/{releaseId}': {
     schema: releases.completeReleaseSchema,
     toRequest(
-      input: Endpoints['PATCH /releases/complete/:releaseId']['input'],
+      input: Endpoints['PATCH /releases/complete/{releaseId}']['input'],
       init: { baseUrl: string; headers?: Partial<Record<string, string>> },
     ) {
-      const endpoint = 'PATCH /releases/complete/:releaseId';
+      const endpoint = 'PATCH /releases/complete/{releaseId}';
       return toRequest(
         endpoint,
         json(input, {
@@ -507,13 +507,13 @@ export default {
       );
     },
   },
-  'PATCH /releases/:releaseId': {
+  'PATCH /releases/{releaseId}': {
     schema: releases.patchReleaseSchema,
     toRequest(
-      input: Endpoints['PATCH /releases/:releaseId']['input'],
+      input: Endpoints['PATCH /releases/{releaseId}']['input'],
       init: { baseUrl: string; headers?: Partial<Record<string, string>> },
     ) {
-      const endpoint = 'PATCH /releases/:releaseId';
+      const endpoint = 'PATCH /releases/{releaseId}';
       return toRequest(
         endpoint,
         json(input, {
@@ -526,13 +526,13 @@ export default {
       );
     },
   },
-  'POST /releases/:releaseId/snapshots': {
+  'POST /releases/{releaseId}/snapshots': {
     schema: releases.createReleaseSnapshotSchema,
     toRequest(
-      input: Endpoints['POST /releases/:releaseId/snapshots']['input'],
+      input: Endpoints['POST /releases/{releaseId}/snapshots']['input'],
       init: { baseUrl: string; headers?: Partial<Record<string, string>> },
     ) {
-      const endpoint = 'POST /releases/:releaseId/snapshots';
+      const endpoint = 'POST /releases/{releaseId}/snapshots';
       return toRequest(
         endpoint,
         json(input, {
@@ -583,13 +583,13 @@ export default {
       );
     },
   },
-  'DELETE /secrets/:id': {
+  'DELETE /secrets/{id}': {
     schema: secrets.deleteSecretSchema,
     toRequest(
-      input: Endpoints['DELETE /secrets/:id']['input'],
+      input: Endpoints['DELETE /secrets/{id}']['input'],
       init: { baseUrl: string; headers?: Partial<Record<string, string>> },
     ) {
-      const endpoint = 'DELETE /secrets/:id';
+      const endpoint = 'DELETE /secrets/{id}';
       return toRequest(
         endpoint,
         json(input, {
