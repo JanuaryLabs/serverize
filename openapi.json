@@ -84,11 +84,19 @@
         "description": "",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Response for 200",
             "content": {
               "text/plain": {
                 "schema": {
                   "type": "string"
+                }
+              }
+            },
+            "headers": {
+              "Transfer-Encoding": {
+                "schema": {
+                  "type": "string",
+                  "enum": ["chunked"]
                 }
               }
             }

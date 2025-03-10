@@ -1,35 +1,15 @@
 import { execFile } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { analyze, responseAnalyzer } from '@sdk-it/generic';
+import { analyze, defaultResponseAnalyzer } from '@sdk-it/generic';
+import { responseAnalyzer } from '@sdk-it/hono';
 import { generate } from '@sdk-it/typescript';
 
 const { paths, components } = await analyze('apps/api/tsconfig.app.json', {
   commonZodImport: './apps/api/src/app/extensions/zod/index.ts',
-  responseAnalyzer,
-  onOperation: (sourceFile, method, path, operation) => {
-    if (path === '/container/logs') {
-      return {
-        [path as string]: {
-          ['get']: {
-            ...operation,
-            responses: {
-              200: {
-                description: 'OK',
-                content: {
-                  'text/plain': {
-                    schema: {
-                      type: 'string',
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      } as const;
-    }
-    return {};
+  responseAnalyzer: {
+    ...responseAnalyzer,
+    default: defaultResponseAnalyzer,
   },
 });
 
