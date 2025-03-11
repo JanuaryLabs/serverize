@@ -1,7 +1,7 @@
 import { execSync } from 'child_process';
 import { readFile, writeFile } from 'fs/promises';
 
-import path, { join } from 'path';
+import path, { join, relative } from 'path';
 
 const npmProjects = ['packages/serverize', 'packages/client', 'apps/vscode'];
 
@@ -41,7 +41,9 @@ for (const project of npmProjects) {
     JSON.stringify(packageJson, null, 2),
     'utf-8',
   );
-  console.log(`Updated ${project} ${join(distDir, 'package.json')}`);
+  console.log(
+    `Updated ${project} ${join(relative(process.cwd(), distDir), 'package.json')}`,
+  );
 }
 
 /**

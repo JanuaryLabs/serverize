@@ -4,7 +4,6 @@ import { readFile } from 'fs/promises';
 import { join } from 'path';
 import { Observable, debounceTime, from, switchMap, tap } from 'rxjs';
 import { logger } from '../program';
-import { getReleaseInfo } from './deploy-context';
 
 export function watchFiles() {
   // const ast = getAst();
@@ -49,7 +48,7 @@ function readFiles(files: string[]) {
 
 function watchMode(token: string) {
   logger('using watch mode');
-  const releaseInfo = getReleaseInfo();
+  // const releaseInfo = getReleaseInfo();
   // const ast = getAst();
   // followLogs(releaseInfo);
   // watchFiles()

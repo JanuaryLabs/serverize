@@ -46,10 +46,10 @@ export default new Command('deploy')
   .addOption(imageOption)
   .addOption(contextOption)
   .addOption(outputOption)
-  .addOption(channelOption)
   .addOption(cwdOption)
-  .addOption(releaseOption)
-  .addOption(projectOption)
+  .addOption(channelOption.makeOptionMandatory(false))
+  .addOption(releaseOption.makeOptionMandatory(false))
+  .addOption(projectOption.makeOptionMandatory(false))
   .action(
     async ({
       projectName,

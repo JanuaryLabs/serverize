@@ -33,6 +33,9 @@ export interface Healthcheck {
 }
 
 export interface AST {
+  projectName?: string;
+  releaseName?: string;
+  channelName?: string;
   healthCheckOptions: Healthcheck | undefined;
   getPaths: () => Promise<string[]>;
   expose?: string;
@@ -81,6 +84,9 @@ export async function inspectDockerfile(
       ),
   );
 
+  const projectName = labels['serverize.project'] as string;
+  const releaseName = labels['serverize.release'] as string;
+  const channelName = labels['serverize.channel'] as string;
   let protocol = labels['serverize.protocol'] as string;
   if (protocol && !['http', 'https', 'tcp'].includes(protocol)) {
     throw new Error(
@@ -117,6 +123,9 @@ export async function inspectDockerfile(
     : guessPort(ast);
 
   return {
+    projectName,
+    releaseName,
+    channelName,
     healthCheckOptions: Object.keys(healthCheckOptions).length
       ? (healthCheckOptions as Healthcheck)
       : undefined,
@@ -152,6 +161,9 @@ export async function inspectImage(image: string): Promise<AST> {
   const {
     ports: [port],
     protocol,
+    channelName,
+    projectName,
+    releaseName,
   } = await getImageExposedPorts(image);
 
   const portandimage = {
@@ -159,13 +171,16 @@ export async function inspectImage(image: string): Promise<AST> {
   };
 
   return {
-    healthCheckOptions: undefined,
     getPaths: async () => {
       return [];
     },
-    protocol,
-    expose: port,
+    healthCheckOptions: undefined,
     dockerfile: '',
+    expose: port,
+    protocol,
+    channelName,
+    projectName,
+    releaseName,
   };
 }
 

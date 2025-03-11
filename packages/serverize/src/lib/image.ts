@@ -263,10 +263,13 @@ export async function getImageExposedPorts(imageName: string) {
   const exposedPorts = data?.Config?.ExposedPorts || {
     '3000/tcp': {},
   };
-  const protocol = data?.Config?.Labels?.['serverize.protocol'] || 'https';
+  const labels = data?.Config?.Labels || {};
+  const protocol = labels['serverize.protocol'] || 'https';
+  const projectName = labels['serverize.project'];
+  const channelName = labels['serverize.channel'];
+  const releaseName = labels['serverize.release'];
   const ports = Object.keys(exposedPorts).map((port) =>
     port.replace('/tcp', ''),
   );
-  return { ports, protocol };
+  return { ports, protocol, projectName, channelName, releaseName };
 }
-
