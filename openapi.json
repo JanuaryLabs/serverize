@@ -474,35 +474,6 @@
               }
             }
           },
-          "408": {
-            "description": "Response for 408",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "cause": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "enum": ["USER_NOT_FOUND"],
-                          "type": "string"
-                        }
-                      },
-                      "required": ["code"],
-                      "additionalProperties": false
-                    },
-                    "message": {
-                      "enum": ["User not found"],
-                      "type": "string"
-                    }
-                  },
-                  "required": ["cause", "message"],
-                  "additionalProperties": false
-                }
-              }
-            }
-          },
           "409": {
             "description": "Response for 409",
             "content": {

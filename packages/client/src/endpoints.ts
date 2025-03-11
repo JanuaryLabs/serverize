@@ -4,7 +4,6 @@ import type {
   BadRequest,
   Conflict,
   NotFound,
-  ProblematicResponse,
   ServerError,
   Unauthorized,
 } from './http/response.ts';
@@ -103,10 +102,7 @@ export interface Endpoints {
   'POST /users/link': {
     input: z.infer<typeof users.linkUserSchema>;
     output: LinkUserOutput;
-    error:
-      | ProblematicResponse
-      | Conflict
-      | ParseError<typeof users.linkUserSchema>;
+    error: Conflict | ParseError<typeof users.linkUserSchema>;
   };
   'POST /users/signin': {
     input: z.infer<typeof users.signinSchema>;

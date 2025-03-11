@@ -1,7 +1,12 @@
 import z from 'zod';
 import type { Endpoints } from './endpoints.ts';
+import {
+  createBaseUrlInterceptor,
+  createDefaultHeadersInterceptor,
+} from './http/interceptors.ts';
 import { fetchType, sendRequest } from './http/send-request.ts';
 import schemas from './schemas.ts';
+
 export const servers = [
   'https://serverize-api.january.sh',
   'http://localhost:3000',
@@ -27,9 +32,11 @@ export class Serverize {
   ): Promise<readonly [Endpoints[E]['output'], Endpoints[E]['error'] | null]> {
     const route = schemas[endpoint];
     return sendRequest(Object.assign(this.#defaultInputs, input), route, {
-      baseUrl: this.options.baseUrl,
       fetch: this.options.fetch,
-      headers: this.defaultHeaders,
+      interceptors: [
+        createDefaultHeadersInterceptor(() => this.defaultHeaders),
+        createBaseUrlInterceptor(() => this.options.baseUrl),
+      ],
     });
   }
 
