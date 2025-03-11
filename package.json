@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "type": "module",
   "workspaces": ["packages/*", "apps/*"],
+  "nx": {},
   "scripts": {
     "serverize": "npx concurrently -k \"nx run serverize:build:development --watch\" \"nx run docker:build:development --watch\" \"nx run dockerfile:build:development --watch\" \"nx run dockercompose:build:development --watch\" \"nx run utils:build:development --watch\"",
-    "client": "NODE_NO_WARNINGS=1 node --experimental-strip-types --watch-path ./apps/api/src --watch ./apps/api/openapi.ts",
+    "client:watch": "NODE_NO_WARNINGS=1 node --experimental-strip-types --watch-path ./apps/api/src --watch ./apps/api/openapi.ts",
+    "client": "NODE_NO_WARNINGS=1 node --experimental-strip-types ./apps/api/openapi.ts",
     "prepare": "husky"
   },
   "private": true,
@@ -47,9 +49,9 @@
     "tailwindcss-animate": "^1.0.7",
     "tslib": "^2.3.0",
     "typescript": "^5.7.0",
-    "@sdk-it/hono": "^0.11.2",
-    "@sdk-it/generic": "^0.11.2",
-    "@sdk-it/typescript": "^0.11.2"
+    "@sdk-it/hono": "^0.11.3",
+    "@sdk-it/generic": "^0.11.3",
+    "@sdk-it/typescript": "^0.11.3"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",

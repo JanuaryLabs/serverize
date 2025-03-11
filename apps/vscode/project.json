@@ -4,8 +4,10 @@
   "sourceRoot": "apps/vscode/src",
   "projectType": "application",
   "tags": [],
+  "implicitDependencies": ["@serverize/source"],
   "targets": {
     "build": {
+      "dependsOn": ["^client"],
       "executor": "nx:run-script",
       "options": {
         "script": "build"

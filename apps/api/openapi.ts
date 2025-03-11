@@ -9,7 +9,10 @@ import { responseAnalyzer } from '@sdk-it/hono';
 import { generate } from '@sdk-it/typescript';
 
 const { paths, components } = await analyze('apps/api/tsconfig.app.json', {
-  commonZodImport: './apps/api/src/app/extensions/zod/index.ts',
+  commonZodImport: join(
+    process.cwd(),
+    'apps/api/src/app/extensions/zod/index.ts',
+  ),
   responseAnalyzer: {
     ...responseAnalyzer,
     ...genericResponseAnalyzer,

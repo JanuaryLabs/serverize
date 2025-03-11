@@ -3,11 +3,17 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/serverize/src",
   "projectType": "library",
-  "implicitDependencies": ["dockerfile", "docker", "dockercompose", "utils"],
+  "implicitDependencies": [
+    "dockerfile",
+    "docker",
+    "dockercompose",
+    "utils",
+    "@serverize/source"
+  ],
   "tags": [],
   "targets": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "^client"],
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
