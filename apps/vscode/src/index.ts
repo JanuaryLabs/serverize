@@ -1,4 +1,4 @@
-import { Serverize } from '@serverize/client';
+import type { Serverize } from '@serverize/client';
 import {
   onIdTokenChanged,
   signInWithCustomToken,
@@ -11,8 +11,12 @@ import { auth, client, signInWithEmail } from 'serverize';
 import { registerAuthCommands } from './commands/auth-command';
 import { showError } from './error-handler';
 import { OrganizationDataProvider } from './tree/accounts';
-import { ProjectsDataProvider, ReleaseItem } from './tree/projects';
-import { ChannelItem, SecretItem, SecretsDataProvider } from './tree/secrets';
+import { ProjectsDataProvider, type ReleaseItem } from './tree/projects';
+import {
+  type ChannelItem,
+  type SecretItem,
+  SecretsDataProvider,
+} from './tree/secrets';
 
 const outputChannel = vscode.window.createOutputChannel('Serverize', {
   log: true,
@@ -422,7 +426,8 @@ export async function activate(context: vscode.ExtensionContext) {
       }
 
       const relativePath = relative(cwd, dockerFileUri.fsPath);
-      const dockerfile = relativePath.split(sep).length > 1 ? relativePath : ``; // we only need relative path if not in workspace (cwd) level
+      const dockerfile = relativePath;
+
       const flags = [
         `-p ${selectedProject.name}`,
         dockerfile ? `-f ${dockerfile}` : '',
