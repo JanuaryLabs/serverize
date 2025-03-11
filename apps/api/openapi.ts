@@ -1,7 +1,10 @@
 import { execFile } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { analyze, defaultResponseAnalyzer } from '@sdk-it/generic';
+import {
+  analyze,
+  responseAnalyzer as genericResponseAnalyzer,
+} from '@sdk-it/generic';
 import { responseAnalyzer } from '@sdk-it/hono';
 import { generate } from '@sdk-it/typescript';
 
@@ -9,7 +12,7 @@ const { paths, components } = await analyze('apps/api/tsconfig.app.json', {
   commonZodImport: './apps/api/src/app/extensions/zod/index.ts',
   responseAnalyzer: {
     ...responseAnalyzer,
-    default: defaultResponseAnalyzer,
+    ...genericResponseAnalyzer,
   },
 });
 

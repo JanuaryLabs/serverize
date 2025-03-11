@@ -1,6 +1,13 @@
 import z from 'zod';
 import type { ParseError } from './http/parser.ts';
-import type { ServerError } from './http/response.ts';
+import type {
+  BadRequest,
+  Conflict,
+  NotFound,
+  ProblematicResponse,
+  ServerError,
+  Unauthorized,
+} from './http/response.ts';
 import * as container from './inputs/container.ts';
 import * as operations from './inputs/operations.ts';
 import * as organizations from './inputs/organizations.ts';
@@ -96,12 +103,15 @@ export interface Endpoints {
   'POST /users/link': {
     input: z.infer<typeof users.linkUserSchema>;
     output: LinkUserOutput;
-    error: ServerError | ParseError<typeof users.linkUserSchema>;
+    error:
+      | ProblematicResponse
+      | Conflict
+      | ParseError<typeof users.linkUserSchema>;
   };
   'POST /users/signin': {
     input: z.infer<typeof users.signinSchema>;
     output: SigninOutput;
-    error: ServerError | ParseError<typeof users.signinSchema>;
+    error: NotFound | ParseError<typeof users.signinSchema>;
   };
   'POST /operations/releases/start': {
     input: z.infer<typeof operations.startReleaseSchema>;
@@ -121,37 +131,37 @@ export interface Endpoints {
   'DELETE /operations/releases/{releaseName}': {
     input: z.infer<typeof operations.deleteReleaseSchema>;
     output: DeleteReleaseOutput;
-    error: ServerError | ParseError<typeof operations.deleteReleaseSchema>;
+    error: NotFound | ParseError<typeof operations.deleteReleaseSchema>;
   };
   'POST /operations/releases/{releaseName}/restore': {
     input: z.infer<typeof operations.restoreReleaseSchema>;
     output: RestoreReleaseOutput;
-    error: ServerError | ParseError<typeof operations.restoreReleaseSchema>;
+    error: NotFound | ParseError<typeof operations.restoreReleaseSchema>;
   };
   'POST /tokens': {
     input: z.infer<typeof tokens.createTokenSchema>;
     output: CreateTokenOutput;
-    error: ServerError | ParseError<typeof tokens.createTokenSchema>;
+    error: NotFound | ParseError<typeof tokens.createTokenSchema>;
   };
   'DELETE /tokens': {
     input: z.infer<typeof tokens.revokeTokenSchema>;
     output: RevokeTokenOutput;
-    error: ServerError | ParseError<typeof tokens.revokeTokenSchema>;
+    error: NotFound | ParseError<typeof tokens.revokeTokenSchema>;
   };
   'GET /tokens': {
     input: z.infer<typeof tokens.listTokensSchema>;
     output: ListTokensOutput;
-    error: ServerError | ParseError<typeof tokens.listTokensSchema>;
+    error: NotFound | ParseError<typeof tokens.listTokensSchema>;
   };
   'GET /tokens/{token}': {
     input: z.infer<typeof tokens.getTokenSchema>;
     output: GetTokenOutput;
-    error: ServerError | ParseError<typeof tokens.getTokenSchema>;
+    error: NotFound | ParseError<typeof tokens.getTokenSchema>;
   };
   'POST /tokens/exchange': {
     input: z.infer<typeof tokens.exchangeTokenSchema>;
     output: ExchangeTokenOutput;
-    error: ServerError | ParseError<typeof tokens.exchangeTokenSchema>;
+    error: Unauthorized | ParseError<typeof tokens.exchangeTokenSchema>;
   };
   'DELETE /tokens/organization/{organizationId}': {
     input: z.infer<typeof tokens.invalidateOrganizationTokensSchema>;
@@ -173,7 +183,7 @@ export interface Endpoints {
   'PATCH /releases/complete/{releaseId}': {
     input: z.infer<typeof releases.completeReleaseSchema>;
     output: CompleteReleaseOutput;
-    error: ServerError | ParseError<typeof releases.completeReleaseSchema>;
+    error: BadRequest | ParseError<typeof releases.completeReleaseSchema>;
   };
   'PATCH /releases/{releaseId}': {
     input: z.infer<typeof releases.patchReleaseSchema>;

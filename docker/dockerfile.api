@@ -1,8 +1,30 @@
-FROM node:lts-alpine
-WORKDIR /usr/src/app
+# syntax=docker/dockerfile:1.7-labs
 
-COPY ./dist/apps/api/package*.json ./
+### Stage 1: Builder
+FROM node:lts-alpine AS builder
+WORKDIR /app
+
+# Copy lockfile and package.json files (using --parents preserves relative paths)
+COPY package-lock.json* .
+COPY --parents **/package.json .
+
+# Install dependencies (you can use npm ci if a clean install is desired)
 RUN npm i --no-audit --no-fund
 
-COPY ./dist/apps/api/ ./
-CMD ["node", "./"]
+# Copy the rest of your source code
+COPY . .
+
+# Run the Nx build for your API in production mode
+RUN ./node_modules/.bin/nx run-many --targets build --projects api --prod
+
+### Stage 2: Production
+FROM node:lts-alpine AS runner
+WORKDIR /app
+
+# Copy only the built output from the builder stage
+COPY --from=builder /app/dist/apps/api ./dist/apps/api
+# Also copy package files if you need to reinstall production dependencies
+RUN cd dist/apps/api && npm i --omit=dev --no-audit --no-fund
+
+# Start the application
+CMD ["node", "dist/apps/api"]

@@ -12,33 +12,33 @@
     "./package.json": "./package.json",
     ".": {
       "node": "./index.js",
-      "default": "./index.js",
       "import": "./index.js",
-      "types": "./src/index.d.ts"
+      "types": "./src/index.d.ts",
+      "default": "./index.js"
     },
     "./docker": {
       "node": "./docker/index.js",
-      "default": "./docker/index.js",
       "import": "./docker/index.js",
-      "types": "./docker/packages/docker/src/index.d.ts"
+      "types": "./docker/packages/docker/src/index.d.ts",
+      "default": "./docker/index.js"
     },
     "./dockerfile": {
       "node": "./dockerfile/index.js",
-      "default": "./dockerfile/index.js",
       "import": "./dockerfile/index.js",
-      "types": "./dockerfile/packages/dockerfile/src/index.d.ts"
+      "types": "./dockerfile/packages/dockerfile/src/index.d.ts",
+      "default": "./dockerfile/index.js"
     },
     "./dockercompose": {
       "node": "./dockercompose/index.js",
-      "default": "./dockercompose/index.js",
       "import": "./dockercompose/index.js",
-      "types": "./dockercompose/packages/dockercompose/src/index.d.ts"
+      "types": "./dockercompose/packages/dockercompose/src/index.d.ts",
+      "default": "./dockercompose/index.js"
     },
     "./utils": {
       "node": "./utils/index.js",
-      "default": "./utils/index.js",
       "import": "./utils/index.js",
-      "types": "./utils/packages/utils/src/index.d.ts"
+      "types": "./utils/packages/utils/src/index.d.ts",
+      "default": "./utils/index.js"
     }
   },
   "devDependencies": {

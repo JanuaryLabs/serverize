@@ -18,9 +18,9 @@
     "./package.json": "./package.json",
     ".": {
       "node": "./index.js",
-      "default": "./index.js",
       "import": "./index.js",
-      "types": "./src/index.d.ts"
+      "types": "./src/index.d.ts",
+      "default": "./index.js"
     }
   }
 }

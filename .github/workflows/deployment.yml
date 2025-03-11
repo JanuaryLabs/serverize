@@ -34,6 +34,8 @@ jobs:
 
       - name: Build Prod
         run: ./node_modules/.bin/nx run-many --projects api,manager,www --target build --prod
+        env:
+          NX_NO_CLOUD: true
 
       - name: Deploy WWW
         uses: nwtgck/actions-netlify@v3.0

@@ -473,6 +473,60 @@
                 }
               }
             }
+          },
+          "408": {
+            "description": "Response for 408",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cause": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "enum": ["USER_NOT_FOUND"],
+                          "type": "string"
+                        }
+                      },
+                      "required": ["code"],
+                      "additionalProperties": false
+                    },
+                    "message": {
+                      "enum": ["User not found"],
+                      "type": "string"
+                    }
+                  },
+                  "required": ["cause", "message"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Response for 409",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "enum": ["User already exists"],
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [409],
+                      "type": "number"
+                    }
+                  },
+                  "required": ["title", "detail", "status"],
+                  "additionalProperties": false
+                }
+              }
+            }
           }
         }
       }
@@ -519,6 +573,35 @@
                     }
                   },
                   "required": ["accessToken"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Response for 404",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "enum": ["User not found"],
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [404],
+                      "type": "number"
+                    },
+                    "code": {
+                      "enum": ["auth/user-not-found"],
+                      "type": "string"
+                    }
+                  },
+                  "required": ["title", "detail", "status", "code"],
                   "additionalProperties": false
                 }
               }
@@ -810,6 +893,31 @@
         "responses": {
           "200": {
             "description": "Response for 200"
+          },
+          "404": {
+            "description": "Response for 404",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "enum": ["Container not found"],
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [404],
+                      "type": "number"
+                    }
+                  },
+                  "required": ["title", "detail", "status"],
+                  "additionalProperties": false
+                }
+              }
+            }
           }
         }
       }
@@ -854,6 +962,31 @@
         "responses": {
           "200": {
             "description": "Response for 200"
+          },
+          "404": {
+            "description": "Response for 404",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "enum": ["Release not found"],
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [404],
+                      "type": "number"
+                    }
+                  },
+                  "required": ["title", "detail", "status"],
+                  "additionalProperties": false
+                }
+              }
+            }
           }
         }
       }
@@ -890,6 +1023,31 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Response for 404",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "enum": [404],
+                      "type": "number"
+                    },
+                    "title": {
+                      "enum": ["Project not found"],
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["status", "title", "detail"],
+                  "additionalProperties": false
+                }
+              }
+            }
           }
         }
       },
@@ -919,6 +1077,31 @@
         "responses": {
           "200": {
             "description": "Response for 200"
+          },
+          "404": {
+            "description": "Response for 404",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "enum": [404],
+                      "type": "number"
+                    },
+                    "title": {
+                      "enum": ["Project not found"],
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["status", "title", "detail"],
+                  "additionalProperties": false
+                }
+              }
+            }
           }
         }
       },
@@ -949,6 +1132,31 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Response for 404",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "enum": [404],
+                      "type": "number"
+                    },
+                    "title": {
+                      "enum": ["Project not found"],
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["status", "title", "detail"],
+                  "additionalProperties": false
+                }
+              }
+            }
           }
         }
       }
@@ -975,6 +1183,24 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiKeys"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Response for 404",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "enum": [404],
+                      "type": "number"
+                    }
+                  },
+                  "required": ["status"],
+                  "additionalProperties": false
                 }
               }
             }
@@ -1168,6 +1394,31 @@
                   "type": "object",
                   "properties": {},
                   "required": [],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Response for 400",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "enum": [400],
+                      "type": "number"
+                    },
+                    "title": {
+                      "enum": ["Release not found"],
+                      "type": "string"
+                    },
+                    "detail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["status", "title", "detail"],
                   "additionalProperties": false
                 }
               }
@@ -1482,6 +1733,34 @@
                     }
                   },
                   "required": ["accessToken"],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Response for 401",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "enum": [401],
+                      "type": "number"
+                    },
+                    "title": {
+                      "enum": ["Invalid API token"],
+                      "type": "string"
+                    },
+                    "detail": {
+                      "enum": [
+                        "The provided API token is invalid or has been revoked"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": ["status", "title", "detail"],
                   "additionalProperties": false
                 }
               }

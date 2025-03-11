@@ -7,7 +7,10 @@ export const servers = [
   'http://localhost:3000',
 ] as const;
 const optionsSchema = z.object({
-  token: z.string().optional(),
+  token: z
+    .string()
+    .optional()
+    .transform((val) => (val ? `Bearer ${val}` : undefined)),
   fetch: fetchType,
   baseUrl: z.enum(servers).default(servers[0]),
 });

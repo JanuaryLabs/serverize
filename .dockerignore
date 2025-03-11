@@ -1,0 +1,52 @@
+# Node.js dependencies
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Development and environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+*.env
+
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Build outputs
+dist
+build
+coverage
+.nyc_output
+
+# Editor directories and files
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker files (optional, depending on your build strategy)
+docker
+docker-compose*.yml
+
+# Other project files that don't need to be in the build
+*.md
+LICENSE
+.editorconfig
+.prettierrc
+.eslintrc
+jest.config.js
+tests
+__tests__
+test
+*.test.js
+*.spec.js

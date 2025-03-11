@@ -5,6 +5,7 @@ import {
   createUrl,
   formdata,
   json,
+  nobody,
   toRequest,
   urlencoded,
 } from './http/request.ts';
@@ -27,7 +28,7 @@ export default {
       const endpoint = 'GET /container/logs';
       return toRequest(
         endpoint,
-        json(input, {
+        nobody(input, {
           inputHeaders: [],
           inputQuery: [
             'projectName',
@@ -53,7 +54,7 @@ export default {
       const endpoint = 'DELETE /organizations/{id}';
       return toRequest(
         endpoint,
-        json(input, {
+        nobody(input, {
           inputHeaders: [],
           inputQuery: [],
           inputBody: [],
@@ -72,7 +73,7 @@ export default {
       const endpoint = 'GET /organizations';
       return toRequest(
         endpoint,
-        json(input, {
+        nobody(input, {
           inputHeaders: [],
           inputQuery: ['pageSize', 'pageNo'],
           inputBody: [],
@@ -167,7 +168,7 @@ export default {
       const endpoint = 'GET /projects';
       return toRequest(
         endpoint,
-        json(input, {
+        nobody(input, {
           inputHeaders: [],
           inputQuery: ['workspaceId', 'name', 'pageSize', 'pageNo'],
           inputBody: [],
@@ -376,7 +377,7 @@ export default {
       const endpoint = 'GET /tokens';
       return toRequest(
         endpoint,
-        json(input, {
+        nobody(input, {
           inputHeaders: [],
           inputQuery: ['projectName'],
           inputBody: [],
@@ -395,7 +396,7 @@ export default {
       const endpoint = 'GET /tokens/{token}';
       return toRequest(
         endpoint,
-        json(input, {
+        nobody(input, {
           inputHeaders: [],
           inputQuery: [],
           inputBody: [],
@@ -433,7 +434,7 @@ export default {
       const endpoint = 'DELETE /tokens/organization/{organizationId}';
       return toRequest(
         endpoint,
-        json(input, {
+        nobody(input, {
           inputHeaders: [],
           inputQuery: [],
           inputBody: [],
@@ -471,7 +472,7 @@ export default {
       const endpoint = 'GET /releases';
       return toRequest(
         endpoint,
-        json(input, {
+        nobody(input, {
           inputHeaders: [],
           inputQuery: [
             'projectId',
@@ -573,7 +574,7 @@ export default {
       const endpoint = 'GET /secrets';
       return toRequest(
         endpoint,
-        json(input, {
+        nobody(input, {
           inputHeaders: [],
           inputQuery: ['projectId', 'channel'],
           inputBody: [],
@@ -592,7 +593,7 @@ export default {
       const endpoint = 'DELETE /secrets/{id}';
       return toRequest(
         endpoint,
-        json(input, {
+        nobody(input, {
           inputHeaders: [],
           inputQuery: [],
           inputBody: [],
@@ -611,7 +612,7 @@ export default {
       const endpoint = 'GET /secrets/values';
       return toRequest(
         endpoint,
-        json(input, {
+        nobody(input, {
           inputHeaders: [],
           inputQuery: ['projectId', 'channel'],
           inputBody: [],
