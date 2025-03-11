@@ -467,6 +467,9 @@ function guessPort(ast: Dockerfile) {
 export function showError(
   error?: ProblematicResponse | ParseError<any> | Error,
 ) {
+  if (process.env.NODE_ENV === 'development') {
+    console.error(error);
+  }
   if (!error) return;
   if (typeof error === 'string') {
     return spinner.fail(error);
@@ -487,8 +490,8 @@ export function showError(
         path: key,
         message: (it as any[])[0].message,
       }));
-      const validationMessage = `${flattened.map((it) => `${it.path}: ${it.message}`).join('\n')}`;
-      return spinner.fail(`${detail || title}\n${validationMessage}`);
+      const validationMessage = `${flattened.map((it) => `\n- ${it.path}: ${it.message}`).join('\n')}`;
+      return spinner.fail(`${detail || title}\n${validationMessage}\n`);
     }
   }
   if (error instanceof Error) {

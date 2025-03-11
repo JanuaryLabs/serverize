@@ -71,7 +71,7 @@ export default async function (router: Hono<HonoEnv>) {
         select: payload.body.environment,
         against: z.any().optional(),
       },
-      jwt: { select: payload.headers.Authorization, against: z.any() },
+      jwt: { select: payload.headers.authorization, against: z.string() },
     })),
     async (context, next) => {
       const { input } = context.var;

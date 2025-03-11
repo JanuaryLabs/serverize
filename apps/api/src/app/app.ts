@@ -3,6 +3,7 @@ import './features/listeners';
 import { Hono } from 'hono';
 import { contextStorage } from 'hono/context-storage';
 import { cors } from 'hono/cors';
+import { HTTPException } from 'hono/http-exception';
 import { logger } from 'hono/logger';
 import { timing } from 'hono/timing';
 import type { StatusCode } from 'hono/utils/http-status';
@@ -12,6 +13,9 @@ import routes from './features/routes';
 
 const application = new Hono<HonoEnv>();
 application.use(timing(), cors(), logger(), contextStorage());
+routes.forEach(([path, route]) => {
+  application.route(path, route);
+});
 
 application.notFound(() => {
   throw new ProblemDetailsException({
@@ -21,13 +25,36 @@ application.notFound(() => {
   });
 });
 
-application.onError((err, context) => {
-  if (err instanceof ProblemDetailsException) {
-    context.status((err.Details.status as StatusCode) ?? 500);
-    return context.json(err.Details);
+application.onError((error, context) => {
+  if (error instanceof ProblemDetailsException) {
+    context.status((error.Details.status as StatusCode) ?? 500);
+    return context.json(error.Details);
   }
-
-  console.error(err);
+  if (error instanceof HTTPException) {
+    const cause = error.cause as Record<string, unknown>;
+    if (cause.code === 'api/validation-failed') {
+      return context.json(
+        {
+          title: error.message,
+          status: error.status,
+          code: cause?.code,
+          errors: cause?.details,
+        },
+        error.status,
+      );
+    } else {
+      return context.json(
+        {
+          title: error.message,
+          status: error.status,
+          code: cause?.code,
+          detail: cause?.details,
+        },
+        error.status,
+      );
+    }
+  }
+  console.error(error);
 
   context.status(500);
   return context.json({
@@ -35,10 +62,6 @@ application.onError((err, context) => {
     status: 500,
     detail: 'An unexpected error occurred',
   });
-});
-
-routes.forEach(([path, route]) => {
-  application.route(path, route);
 });
 
 export default application;

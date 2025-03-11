@@ -84,7 +84,10 @@ export default {
           select: trigger.body.environment,
           against: z.any().optional(),
         },
-        jwt: trigger.headers.Authorization,
+        jwt: {
+          select: trigger.headers.authorization,
+          against: z.string(),
+        },
       }),
     }),
     execute: async ({ input }) => {
@@ -213,7 +216,10 @@ export default {
           select: trigger.body.channel,
           against: commonZod.channelSchema,
         },
-        jwt: trigger.headers.Authorization,
+        jwt: {
+          select: trigger.headers.authorization,
+          against: z.string(),
+        },
       }),
     }),
     execute: async ({ input }) => {
@@ -277,7 +283,11 @@ export default {
           select: trigger.body.projectName,
           against: z.string().trim().min(1),
         },
-        jwt: trigger.headers.Authorization,
+
+        jwt: {
+          select: trigger.headers.authorization,
+          against: z.string(),
+        },
       }),
     }),
     execute: async ({ input }) => {

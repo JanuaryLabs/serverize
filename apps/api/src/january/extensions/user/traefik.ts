@@ -197,7 +197,7 @@ function createSablierMiddleware(groupName: string) {
       sablier: {
         group: groupName,
         sablierUrl: 'http://sablier:10000',
-        sessionDuration: process.env.NODE_ENV === 'development' ? '20s' : '30m',
+        sessionDuration: process.env.NODE_ENV === 'development' ? '1m' : '30m',
         blocking: {
           defaultTimeout: '30s',
         },

@@ -80,7 +80,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['name'],
           inputParams: [],
         }),
       );
@@ -95,7 +95,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['name', 'projectName', 'uid'],
           inputParams: [],
         }),
       );
@@ -110,7 +110,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['name', 'organizationId'],
           inputParams: [],
         }),
       );
@@ -125,7 +125,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['name'],
           inputParams: [],
         }),
       );
@@ -155,7 +155,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['name'],
           inputParams: ['id'],
         }),
       );
@@ -170,7 +170,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['token', 'providerId', 'orgName', 'projectName'],
           inputParams: [],
         }),
       );
@@ -185,7 +185,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['token', 'providerId', 'source'],
           inputParams: [],
         }),
       );
@@ -200,7 +200,20 @@ export default {
         json(input, {
           inputHeaders: ['jwt'],
           inputQuery: [],
-          inputBody: [],
+          inputBody: [
+            'releaseName',
+            'projectId',
+            'projectName',
+            'channel',
+            'tarLocation',
+            'runtimeConfig',
+            'port',
+            'protocol',
+            'image',
+            'volumes',
+            'serviceName',
+            'environment',
+          ],
           inputParams: [],
         }),
       );
@@ -217,7 +230,7 @@ export default {
         json(input, {
           inputHeaders: ['jwt'],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['projectId', 'projectName', 'channel'],
           inputParams: ['releaseName'],
         }),
       );
@@ -234,7 +247,7 @@ export default {
         json(input, {
           inputHeaders: ['jwt'],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['projectId', 'projectName'],
           inputParams: ['channel'],
         }),
       );
@@ -251,7 +264,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['projectId', 'channel'],
           inputParams: ['releaseName'],
         }),
       );
@@ -268,7 +281,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['projectId', 'channel'],
           inputParams: ['releaseName'],
         }),
       );
@@ -283,7 +296,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['projectName'],
           inputParams: [],
         }),
       );
@@ -298,7 +311,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['projectName', 'token'],
           inputParams: [],
         }),
       );
@@ -343,7 +356,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['token'],
           inputParams: [],
         }),
       );
@@ -375,7 +388,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['releaseName', 'projectId', 'channel'],
           inputParams: [],
         }),
       );
@@ -414,7 +427,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['conclusion', 'containerName', 'tarLocation'],
           inputParams: ['releaseId'],
         }),
       );
@@ -429,7 +442,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['status', 'conclusion', 'containerName'],
           inputParams: ['releaseId'],
         }),
       );
@@ -446,7 +459,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['name'],
           inputParams: ['releaseId'],
         }),
       );
@@ -461,7 +474,7 @@ export default {
         json(input, {
           inputHeaders: [],
           inputQuery: [],
-          inputBody: [],
+          inputBody: ['projectId', 'channel', 'secretLabel', 'secretValue'],
           inputParams: [],
         }),
       );

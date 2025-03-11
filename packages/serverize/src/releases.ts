@@ -98,6 +98,7 @@ const restart = new Command('restart')
         projectName: currentProject.projectName,
         channel,
         releaseName,
+        jwt: '',
       },
     );
 

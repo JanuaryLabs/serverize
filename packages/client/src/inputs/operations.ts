@@ -12,20 +12,20 @@ export const startReleaseSchema = z.object({
   volumes: z.array(z.string()).optional(),
   serviceName: z.unknown().optional(),
   environment: z.unknown().optional(),
-  jwt: z.unknown(),
+  jwt: z.string(),
 });
 export const restartReleaseSchema = z.object({
   projectId: z.string().uuid().optional(),
   projectName: z.string().optional(),
   channel: z.enum(['dev', 'preview']),
   releaseName: z.string(),
-  jwt: z.unknown(),
+  jwt: z.string(),
 });
 export const restartChannelSchema = z.object({
   projectId: z.string().uuid().optional(),
   projectName: z.string().optional(),
   channel: z.enum(['dev', 'preview']),
-  jwt: z.unknown(),
+  jwt: z.string(),
 });
 export const deleteReleaseSchema = z.object({
   projectId: z.string().uuid().optional(),

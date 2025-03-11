@@ -589,7 +589,9 @@
             "in": "header",
             "name": "jwt",
             "required": true,
-            "schema": {}
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "tags": ["operations"],
@@ -700,7 +702,9 @@
             "in": "header",
             "name": "jwt",
             "required": true,
-            "schema": {}
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "tags": ["operations"],
@@ -775,7 +779,9 @@
             "in": "header",
             "name": "jwt",
             "required": true,
-            "schema": {}
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "tags": ["operations"],

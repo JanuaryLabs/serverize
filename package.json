@@ -47,9 +47,9 @@
     "tailwindcss-animate": "^1.0.7",
     "tslib": "^2.3.0",
     "typescript": "^5.7.0",
-    "@sdk-it/hono": "^0.10.2",
-    "@sdk-it/generic": "^0.10.2",
-    "@sdk-it/typescript": "^0.10.2"
+    "@sdk-it/hono": "^0.11.2",
+    "@sdk-it/generic": "^0.11.2",
+    "@sdk-it/typescript": "^0.11.2"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
