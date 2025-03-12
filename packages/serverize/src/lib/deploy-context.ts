@@ -28,9 +28,9 @@ import { buildCompose, buildImage, saveImage } from './image';
 import { pushImage } from './uploader';
 import { streamLogs } from './view-logs';
 
-import { box } from '@january/console';
 import { execa } from 'execa';
 import { writeFile } from 'fs/promises';
+import { box } from './console.ts';
 
 interface ReleaseInfo {
   channel: 'dev' | 'preview';

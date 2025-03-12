@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import { Command } from 'commander';
 
 import { client } from './lib/api-client';
@@ -8,10 +7,9 @@ import {
   projectOption,
   projectOptionsArg,
   showError,
-  spinner,
 } from './program';
 
-import { box } from '@january/console';
+import { box } from './lib/console.ts';
 
 const create = new Command('create')
   .summary('Generate a new token')

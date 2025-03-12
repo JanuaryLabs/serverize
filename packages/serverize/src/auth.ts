@@ -13,7 +13,7 @@ import {
 import { auth } from './lib/firebase';
 import { askForProjectName, showError, spinner, tell } from './program';
 
-import { box } from '@january/console';
+import { box } from './lib/console.ts';
 
 const CLIENT_ID =
   process.env.NODE_ENV === 'development'

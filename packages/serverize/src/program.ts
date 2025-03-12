@@ -21,7 +21,7 @@ import { client, serverizeApiUrl } from './lib/api-client';
 import { initialise } from './lib/auth-methods';
 import { auth } from './lib/firebase';
 
-import { box } from '@january/console';
+import { box } from './lib/console.ts';
 import { getImageExposedPorts } from './lib/image';
 
 export interface Healthcheck {

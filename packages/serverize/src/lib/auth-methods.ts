@@ -18,7 +18,7 @@ import {
 
 import { auth } from './firebase';
 
-import { box } from '@january/console';
+import { box } from './console.ts';
 
 export async function anonymouslySignIn() {
   if (auth.currentUser) {

@@ -19,7 +19,7 @@ import {
 import { cwdOption, dropdown, printDivider, spinner } from './program';
 import { setupFramework } from './setup/setup-framework';
 
-import { box } from '@january/console';
+import { box } from './lib/console.ts';
 
 const listCommand = new Command('list')
   .alias('ls')

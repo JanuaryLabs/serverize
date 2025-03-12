@@ -13,7 +13,7 @@ import {
   tell,
 } from './program';
 
-import { box } from '@january/console';
+import { box } from './lib/console.ts';
 
 const list = new Command('list')
   .alias('ls')

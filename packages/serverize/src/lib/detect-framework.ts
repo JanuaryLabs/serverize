@@ -5,9 +5,9 @@ import { basename, dirname, join } from 'path';
 import { exist, getFile, readJsonFile, safeFail } from 'serverize/utils';
 import { parseRequirements } from './requirements-parser';
 
-import { fileBundler } from '@january/bundler';
 import { type Callers, staticEval } from '@january/evaluator';
 import { checker, parseCode, resolveCallExpression } from '@january/parser';
+import { fileBundler } from './file-bundler';
 
 export const supportedFrameworks = [
   'nextjs',
