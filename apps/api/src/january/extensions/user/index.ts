@@ -101,8 +101,6 @@ export async function tellDiscord(message: string, url?: string) {
   });
 }
 
-export const serverizeUrl = process.env.MANAGEMENT_API_URL;
-
 export function clean(obj: Record<string, any>) {
   const cleaned: Record<string, any> = {};
   for (var propName in obj) {

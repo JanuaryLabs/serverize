@@ -1,5 +1,5 @@
-import './features/crons';
-import './features/listeners';
+import './features/crons.ts';
+import './features/listeners.ts';
 import { Hono } from 'hono';
 import { contextStorage } from 'hono/context-storage';
 import { cors } from 'hono/cors';
@@ -9,7 +9,7 @@ import { timing } from 'hono/timing';
 import type { StatusCode } from 'hono/utils/http-status';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import type { HonoEnv } from '#core/utils.ts';
-import routes from './features/routes';
+import routes from './features/routes.ts';
 
 const application = new Hono<HonoEnv>();
 application.use(timing(), cors(), logger(), contextStorage());
@@ -32,27 +32,16 @@ application.onError((error, context) => {
   }
   if (error instanceof HTTPException) {
     const cause = error.cause as Record<string, unknown>;
-    if (cause.code === 'api/validation-failed') {
-      return context.json(
-        {
-          title: error.message,
-          status: error.status,
-          code: cause?.code,
-          errors: cause?.details,
-        },
-        error.status,
-      );
-    } else {
-      return context.json(
-        {
-          title: error.message,
-          status: error.status,
-          code: cause?.code,
-          detail: cause?.details,
-        },
-        error.status,
-      );
-    }
+    return context.json(
+      {
+        title: error.message,
+        status: error.status,
+        code: cause?.code,
+        errors: cause?.errors,
+        detail: cause?.detail,
+      },
+      error.status,
+    );
   }
   console.error(error);
 

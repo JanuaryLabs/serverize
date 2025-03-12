@@ -3,7 +3,7 @@ import { Command } from 'commander';
 import { signOut } from 'firebase/auth';
 import validator from 'validator';
 
-import { client, serverizeManagementUrl } from './lib/api-client';
+import { client, serverizeApiUrl } from './lib/api-client';
 import {
   initialise,
   signInWithEmail,
@@ -19,7 +19,7 @@ const CLIENT_ID =
   process.env.NODE_ENV === 'development'
     ? 'Ov23liFrVjYBjqttXVYt'
     : 'Ov23liTdbDl03bHIuT4N';
-const REDIRECT_URI = `${serverizeManagementUrl}/callback`;
+const REDIRECT_URI = `${serverizeApiUrl}/callback`;
 
 async function github() {
   const timestamp = Date.now();

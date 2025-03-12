@@ -3,6 +3,7 @@ import { type HonoEnv } from '#core/utils.ts';
 const router = new Hono<HonoEnv>();
 
 for await (const route of [
+  import('./read-progress.route.ts'),
   import('./start-release.route.ts'),
   import('./restart-release.route.ts'),
   import('./restart-channel.route.ts'),

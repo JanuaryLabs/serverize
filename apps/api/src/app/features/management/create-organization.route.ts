@@ -21,6 +21,7 @@ export default async function (router: Hono<HonoEnv>) {
       name: { select: payload.body.name, against: z.string().trim().min(1) },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input } = context.var;
       await saveEntity(Organizations, {
         name: input.name,

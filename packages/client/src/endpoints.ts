@@ -40,6 +40,7 @@ import type { ListReleasesOutput } from './outputs/list-releases.ts';
 import type { ListTokensOutput } from './outputs/list-tokens.ts';
 import type { PatchProjectOutput } from './outputs/patch-project.ts';
 import type { PatchReleaseOutput } from './outputs/patch-release.ts';
+import type { ReadProgressOutput } from './outputs/read-progress.ts';
 import type { RestartChannelOutput } from './outputs/restart-channel.ts';
 import type { RestartReleaseOutput } from './outputs/restart-release.ts';
 import type { RestoreReleaseOutput } from './outputs/restore-release.ts';
@@ -108,6 +109,11 @@ export interface Endpoints {
     input: z.infer<typeof users.signinSchema>;
     output: SigninOutput;
     error: NotFound | ParseError<typeof users.signinSchema>;
+  };
+  'GET /operations/read': {
+    input: z.infer<typeof operations.readProgressSchema>;
+    output: ReadProgressOutput;
+    error: ServerError | ParseError<typeof operations.readProgressSchema>;
   };
   'POST /operations/releases/start': {
     input: z.infer<typeof operations.startReleaseSchema>;

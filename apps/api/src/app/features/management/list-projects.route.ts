@@ -39,6 +39,7 @@ export default async function (router: Hono<HonoEnv>) {
       },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input, subject } = context.var;
       const qb = createQueryBuilder(Projects, 'projects').where(
         'projects.workspaceId = :workspaceId',

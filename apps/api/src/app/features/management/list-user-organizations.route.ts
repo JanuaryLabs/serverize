@@ -20,6 +20,7 @@ export default async function (router: Hono<HonoEnv>) {
     '/users/organizations',
     policies.authenticated,
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { subject } = context.var;
       const qb = createQueryBuilder(Organizations, 'organizations')
         .innerJoin('organizations.members', 'members')

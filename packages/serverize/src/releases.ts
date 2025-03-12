@@ -2,7 +2,6 @@ import { Command } from 'commander';
 
 import { safeFail } from 'serverize/utils';
 import { client } from './lib/api-client';
-import { streamLogs } from './lib/view-logs';
 import {
   channelOption,
   getCurrentProject,
@@ -14,6 +13,7 @@ import {
 } from './program';
 
 import { box } from './lib/console.ts';
+import { reportProgress } from './lib/view-logs.ts';
 
 const list = new Command('list')
   .alias('ls')
@@ -107,31 +107,14 @@ const restart = new Command('restart')
       process.exit(1);
     }
 
-    streamLogs(data.traceId).subscribe({
-      next: tell,
-      error: (error) => {
-        const message = safeFail(
-          () => (typeof error === 'string' ? error : error.message).trim(),
-          '',
-        );
-        if (message) {
-          spinner.fail(`Failed to process image: ${message}`);
-        } else {
-          spinner.fail(`Failed to process image`);
-          console.error(error);
-        }
-        process.exit(1);
-      },
-      complete: () => {
-        spinner.succeed(`Release ${releaseName} restarted successfully`);
-        box.print(
-          `${currentProject.projectName} Restarted`,
-          `- Accessible at ${data.finalUrl}`,
-          `- Logs: npx serverize logs -p ${currentProject.projectName}`,
-          `- Stuck? Join us at https://discord.gg/aj9bRtrmNt`,
-        );
-      },
-    });
+    await reportProgress(data.traceId);
+    spinner.succeed(`Release ${releaseName} restarted successfully`);
+    box.print(
+      `${currentProject.projectName} Restarted`,
+      `- Accessible at ${data.finalUrl}`,
+      `- Logs: npx serverize logs -p ${currentProject.projectName}`,
+      `- Stuck? Join us at https://discord.gg/aj9bRtrmNt`,
+    );
   });
 
 export default new Command('releases')

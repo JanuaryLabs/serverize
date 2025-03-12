@@ -2,11 +2,11 @@ import { execFileSync } from 'child_process';
 
 import { join } from 'path';
 
-import { defineConfig } from '@january/canary';
-import { auth } from '@january/extensions/firebase';
-import { hono } from '@january/extensions/hono';
-import { identity } from '@january/extensions/identity';
-import { postgresql, typeorm } from '@january/extensions/typeorm';
+import { defineConfig } from '@januarylabs/canary';
+import { auth } from '@januarylabs/extensions/firebase';
+import { hono } from '@januarylabs/extensions/hono';
+import { identity } from '@januarylabs/extensions/identity';
+import { postgresql, typeorm } from '@januarylabs/extensions/typeorm';
 import { npmRunPathEnv } from 'npm-run-path';
 import { fileWatch } from './file-watcher.ts';
 
@@ -18,7 +18,6 @@ await defineConfig({
     cwd: appDir,
   },
   tsconfigName: join(appDir, 'tsconfig.app.json'),
-  formatGeneratedCode: false,
   extensions: [
     identity,
     hono(),

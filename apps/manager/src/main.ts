@@ -32,63 +32,6 @@ const application = express()
   )
   .use(morgan('tiny'))
   .get('/health', (req, res) => res.send('OK'))
-  .post('/deploy', express.json(), async (req, res, next) => {
-    try {
-      const controller = new AbortController();
-      const release = req.body as Releases & {
-        projectName: string;
-      };
-
-      req.on('aborted', () => {
-        console.log('Connection aborted');
-        controller.abort('Client aborted connection');
-      });
-
-      const token = req.header('Authorization');
-      if (!token) {
-        res.status(401).send();
-        return;
-      }
-
-      res.end();
-      await startServer(
-        token,
-        controller.signal,
-        {
-          id: release.id,
-          name: release.name,
-          projectName: release.projectName,
-          channel: release.channel,
-          projectId: release.projectId,
-          // TODO: create seperate entity (or just get them from the docker image assuming we are going to have a registry around) for tarLocation, image and runtimeConfig (basically and column that will be updated later on not when the release is created)
-          tarLocation: release.tarLocation!,
-          port: release.port,
-          protocol: (release as any).protocol,
-          image: release.image!,
-          domainPrefix: release.domainPrefix,
-          releaseId: release.id,
-          volumes: release.volumes,
-          traceId: req.body.traceId,
-          environment: req.body.environment,
-          serviceName: req.body.serviceName,
-          network: req.body.network,
-        },
-        JSON.parse(release.runtimeConfig!),
-      );
-    } catch (error: any) {
-      // TODO: log the error
-      console.error(error);
-      // res
-      //   .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      //   .end(
-      //     error instanceof Error
-      //       ? `error:${error.message}`
-      //       : 'error' in error
-      //         ? `error:${error.error}`
-      //         : 'error:unknown',
-      //   );
-    }
-  })
   .post('/restart', express.json(), async (req, res, next) => {
     try {
       const controller = new AbortController();
@@ -142,34 +85,6 @@ const application = express()
       //         : 'error:unknown',
       //   );
     }
-  })
-  .get('/read', async (req, res) => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    const traceId = req.query.traceId as string;
-    const filePath = join(tmpdir(), traceId + '.jsonl');
-    req.on('aborted', () => {
-      controller.abort('Client aborted connection');
-    });
-    req.on('error', (error) => {
-      if (error.name === 'AbortError') {
-        return;
-      }
-      throw error;
-    });
-
-    await observeFile(
-      filePath,
-      res,
-      AbortSignal.any([
-        signal,
-        AbortSignal.timeout(
-          // 1 minute
-          60 * 1000,
-        ),
-      ]),
-    );
   });
 
 application

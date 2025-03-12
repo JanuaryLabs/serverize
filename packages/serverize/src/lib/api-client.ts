@@ -10,12 +10,6 @@ export const serverizeApiUrl =
     ? 'http://localhost:3000'
     : 'https://serverize-api.january.sh');
 
-export const serverizeManagementUrl =
-  process.env.MANAGEMENT_API_URL ||
-  (process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3100'
-    : 'https://serverize-manager.january.sh');
-
 export const client = new Serverize({
   token: '',
   baseUrl: serverizeApiUrl,

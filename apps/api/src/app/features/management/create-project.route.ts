@@ -22,6 +22,7 @@ export default async function (router: Hono<HonoEnv>) {
       name: { select: payload.body.name, against: commonZod.orgNameValidator },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input, subject } = context.var;
       // FIXME: workspaceId should come from the body
       // user should select in what workspace the project should be created

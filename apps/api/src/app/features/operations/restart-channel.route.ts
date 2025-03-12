@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Hono } from 'hono';
 import z from 'zod';
 import policies from '#core/policies.ts';
@@ -8,7 +7,6 @@ import Releases from '#entities/releases.entity.ts';
 import { consume } from '#extensions/hono/consume.ts';
 import output from '#extensions/hono/output.ts';
 import { createQueryBuilder, execute } from '#extensions/postgresql/index.ts';
-import { serverizeUrl } from '#extensions/user/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
@@ -33,6 +31,7 @@ export default async function (router: Hono<HonoEnv>) {
       jwt: { select: payload.headers.authorization, against: z.string() },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input } = context.var;
       const releases = await execute(
         createQueryBuilder(Releases, 'releases')
@@ -51,19 +50,19 @@ export default async function (router: Hono<HonoEnv>) {
       const traces: string[] = [];
       for (const release of releases) {
         const traceId = crypto.randomUUID();
-        await axios.post(
-          `${serverizeUrl}/restart`,
-          {
-            projectName: input.projectName,
-            traceId,
-            ...release,
-          },
-          {
-            headers: {
-              Authorization: input.jwt,
-            },
-          },
-        );
+        // await axios.post(
+        //   `${serverizeUrl}/restart`,
+        //   {
+        //     projectName: input.projectName,
+        //     traceId,
+        //     ...release,
+        //   },
+        //   {
+        //     headers: {
+        //       Authorization: input.jwt,
+        //     },
+        //   },
+        // );
         traces.push(traceId);
       }
       return output.ok({ traces });

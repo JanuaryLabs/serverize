@@ -33,6 +33,7 @@ export default async function (router: Hono<HonoEnv>) {
       uid: { select: payload.body.uid, against: z.string().trim().min(1) },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input } = context.var;
       try {
         const data = await createDefaultOrg({

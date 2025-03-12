@@ -75,11 +75,16 @@ export function observeFile(config: {
       return currentSize;
     }
     async function write(line: string) {
+      const entry = JSON.parse(line);
+      // TODO: it should be from outside
+      if (entry.type === 'complete' || entry.type === 'error') {
+        readable.push(null);
+        return false;
+      }
       if (!readable.push(line)) {
         await new Promise((resolve) => readable.once('drain', resolve));
       }
     }
   })();
-
   return readable;
 }

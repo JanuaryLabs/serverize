@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { join } from 'node:path';
 import { Hono } from 'hono';
 import z from 'zod';
 import policies from '#core/policies.ts';
@@ -7,6 +7,7 @@ import { validate } from '#core/validator.ts';
 import Projects from '#entities/projects.entity.ts';
 import Releases from '#entities/releases.entity.ts';
 import Volumes from '#entities/volumes.entity.ts';
+import { startServer } from '#extensions/docker/start.ts';
 import { consume } from '#extensions/hono/consume.ts';
 import output from '#extensions/hono/output.ts';
 import {
@@ -21,7 +22,6 @@ import {
   clean,
   defaultHealthCheck,
   getChannelEnv,
-  serverizeUrl,
 } from '#extensions/user/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
 
@@ -71,9 +71,9 @@ export default async function (router: Hono<HonoEnv>) {
         select: payload.body.environment,
         against: z.any().optional(),
       },
-      jwt: { select: payload.headers.authorization, against: z.string() },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input } = context.var;
       const traceId = crypto.randomUUID();
       const getOrgIdQb = createQueryBuilder(Projects, 'projects')
@@ -146,11 +146,16 @@ export default async function (router: Hono<HonoEnv>) {
         projectId: input.projectId,
       });
 
-      const { data } = await axios.post(
-        `${serverizeUrl}/deploy`,
+      // TOOD: delegate this to worker
+      await startServer(
+        signal,
         {
           ...release,
           projectName: input.projectName,
+          // TODO: create seperate entity (or just get them from the docker image assuming we are going to have a registry around) for tarLocation, image and runtimeConfig (basically and column that will be updated later on not when the release is created)
+          tarLocation: release.tarLocation!,
+          protocol: (release as any).protocol,
+          image: release.image!,
           environment: { ...channelEnv, ...input.environment },
           serviceName: input.serviceName,
           network: [
@@ -164,11 +169,7 @@ export default async function (router: Hono<HonoEnv>) {
           traceId,
           volumes,
         },
-        {
-          headers: {
-            Authorization: input.jwt,
-          },
-        },
+        JSON.parse(release.runtimeConfig!),
       );
       return output.ok({
         traceId,

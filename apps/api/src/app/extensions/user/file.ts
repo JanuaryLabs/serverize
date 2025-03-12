@@ -43,6 +43,7 @@ export function observeFile(config: {
 
     // keep it blocking because we don't want to start the watch until the current content is sent
     for await (const line of stream) {
+      console.log({ line });
       await write(line);
     }
 
@@ -67,6 +68,7 @@ export function observeFile(config: {
           end,
         });
         for await (const chunk of stream) {
+          console.log({ chunk });
           await write(chunk);
         }
       } else if (config.autoRestart) {

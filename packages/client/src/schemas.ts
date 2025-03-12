@@ -191,6 +191,21 @@ export default {
       );
     },
   },
+  'GET /operations/read': {
+    schema: operations.readProgressSchema,
+    toRequest(input: Endpoints['GET /operations/read']['input']) {
+      const endpoint = 'GET /operations/read';
+      return toRequest(
+        endpoint,
+        nobody(input, {
+          inputHeaders: [],
+          inputQuery: ['traceId'],
+          inputBody: [],
+          inputParams: [],
+        }),
+      );
+    },
+  },
   'POST /operations/releases/start': {
     schema: operations.startReleaseSchema,
     toRequest(input: Endpoints['POST /operations/releases/start']['input']) {
@@ -198,7 +213,7 @@ export default {
       return toRequest(
         endpoint,
         json(input, {
-          inputHeaders: ['jwt'],
+          inputHeaders: [],
           inputQuery: [],
           inputBody: [
             'releaseName',

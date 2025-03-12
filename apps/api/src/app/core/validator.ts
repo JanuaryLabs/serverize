@@ -150,7 +150,8 @@ export function parse<T extends z.ZodRawShape>(
       message: 'Validation failed',
       cause: {
         code: 'api/validation-failed',
-        details: result.error.flatten((issue) => ({
+        detail: 'The input data is invalid',
+        errors: result.error.flatten((issue) => ({
           message: issue.message,
           code: issue.code,
           fatel: issue.fatal,
@@ -175,7 +176,7 @@ export const consume = (
         message: 'Unsupported Media Type',
         cause: {
           code: 'api/unsupported-media-type',
-          details: `Expected content type: ${contentType}, but got: ${clientContentType}`,
+          detail: `Expected content type: ${contentType}, but got: ${clientContentType}`,
         },
       });
     }

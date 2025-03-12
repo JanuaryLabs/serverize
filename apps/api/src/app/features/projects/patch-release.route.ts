@@ -39,6 +39,7 @@ export default async function (router: Hono<HonoEnv>) {
       },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input } = context.var;
       const qb = createQueryBuilder(Releases, 'releases').where(
         'releases.id = :releaseId',

@@ -119,11 +119,6 @@ export function toTraefikConfig(releases: ReleaseConfig[]) {
             servers: [{ url: 'http://tusd:8080' }],
           },
         },
-        'serverize-manager': {
-          loadBalancer: {
-            servers: [{ url: 'http://manager:3000' }],
-          },
-        },
         'serverize-api': {
           loadBalancer: {
             servers: [{ url: 'http://api:3000' }],

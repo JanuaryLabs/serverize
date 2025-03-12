@@ -1,6 +1,7 @@
-import type { GetEventsOptions } from 'dockerode';
 import os from 'os';
+import type { GetEventsOptions } from 'dockerode';
 
+import { PassThrough } from 'stream';
 import {
   Observable,
   Subject,
@@ -14,10 +15,7 @@ import {
   tap,
 } from 'rxjs';
 import { docker, getContainer } from 'serverize/docker';
-import { PassThrough } from 'stream';
 import tarStream from 'tar-stream';
-
-import type { BundableFile } from '@january/bundler';
 
 export class ContainerNotFoundError extends Error {
   constructor(public containerId: string) {
@@ -236,7 +234,7 @@ function calculateNContainerPerMachine(memoryPerContainerMB = 96) {
   });
 }
 
-export function createTar(files: BundableFile[]) {
+export function createTar(files: { content: string; path: string }[]) {
   const pack = tarStream.pack();
   for (const { path, content } of files) {
     pack.entry({ name: path }, content);

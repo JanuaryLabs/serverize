@@ -1,4 +1,6 @@
-import type { Releases } from '@serverize/client';
+import { tmpdir } from 'os';
+
+import { join } from 'path';
 import { docker, removeContainer, upsertVolume } from 'serverize/docker';
 import { createRecorder } from 'serverize/utils';
 
@@ -14,9 +16,8 @@ export interface ReleaseInfo {
   protocol?: string | null;
   port?: number | null;
   traceId: string;
-  releaseId: string;
   network: string;
-  volumes: Releases['volumes'];
+  volumes: { src: string; dest: string }[];
   environment?: Record<string, string>;
   serviceName?: string;
 }

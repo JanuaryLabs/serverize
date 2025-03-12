@@ -8,6 +8,8 @@ export default async function (router: Hono<HonoEnv>) {
    * @tags root
    */
   router.get('/favicon.ico', async (context, next) => {
+    const signal = context.req.raw.signal;
+
     return output.ok();
   });
 }

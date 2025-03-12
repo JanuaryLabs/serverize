@@ -22,6 +22,7 @@ export * from './list-releases.ts';
 export * from './list-tokens.ts';
 export * from './patch-project.ts';
 export * from './patch-release.ts';
+export * from './read-progress.ts';
 export * from './restart-channel.ts';
 export * from './restart-release.ts';
 export * from './restore-release.ts';

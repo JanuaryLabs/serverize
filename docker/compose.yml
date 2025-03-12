@@ -17,8 +17,6 @@ services:
     depends_on:
       api:
         condition: service_healthy
-      manager:
-        condition: service_healthy
     logging:
       driver: 'json-file'
       options:
@@ -57,30 +55,6 @@ services:
         max-size: '10m'
         max-file: '1'
 
-  manager:
-    image: docker.io/ezzabuzaid/serverize-manager:latest
-    platform: linux/amd64
-    restart: unless-stopped
-    networks:
-      - traefik-network
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - serverize-uploads:/serverize/uploads:rw
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - GITHUB_CLIENT_ID=Ov23liTdbDl03bHIuT4N
-      - GITHUB_CLIENT_SECRET=6e79fe6d569964426f4c81d532686be6f17c28ae
-      - API_URL=http://api:3000
-      - UPLOAD_DIR=/serverize/uploads
-    healthcheck:
-      test: wget --no-verbose --spider --tries=1 http://localhost:3000/health || exit 1
-    logging:
-      driver: 'json-file'
-      options:
-        max-size: '50m'
-        max-file: '5'
-
   api:
     image: docker.io/ezzabuzaid/serverize-api:latest
     platform: linux/amd64
@@ -98,7 +72,6 @@ services:
       - PORT=3000
       - ORM_SYNCHRONIZE=true
       - ORM_MIGRATIONS_RUN=true
-      - MANAGEMENT_API_URL=http://manager:3000
     healthcheck:
       test: wget --no-verbose --spider --tries=1 http://localhost:3000/health || exit 1
     logging:

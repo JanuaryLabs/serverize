@@ -33,7 +33,7 @@ jobs:
       - uses: nrwl/nx-set-shas@v4
 
       - name: Build Prod
-        run: ./node_modules/.bin/nx run-many --projects api,manager,www --target build --prod
+        run: ./node_modules/.bin/nx run-many --projects api,www --target build --prod
         env:
           NX_NO_CLOUD: true
 
@@ -66,14 +66,6 @@ jobs:
           context: .
           push: true
           tags: ezzabuzaid/serverize-api:latest
-          platforms: linux/amd64,linux/arm64
-      - name: Build and push - MANAGER
-        uses: docker/build-push-action@v5
-        with:
-          file: ./docker/dockerfile.manager
-          context: .
-          push: true
-          tags: ezzabuzaid/serverize-manager:latest
           platforms: linux/amd64,linux/arm64
 
       # - name: Remove package-lock.json from dist

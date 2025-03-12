@@ -34,6 +34,7 @@ export default async function (router: Hono<HonoEnv>) {
       },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input } = context.var;
       const key = await getProjectKey(input.projectId);
       const { nonce, secret } = await encrypt(key, input.secretValue);

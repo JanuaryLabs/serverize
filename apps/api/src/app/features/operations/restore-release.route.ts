@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Hono } from 'hono';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import z from 'zod';
@@ -38,6 +37,7 @@ export default async function (router: Hono<HonoEnv>) {
       },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input } = context.var;
       await useTransaction(async () => {
         const releaseQb = createQueryBuilder(Releases, 'releases')

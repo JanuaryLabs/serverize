@@ -23,6 +23,7 @@ export default async function (router: Hono<HonoEnv>) {
       id: { select: payload.params.id, against: z.string().uuid() },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input } = context.var;
       const qb = createQueryBuilder(Organizations, 'organizations').where(
         'organizations.id = :id',

@@ -1,9 +1,9 @@
 const { execFileSync } = require('node:child_process');
-const { esbuildPlugin: january } = require('@january/canary');
-const { hono } = require('@january/extensions/hono');
-const { identity } = require('@january/extensions/identity');
-const { auth } = require('@january/extensions/firebase');
-const { postgresql, typeorm } = require('@january/extensions/typeorm');
+const { esbuildPlugin: january } = require('@januarylabs/canary');
+const { hono } = require('@januarylabs/extensions/hono');
+const { identity } = require('@januarylabs/extensions/identity');
+const { auth } = require('@januarylabs/extensions/firebase');
+const { postgresql, typeorm } = require('@januarylabs/extensions/typeorm');
 const { npmRunPathEnv } = require('npm-run-path');
 const { join } = require('node:path');
 // const { fileWatch } = require(join(process.cwd(), 'tools/file-watcher.ts'));

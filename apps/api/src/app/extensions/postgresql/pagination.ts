@@ -20,10 +20,12 @@ export interface PaginationMetadata {
 }
 
 export class Pagination<T> {
-  constructor(
-    public records: T,
-    public metadata: PaginationMetadata,
-  ) {}
+  public records: T;
+  public metadata: PaginationMetadata;
+  constructor(records: T, metadata: PaginationMetadata) {
+    this.records = records;
+    this.metadata = metadata;
+  }
 }
 
 export function limitOffsetPagination<Entity extends ObjectLiteral>(

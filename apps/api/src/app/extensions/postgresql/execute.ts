@@ -13,7 +13,7 @@ import {
 } from 'typeorm';
 import type { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity.js';
 
-import { dataSource } from './data-source';
+import { dataSource } from './data-source.ts';
 
 const asyncLocalStorage = new AsyncLocalStorage<QueryRunner>();
 

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Hono } from 'hono';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import { getContainer, removeContainer } from 'serverize/docker';
@@ -35,6 +34,7 @@ export default async function (router: Hono<HonoEnv>) {
       },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input } = context.var;
       await useTransaction(async () => {
         const release = await createQueryBuilder(Releases, 'releases')

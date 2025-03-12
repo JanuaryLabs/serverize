@@ -581,19 +581,47 @@
         }
       }
     },
-    "/operations/releases/start": {
-      "post": {
-        "operationId": "StartRelease",
+    "/operations/read": {
+      "get": {
+        "operationId": "ReadProgress",
         "parameters": [
           {
-            "in": "header",
-            "name": "jwt",
+            "in": "query",
+            "name": "traceId",
             "required": true,
             "schema": {
               "type": "string"
             }
           }
         ],
+        "tags": ["operations"],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Response for 200",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "headers": {
+              "Transfer-Encoding": {
+                "schema": {
+                  "type": "string",
+                  "enum": ["chunked"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operations/releases/start": {
+      "post": {
+        "operationId": "StartRelease",
+        "parameters": [],
         "tags": ["operations"],
         "description": "",
         "requestBody": {

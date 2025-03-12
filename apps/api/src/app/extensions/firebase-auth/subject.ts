@@ -6,7 +6,7 @@ import {
 } from 'firebase-admin/auth';
 import { type IResult } from 'ua-parser-js';
 import { UnauthorizedException } from '#core/exceptions.ts';
-import { firebaseApp } from './firebase';
+import { firebaseApp } from './firebase.ts';
 
 export interface ClientInfo {
   ip?: string | null;

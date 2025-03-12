@@ -1,6 +1,7 @@
 import z from 'zod';
+export const readProgressSchema = z.object({ traceId: z.string() });
 export const startReleaseSchema = z.object({
-  releaseName: z.string().optional(),
+  releaseName: z.string(),
   projectId: z.string().uuid(),
   projectName: z.string(),
   channel: z.enum(['dev', 'preview']),
@@ -12,7 +13,6 @@ export const startReleaseSchema = z.object({
   volumes: z.array(z.string()).optional(),
   serviceName: z.unknown().optional(),
   environment: z.unknown().optional(),
-  jwt: z.string(),
 });
 export const restartReleaseSchema = z.object({
   projectId: z.string().uuid().optional(),

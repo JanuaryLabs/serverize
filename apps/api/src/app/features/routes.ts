@@ -1,10 +1,10 @@
 import { Hono } from 'hono';
 import { type HonoEnv } from '#core/utils.ts';
-import dockerRouter from './docker/docker.router';
-import managementRouter from './management/management.router';
-import operationsRouter from './operations/operations.router';
-import projectsRouter from './projects/projects.router';
-import rootRouter from './root/root.router';
+import dockerRouter from './docker/docker.router.ts';
+import managementRouter from './management/management.router.ts';
+import operationsRouter from './operations/operations.router.ts';
+import projectsRouter from './projects/projects.router.ts';
+import rootRouter from './root/root.router.ts';
 export default [
   dockerRouter,
   managementRouter,

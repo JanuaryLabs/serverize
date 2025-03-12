@@ -4,14 +4,13 @@ import { AsyncLocalStorage } from 'async_hooks';
 import {
   from,
   lastValueFrom,
-  map,
   mergeMap,
+  of,
   switchMap,
   tap,
   throwError,
 } from 'rxjs';
 import { isDockerRunning } from 'serverize/docker';
-import { safeFail } from 'serverize/utils';
 import {
   type AST,
   ensureUser,
@@ -26,11 +25,11 @@ import {
 import { client, makeImageName } from './api-client';
 import { buildCompose, buildImage, saveImage } from './image';
 import { pushImage } from './uploader';
-import { streamLogs } from './view-logs';
 
 import { execa } from 'execa';
 import { writeFile } from 'fs/promises';
 import { box } from './console.ts';
+import { reportProgress } from './view-logs.ts';
 
 interface ReleaseInfo {
   channel: 'dev' | 'preview';
@@ -93,7 +92,6 @@ export async function runInComposeContext(config: DeployContext) {
           image: tar.image,
           Healthcheck: tar.healthcheck,
         }),
-        jwt: '',
         port: port,
         image: tar.image,
         tarLocation: tar.tarLocation,
@@ -116,26 +114,7 @@ export async function runInComposeContext(config: DeployContext) {
         url: data.finalUrl,
       });
     }
-    await lastValueFrom(
-      streamLogs(data.traceId).pipe(
-        tap({
-          next: tell,
-          error: (error) => {
-            const message = safeFail(
-              () => (typeof error === 'string' ? error : error.message).trim(),
-              '',
-            );
-            if (message) {
-              spinner.fail(`Failed to process image: ${message}`);
-            } else {
-              spinner.fail(`Failed to process image`);
-              console.error(error);
-            }
-            process.exit(1);
-          },
-        }),
-      ),
-    );
+    await reportProgress(data.traceId);
   }
 
   spinner.succeed('Deployed successfully');
@@ -302,37 +281,26 @@ export function deployProject(
           image: ast.finalImageName,
           Healthcheck: ast.healthCheckOptions,
         }),
-        jwt: '',
         tarLocation: tarLocation,
         port: port,
         protocol: ast.protocol === 'tcp' ? 'tcp' : 'https',
       }),
     ),
+
     mergeMap(([data, error]) => {
       console.log(''); // sometimes the logs are not printed. this fixes it.
       if (error || !data) {
         return throwError(() => error);
       }
-      return streamLogs(data.traceId).pipe(
-        tap({
-          next: tell,
-          error: (error) => {
-            const message = safeFail(
-              () => (typeof error === 'string' ? error : error.message).trim(),
-              '',
-            );
-            if (message) {
-              spinner.fail(`Failed to process image: ${message}`);
-            } else {
-              spinner.fail(`Failed to process image`);
-              console.error(error);
-            }
-            process.exit(1);
-          },
-        }),
-        map(() => data.finalUrl),
-      );
+      return of(data.finalUrl);
     }),
+    // mergeMap(([data, error]) => {
+    //   console.log(''); // sometimes the logs are not printed. this fixes it.
+    //   if (error || !data) {
+    //     return throwError(() => error);
+    //   }
+    //   return reportProgress(data.traceId).then(() => data.finalUrl);
+    // }),
   );
 }
 

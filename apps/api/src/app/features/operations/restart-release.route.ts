@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { Hono } from 'hono';
 import z from 'zod';
 import policies from '#core/policies.ts';
@@ -12,7 +11,6 @@ import {
   PROTOCOL,
   SERVERIZE_DOMAIN,
   releaseCreatedDiscordWebhook,
-  serverizeUrl,
   tellDiscord,
 } from '#extensions/user/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
@@ -43,6 +41,7 @@ export default async function (router: Hono<HonoEnv>) {
       jwt: { select: payload.headers.authorization, against: z.string() },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input } = context.var;
       const release = await createQueryBuilder(Releases, 'releases')
         .where('releases.name = :name', { name: input.releaseName })
@@ -58,19 +57,19 @@ export default async function (router: Hono<HonoEnv>) {
         })
         .getOneOrFail();
       const traceId = crypto.randomUUID();
-      const { data } = await axios.post(
-        `${serverizeUrl}/restart`,
-        {
-          projectName: input.projectName,
-          traceId,
-          ...release,
-        },
-        {
-          headers: {
-            Authorization: input.jwt,
-          },
-        },
-      );
+      // const { data } = await axios.post(
+      //   `${serverizeUrl}/restart`,
+      //   {
+      //     projectName: input.projectName,
+      //     traceId,
+      //     ...release,
+      //   },
+      //   {
+      //     headers: {
+      //       Authorization: input.jwt,
+      //     },
+      //   },
+      // );
       const finalUrl = `${PROTOCOL}://${release.domainPrefix}.${SERVERIZE_DOMAIN}`;
       await tellDiscord(
         `new release ${finalUrl}`,

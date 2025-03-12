@@ -41,6 +41,7 @@ export default async function (router: Hono<HonoEnv>) {
       },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input } = context.var;
       const auth = getAuth(firebaseApp);
       const octokit = new Octokit({

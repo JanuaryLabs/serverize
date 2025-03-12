@@ -24,6 +24,7 @@ export default async function (router: Hono<HonoEnv>) {
       token: { select: payload.body.token, against: z.string() },
     })),
     async (context, next) => {
+      const signal = context.req.raw.signal;
       const { input } = context.var;
       const qb = createQueryBuilder(ApiKeys, 'apiKeys')
         .where('apiKeys.key = :key', { key: input.token })

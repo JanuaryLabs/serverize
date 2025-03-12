@@ -12,6 +12,8 @@ export default async function (router: Hono<HonoEnv>) {
    * @tags containers
    */
   router.get('/containers/discovery', async (context, next) => {
+    const signal = context.req.raw.signal;
+
     // const qb = createQueryBuilder(tables.releases, 'releases')
     //   .select(['releases.port', 'releases.domainPrefix'])
     //   .where('releases.status = :status', { status: 'completed' })

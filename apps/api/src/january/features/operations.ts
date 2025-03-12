@@ -15,20 +15,42 @@ import {
   clean,
   defaultHealthCheck,
   getChannelEnv,
+  observeFile,
   releaseCreatedDiscordWebhook,
-  serverizeUrl,
   tellDiscord,
 } from '#extensions/user/index.ts';
 import * as commonZod from '#extensions/zod/index.ts';
 
-import axios from 'axios';
-
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { trigger, workflow } from '@january/declarative';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 import { getContainer, removeContainer } from 'serverize/docker';
+import { startServer } from '#extensions/docker/start.ts';
 import output from '#extensions/hono/output.ts';
 
 export default {
+  ReadProgress: workflow({
+    tag: 'operations',
+    trigger: trigger.stream({
+      method: 'get',
+      path: '/read',
+      policies: [policies.authenticated],
+      input: (trigger) => ({
+        traceId: {
+          select: trigger.query.traceId,
+          against: z.string(),
+        },
+      }),
+    }),
+    execute: async ({ input, signal }) => {
+      const filePath = join(tmpdir(), input.traceId + '.jsonl');
+      return observeFile({
+        filePath,
+        signal,
+      });
+    },
+  }),
   StartRelease: workflow({
     tag: 'operations',
     trigger: trigger.http({
@@ -84,13 +106,9 @@ export default {
           select: trigger.body.environment,
           against: z.any().optional(),
         },
-        jwt: {
-          select: trigger.headers.authorization,
-          against: z.string(),
-        },
       }),
     }),
-    execute: async ({ input }) => {
+    execute: async ({ input, signal }) => {
       const traceId = crypto.randomUUID();
       const getOrgIdQb = createQueryBuilder(tables.projects, 'projects')
         .innerJoinAndSelect('projects.workspace', 'workspace')
@@ -162,11 +180,16 @@ export default {
         projectId: input.projectId,
       });
 
-      const { data } = await axios.post(
-        `${serverizeUrl}/deploy`,
+      // TOOD: delegate this to worker
+      await startServer(
+        signal,
         {
           ...release,
           projectName: input.projectName,
+          // TODO: create seperate entity (or just get them from the docker image assuming we are going to have a registry around) for tarLocation, image and runtimeConfig (basically and column that will be updated later on not when the release is created)
+          tarLocation: release.tarLocation!,
+          protocol: (release as any).protocol,
+          image: release.image!,
           environment: { ...channelEnv, ...input.environment },
           serviceName: input.serviceName,
           network: [
@@ -180,11 +203,7 @@ export default {
           traceId,
           volumes,
         },
-        {
-          headers: {
-            Authorization: input.jwt,
-          },
-        },
+        JSON.parse(release.runtimeConfig!),
       );
       return output.ok({
         traceId,
@@ -237,19 +256,19 @@ export default {
         })
         .getOneOrFail();
       const traceId = crypto.randomUUID();
-      const { data } = await axios.post(
-        `${serverizeUrl}/restart`,
-        {
-          projectName: input.projectName,
-          traceId,
-          ...release,
-        },
-        {
-          headers: {
-            Authorization: input.jwt,
-          },
-        },
-      );
+      // const { data } = await axios.post(
+      //   `${serverizeUrl}/restart`,
+      //   {
+      //     projectName: input.projectName,
+      //     traceId,
+      //     ...release,
+      //   },
+      //   {
+      //     headers: {
+      //       Authorization: input.jwt,
+      //     },
+      //   },
+      // );
       const finalUrl = `${PROTOCOL}://${release.domainPrefix}.${SERVERIZE_DOMAIN}`;
       await tellDiscord(
         `new release ${finalUrl}`,
@@ -308,19 +327,19 @@ export default {
       const traces: string[] = [];
       for (const release of releases) {
         const traceId = crypto.randomUUID();
-        await axios.post(
-          `${serverizeUrl}/restart`,
-          {
-            projectName: input.projectName,
-            traceId,
-            ...release,
-          },
-          {
-            headers: {
-              Authorization: input.jwt,
-            },
-          },
-        );
+        // await axios.post(
+        //   `${serverizeUrl}/restart`,
+        //   {
+        //     projectName: input.projectName,
+        //     traceId,
+        //     ...release,
+        //   },
+        //   {
+        //     headers: {
+        //       Authorization: input.jwt,
+        //     },
+        //   },
+        // );
         traces.push(traceId);
       }
       return { traces };
