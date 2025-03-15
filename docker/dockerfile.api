@@ -5,7 +5,7 @@ FROM node:lts-alpine AS builder
 WORKDIR /app
 
 # Copy lockfile and package.json files (using --parents preserves relative paths)
-COPY package-lock.json* .
+# COPY package-lock.json* .
 COPY --parents **/package.json .
 
 # Install dependencies (you can use npm ci if a clean install is desired)
