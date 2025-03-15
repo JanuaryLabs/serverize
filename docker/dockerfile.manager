@@ -1,8 +1,0 @@
-FROM node:lts-alpine
-WORKDIR /usr/src/app
-
-COPY ./dist/apps/manager/package*.json ./
-RUN npm i --no-audit --no-fund
-
-COPY ./dist/apps/manager/ ./
-CMD ["node", "./"]
