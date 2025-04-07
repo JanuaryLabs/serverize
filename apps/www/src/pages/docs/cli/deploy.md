@@ -20,7 +20,7 @@ Deploy an application using a Dockerfile or Docker Compose file
 | `-i, --image [image]` | Docker image to deploy. |  |
 | `--context [context]` | Docker build context | `.` |
 | `-o, --output-file <outputFile>` | Write output to a file |  |
-| `-c, --channel <channel>` | Channel name (dev or preview) | `dev` |
 | `--cwd [cwd]` | Project directory | `$(pwd)` |
+| `-c, --channel <channel>` | Channel name (dev or preview) | `dev` |
 | `-r, --release <release>` | Release name | `latest` |
 | `-p, --project-name <projectName>` | The project name |  |

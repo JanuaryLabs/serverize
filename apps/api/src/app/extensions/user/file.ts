@@ -43,7 +43,6 @@ export function observeFile(config: {
 
     // keep it blocking because we don't want to start the watch until the current content is sent
     for await (const line of stream) {
-      console.log({ line });
       await write(line);
     }
 
@@ -68,7 +67,6 @@ export function observeFile(config: {
           end,
         });
         for await (const chunk of stream) {
-          console.log({ chunk });
           await write(chunk);
         }
       } else if (config.autoRestart) {
@@ -77,11 +75,16 @@ export function observeFile(config: {
       return currentSize;
     }
     async function write(line: string) {
+      const entry = JSON.parse(line);
+      // TODO: it should be from outside
+      if (entry.type === 'complete' || entry.type === 'error') {
+        readable.push(null);
+        return false;
+      }
       if (!readable.push(line)) {
         await new Promise((resolve) => readable.once('drain', resolve));
       }
     }
   })();
-
   return readable;
 }

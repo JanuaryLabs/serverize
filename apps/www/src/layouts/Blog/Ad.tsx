@@ -43,7 +43,7 @@ export default function Ad({
       icon: <Code className="w-4 h-4" />,
     },
     {
-      title: 'Chant',
+      title: 'SDK-IT',
       description: 'SDK generation for your APIs',
       icon: <BoomBox className="w-4 h-4" />,
     },

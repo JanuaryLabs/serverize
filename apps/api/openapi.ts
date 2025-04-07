@@ -17,9 +17,21 @@ const { paths, components } = await analyze('apps/api/tsconfig.app.json', {
     ...responseAnalyzer,
     ...genericResponseAnalyzer,
   },
+  onOperation: (sourceFile, method, path, operation) => {
+    operation.responses ??= {};
+    operation.responses[401] = {
+      description: 'Unauthorized',
+      content: {
+        'application/json': {
+          schema: { $ref: '#/components/schemas/Unauthorized' },
+        },
+      },
+    };
+    return {};
+  },
 });
 
-const spec = {
+const spec: Parameters<typeof generate>[0] = {
   openapi: '3.1.0',
   info: {
     title: 'Serverize API',
@@ -40,8 +52,8 @@ const spec = {
       description: 'Local server',
     },
   ],
-  paths,
   security: [{ bearerAuth: [] }],
+  paths,
   components: {
     ...components,
     securitySchemes: {
@@ -50,7 +62,25 @@ const spec = {
         scheme: 'bearer',
         bearerFormat: 'JWT',
       },
-    } as const,
+    },
+    schemas: {
+      ...components.schemas,
+      Unauthorized: {
+        type: 'object',
+        required: ['type', 'title'],
+        additionalProperties: false,
+        properties: {
+          type: {
+            type: 'string',
+            enum: ['Unauthorized'],
+          },
+          title: {
+            type: 'string',
+            enum: ['Authentication is required to access this resource.'],
+          },
+        },
+      },
+    },
   },
   tags: [],
 };
