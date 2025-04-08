@@ -1,5 +1,4 @@
 import { tmpdir } from 'os';
-import { Serverize } from '@serverize/client';
 import type { Container } from 'dockerode';
 
 import { join } from 'path';
@@ -15,7 +14,7 @@ import {
   useTransaction,
 } from '#extensions/postgresql/execute.ts';
 import { fileWriter } from './file.ts';
-import { ReleaseInfo, createRemoteServer } from './manager';
+import { type ReleaseInfo, createRemoteServer } from './manager';
 
 export const UPLOADS_DIR =
   process.env.UPLOAD_DIR ||
@@ -82,7 +81,7 @@ export async function startServer(
   );
   await session.write({ type: 'progress', message: 'Creating session...' });
 
-  const release = makeRelease(releaseInfo.id);
+  const releaseManager = makeReleaseManager(releaseInfo.id);
 
   // Get the current time in seconds since the Unix epoch
   const sinceTimestamp = Math.floor(Date.now() / 1000);
@@ -99,15 +98,7 @@ export async function startServer(
           type: 'progress',
           message: 'Processing image...',
         });
-        const stream = await docker.loadImage(
-          join(UPLOADS_DIR, releaseInfo.tarLocation),
-          {
-            t: releaseInfo.image,
-            abortSignal: signal,
-          },
-        );
-        await session.write({ type: 'progress', message: 'Image loaded...' });
-        await followProgress(stream);
+        await loadImage(releaseInfo, signal);
         await session.write({
           type: 'progress',
           message: 'Image processed...',
@@ -116,7 +107,7 @@ export async function startServer(
       },
       {
         memory:
-          parseInt(
+          Number.parseInt(
             imageName ? imageToMemoryMap[imageName] || '96' : '96',
             10,
           ) || 96,
@@ -130,18 +121,18 @@ export async function startServer(
       type: 'error',
       message: `Server error: please try again later`,
     });
-    await release.fail();
+    await releaseManager.fail();
     return;
   }
 
-  await release.waiting();
+  await releaseManager.waiting();
   const container = await getContainer({ name: containerName });
   if (!container) {
     await session.write({
       type: 'error',
       message: `Something went wrong. Container ${containerName} not found`,
     });
-    await release.fail();
+    await releaseManager.fail();
     return;
   }
 
@@ -175,7 +166,7 @@ export async function startServer(
     type: 'complete',
     message: 'Taking snapshot...',
   });
-  await release.success({ containerName });
+  await releaseManager.success({ containerName });
 
   async function sendLogAndEnd(container: Container) {
     const logs = await container.logs({
@@ -194,11 +185,11 @@ export async function startServer(
       message: `Container not healthy; Check that: \n- The dockerfile runs a server.\n- Exposes the correct port.\n- Specify a health check instruction.`,
     });
     console.log('Container not healthy', logs);
-    await release.fail();
+    await releaseManager.fail();
   }
 }
 
-function makeRelease(id: string) {
+function makeReleaseManager(id: string) {
   return {
     waiting: () => {
       const qb = createQueryBuilder(tables.releases, 'releases').where(
@@ -269,4 +260,19 @@ function makeRelease(id: string) {
       });
     },
   };
+}
+
+async function loadImage(releaseInfo: ReleaseInfo, signal: AbortSignal) {
+  const stream = await docker.loadImage(
+    join(UPLOADS_DIR, releaseInfo.tarLocation),
+    {
+      t: releaseInfo.image,
+      abortSignal: signal,
+    },
+  );
+  await followProgress(stream);
+  await docker.pull('nginxinc/nginx-unprivileged:latest', {
+    t: 'nginx',
+    abortSignal: signal,
+  });
 }
