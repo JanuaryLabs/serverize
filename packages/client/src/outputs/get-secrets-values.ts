@@ -1,2 +1,13 @@
 import z from 'zod';
-export type GetSecretsValuesOutput = { [key: string]: string };
+import type * as http from '../http';
+import { type UnauthorizedErr } from '../models/UnauthorizedErr.ts';
+
+/**
+ * Response for 200
+ */
+export type GetSecretsValuesOutput200 = { [key: string]: string };
+
+/**
+ * Unauthorized
+ */
+export type GetSecretsValuesOutput401 = UnauthorizedErr;

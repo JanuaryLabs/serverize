@@ -11,6 +11,7 @@ import type { Releases } from './Releases.ts';
 import type { Secrets } from './Secrets.ts';
 import type { SecretsKeys } from './SecretsKeys.ts';
 import type { Snapshots } from './Snapshots.ts';
+import type { UnauthorizedErr } from './UnauthorizedErr.ts';
 import type { Volumes } from './Volumes.ts';
 import type { Workspaces } from './Workspaces.ts';
 import type { WorkspacesMembers } from './WorkspacesMembers.ts';

@@ -13,7 +13,6 @@ import {
   problemDetailsMiddleware,
 } from 'rfc-7807-problem-details';
 import { observeFile } from './file';
-import { startServer } from './start';
 
 Object.assign(process.env, {
   NODE_ENV: process.env.NODE_ENV ?? 'development',
@@ -31,61 +30,7 @@ const application = express()
     }),
   )
   .use(morgan('tiny'))
-  .get('/health', (req, res) => res.send('OK'))
-  .post('/restart', express.json(), async (req, res, next) => {
-    try {
-      const controller = new AbortController();
-      const release = req.body as Releases & {
-        projectName: string;
-      };
-      req.on('aborted', () => {
-        controller.abort('Client aborted connection');
-      });
-
-      const token = req.header('Authorization');
-      if (!token) {
-        res.status(401).send();
-        return;
-      }
-
-      res.end();
-
-      await startServer(
-        token,
-        controller.signal,
-        {
-          id: release.id,
-          name: release.name,
-          projectName: release.projectName,
-          channel: release.channel,
-          projectId: release.projectId,
-          tarLocation: release.tarLocation!,
-          image: release.image!,
-          domainPrefix: release.domainPrefix,
-          volumes: release.volumes,
-          releaseId: release.id,
-          port: release.port,
-          traceId: req.body.traceId,
-          environment: req.body.environment,
-          serviceName: req.body.serviceName,
-          network: req.body.network,
-        },
-        JSON.parse(release.runtimeConfig!),
-      );
-    } catch (error: any) {
-      // TODO: log the error
-      console.error(error);
-      // res
-      //   .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      //   .end(
-      //     error instanceof Error
-      //       ? `error:${error.message}`
-      //       : 'error' in error
-      //         ? `error:${error.error}`
-      //         : 'error:unknown',
-      //   );
-    }
-  });
+  .get('/health', (req, res) => res.send('OK'));
 
 application
   .use((req, res, next) => {

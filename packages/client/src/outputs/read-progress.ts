@@ -1,2 +1,13 @@
 import z from 'zod';
-export type ReadProgressOutput = ReadableStream;
+import type * as http from '../http';
+import { type UnauthorizedErr } from '../models/UnauthorizedErr.ts';
+
+/**
+ * Response for 200
+ */
+export type ReadProgressOutput200 = ReadableStream;
+
+/**
+ * Unauthorized
+ */
+export type ReadProgressOutput401 = UnauthorizedErr;

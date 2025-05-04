@@ -1,2 +1,13 @@
 import z from 'zod';
-export type StreamContainerLogsOutput = ReadableStream;
+import type * as http from '../http';
+import { type UnauthorizedErr } from '../models/UnauthorizedErr.ts';
+
+/**
+ * Response for 200
+ */
+export type StreamContainerLogsOutput200 = ReadableStream;
+
+/**
+ * Unauthorized
+ */
+export type StreamContainerLogsOutput401 = UnauthorizedErr;

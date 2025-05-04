@@ -1,2 +1,13 @@
 import z from 'zod';
-export type CreateProjectOutput = ReadableStream;
+import type * as http from '../http';
+import { type UnauthorizedErr } from '../models/UnauthorizedErr.ts';
+
+/**
+ * Response for 200
+ */
+export type CreateProjectOutput200 = void;
+
+/**
+ * Unauthorized
+ */
+export type CreateProjectOutput401 = UnauthorizedErr;

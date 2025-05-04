@@ -1,7 +1,7 @@
 import { platform } from 'os';
 import ignore from '@balena/dockerignore';
 import { checkbox, input, select } from '@inquirer/prompts';
-import { ParseError, ProblematicResponse } from '@serverize/client';
+import { APIError, ParseError, ProblematicResponse } from '@serverize/client';
 import chalk from 'chalk';
 import cliProgress from 'cli-progress';
 import cliSpinners from 'cli-spinners';
@@ -490,26 +490,24 @@ export function showError(
     return spinner.fail(error);
   }
 
-  if ('kind' in error) {
-    if (error.kind === 'parse') {
-      const flattened = Object.entries(error.fieldErrors).map(([key, it]) => ({
+  if (error instanceof ParseError) {
+    const flattened = Object.entries(error.data.fieldErrors).map(
+      ([key, it]) => ({
         path: key,
         message: (it as any[])[0].message,
-      }));
-      const message = `${flattened.map((it) => `${it.path}: ${it.message}`).join('\n')}`;
-      return spinner.fail(`${message}\n${message}`);
-    }
-    if (error.kind === 'response') {
-      const { errors, detail, title } = error.body as any;
-      const flattened = Object.entries(errors ?? {}).map(([key, it]) => ({
-        path: key,
-        message: (it as any[])[0].message,
-      }));
-      const validationMessage = `${flattened.map((it) => `\n- ${it.path}: ${it.message}`).join('\n')}`;
-      return spinner.fail(`${detail || title}\n${validationMessage}\n`);
-    }
-  }
-  if (error instanceof Error) {
+      }),
+    );
+    const message = `${flattened.map((it) => `${it.path}: ${it.message}`).join('\n')}`;
+    return spinner.fail(`${message}\n${message}`);
+  } else if (error instanceof APIError) {
+    const { errors, detail, title } = error.data as any;
+    const flattened = Object.entries(errors ?? {}).map(([key, it]) => ({
+      path: key,
+      message: (it as any[])[0].message,
+    }));
+    const validationMessage = `${flattened.map((it) => `\n- ${it.path}: ${it.message}`).join('\n')}`;
+    return spinner.fail(`${detail || title}\n${validationMessage}\n`);
+  } else if (error instanceof Error) {
     return spinner.fail(error.message);
   }
   return spinner.fail(JSON.stringify(error));

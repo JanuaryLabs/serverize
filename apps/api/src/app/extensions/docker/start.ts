@@ -271,4 +271,8 @@ async function loadImage(releaseInfo: ReleaseInfo, signal: AbortSignal) {
     },
   );
   await followProgress(stream);
+  await docker.pull('nginxinc/nginx-unprivileged:latest', {
+    t: 'nginx',
+    abortSignal: signal,
+  });
 }

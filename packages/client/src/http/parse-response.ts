@@ -1,22 +1,5 @@
 import { parse } from 'fast-content-type-parse';
 
-export async function handleError(response: Response) {
-  try {
-    if (response.status >= 400 && response.status < 500) {
-      const body = (await response.json()) as Record<string, any>;
-      return {
-        status: response.status,
-        body: body,
-      };
-    }
-    return new Error(
-      `An error occurred while fetching the data. Status: ${response.status}`,
-    );
-  } catch (error) {
-    return error as any;
-  }
-}
-
 async function handleChunkedResponse(response: Response, contentType: string) {
   const { type } = parse(contentType);
 
@@ -49,7 +32,11 @@ async function handleChunkedResponse(response: Response, contentType: string) {
   }
 }
 
-export async function parseResponse(response: Response) {
+export function chunked(response: Response) {
+  return response.body!;
+}
+
+export async function buffered(response: Response) {
   const contentType = response.headers.get('Content-Type');
   if (!contentType) {
     throw new Error('Content-Type header is missing');
@@ -57,11 +44,6 @@ export async function parseResponse(response: Response) {
 
   if (response.status === 204) {
     return null;
-  }
-  const isChunked = response.headers.get('Transfer-Encoding') === 'chunked';
-  if (isChunked) {
-    return response.body!;
-    // return handleChunkedResponse(response, contentType);
   }
 
   const { type } = parse(contentType);

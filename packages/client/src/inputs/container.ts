@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 export const streamContainerLogsSchema = z.object({
   projectName: z.string(),
   channelName: z.string(),

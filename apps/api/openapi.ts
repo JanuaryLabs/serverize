@@ -23,7 +23,7 @@ const { paths, components } = await analyze('apps/api/tsconfig.app.json', {
       description: 'Unauthorized',
       content: {
         'application/json': {
-          schema: { $ref: '#/components/schemas/Unauthorized' },
+          schema: { $ref: '#/components/schemas/UnauthorizedErr' },
         },
       },
     };
@@ -65,7 +65,7 @@ const spec: Parameters<typeof generate>[0] = {
     },
     schemas: {
       ...components.schemas,
-      Unauthorized: {
+      UnauthorizedErr: {
         type: 'object',
         required: ['type', 'title'],
         additionalProperties: false,
@@ -93,6 +93,10 @@ await writeFile(
 await generate(spec, {
   output: join(process.cwd(), 'packages/client/src'),
   name: 'Serverize',
+  style: {
+    errorAsValue: true,
+    outputType: 'default',
+  },
   formatCode: ({ env, output }) => {
     execFile('biome', ['check', output, '--write'], { env: env });
   },

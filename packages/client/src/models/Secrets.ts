@@ -10,6 +10,7 @@ import type { Projects } from './Projects.ts';
 import type { Releases } from './Releases.ts';
 import type { SecretsKeys } from './SecretsKeys.ts';
 import type { Snapshots } from './Snapshots.ts';
+import type { UnauthorizedErr } from './UnauthorizedErr.ts';
 import type { Users } from './Users.ts';
 import type { Volumes } from './Volumes.ts';
 import type { Workspaces } from './Workspaces.ts';

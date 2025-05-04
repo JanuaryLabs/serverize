@@ -10,6 +10,7 @@ export * from './Releases.ts';
 export * from './Secrets.ts';
 export * from './SecretsKeys.ts';
 export * from './Snapshots.ts';
+export * from './UnauthorizedErr.ts';
 export * from './Users.ts';
 export * from './Volumes.ts';
 export * from './Workspaces.ts';

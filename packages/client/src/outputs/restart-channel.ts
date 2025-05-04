@@ -1,2 +1,16 @@
 import z from 'zod';
-export type RestartChannelOutput = { traces: string[] };
+import type * as http from '../http';
+import { type UnauthorizedErr } from '../models/UnauthorizedErr.ts';
+
+/**
+ * Response for 200
+ */
+export type RestartChannelOutput200 = {
+  traces: string[];
+  [http.KIND]: typeof http.Ok.kind;
+};
+
+/**
+ * Unauthorized
+ */
+export type RestartChannelOutput401 = UnauthorizedErr;

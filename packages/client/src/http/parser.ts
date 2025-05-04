@@ -1,14 +1,20 @@
 import { z } from 'zod';
 
-export type ParseError<T extends z.ZodType<any, any, any>> = {
-  kind: 'parse';
-} & z.inferFlattenedErrors<T>;
+export class ParseError<T extends z.ZodType<any, any, any>> {
+  public data: z.typeToFlattenedError<T, z.ZodIssue>;
+  constructor(data: z.typeToFlattenedError<T, z.ZodIssue>) {
+    this.data = data;
+  }
+}
 
-export function parse<T extends z.ZodType>(schema: T, input: unknown) {
+export function parseInput<T extends z.ZodType<any, any, any>>(
+  schema: T,
+  input: unknown,
+) {
   const result = schema.safeParse(input);
   if (!result.success) {
-    const errors = result.error.flatten((issue) => issue);
-    return [null, errors];
+    const error = result.error.flatten((issue) => issue);
+    return [null, new ParseError(error)];
   }
   return [result.data as z.infer<T>, null];
 }

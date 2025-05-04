@@ -1,2 +1,13 @@
 import z from 'zod';
-export type DeleteSecretOutput = ReadableStream;
+import type * as http from '../http';
+import { type UnauthorizedErr } from '../models/UnauthorizedErr.ts';
+
+/**
+ * Response for 200
+ */
+export type DeleteSecretOutput200 = void;
+
+/**
+ * Unauthorized
+ */
+export type DeleteSecretOutput401 = UnauthorizedErr;

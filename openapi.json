@@ -111,7 +111,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -144,7 +144,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -208,7 +208,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -221,6 +221,7 @@
         "tags": ["organizations"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -245,7 +246,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -260,6 +261,7 @@
         "tags": ["organizations"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -299,7 +301,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -314,6 +316,7 @@
         "tags": ["workspaces"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -342,7 +345,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -357,6 +360,7 @@
         "tags": ["projects"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -381,7 +385,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -461,7 +465,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -486,6 +490,7 @@
         "tags": ["projects"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -510,7 +515,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -525,6 +530,7 @@
         "tags": ["users"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -574,7 +580,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -614,6 +620,7 @@
         "tags": ["users"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -659,7 +666,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -735,7 +742,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -750,6 +757,7 @@
         "tags": ["operations"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -840,7 +848,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -873,6 +881,7 @@
         "tags": ["operations"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -926,7 +935,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -960,6 +969,7 @@
         "tags": ["operations"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -1005,7 +1015,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1030,6 +1040,7 @@
         "tags": ["operations"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -1059,7 +1070,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1109,6 +1120,7 @@
         "tags": ["operations"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -1138,7 +1150,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1178,6 +1190,7 @@
         "tags": ["tokens"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -1209,7 +1222,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1247,6 +1260,7 @@
         "tags": ["tokens"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -1273,7 +1287,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1338,7 +1352,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1402,7 +1416,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1435,6 +1449,7 @@
         "tags": ["releases"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -1482,7 +1497,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1579,7 +1594,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1604,6 +1619,7 @@
         "tags": ["releases"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -1669,7 +1685,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1694,6 +1710,7 @@
         "tags": ["releases"],
         "description": "",
         "requestBody": {
+          "required": false,
           "content": {
             "application/json": {
               "schema": {
@@ -1734,7 +1751,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1759,6 +1776,7 @@
         "tags": ["releases"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -1797,7 +1815,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1812,6 +1830,7 @@
         "tags": ["secrets"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -1864,7 +1883,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1915,7 +1934,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -1948,7 +1967,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -2001,7 +2020,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -2016,6 +2035,7 @@
         "tags": ["tokens"],
         "description": "",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -2053,7 +2073,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -2096,7 +2116,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
+                  "$ref": "#/components/schemas/UnauthorizedErr"
                 }
               }
             }
@@ -3290,7 +3310,7 @@
         "required": ["organizationId", "workspaceId", "aknowledged"],
         "additionalProperties": false
       },
-      "Unauthorized": {
+      "UnauthorizedErr": {
         "type": "object",
         "required": ["type", "title"],
         "additionalProperties": false,

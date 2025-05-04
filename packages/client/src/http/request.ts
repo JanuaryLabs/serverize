@@ -1,16 +1,28 @@
-export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-export type ContentType = 'xml' | 'json' | 'urlencoded' | 'multipart';
+type Init = Omit<RequestInit, 'headers'> & { headers: Headers };
+export type RequestConfig = { init: Init; url: URL };
+export type Method =
+  | 'GET'
+  | 'POST'
+  | 'PUT'
+  | 'PATCH'
+  | 'DELETE'
+  | 'HEAD'
+  | 'OPTIONS';
+export type ContentType =
+  | 'xml'
+  | 'json'
+  | 'urlencoded'
+  | 'multipart'
+  | 'formdata';
+export type HeadersInit = [string, string][] | Record<string, string>;
 export type Endpoint =
   | `${ContentType} ${Method} ${string}`
   | `${Method} ${string}`;
 
 export type BodyInit =
   | ArrayBuffer
-  | AsyncIterable<Uint8Array>
   | Blob
   | FormData
-  | Iterable<Uint8Array>
-  | NodeJS.ArrayBufferView
   | URLSearchParams
   | null
   | string;
@@ -49,10 +61,14 @@ type Props = {
 };
 
 abstract class Serializer {
-  constructor(
-    protected input: Input,
-    protected props: Props,
-  ) {}
+  protected input: Input;
+  protected props: Props;
+
+  constructor(input: Input, props: Props) {
+    this.input = input;
+    this.props = props;
+  }
+
   abstract getBody(): BodyInit | null;
   abstract getHeaders(): Record<string, string>;
   serialize(): Serialized {
@@ -96,6 +112,13 @@ interface Serialized {
 class JsonSerializer extends Serializer {
   getBody(): BodyInit | null {
     const body: Record<string, any> = {};
+    if (
+      this.props.inputBody.length === 1 &&
+      this.props.inputBody[0] === '$body'
+    ) {
+      return JSON.stringify(this.input.$body);
+    }
+
     for (const prop of this.props.inputBody) {
       body[prop] = this.input[prop];
     }
@@ -118,7 +141,10 @@ class UrlencodedSerializer extends Serializer {
     return body;
   }
   getHeaders(): Record<string, string> {
-    return {};
+    return {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Accept: 'application/json',
+    };
   }
 }
 
@@ -140,7 +166,9 @@ class FormDataSerializer extends Serializer {
     return body;
   }
   getHeaders(): Record<string, string> {
-    return {};
+    return {
+      Accept: 'application/json',
+    };
   }
 }
 
@@ -160,14 +188,16 @@ export function formdata(input: Input, props: Props) {
 export function toRequest<T extends Endpoint>(
   endpoint: T,
   input: Serialized,
-): Request {
+): RequestConfig {
   const [method, path] = endpoint.split(' ');
   const pathVariable = template(path, input.params);
 
-  const url = createUrl(pathVariable, input.query);
-  return new Request(url, {
-    method: method,
-    headers: input.headers,
-    body: method === 'GET' ? undefined : input.body,
-  });
+  return {
+    url: createUrl(pathVariable, input.query),
+    init: {
+      method: method,
+      headers: new Headers(input.headers),
+      body: method === 'GET' ? undefined : input.body,
+    },
+  };
 }
