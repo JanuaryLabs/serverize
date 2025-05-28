@@ -1,5 +1,5 @@
 {
-  "name": "@serverize/client",
+  "name": "@serverize/dockerfile",
   "version": "0.60.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -9,8 +9,7 @@
     "access": "public"
   },
   "dependencies": {
-    "zod": "^3.23.8",
-    "fast-content-type-parse": "^2.0.0"
+    "execa": "^9.5.2"
   },
   "exports": {
     "./package.json": "./package.json",

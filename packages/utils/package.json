@@ -1,5 +1,5 @@
 {
-  "name": "@serverize/client",
+  "name": "@serverize/utils",
   "version": "0.60.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -7,10 +7,6 @@
   "types": "./dist/index.d.ts",
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {
-    "zod": "^3.23.8",
-    "fast-content-type-parse": "^2.0.0"
   },
   "exports": {
     "./package.json": "./package.json",
@@ -20,5 +16,10 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist", "!**/*.tsbuildinfo"]
+  "files": ["dist", "!**/*.tsbuildinfo"],
+  "dependencies": {
+    "prettier": "^3.4.2",
+    "retry": "^0.13.1",
+    "stringcase": "^4.3.1"
+  }
 }
