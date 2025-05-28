@@ -1,7 +1,7 @@
 import output from '#extensions/hono/output.ts';
 import { dataSource } from '#extensions/postgresql/index.ts';
 
-import { trigger, workflow } from '@january/declarative';
+import { trigger, workflow } from '@januarylabs/declarative';
 
 export default {
   EmptyFavicon: workflow({

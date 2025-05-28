@@ -1,7 +1,4 @@
-import type { trigger } from '@january/declarative';
-import type { Context } from 'hono';
 import { createMiddleware } from 'hono/factory';
-import { type RedirectStatusCode } from 'hono/utils/http-status';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 
 export const consume = (contentType: string) => {

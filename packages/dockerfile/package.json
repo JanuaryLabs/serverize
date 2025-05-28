@@ -9,7 +9,9 @@
     "access": "public"
   },
   "dependencies": {
-    "execa": "^9.5.2"
+    "execa": "^9.5.2",
+    "@serverize/docker": "0.60.0",
+    "@serverize/utils": "*"
   },
   "exports": {
     "./package.json": "./package.json",

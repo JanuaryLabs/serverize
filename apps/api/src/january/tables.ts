@@ -1,5 +1,5 @@
 import { table } from 'console';
-import { field, index, mandatory, unique } from '@january/declarative';
+import { field, index, mandatory, unique } from '@januarylabs/declarative';
 
 import { tables } from '#entities';
 export default {

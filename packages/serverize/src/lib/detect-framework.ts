@@ -6,8 +6,8 @@ import { basename, dirname, join } from 'path';
 import { exist, getFile, readJsonFile, safeFail } from '@serverize/utils';
 import { parseRequirements } from './requirements-parser';
 
-import { type Callers, staticEval } from '@january/evaluator';
-import { checker, parseCode, resolveCallExpression } from '@january/parser';
+import { type Callers, staticEval } from '@januarylabs/evaluator';
+import { checker, parseCode, resolveCallExpression } from '@januarylabs/parser';
 import { fileBundler } from './file-bundler';
 
 export const supportedFrameworks = [

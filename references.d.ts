@@ -3,9 +3,9 @@
 /// <reference path="node_modules/@januarylabs/extensions/src/firebase/auth/index.d.ts" />
 /// <reference path="node_modules/@januarylabs/extensions/src/typeorm/index.d.ts" />
 
-import type { Policy } from '@january/declarative';
+import type { Policy } from '@januarylabs/declarative';
 
-declare module '@january/declarative' {
+declare module '@januarylabs/declarative' {
   export namespace policy {
     function authenticated(): Policy;
   }

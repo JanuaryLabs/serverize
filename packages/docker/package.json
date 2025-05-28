@@ -13,7 +13,8 @@
     "execa": "^9.5.2",
     "dockerode": "^4.0.2",
     "tar-stream": "^3.1.7",
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "@serverize/utils": "*"
   },
   "exports": {
     "./package.json": "./package.json",

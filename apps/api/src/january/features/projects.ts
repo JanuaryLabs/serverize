@@ -21,7 +21,7 @@ import * as commonZod from '#extensions/zod/index.ts';
 
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
 
-import { trigger, workflow } from '@january/declarative';
+import { trigger, workflow } from '@januarylabs/declarative';
 import { getAuth } from 'firebase-admin/auth';
 import { firebaseApp } from '#extensions/firebase-auth/index.ts';
 

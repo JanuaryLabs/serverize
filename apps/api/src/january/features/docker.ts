@@ -3,7 +3,7 @@ import * as commonZod from '#extensions/zod/index.ts';
 
 import { docker } from '@serverize/docker';
 
-import { trigger, workflow } from '@january/declarative';
+import { trigger, workflow } from '@januarylabs/declarative';
 import { toTraefikConfig } from '#extensions/user/index.ts';
 
 export default {

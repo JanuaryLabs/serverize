@@ -4,10 +4,10 @@
 /// <reference path="../../node_modules/@januarylabs/extensions/src/typeorm/index.d.ts" />
 
 import type { Readable } from 'node:stream';
-import type { Policy } from '@january/declarative';
-import type { TriggerDefinition } from '@january/declarative';
+import type { Policy } from '@januarylabs/declarative';
+import type { TriggerDefinition } from '@januarylabs/declarative';
 
-declare module '@january/declarative' {
+declare module '@januarylabs/declarative' {
   export namespace policy {
     function authenticated(): Policy;
   }
@@ -21,7 +21,7 @@ declare module '@january/declarative' {
   }
 }
 
-declare module '@january/declarative' {
+declare module '@januarylabs/declarative' {
   interface Config {
     filePath: string;
     autoRestart?: boolean;

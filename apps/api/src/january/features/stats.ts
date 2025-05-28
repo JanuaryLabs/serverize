@@ -1,6 +1,3 @@
-import { trigger, workflow } from '@january/declarative';
-import { safeFail } from '#extensions/user/index.ts';
-
 export default {
   // WatchAccessLog: workflow({
   //   tag: 'why',

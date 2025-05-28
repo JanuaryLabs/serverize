@@ -1,8 +1,8 @@
 import { camelcase, dotcase, spinalcase } from 'stringcase';
 
 import { join } from 'node:path';
-import { refineExecute } from '@january/generator';
 import type { Extension } from '@januarylabs/extensions';
+import { refineExecute } from '@januarylabs/generator';
 export const makeFeatureFile = (featureName: string, fileName: string) =>
   join('./src/app/features', spinalcase(featureName), fileName);
 
