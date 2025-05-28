@@ -1,10 +1,8 @@
-import { Hono } from 'hono';
-import { docker } from 'serverize/docker';
-import z from 'zod';
-import { type HonoEnv } from '#core/utils.ts';
+import { docker } from '@serverize/docker';
+import type { Hono } from 'hono';
+import type { HonoEnv } from '#core/utils.ts';
 import output from '#extensions/hono/output.ts';
 import { toTraefikConfig } from '#extensions/user/index.ts';
-import * as commonZod from '#extensions/zod/index.ts';
 
 export default async function (router: Hono<HonoEnv>) {
   /**

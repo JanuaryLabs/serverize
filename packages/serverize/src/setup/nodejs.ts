@@ -3,9 +3,9 @@ import { detect } from 'detect-package-manager';
 import { rm } from 'fs/promises';
 
 import { join } from 'path';
+import { type PackageManager, nodejs } from '@serverize/dockerfile';
+import { type PackageJson, getFile, readPackageJson } from '@serverize/utils';
 import semver from 'semver';
-import { type PackageManager, nodejs } from 'serverize/dockerfile';
-import { type PackageJson, getFile, readPackageJson } from 'serverize/utils';
 import { writeDockerIgnore } from '../lib/file';
 import { spinner } from '../program';
 

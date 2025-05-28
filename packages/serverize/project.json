@@ -16,62 +16,7 @@
       "dependsOn": ["^build", "^client"],
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
-      "options": {
-        "declaration": true,
-        "declarationRootDir": "packages/serverize/src",
-        "additionalEntryPoints": ["packages/serverize/src/cli.ts"],
-        "outputPath": "dist/packages/serverize",
-        "main": "packages/serverize/src/index.ts",
-        "tsConfig": "packages/serverize/tsconfig.lib.json",
-        "assets": [],
-        "format": ["esm"],
-        "minify": false,
-        "deleteOutputPath": true,
-        "sourcemap": true,
-        "generatePackageJson": true,
-        "bundle": true,
-        "thirdParty": false,
-        "esbuildOptions": {
-          "alias": {
-            "cli-spinners": "aliases/cli-spinners/index.js"
-          },
-          "banner": {
-            "js": "import { createRequire } from 'module'; const require = createRequire(import.meta.url);"
-          }
-        }
-      },
-      "configurations": {
-        "production": {
-          "external": [
-            "@serverize/client",
-            "serverize/utils",
-            "serverize/docker",
-            "serverize/dockerfile",
-            "serverize/dockercompose"
-          ]
-        },
-        "development": {
-          "external": [
-            "serverize/utils",
-            "serverize/docker",
-            "serverize/dockerfile",
-            "serverize/dockercompose"
-          ]
-        }
-      }
-    },
-    "nx-release-publish": {
-      "options": {
-        "packageRoot": "dist/{projectRoot}"
-      }
-    }
-  },
-  "release": {
-    "version": {
-      "generatorOptions": {
-        "packageRoot": "dist/{projectRoot}",
-        "currentVersionResolver": "git-tag"
-      }
+      "options": {}
     }
   }
 }

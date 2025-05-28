@@ -4,6 +4,15 @@
   "include": [],
   "references": [
     {
+      "path": "../../packages/utils"
+    },
+    {
+      "path": "../../packages/client"
+    },
+    {
+      "path": "../../packages/docker"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ],

@@ -1,11 +1,11 @@
+import { randomUUID } from 'crypto';
 import { writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import Docker, { type Container } from 'dockerode';
 import esbuild from 'esbuild';
-import { nodeExternalsPlugin } from 'esbuild-node-externals';
 
 import { join } from 'path';
-import { createRecorder } from 'serverize/utils';
+import { createRecorder } from '@serverize/utils';
 
 const docker = new Docker();
 
@@ -50,7 +50,6 @@ async function completeCode(userCode: string) {
   const result = await build(`${projectCode};`);
   return `;${result.outputFiles![0].text};console.log(JSON.stringify(defProject));`;
 }
-
 /**
  * Run node.js or typescript untrusted (user) code in a container
  */
@@ -60,7 +59,7 @@ export async function runUntrustedCode(userCode: string) {
   recorder.record('completeCode');
   const code = await completeCode(userCode);
 
-  const fileName = `${tmpdir()}/user-code-${crypto.randomUUID()}.js`;
+  const fileName = `${tmpdir()}/user-code-${randomUUID()}.js`;
   writeFileSync(fileName, code);
 
   console.log({ fileName });
@@ -68,7 +67,7 @@ export async function runUntrustedCode(userCode: string) {
   recorder.recordEnd('completeCode');
   recorder.record('runContainer');
   const container = await docker.createContainer({
-    name: 'untrusted-' + crypto.randomUUID(),
+    name: 'untrusted-' + randomUUID(),
     Image: 'node:lts',
     User: 'node',
     WorkingDir: '/app',

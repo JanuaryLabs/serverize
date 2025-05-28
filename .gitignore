@@ -227,3 +227,5 @@ dist
 node_modules
 .vscode-test/
 *.vsix
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md

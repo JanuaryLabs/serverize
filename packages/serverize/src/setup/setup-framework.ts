@@ -18,11 +18,11 @@ import {
   nuxtjs,
   remix,
   streamlit,
-} from 'serverize/dockerfile';
-import { exist, readJsonFile, readPackageJson } from 'serverize/utils';
+} from '@serverize/dockerfile';
+import { exist, readJsonFile, readPackageJson } from '@serverize/utils';
 import {
   detectFramework,
-  framework,
+  type framework,
   readConfig,
 } from '../lib/detect-framework';
 import { writeDockerIgnore } from '../lib/file';
@@ -341,19 +341,17 @@ export async function setupFramework(
       break;
     }
     case 'nodejs': {
-      {
-        await setupNodejs({
-          cwd: options.cwd,
-          src: src,
-          dest,
-          ...options.options,
-        });
-        setups.push({
-          dockerfile: dockerfilepath,
-          dockerignore: join(dockerIgnoreDir, '.dockerignore'),
-          framework: 'nodejs',
-        });
-      }
+      await setupNodejs({
+        cwd: options.cwd,
+        src: src,
+        dest,
+        ...options.options,
+      });
+      setups.push({
+        dockerfile: dockerfilepath,
+        dockerignore: join(dockerIgnoreDir, '.dockerignore'),
+        framework: 'nodejs',
+      });
       break;
     }
     case 'nx': {

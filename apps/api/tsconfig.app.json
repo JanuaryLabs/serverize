@@ -6,5 +6,16 @@
     "jsx": "preserve",
     "moduleResolution": "Bundler",
     "module": "ESNext"
-  }
+  },
+  "references": [
+    {
+      "path": "../../packages/serverize/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/utils/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/docker/tsconfig.lib.json"
+    }
+  ]
 }

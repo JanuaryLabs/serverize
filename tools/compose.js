@@ -3,7 +3,7 @@ import {
   nodeServer,
   postgres,
   service,
-} from 'serverize/dockercompose';
+} from '@serverize/dockercompose';
 
 await compose({
   database: service(postgres),

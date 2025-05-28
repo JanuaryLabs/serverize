@@ -6,7 +6,7 @@ import { type UnauthorizedErr } from '../models/UnauthorizedErr.ts';
  * Response for 200
  */
 export type StartReleaseOutput200 = {
-  traceId: string;
+  traceId: any;
   releaseId: string;
   finalUrl: string;
   [http.KIND]: typeof http.Ok.kind;

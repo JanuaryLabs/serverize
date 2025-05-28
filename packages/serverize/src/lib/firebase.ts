@@ -4,7 +4,7 @@ import { initializeAuth } from 'firebase/auth';
 import { mkdir, rm, writeFile } from 'fs/promises';
 
 import { dirname, join } from 'path';
-import { getFile } from 'serverize/utils';
+import { getFile } from '@serverize/utils';
 
 const file =
   process.env.NODE_ENV === 'development'

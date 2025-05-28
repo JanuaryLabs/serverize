@@ -1,4 +1,4 @@
-import { notNullOrUndefined } from 'serverize/utils';
+import { notNullOrUndefined } from '@serverize/utils';
 
 interface Requirement {
   type: 'requirement' | 'package' | 'url';

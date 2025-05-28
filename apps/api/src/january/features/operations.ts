@@ -24,8 +24,8 @@ import * as commonZod from '#extensions/zod/index.ts';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { trigger, workflow } from '@january/declarative';
+import { getContainer, removeContainer } from '@serverize/docker';
 import { ProblemDetailsException } from 'rfc-7807-problem-details';
-import { getContainer, removeContainer } from 'serverize/docker';
 import { startServer } from '#extensions/docker/start.ts';
 import output from '#extensions/hono/output.ts';
 

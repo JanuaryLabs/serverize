@@ -4,6 +4,15 @@
   "include": [],
   "references": [
     {
+      "path": "../../packages/serverize"
+    },
+    {
+      "path": "../../packages/utils"
+    },
+    {
+      "path": "../../packages/docker"
+    },
+    {
       "path": "./tsconfig.app.json"
     },
     {

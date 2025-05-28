@@ -15,30 +15,6 @@
       "import": "./index.js",
       "types": "./src/index.d.ts",
       "default": "./index.js"
-    },
-    "./docker": {
-      "node": "./docker/index.js",
-      "import": "./docker/index.js",
-      "types": "./docker/packages/docker/src/index.d.ts",
-      "default": "./docker/index.js"
-    },
-    "./dockerfile": {
-      "node": "./dockerfile/index.js",
-      "import": "./dockerfile/index.js",
-      "types": "./dockerfile/packages/dockerfile/src/index.d.ts",
-      "default": "./dockerfile/index.js"
-    },
-    "./dockercompose": {
-      "node": "./dockercompose/index.js",
-      "import": "./dockercompose/index.js",
-      "types": "./dockercompose/packages/dockercompose/src/index.d.ts",
-      "default": "./dockercompose/index.js"
-    },
-    "./utils": {
-      "node": "./utils/index.js",
-      "import": "./utils/index.js",
-      "types": "./utils/packages/utils/src/index.d.ts",
-      "default": "./utils/index.js"
     }
   },
   "devDependencies": {

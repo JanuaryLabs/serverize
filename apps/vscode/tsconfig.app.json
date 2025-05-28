@@ -6,5 +6,13 @@
     "types": ["node", "vscode"]
   },
   "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"],
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "../../packages/client/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/serverize/tsconfig.lib.json"
+    }
+  ]
 }

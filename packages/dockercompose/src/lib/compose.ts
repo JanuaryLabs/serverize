@@ -1,6 +1,6 @@
 import yaml from 'js-yaml';
 
-import { toKevValEnv, writeFiles } from 'serverize/utils';
+import { toKevValEnv, writeFiles } from '@serverize/utils';
 
 export interface ComposeService {
   image: string;

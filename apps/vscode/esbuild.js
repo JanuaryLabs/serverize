@@ -42,7 +42,7 @@ async function main() {
     sourcesContent: false,
     platform: 'node',
     outfile: join(dest, 'index.js'),
-    external: ['vscode'],
+    external: ['vscode', 'serverize'],
     logLevel: 'silent',
     plugins: [
       /* add to the end of plugins array */

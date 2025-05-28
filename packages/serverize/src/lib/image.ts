@@ -1,4 +1,5 @@
 import { type ReadStream, createReadStream, readFileSync } from 'fs';
+import crypto from 'node:crypto';
 import { tmpdir } from 'os';
 import chalk from 'chalk';
 import { parse } from 'dotenv';

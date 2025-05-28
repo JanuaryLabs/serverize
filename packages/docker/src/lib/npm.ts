@@ -1,7 +1,7 @@
 import type { Container } from 'dockerode';
 
 import { PassThrough } from 'stream';
-import { extractError } from 'serverize/utils';
+import { extractError } from '@serverize/utils';
 import tarStream, { type Pack } from 'tar-stream';
 import { docker } from './instance';
 import { followLogs, removeContainer, startContainer } from './utils';

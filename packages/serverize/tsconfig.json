@@ -1,18 +1,20 @@
 {
   "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "module": "ESNext",
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": false,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "declaration": true
-  },
   "files": [],
   "include": [],
   "references": [
+    {
+      "path": "../utils"
+    },
+    {
+      "path": "../dockerfile"
+    },
+    {
+      "path": "../docker"
+    },
+    {
+      "path": "../client"
+    },
     {
       "path": "./tsconfig.lib.json"
     }

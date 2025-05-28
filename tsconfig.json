@@ -2,5 +2,36 @@
   "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "files": [],
-  "references": []
+  "references": [
+    {
+      "path": "./packages/dockercompose"
+    },
+    {
+      "path": "./packages/dockerfile"
+    },
+    {
+      "path": "./packages/serverize"
+    },
+    {
+      "path": "./packages/client"
+    },
+    {
+      "path": "./packages/docker"
+    },
+    {
+      "path": "./packages/utils"
+    },
+    {
+      "path": "./apps/manager"
+    },
+    {
+      "path": "./apps/vscode"
+    },
+    {
+      "path": "./apps/api"
+    },
+    {
+      "path": "./apps/www"
+    }
+  ]
 }

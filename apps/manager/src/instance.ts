@@ -2,6 +2,7 @@ import os from 'os';
 import type { GetEventsOptions } from 'dockerode';
 
 import { PassThrough } from 'stream';
+import { docker, getContainer } from '@serverize/docker';
 import {
   Observable,
   Subject,
@@ -14,7 +15,6 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { docker, getContainer } from 'serverize/docker';
 import tarStream from 'tar-stream';
 
 export class ContainerNotFoundError extends Error {

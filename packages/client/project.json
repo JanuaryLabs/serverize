@@ -1,42 +1,14 @@
 {
-  "name": "client",
+  "name": "@sdk-it/client",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/client/src",
   "projectType": "library",
   "tags": [],
-  "implicitDependencies": ["@serverize/source"],
   "targets": {
     "build": {
-      "dependsOn": ["^client"],
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/client",
-        "main": "packages/client/src/index.ts",
-        "tsConfig": "packages/client/tsconfig.lib.json",
-        "assets": [],
-        "format": ["esm"],
-        "outputFileName": "index.js",
-        "minify": false,
-        "deleteOutputPath": false,
-        "sourcemap": true,
-        "generatePackageJson": true,
-        "bundle": true,
-        "thirdParty": false
-      }
-    },
-    "nx-release-publish": {
-      "options": {
-        "packageRoot": "dist/{projectRoot}"
-      }
-    }
-  },
-  "release": {
-    "version": {
-      "generatorOptions": {
-        "packageRoot": "dist/{projectRoot}",
-        "currentVersionResolver": "git-tag"
-      }
+      "options": {}
     }
   }
 }

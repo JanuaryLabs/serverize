@@ -11,37 +11,9 @@
     "build": {
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/packages/serverize/utils",
-        "main": "packages/utils/src/index.ts",
-        "tsConfig": "packages/utils/tsconfig.lib.json",
-        "outputFileName": "index.js",
-        "assets": [],
-        "format": ["esm"],
-        "minify": false,
-        "deleteOutputPath": false,
-        "sourcemap": true,
-        "generatePackageJson": false,
-        "bundle": true,
-        "thirdParty": false,
-        "external": [
-          "@serverize/client",
-          "serverize/utils",
-          "serverize/docker",
-          "serverize/dockerfile",
-          "serverize/dockercompose"
-        ]
-      },
-      "configurations": {
-        "development": {
-          "minify": false
-        },
-        "production": {
-          "minify": true
-        }
+        "deleteOutputPath": false
       }
     }
-  },
-  "tags": ["utils"]
+  }
 }

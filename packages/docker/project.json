@@ -8,32 +8,7 @@
     "build": {
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/serverize/docker",
-        "main": "packages/docker/src/index.ts",
-        "tsConfig": "packages/docker/tsconfig.lib.json",
-        "outputFileName": "index.js",
-        "assets": [],
-        "format": ["esm"],
-        "minify": false,
-        "deleteOutputPath": false,
-        "sourcemap": true,
-        "generatePackageJson": false,
-        "bundle": true,
-        "thirdParty": false,
-        "external": [
-          "@serverize/client",
-          "serverize/utils",
-          "serverize/docker",
-          "serverize/dockerfile",
-          "serverize/dockercompose"
-        ],
-        "esbuildOptions": {
-          "banner": {
-            "js": "import { createRequire } from 'module'; const require = createRequire(import.meta.url);"
-          }
-        }
-      }
+      "options": {}
     },
     "lint": {
       "executor": "@nx/eslint:lint"

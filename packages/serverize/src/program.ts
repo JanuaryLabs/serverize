@@ -1,7 +1,7 @@
 import { platform } from 'os';
 import ignore from '@balena/dockerignore';
 import { checkbox, input, select } from '@inquirer/prompts';
-import { APIError, ParseError, ProblematicResponse } from '@serverize/client';
+import { APIError, ParseError } from '@serverize/client';
 import chalk from 'chalk';
 import cliProgress from 'cli-progress';
 import cliSpinners from 'cli-spinners';
@@ -14,9 +14,9 @@ import { readFile } from 'fs/promises';
 import ora from 'ora';
 import validator from 'validator';
 
+import { coerceArray, nodeServer } from '@serverize/dockerfile';
+import { exist, notNullOrUndefined, safeFail } from '@serverize/utils';
 import parse from 'parse-duration';
-import { coerceArray, nodeServer } from 'serverize/dockerfile';
-import { exist, notNullOrUndefined, safeFail } from 'serverize/utils';
 import { client, serverizeApiUrl } from './lib/api-client';
 import { initialise } from './lib/auth-methods';
 import { auth } from './lib/firebase';
@@ -87,7 +87,7 @@ export async function inspectDockerfile(
   const projectName = labels['serverize.project'] as string;
   const releaseName = labels['serverize.release'] as string;
   const channelName = labels['serverize.channel'] as string;
-  let protocol = labels['serverize.protocol'] as string;
+  const protocol = labels['serverize.protocol'] as string;
   if (protocol && !['http', 'https', 'tcp'].includes(protocol)) {
     throw new Error(
       `Invalid protocol ${protocol}. Must be "http", "https" or "tcp"`,
@@ -535,7 +535,7 @@ export function refineHealthcheck(healthcheck: {
 }) {
   const mappers: Record<string, (...args: any[]) => any> = {
     StartPeriod: (value: string) => parse(value, 'nanosecond'),
-    Retries: (value: string) => (value ? parseInt(value, 10) : null),
+    Retries: (value: string) => (value ? Number.parseInt(value, 10) : null),
     Timeout: (value: string) => parse(value, 'nanosecond'),
     Interval: (value: string) => parse(value, 'nanosecond'),
     Test: (value: string) => coerceArray(value),

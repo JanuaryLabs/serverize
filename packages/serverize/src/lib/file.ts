@@ -1,7 +1,7 @@
 import { writeFile } from 'fs/promises';
 
 import { join } from 'path';
-import { coerceArray } from 'serverize/dockerfile';
+import { coerceArray } from '@serverize/dockerfile';
 
 export async function writeDockerIgnore(
   projectDir: string,

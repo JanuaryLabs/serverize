@@ -1,8 +1,9 @@
 import { existsSync } from 'fs';
+import crypto from 'node:crypto';
 import { readFile, readdir, rm } from 'fs/promises';
 
 import { basename, dirname, join } from 'path';
-import { exist, getFile, readJsonFile, safeFail } from 'serverize/utils';
+import { exist, getFile, readJsonFile, safeFail } from '@serverize/utils';
 import { parseRequirements } from './requirements-parser';
 
 import { type Callers, staticEval } from '@january/evaluator';

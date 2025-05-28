@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 
+import { isDockerRunning } from '@serverize/docker';
 import { AsyncLocalStorage } from 'async_hooks';
 import {
   from,
@@ -10,7 +11,6 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { isDockerRunning } from 'serverize/docker';
 import {
   type AST,
   ensureUser,

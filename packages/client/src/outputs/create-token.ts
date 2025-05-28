@@ -5,7 +5,7 @@ import { type UnauthorizedErr } from '../models/UnauthorizedErr.ts';
 /**
  * Response for 200
  */
-export type CreateTokenOutput200 = string;
+export type CreateTokenOutput200 = any;
 
 /**
  * Unauthorized

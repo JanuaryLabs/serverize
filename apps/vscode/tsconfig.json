@@ -4,6 +4,12 @@
   "include": [],
   "references": [
     {
+      "path": "../../packages/client"
+    },
+    {
+      "path": "../../packages/serverize"
+    },
+    {
       "path": "./tsconfig.app.json"
     }
   ],

@@ -1,6 +1,4 @@
 import { Command } from 'commander';
-
-import { safeFail } from 'serverize/utils';
 import { client } from './lib/api-client';
 import {
   channelOption,
@@ -9,7 +7,6 @@ import {
   releaseOption,
   showError,
   spinner,
-  tell,
 } from './program';
 
 import { box } from './lib/console.ts';

@@ -1,8 +1,5 @@
-import { tmpdir } from 'os';
-
-import { join } from 'path';
-import { docker, removeContainer, upsertVolume } from 'serverize/docker';
-import { createRecorder } from 'serverize/utils';
+import { docker, removeContainer, upsertVolume } from '@serverize/docker';
+import { createRecorder } from '@serverize/utils';
 
 export interface ReleaseInfo {
   projectName: string;

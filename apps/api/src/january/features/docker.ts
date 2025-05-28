@@ -1,8 +1,7 @@
 import z from 'zod';
-import output from '#extensions/hono/output.ts';
 import * as commonZod from '#extensions/zod/index.ts';
 
-import { docker } from 'serverize/docker';
+import { docker } from '@serverize/docker';
 
 import { trigger, workflow } from '@january/declarative';
 import { toTraefikConfig } from '#extensions/user/index.ts';

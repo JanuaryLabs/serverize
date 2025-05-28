@@ -1,6 +1,6 @@
+import { readFile } from 'node:fs/promises';
 import { parse } from 'dotenv';
 import { execa } from 'execa';
-import { readFile } from 'node:fs/promises';
 
 import { join } from 'path';
 

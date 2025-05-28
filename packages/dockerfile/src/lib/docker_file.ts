@@ -1,11 +1,12 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
+import crypto from 'node:crypto';
 import { rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, posix } from 'node:path';
 import { execa } from 'execa';
 
-import { ensureDockerRunning } from 'serverize/docker';
-import { safeFail } from 'serverize/utils';
+import { ensureDockerRunning } from '@serverize/docker';
+import { safeFail } from '@serverize/utils';
 import type { NetworkFactory } from './network';
 
 type StageFn = (options?: any) => Stage;
@@ -413,7 +414,7 @@ function stageFactory(config: Stage): StageFactory {
       return this;
     },
     addOutput(value) {
-      config.output;
+      // config.output;
       return this;
     },
     env,

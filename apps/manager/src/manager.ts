@@ -1,6 +1,6 @@
 import type { Releases } from '@serverize/client';
-import { docker, removeContainer, upsertVolume } from 'serverize/docker';
-import { createRecorder } from 'serverize/utils';
+import { docker, removeContainer, upsertVolume } from '@serverize/docker';
+import { createRecorder } from '@serverize/utils';
 
 export interface ReleaseInfo {
   projectName: string;

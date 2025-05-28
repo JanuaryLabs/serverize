@@ -1,4 +1,4 @@
-import { safeFail } from 'serverize/utils';
+import { safeFail } from '@serverize/utils';
 import { showError, spinner, tell } from '../program';
 import { client } from './api-client';
 

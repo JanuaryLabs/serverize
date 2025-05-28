@@ -827,9 +827,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "traceId": {
-                      "type": "string"
-                    },
+                    "traceId": {},
                     "releaseId": {
                       "type": "string"
                     },
@@ -914,9 +912,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "traceId": {
-                      "type": "string"
-                    },
+                    "traceId": {},
                     "releaseId": {
                       "type": "string"
                     },
@@ -1211,9 +1207,7 @@
             "description": "Response for 200",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "string"
-                }
+                "schema": {}
               }
             }
           },

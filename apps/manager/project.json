@@ -4,29 +4,11 @@
   "sourceRoot": "apps/manager/src",
   "projectType": "application",
   "tags": [],
-  "implicitDependencies": ["@serverize/source"],
   "targets": {
     "build": {
-      "dependsOn": ["^client"],
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
-      "options": {
-        "main": "apps/manager/src/main.ts",
-        "tsConfig": "apps/manager/tsconfig.app.json",
-        "outputPath": "dist/apps/manager",
-        "format": ["esm"],
-        "minify": false,
-        "sourcemap": true,
-        "generatePackageJson": true,
-        "esbuildOptions": {
-          "alias": {
-            "lodash": "lodash-es"
-          },
-          "banner": {
-            "js": "import { createRequire } from 'module'; const require = createRequire(import.meta.url);"
-          }
-        }
-      }
+      "options": {}
     },
     "serve": {
       "executor": "@nx/js:node",

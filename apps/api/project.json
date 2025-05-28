@@ -11,16 +11,6 @@
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "skipTypeCheck": true,
-        "main": "apps/api/src/app/server.ts",
-        "tsConfig": "apps/api/tsconfig.app.json",
-        "outputPath": "dist/apps/api",
-        "format": ["esm"],
-        "platform": "node",
-        "minify": false,
-        "sourcemap": true,
-        "deleteOutputPath": false,
-        "generatePackageJson": true,
         "esbuildConfig": "apps/api/esbuild.cjs"
       }
     },
