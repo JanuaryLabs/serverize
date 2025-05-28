@@ -23,7 +23,7 @@ services:
       - serverize-uploads:/data:rw
       - logs:/tmp/logs
       - /Users/ezzabuzaid/Desktop/january/serverize/dist/apps/api:/app/api:rw
-      - /Users/ezzabuzaid/Desktop/january/serverize/apps/api/node_modules:/app/api/node_modules:rw
+      # - /Users/ezzabuzaid/Desktop/january/serverize/apps/api/node_modules:/app/node_modules:rw
       - /Users/ezzabuzaid/Desktop/january/serverize/node_modules:/app/node_modules:rw
     env_file: !override
       - /Users/ezzabuzaid/Desktop/january/serverize/apps/api/.env

@@ -85,6 +85,7 @@ export async function runInComposeContext(config: DeployContext) {
   for (const tar of tars) {
     const port = tar.port ? Number.parseInt(tar.port || '3000', 10) : undefined;
     spinner.prefixText = `Deploying ${chalk.green(tar.name)}`;
+
     const [data, error] = await client.request(
       'POST /operations/releases/start',
       {

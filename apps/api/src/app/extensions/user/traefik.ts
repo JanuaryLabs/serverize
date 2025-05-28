@@ -148,13 +148,6 @@ export function toTraefikConfig(releases: ReleaseConfig[]) {
           // middlewares: ['rate-limit@http'],
           ...productionRouteProps,
         },
-        'serverize-manager': {
-          service: 'serverize-manager',
-          entrypoints: [defaultEntrypoint],
-          rule: `Host(\`serverize-manager.${SERVERIZE_DOMAIN}\`)`,
-          middlewares: ['rate-limit@http'],
-          ...productionRouteProps,
-        },
         'serverize-api': {
           service: 'serverize-api',
           entrypoints: [defaultEntrypoint],

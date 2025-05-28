@@ -4,8 +4,10 @@
   "sourceRoot": "packages/client/src",
   "projectType": "library",
   "tags": [],
+  "implicitDependencies": ["@serverize/source"],
   "targets": {
     "build": {
+      "dependsOn": ["^client"],
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {

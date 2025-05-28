@@ -448,7 +448,7 @@ function guessPort(ast: Dockerfile) {
     python: '8000', // Common default port for Python HTTP servers
     golang: '8080', // Common default for Go web servers
     tomcat: '8080', // Apache Tomcat server default HTTP port
-    memcached: '11211', // Memcached caching system default port
+    memcached: '11211', // Memcached caching system default portI
     couchdb: '5984', // CouchDB database default port
     consul: '8500', // Consul service mesh default port
     vault: '8200', // HashiCorp Vault default port
@@ -479,9 +479,7 @@ function guessPort(ast: Dockerfile) {
   return undefined;
 }
 
-export function showError(
-  error?: ProblematicResponse | ParseError<any> | Error,
-) {
+export function showError(error?: unknown) {
   if (process.env.NODE_ENV === 'development') {
     console.error(error);
   }

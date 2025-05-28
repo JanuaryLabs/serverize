@@ -93,6 +93,7 @@ await writeFile(
 await generate(spec, {
   output: join(process.cwd(), 'packages/client/src'),
   name: 'Serverize',
+  mode: 'minimal',
   style: {
     errorAsValue: true,
     outputType: 'default',

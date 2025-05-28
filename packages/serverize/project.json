@@ -17,6 +17,8 @@
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "declaration": true,
+        "declarationRootDir": "packages/serverize/src",
         "additionalEntryPoints": ["packages/serverize/src/cli.ts"],
         "outputPath": "dist/packages/serverize",
         "main": "packages/serverize/src/index.ts",
@@ -24,7 +26,7 @@
         "assets": [],
         "format": ["esm"],
         "minify": false,
-        "deleteOutputPath": false,
+        "deleteOutputPath": true,
         "sourcemap": true,
         "generatePackageJson": true,
         "bundle": true,
