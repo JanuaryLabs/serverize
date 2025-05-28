@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "execa": "^9.5.2",
-    "@serverize/docker": "0.60.0",
+    "@serverize/docker": "*",
     "@serverize/utils": "*"
   },
   "exports": {

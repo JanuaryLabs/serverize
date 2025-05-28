@@ -86,11 +86,12 @@
           }
         },
         "external": [
+          "serverize",
           "@serverize/client",
-          "serverize/utils",
-          "serverize/docker",
-          "serverize/dockerfile",
-          "serverize/dockercompose"
+          "@serverize/utils",
+          "@serverize/docker",
+          "@serverize/dockerfile",
+          "@serverize/dockercompose"
         ]
       },
       "cache": true,
