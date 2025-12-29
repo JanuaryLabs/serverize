@@ -44,7 +44,7 @@ export default function HeroVert() {
 
           <div className="mt-8 flex flex-col gap-4 md:flex-row md:items-center md:gap-8">
             <EyeCatchingButton className="lg:h-12 lg:text-lg" size={'lg'}>
-              <a href="https://cal.com/january-sh/30min" target="_blank">
+              <a href="https://cal.com/january-sh/30min" target="_blank" rel="noreferrer">
                 Request a demo
               </a>
             </EyeCatchingButton>

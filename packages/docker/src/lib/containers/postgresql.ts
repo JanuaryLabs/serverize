@@ -1,9 +1,9 @@
 import { tmpdir } from 'os';
+import { join } from 'path';
 
 import { docker } from '../instance';
 import { followProgress } from '../utils';
 import { startContainer, upsertNetwork, upsertVolume } from '../utils';
-import { join } from 'path';
 
 export async function imageExists(repoTag: string) {
   const images = await docker.listImages({ all: true });
@@ -11,7 +11,7 @@ export async function imageExists(repoTag: string) {
 }
 
 export async function runPostgres(config: { network?: string } = {}) {
-  const pgRepo = 'postgres:17-alpine';
+  const pgRepo = 'postgres:18-alpine';
   const exists = await imageExists(pgRepo);
   if (!exists) {
     const image = await docker.pull(pgRepo);

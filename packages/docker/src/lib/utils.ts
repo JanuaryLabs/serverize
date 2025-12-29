@@ -1,11 +1,12 @@
-import crypto from 'crypto';
-import { createReadStream, existsSync } from 'fs';
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
-import { tmpdir } from 'os';
-import type { Container } from 'dockerode';
 
+import crypto from 'crypto';
+import type { Container } from 'dockerode';
+import { createReadStream, existsSync } from 'fs';
+import { tmpdir } from 'os';
 import { basename, dirname, join } from 'path';
 import type internal from 'stream';
+
 import { docker } from './instance';
 
 export function followProgress(
@@ -291,12 +292,10 @@ export async function pullImage(image: string, tag = 'latest') {
   return image;
 }
 
-export async function imagesExists(...tags: string[]) {
+export async function imagesExists(image: string, tag = 'latest') {
   const images = await docker.listImages({
     all: true,
   });
   const imageTags = images.flatMap((image) => image.RepoTags);
-  return tags.every((tag) => {
-    return imageTags.includes(tag.includes(':') ? tag : `${tag}:latest`);
-  });
+  return imageTags.includes(`${image}:${tag}`);
 }

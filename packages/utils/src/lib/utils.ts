@@ -20,41 +20,6 @@ export function notNullOrUndefined<T>(
   return !isNullOrUndefined(value);
 }
 
-export function upsert<T extends { id: string }>(
-  array: T[],
-  id: string,
-  insert: (current: T, isNew: boolean) => T,
-) {
-  const [index, item] = byId<T>(array, id);
-  if (item) {
-    array[index] = insert(item, false);
-    return array;
-  } else {
-    return [...array, insert({ id } as T, true)];
-  }
-}
-export async function upsertAsync<T extends { id: string }>(
-  array: T[],
-  id: string,
-  insert: (current: T) => Promise<T> | T,
-): Promise<T[]> {
-  const [index, item] = byId<T>(array, id);
-  if (item) {
-    array[index] = await insert(item);
-    return array;
-  } else {
-    return [...array, await insert({ id } as T)];
-  }
-}
-
-export function byId<T extends { id: string }>(
-  array: T[],
-  id: string,
-): [number, T | undefined] {
-  const index = array.findIndex((it) => it.id === id);
-  return [index, array[index]];
-}
-
 const removeEmpty = (obj: any) => {
   const newObj: Record<string, any> = {};
   Object.keys(obj).forEach((key) => {

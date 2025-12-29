@@ -121,7 +121,7 @@ export function Nav(props: { className?: string }) {
               'h-8 px-2.5 py-1 shadow-none',
               'hidden lg:flex',
               'mr-3 md:mr-4',
-            )}
+            )} rel="noreferrer"
           >
             Contact
           </a>

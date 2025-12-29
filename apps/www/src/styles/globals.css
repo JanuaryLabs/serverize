@@ -77,8 +77,8 @@ body {
   --ec-brdCol: hsl(var(--border)) !important;
   --ec-brdWd: 1px !important;
   --ec-brdRad: var(--radius) !important;
-  --ec-codeFontFml: theme("fontFamily.mono");
-  --ec-uiFontFml: theme("fontFamily.sans");
+  --ec-codeFontFml: theme('fontFamily.mono');
+  --ec-uiFontFml: theme('fontFamily.sans');
 }
 @layer base {
   * {
@@ -210,6 +210,13 @@ details {
   > h5 {
     @apply mb-1 font-semibold leading-none tracking-tight;
   }
+}
+
+.prose blockquote.callout :where(p):first-child::before,
+.prose .callout :where(p):first-child::before,
+.prose blockquote.callout :where(p):last-child::after,
+.prose .callout :where(p):last-child::after {
+  content: none;
 }
 
 .callout-icon {

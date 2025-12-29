@@ -107,7 +107,7 @@ export function Screen() {
         <div className="flex items-center">
           <a href="https://serverize.sh">Serverize</a>
         </div>
-        <a target="_blank" href="https://serverize.sh/guides">
+        <a target="_blank" href="https://serverize.sh/guides" rel="noreferrer">
           <button className="border-input hover:bg-accent focus-visible:ring-ring inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md border px-4 py-2 text-xs font-medium shadow-sm transition-colors hover:text-black focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50">
             Documentation
           </button>

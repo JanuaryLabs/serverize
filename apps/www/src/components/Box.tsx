@@ -18,8 +18,7 @@ const Icon = ({ className, ...rest }: any) => {
 };
 export default function Try(props: PropsWithChildren<{ className?: string }>) {
   return (
-    <>
-      <div
+    <div
         className={cn(
           'border-border/70 relative rounded-md border',
           props.className,
@@ -31,6 +30,5 @@ export default function Try(props: PropsWithChildren<{ className?: string }>) {
         <Icon className="absolute -bottom-3 -right-3 h-6 w-6 text-black dark:text-white" />
         {props.children}
       </div>
-    </>
   );
 }

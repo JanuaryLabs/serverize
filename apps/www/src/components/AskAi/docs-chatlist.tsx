@@ -97,8 +97,7 @@ export function ChatList(props: PropsWithChildren) {
 
 function SuggestedPrompts(props: { onSelectPrompt: (prompt: string) => void }) {
   return (
-    <>
-      <div className="mb-4 flex flex-col items-start">
+    <div className="mb-4 flex flex-col items-start">
         <p className="text-secondary-foreground/70 my-4 text-sm">
           Hi! I'm an AI assistant trained on documentation, code, and other
           content. I can answer questions about{' '}
@@ -127,6 +126,5 @@ function SuggestedPrompts(props: { onSelectPrompt: (prompt: string) => void }) {
           ))}
         </ul>
       </div>
-    </>
   );
 }

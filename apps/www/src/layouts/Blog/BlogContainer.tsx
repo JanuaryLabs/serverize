@@ -111,7 +111,7 @@ export function Contribute(props: {
         <a
           target="_blank"
           className="flex cursor-pointer items-center gap-x-2 text-sm hover:underline"
-          href="https://github.com/JanuaryLabs/serverize/issues"
+          href="https://github.com/JanuaryLabs/serverize/issues" rel="noreferrer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -142,7 +142,7 @@ export function Contribute(props: {
         <a
           className="flex cursor-pointer items-center gap-x-2 text-sm hover:underline"
           target="_blank"
-          href={`https://github.com/JanuaryLabs/serverize/blob/main/apps/www/src/pages${props.path}.md`}
+          href={`https://github.com/JanuaryLabs/serverize/blob/main/apps/www/src/pages${props.path}.md`} rel="noreferrer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -164,7 +164,7 @@ export function Contribute(props: {
         <a
           className="flex cursor-pointer items-center gap-x-2 text-sm hover:underline"
           target="_blank"
-          href="https://discord.gg/aj9bRtrmNt"
+          href="https://discord.gg/aj9bRtrmNt" rel="noreferrer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

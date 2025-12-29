@@ -1,24 +1,16 @@
 {
   "singleQuote": true,
   "importOrder": [
+    "./startup",
+    "./instrument",
+    "^node:(.*)$",
     "<THIRD_PARTY_MODULES>",
-    "^[./startup]",
-    "^@january/(.*)$",
-    "^serverize/(.*)$",
+    "^@agent/(.*)$",
     "^[./]"
   ],
   "plugins": [
     "@trivago/prettier-plugin-sort-imports",
-    "prettier-plugin-astro",
     "prettier-plugin-tailwindcss"
-  ],
-  "overrides": [
-    {
-      "files": "*.astro",
-      "options": {
-        "parser": "astro"
-      }
-    }
   ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,

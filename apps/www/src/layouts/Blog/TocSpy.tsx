@@ -37,7 +37,7 @@ export default function TocSpy() {
 }
 
 function isElementVisible(el: Element) {
-  var rect = el.getBoundingClientRect(),
+  const rect = el.getBoundingClientRect(),
     vWidth = window.innerWidth || document.documentElement.clientWidth,
     vHeight = window.innerHeight || document.documentElement.clientHeight,
     efp = (x: number, y: number) => {

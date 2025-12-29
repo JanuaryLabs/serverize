@@ -1,6 +1,7 @@
 import { execFile } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+
 import {
   analyze,
   responseAnalyzer as genericResponseAnalyzer,
@@ -99,6 +100,8 @@ await generate(spec, {
     outputType: 'default',
   },
   formatCode: ({ env, output }) => {
-    execFile('biome', ['check', output, '--write'], { env: env });
+    execFile('prettier', ['openapi.json', output, '--write'], {
+      env: env,
+    });
   },
 });

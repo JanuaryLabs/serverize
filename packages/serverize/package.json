@@ -53,6 +53,8 @@
     "validator": "13.9.0",
     "@serverize/docker": "*",
     "@serverize/utils": "*",
-    "@serverize/dockerfile": "*"
+    "@serverize/dockerfile": "*",
+    "@januarylabs/evaluator": "0.54.9",
+    "@januarylabs/parser": "0.54.7"
   }
 }

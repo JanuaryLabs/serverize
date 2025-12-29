@@ -10,10 +10,9 @@ import {
   signInWithGoogle,
   signUpWithEmail,
 } from './lib/auth-methods';
+import { box } from './lib/console.ts';
 import { auth } from './lib/firebase';
 import { askForProjectName, showError, spinner, tell } from './program';
-
-import { box } from './lib/console.ts';
 
 const CLIENT_ID =
   process.env.NODE_ENV === 'development'
@@ -191,6 +190,7 @@ export async function register() {
         spinner.fail((error as Error).message);
         process.exit(1);
       }
+      return undefined;
     }
     default:
       return undefined;

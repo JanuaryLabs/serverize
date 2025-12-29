@@ -4,10 +4,10 @@ import {
   signInWithCustomToken,
   signOut,
 } from 'firebase/auth';
-import * as vscode from 'vscode';
-
 import { relative, sep } from 'path';
 import { auth, client, signInWithEmail } from 'serverize';
+import * as vscode from 'vscode';
+
 import { registerAuthCommands } from './commands/auth-command';
 import { showError } from './error-handler';
 import { OrganizationDataProvider } from './tree/accounts';
@@ -600,4 +600,6 @@ async function showProjectSelector(serverize: Serverize) {
   });
 }
 
-export function deactivate() {}
+export function deactivate() {
+  //
+}

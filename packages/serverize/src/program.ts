@@ -1,7 +1,8 @@
-import { platform } from 'os';
 import ignore from '@balena/dockerignore';
 import { checkbox, input, select } from '@inquirer/prompts';
 import { APIError, ParseError } from '@serverize/client';
+import { coerceArray, nodeServer } from '@serverize/dockerfile';
+import { exist, notNullOrUndefined, safeFail } from '@serverize/utils';
 import chalk from 'chalk';
 import cliProgress from 'cli-progress';
 import cliSpinners from 'cli-spinners';
@@ -12,16 +13,14 @@ import glob from 'fast-glob';
 import { signInWithCustomToken, signOut } from 'firebase/auth';
 import { readFile } from 'fs/promises';
 import ora from 'ora';
+import { platform } from 'os';
+import parse from 'parse-duration';
 import validator from 'validator';
 
-import { coerceArray, nodeServer } from '@serverize/dockerfile';
-import { exist, notNullOrUndefined, safeFail } from '@serverize/utils';
-import parse from 'parse-duration';
 import { client, serverizeApiUrl } from './lib/api-client';
 import { initialise } from './lib/auth-methods';
-import { auth } from './lib/firebase';
-
 import { box } from './lib/console.ts';
+import { auth } from './lib/firebase';
 import { getImageExposedPorts } from './lib/image';
 
 export interface Healthcheck {
@@ -256,7 +255,7 @@ export const projectOption = new Option(
   'The project name',
 )
   .makeOptionMandatory(
-    !!!(process.env.SERVERIZE_PROJECT || process.env.SERVERIZE_API_TOKEN),
+    !(process.env.SERVERIZE_PROJECT || process.env.SERVERIZE_API_TOKEN),
   )
   .default(process.env.SERVERIZE_PROJECT);
 
