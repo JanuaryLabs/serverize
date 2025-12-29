@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 export const createReleaseSchema = z.object({
   releaseName: z.string(),
   projectId: z.string().uuid(),

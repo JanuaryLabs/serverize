@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 export const createSecretSchema = z.object({
   projectId: z.string().uuid(),
   channel: z.enum(['dev', 'preview']).default('dev'),

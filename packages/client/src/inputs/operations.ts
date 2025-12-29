@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 export const readProgressSchema = z.object({ traceId: z.string() });
 export const startReleaseSchema = z.object({
   releaseName: z.string(),

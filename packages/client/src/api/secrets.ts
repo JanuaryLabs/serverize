@@ -1,4 +1,5 @@
 import z from 'zod';
+
 import { buffered, chunked } from '../http/parse-response.ts';
 import { ParseError } from '../http/parser.ts';
 import {
@@ -28,6 +29,7 @@ import {
   type GetSecretsOutput200,
   type GetSecretsOutput401,
 } from '../outputs/get-secrets.ts';
+
 export default {
   'POST /secrets': {
     schema: secrets.createSecretSchema,

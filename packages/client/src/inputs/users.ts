@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 export const linkUserSchema = z.object({
   token: z.string(),
   providerId: z.enum(['github.com', 'google.com', 'password']),

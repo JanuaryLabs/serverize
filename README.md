@@ -1,76 +1,171 @@
-## Serverize - One step Docker deployment
+# Serverize
 
-Serverize facilitates the creation of **development**, **testing**, and **preview** environments, each tailored to empower different phases of the product lifecycle without unnecessary complexity.
+One-step Docker deployment for any framework.
 
-It uses Docker to package your application and deploy it to a unique URL, allowing you to share your work with others or test it in a production-like environment.
+[![npm version](https://img.shields.io/npm/v/serverize.svg)](https://www.npmjs.com/package/serverize)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org/)
 
-## Zero Config Deployment
+## Overview
 
-Serverize is built to be as simple as possible and aspires to simplify the deployment process for developers. It can be used with any framework or language, as long as you have a Dockerfile that exposes a HTTP port.
+Serverize packages your application in Docker and deploys it to a unique URL. Create development, testing, and preview environments without the complexity.
 
-Core part of Serverize is the implicit auto setup feature, which can detect the framework you are using and try to set the project up.
+- **Zero config** - Auto-detects your framework and generates Dockerfiles
+- **Any framework** - Works with Node.js, Python, .NET, and more
+- **Instant URLs** - Get a shareable URL for every deployment
+- **Secrets management** - Securely inject environment variables
 
-The logic is encapsulated in the following command.
+## Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) installed and running
+- [Node.js](https://nodejs.org/) 18 or higher
+- npm, yarn, or pnpm
+
+## Quick Start
 
 ```sh
+# Deploy your app (auto-detects framework)
 npx serverize
 ```
 
-That is being said, only number of frameworks are supported at the moment including:
+That's it. Serverize will:
 
-- Node.js
-- Deno
-- Bun
-- Nuxt.js
-- Astro
-- Next.js
-- [and more](./packages/dockerfile/src/lib/frameworks)
+1. Detect your framework
+2. Generate a Dockerfile (if needed)
+3. Build and deploy your app
+4. Return a unique URL
 
+### Manual Setup
 
-Bear in mind that you still can customize the Dockerfile to fit your needs.
+If you prefer to set up manually or customize the Dockerfile:
 
-## Auto Setup
-
-Building on the zero config concept you can use the setup command to choose the framework you are using and let Serverize write the Dockerfile for that can be customized later.
-
-```sh frame=none
+```sh
+# Generate Dockerfile for your framework
 npx serverize setup [framework]
+
+# Examples
+npx serverize setup next      # Next.js
+npx serverize setup nuxt      # Nuxt
+npx serverize setup astro     # Astro
+npx serverize setup deno      # Deno
 ```
 
-Where `framework` is the framework you want to setup, if not provided, serverize will try to guess it otherwise it'll ask you.
+## Supported Frameworks
 
-**Example:**
+| Framework | Command                         | Status    |
+| --------- | ------------------------------- | --------- |
+| Node.js   | `npx serverize setup node`      | Supported |
+| Deno      | `npx serverize setup deno`      | Supported |
+| Bun       | `npx serverize setup bun`       | Supported |
+| Next.js   | `npx serverize setup next`      | Supported |
+| Nuxt      | `npx serverize setup nuxt`      | Supported |
+| Astro     | `npx serverize setup astro`     | Supported |
+| Remix     | `npx serverize setup remix`     | Supported |
+| Angular   | `npx serverize setup angular`   | Supported |
+| Vite      | `npx serverize setup vite`      | Supported |
+| FastAPI   | `npx serverize setup fastapi`   | Supported |
+| Streamlit | `npx serverize setup streamlit` | Supported |
+| .NET      | `npx serverize setup dotnet`    | Supported |
 
-1. **Setup Deno**
+Custom Dockerfiles are always supported - just create a `Dockerfile` that exposes an HTTP port.
 
-```sh frame=none
-npx serverize setup deno
+## CLI Commands
+
+| Command                           | Description                       |
+| --------------------------------- | --------------------------------- |
+| `npx serverize`                   | Deploy with auto-detection        |
+| `npx serverize setup [framework]` | Generate Dockerfile for framework |
+| `npx serverize deploy`            | Deploy using existing Dockerfile  |
+| `npx serverize releases`          | List and manage releases          |
+| `npx serverize logs`              | View deployment logs              |
+| `npx serverize secrets`           | Manage secrets/env variables      |
+| `npx serverize tokens`            | Manage API tokens                 |
+| `npx serverize auth`              | Authentication commands           |
+
+## Configuration
+
+### Custom Dockerfile
+
+The generated Dockerfile can be customized to fit your needs. Serverize respects any modifications you make.
+
+### Docker Compose
+
+For multi-container setups, Serverize supports Docker Compose files:
+
+```sh
+npx serverize deploy --compose
 ```
 
-This command will add Dockerfile as well as dockerignore to your project.
+### Secrets
 
-2. **Setup Astro**
+Manage environment variables securely:
 
-```sh frame=none
-npx serverize setup astro
+```sh
+# Add a secret
+npx serverize secrets set API_KEY=your-key
+
+# List secrets
+npx serverize secrets list
 ```
 
-3. **Setup Nuxt**
+## Project Structure
 
-```sh frame=none
-npx serverize setup nuxt
+This is a monorepo with the following packages:
+
+| Package                                                | Description                     |
+| ------------------------------------------------------ | ------------------------------- |
+| [`serverize`](./packages/serverize)                    | CLI tool                        |
+| [`@serverize/client`](./packages/client)               | API client library              |
+| [`@serverize/dockerfile`](./packages/dockerfile)       | Dockerfile generation utilities |
+| [`@serverize/docker`](./packages/docker)               | Docker runtime utilities        |
+| [`@serverize/dockercompose`](./packages/dockercompose) | Docker Compose utilities        |
+| [`@serverize/utils`](./packages/utils)                 | Shared utilities                |
+
+## Troubleshooting
+
+### Docker not running
+
+```
+Error: Cannot connect to Docker daemon
 ```
 
-4. **Auto setup:**
+Make sure Docker Desktop is running or the Docker daemon is started.
 
-```sh frame=none
-npx serverize setup
+### Port already in use
+
+If your app's port is already in use, modify the `EXPOSE` directive in your Dockerfile or configure your app to use a different port.
+
+### Build fails
+
+1. Check that your Dockerfile is valid
+2. Ensure all dependencies are properly declared
+3. Run `docker build .` locally to debug
+
+## Contributing
+
+Contributions are welcome! This project uses [Nx](https://nx.dev/) for monorepo management.
+
+### Development Setup
+
+```sh
+# Clone the repo
+git clone https://github.com/JanuaryLabs/serverize.git
+cd serverize
+
+# Install dependencies
+npm install
+
+# Build all packages
+npx nx run-many -t build
+
+# Run the CLI in dev mode
+npm run serverize
 ```
 
+### Reporting Issues
 
-## Project structure
+Found a bug or have a feature request? [Open an issue](https://github.com/JanuaryLabs/serverize/issues).
 
-1. [CLI tool](./packages/serverize) to manage your projects, channels, releases, ...etc.
-2. [API](./apps/api/) that handles the deployment process.
-3. [API client](./packages/client) to interact with serverize through the API.
-4. [dockerfile primitives](./packages/dockerfile) to help you build your dockerfile.
+## License
+
+Apache 2.0 - see [LICENSE](LICENSE) for details.

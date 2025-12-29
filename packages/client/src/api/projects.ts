@@ -1,4 +1,5 @@
 import z from 'zod';
+
 import { buffered, chunked } from '../http/parse-response.ts';
 import { ParseError } from '../http/parser.ts';
 import {
@@ -24,6 +25,7 @@ import {
   type PatchProjectOutput200,
   type PatchProjectOutput401,
 } from '../outputs/patch-project.ts';
+
 export default {
   'POST /projects': {
     schema: projects.createProjectSchema,

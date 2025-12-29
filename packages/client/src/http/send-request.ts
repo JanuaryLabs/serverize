@@ -1,4 +1,5 @@
 import z from 'zod';
+
 import type { Interceptor } from './interceptors.ts';
 import { buffered } from './parse-response.ts';
 import { parseInput } from './parser.ts';

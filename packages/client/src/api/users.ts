@@ -1,4 +1,5 @@
 import z from 'zod';
+
 import { buffered, chunked } from '../http/parse-response.ts';
 import { ParseError } from '../http/parser.ts';
 import {
@@ -22,6 +23,7 @@ import {
   type SigninOutput401,
   type SigninOutput404,
 } from '../outputs/signin.ts';
+
 export default {
   'POST /users/link': {
     schema: users.linkUserSchema,

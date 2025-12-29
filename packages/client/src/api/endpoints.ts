@@ -1,11 +1,11 @@
 import type z from 'zod';
+
 import type { ParseError } from '../http/parser.ts';
 import type {
   ProblematicResponse,
   SuccessfulResponse,
 } from '../http/response.ts';
 import type { OutputType, Parser, Type } from '../http/send-request.ts';
-
 import schemas from './schemas.ts';
 
 type Output<T extends OutputType> = T extends {

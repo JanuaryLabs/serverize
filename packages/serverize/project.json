@@ -16,7 +16,10 @@
       "dependsOn": ["^build", "^client"],
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
-      "options": {}
+      "options": {
+        "skipTypeCheck": true,
+        "declaration": false
+      }
     }
   }
 }

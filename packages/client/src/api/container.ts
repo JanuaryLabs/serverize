@@ -1,4 +1,5 @@
 import z from 'zod';
+
 import { buffered, chunked } from '../http/parse-response.ts';
 import { ParseError } from '../http/parser.ts';
 import {
@@ -16,6 +17,7 @@ import {
   type StreamContainerLogsOutput200,
   type StreamContainerLogsOutput401,
 } from '../outputs/stream-container-logs.ts';
+
 export default {
   'GET /container/logs': {
     schema: container.streamContainerLogsSchema,

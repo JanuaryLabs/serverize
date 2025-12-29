@@ -32,6 +32,9 @@
     },
     {
       "path": "./apps/www"
+    },
+    {
+      "path": "./packages/sandbox"
     }
   ]
 }

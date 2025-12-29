@@ -4,7 +4,7 @@
   "include": [],
   "references": [
     {
-      "path": "../utils"
+      "path": "../docker"
     },
     {
       "path": "./tsconfig.lib.json"

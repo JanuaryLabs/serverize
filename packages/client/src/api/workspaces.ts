@@ -1,4 +1,5 @@
 import z from 'zod';
+
 import { buffered, chunked } from '../http/parse-response.ts';
 import { ParseError } from '../http/parser.ts';
 import {
@@ -16,6 +17,7 @@ import {
   type CreateWorkspaceOutput200,
   type CreateWorkspaceOutput401,
 } from '../outputs/create-workspace.ts';
+
 export default {
   'POST /workspaces': {
     schema: workspaces.createWorkspaceSchema,

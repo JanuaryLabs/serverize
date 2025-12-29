@@ -1,4 +1,5 @@
 import type { HeadersInit, RequestConfig } from './request.ts';
+
 export interface Interceptor {
   before?: (config: RequestConfig) => Promise<RequestConfig> | RequestConfig;
   after?: (response: Response) => Promise<Response> | Response;

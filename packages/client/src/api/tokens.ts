@@ -1,4 +1,5 @@
 import z from 'zod';
+
 import { buffered, chunked } from '../http/parse-response.ts';
 import { ParseError } from '../http/parser.ts';
 import {
@@ -40,6 +41,7 @@ import {
   type RevokeTokenOutput401,
   type RevokeTokenOutput404,
 } from '../outputs/revoke-token.ts';
+
 export default {
   'POST /tokens': {
     schema: tokens.createTokenSchema,

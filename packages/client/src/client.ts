@@ -1,14 +1,14 @@
 import z from 'zod';
+
 import type { Endpoints } from './api/endpoints.ts';
 import schemas from './api/schemas.ts';
 import {
   createBaseUrlInterceptor,
   createHeadersInterceptor,
 } from './http/interceptors.ts';
+import { type ParseError, parseInput } from './http/parser.ts';
 import type { HeadersInit, RequestConfig } from './http/request.ts';
 import { dispatch, fetchType, parse } from './http/send-request.ts';
-
-import { type ParseError, parseInput } from './http/parser.ts';
 
 export const servers = [
   'https://serverize-api.january.sh',

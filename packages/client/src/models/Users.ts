@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import type { ApiKeys } from './ApiKeys.ts';
 import type { Claims } from './Claims.ts';
 import type { Members } from './Members.ts';
@@ -15,6 +16,7 @@ import type { UnauthorizedErr } from './UnauthorizedErr.ts';
 import type { Volumes } from './Volumes.ts';
 import type { Workspaces } from './Workspaces.ts';
 import type { WorkspacesMembers } from './WorkspacesMembers.ts';
+
 export type Users = {
   members: Members[] | undefined;
   membersIds: null | string[] | undefined;
