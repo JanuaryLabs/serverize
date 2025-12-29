@@ -1,5 +1,3 @@
-import { WebhookClient } from 'discord.js';
-import { getAuth } from 'firebase-admin/auth';
 import { tables } from '#entities';
 import { firebaseApp } from '#extensions/firebase-auth/index.ts';
 import {
@@ -7,6 +5,8 @@ import {
   execute,
   saveEntity,
 } from '#extensions/postgresql/index.ts';
+import { WebhookClient } from 'discord.js';
+import { getAuth } from 'firebase-admin/auth';
 
 export async function generateKey() {
   const sodium = await import('libsodium-wrappers').then(
@@ -103,7 +103,7 @@ export async function tellDiscord(message: string, url?: string) {
 
 export function clean(obj: Record<string, any>) {
   const cleaned: Record<string, any> = {};
-  for (var propName in obj) {
+  for (const propName in obj) {
     if (obj[propName] === null || obj[propName] === undefined) {
       continue;
     } else {

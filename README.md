@@ -4,7 +4,7 @@ One-step Docker deployment for any framework.
 
 [![npm version](https://img.shields.io/npm/v/serverize.svg)](https://www.npmjs.com/package/serverize)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org/)
+[![Node.js LTS](https://img.shields.io/badge/node-LTS-brightgreen.svg)](https://nodejs.org/)
 
 ## Overview
 
@@ -18,7 +18,7 @@ Serverize packages your application in Docker and deploys it to a unique URL. Cr
 ## Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/) installed and running
-- [Node.js](https://nodejs.org/) 18 or higher
+- [Node.js LTS](https://nodejs.org/)
 - npm, yarn, or pnpm
 
 ## Quick Start

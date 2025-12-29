@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-private-class-members */
 import type { MiddlewareHandler, ValidationTargets } from 'hono';
 import { createMiddleware } from 'hono/factory';
 import { HTTPException } from 'hono/http-exception';

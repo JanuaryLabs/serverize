@@ -5,12 +5,12 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "private": false,
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "dotenv": "16.4.7",
-    "execa": "^9.5.2"
+    "@serverize/docker": "0.61.0"
   },
   "exports": {
     "./package.json": "./package.json",

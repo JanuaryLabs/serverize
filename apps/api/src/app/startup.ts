@@ -1,6 +1,6 @@
-import z from 'zod';
 import { parse } from '#core/validation.ts';
 import { initialize } from '#extensions/postgresql/index.ts';
+import z from 'zod';
 
 const env = z.object({
   ...(await import('#extensions/postgresql/index.ts')).env,
@@ -26,7 +26,7 @@ declare global {
   namespace NodeJS {
     // Extend the ProcessEnv interface with the parsed environment variables
     // @ts-ignore
-    interface ProcessEnv extends z.infer<typeof env> {}
+    type ProcessEnv = z.infer<typeof env>;
   }
 }
 

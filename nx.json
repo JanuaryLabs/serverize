@@ -91,7 +91,8 @@
           "@serverize/utils",
           "@serverize/docker",
           "@serverize/dockerfile",
-          "@serverize/dockercompose"
+          "@serverize/dockercompose",
+          "@serverize/serverize"
         ]
       },
       "cache": true,
