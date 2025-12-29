@@ -1,6 +1,6 @@
 {
   "name": "@serverize/dockerfile",
-  "version": "0.60.0",
+  "version": "0.61.0",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "execa": "^9.5.2",
-    "@serverize/docker": "*",
-    "@serverize/utils": "*"
+    "@serverize/docker": "0.61.0",
+    "@serverize/utils": "0.61.0"
   },
   "exports": {
     "./package.json": "./package.json",
@@ -21,5 +21,8 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist", "!**/*.tsbuildinfo"]
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ]
 }

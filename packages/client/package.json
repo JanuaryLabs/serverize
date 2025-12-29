@@ -1,6 +1,6 @@
 {
   "name": "@serverize/client",
-  "version": "0.60.2",
+  "version": "0.61.0",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -20,5 +20,8 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist", "!**/*.tsbuildinfo"]
+  "files": [
+    "dist",
+    "!**/*.tsbuildinfo"
+  ]
 }

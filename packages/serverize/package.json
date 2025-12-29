@@ -1,6 +1,6 @@
 {
   "name": "serverize",
-  "version": "0.60.0",
+  "version": "0.61.0",
   "bin": {
     "serverize": "./cli.js"
   },
@@ -30,7 +30,7 @@
   "dependencies": {
     "@balena/dockerignore": "1.0.2",
     "@inquirer/prompts": "^7.2.1",
-    "@serverize/client": "*",
+    "@serverize/client": "0.61.0",
     "boxen": "^8.0.1",
     "chalk": "5.4.1",
     "cli-progress": "^3.12.0",
@@ -51,9 +51,9 @@
     "semver": "^7.6.3",
     "tus-js-client": "^4.2.3",
     "validator": "13.9.0",
-    "@serverize/docker": "*",
-    "@serverize/utils": "*",
-    "@serverize/dockerfile": "*",
+    "@serverize/docker": "0.61.0",
+    "@serverize/utils": "0.61.0",
+    "@serverize/dockerfile": "0.61.0",
     "@januarylabs/evaluator": "0.54.9",
     "@januarylabs/parser": "0.54.7"
   }
