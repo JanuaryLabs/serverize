@@ -10,6 +10,7 @@
     "lib": ["ESNext"]
   },
   "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts"],
   "references": [
     {
       "path": "../docker/tsconfig.lib.json"
